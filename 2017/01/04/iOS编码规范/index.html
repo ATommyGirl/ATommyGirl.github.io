@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="一、空格在适当的地方、适当地加空格、可以适当地提高代码可读性你一定读过”紧凑型”的代码，一个字符挨着一个字符，如果不是会报错，可能类名和变量名之间都没有空格了。用大学 c 语言老师的话说：你们的大拇指是残疾了吗？？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS编码规范总结">
+<meta property="og:url" content="https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="一、空格在适当的地方、适当地加空格、可以适当地提高代码可读性你一定读过”紧凑型”的代码，一个字符挨着一个字符，如果不是会报错，可能类名和变量名之间都没有空格了。用大学 c 语言老师的话说：你们的大拇指是残疾了吗？？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/22.png">
+<meta property="article:published_time" content="2017-01-04T06:25:06.000Z">
+<meta property="article:modified_time" content="2017-01-04T06:25:06.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/22.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>iOS编码规范总结</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2017/10/02/GitHubPages404/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2016/07/01/CentOS%20%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&text=iOS编码规范总结"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=iOS编码规范总结"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&is_video=false&description=iOS编码规范总结"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS编码规范总结&body=Check out this article: https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=iOS编码规范总结"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=iOS编码规范总结"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=iOS编码规范总结"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=iOS编码规范总结"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&name=iOS编码规范总结&description=&lt;h2 id=&#34;一、空格&#34;&gt;&lt;a href=&#34;#一、空格&#34; class=&#34;headerlink&#34; title=&#34;一、空格&#34;&gt;&lt;/a&gt;一、空格&lt;/h2&gt;&lt;h4 id=&#34;在适当的地方、适当地加空格、可以适当地提高代码可读性&#34;&gt;&lt;a href=&#34;#在适当的地方、适当地加空格、可以适当地提高代码可读性&#34; class=&#34;headerlink&#34; title=&#34;在适当的地方、适当地加空格、可以适当地提高代码可读性&#34;&gt;&lt;/a&gt;在适当的地方、适当地加空格、可以适当地提高代码可读性&lt;/h4&gt;&lt;p&gt;你一定读过”紧凑型”的代码，一个字符挨着一个字符，如果不是会报错，可能类名和变量名之间都没有空格了。用大学 c 语言老师的话说：你们的大拇指是残疾了吗？？&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&t=iOS编码规范总结"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A9%BA%E6%A0%BC"><span class="toc-number">1.</span> <span class="toc-text">一、空格</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E9%80%82%E5%BD%93%E7%9A%84%E5%9C%B0%E6%96%B9%E3%80%81%E9%80%82%E5%BD%93%E5%9C%B0%E5%8A%A0%E7%A9%BA%E6%A0%BC%E3%80%81%E5%8F%AF%E4%BB%A5%E9%80%82%E5%BD%93%E5%9C%B0%E6%8F%90%E9%AB%98%E4%BB%A3%E7%A0%81%E5%8F%AF%E8%AF%BB%E6%80%A7"><span class="toc-number">1.0.1.</span> <span class="toc-text">在适当的地方、适当地加空格、可以适当地提高代码可读性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%AE%A1%E6%97%B6%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">二、计时器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NSTimer-%E6%9B%BF%E6%8D%A2%E4%B8%BAdispatch-source-timer"><span class="toc-number">2.0.1.</span> <span class="toc-text">NSTimer 替换为dispatch source timer</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81URL%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">三、URL字符串解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%9E%90URL%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E4%BD%BF%E7%94%A8-NSURLComponents-%E7%B1%BB%E5%81%9A%E8%A7%A3%E6%9E%90%EF%BC%8C%E4%B8%8D%E8%A6%81%E9%80%9A%E8%BF%87%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%88%AA%E5%8F%96%E7%AD%89%E6%96%B9%E5%BC%8F"><span class="toc-number">3.0.1.</span> <span class="toc-text">分析URL字符串的时候，使用 NSURLComponents 类做解析，不要通过字符串截取等方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E6%9E%9A%E4%B8%BE"><span class="toc-number">4.</span> <span class="toc-text">四、 枚举</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E6%9E%9A%E4%B8%BE"><span class="toc-number">4.0.1.</span> <span class="toc-text">普通枚举</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81C-%E8%AF%AD%E8%A8%80%E7%9A%84%E6%9E%9A%E4%B8%BE%E5%86%99%E6%B3%95-enum"><span class="toc-number">4.0.1.1.</span> <span class="toc-text">1、C 语言的枚举写法 enum</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81OC-%E6%95%B4%E5%9E%8B%E6%9E%9A%E4%B8%BE"><span class="toc-number">4.0.1.2.</span> <span class="toc-text">2、OC 整型枚举</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9E%9A%E4%B8%BE%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="toc-number">4.0.1.3.</span> <span class="toc-text">3、字符串枚举实现方案</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1%E3%80%81%E5%9F%BA%E4%BA%8E%E6%99%AE%E9%80%9A%E6%9E%9A%E4%B8%BE%EF%BC%8CC-%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.0.1.3.1.</span> <span class="toc-text">1、基于普通枚举，C 语言实现</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2%E3%80%81%E5%AE%8F%E5%AE%9A%E4%B9%89"><span class="toc-number">4.0.1.3.2.</span> <span class="toc-text">2、宏定义</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3%E3%80%81%E8%8B%B9%E6%9E%9C%E5%AE%98%E6%96%B9%E7%9A%84%E5%81%9A%E6%B3%95"><span class="toc-number">4.0.1.3.3.</span> <span class="toc-text">3、苹果官方的做法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%8D%E7%A7%BB%E6%9E%9A%E4%B8%BE"><span class="toc-number">4.0.2.</span> <span class="toc-text">位移枚举</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        iOS编码规范总结
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-01-04T06:25:06.000Z" itemprop="datePublished">2017-01-04</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="一、空格"><a href="#一、空格" class="headerlink" title="一、空格"></a>一、空格</h2><h4 id="在适当的地方、适当地加空格、可以适当地提高代码可读性"><a href="#在适当的地方、适当地加空格、可以适当地提高代码可读性" class="headerlink" title="在适当的地方、适当地加空格、可以适当地提高代码可读性"></a>在适当的地方、适当地加空格、可以适当地提高代码可读性</h4><p>你一定读过”紧凑型”的代码，一个字符挨着一个字符，如果不是会报错，可能类名和变量名之间都没有空格了。用大学 c 语言老师的话说：你们的大拇指是残疾了吗？？</p>
+<span id="more"></span>
+
+<p>为了避免博客风格影响视觉，直接上图片吧。其实我不知道是不是有这样明确的编码规范，我只是看苹果的怎么写，我就怎么写，下面也只是举一些简单的例子。</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/22.png"></p>
+<h2 id="二、计时器"><a href="#二、计时器" class="headerlink" title="二、计时器"></a>二、计时器</h2><h4 id="NSTimer-替换为dispatch-source-timer"><a href="#NSTimer-替换为dispatch-source-timer" class="headerlink" title="NSTimer 替换为dispatch source timer"></a>NSTimer 替换为dispatch source timer</h4><p>NSTimer 在主线程的 Runloop 里会在 Runloop 切换其它模式时停止，这时就需要手动在子线程开启一个模式为 NSRunLoopCommonModes 的 Runloop，并且释放不到位，会导致引用 Timer 的对象也得不到释放。 如果不想开启一个新的 Runloop，并且避免引用问题，可以用不跟 Runloop 关联的 dispatch source timer。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)createTimer &#123;</span><br><span class="line">    __block <span class="keyword">int</span> timeout = <span class="number">60</span>;</span><br><span class="line">    <span class="built_in">dispatch_queue_t</span> global = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>);</span><br><span class="line">    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, <span class="number">0</span>, <span class="number">0</span>, global);</span><br><span class="line">    </span><br><span class="line">    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, <span class="number">1.0</span> * <span class="built_in">NSEC_PER_SEC</span>, <span class="number">0</span> * <span class="built_in">NSEC_PER_SEC</span>);</span><br><span class="line">    dispatch_source_set_event_handler(timer, ^&#123;</span><br><span class="line">        timeout --;</span><br><span class="line">        <span class="keyword">if</span> (timeout &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">            dispatch_source_cancel(timer);</span><br><span class="line">            <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                <span class="comment">//do something after timer done.</span></span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    dispatch_resume(timer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更多关于GCD的用法，请见我的另一个总结<a target="_blank" rel="noopener" href="https://atommygirl.github.io/2016/01/13/GCD%EF%BC%88Grand%20Central%20Dispatch%EF%BC%89/">GCD (Grand Central Dispatch)</a> 。</p>
+<h2 id="三、URL字符串解析"><a href="#三、URL字符串解析" class="headerlink" title="三、URL字符串解析"></a>三、URL字符串解析</h2><h4 id="分析URL字符串的时候，使用-NSURLComponents-类做解析，不要通过字符串截取等方式"><a href="#分析URL字符串的时候，使用-NSURLComponents-类做解析，不要通过字符串截取等方式" class="headerlink" title="分析URL字符串的时候，使用 NSURLComponents 类做解析，不要通过字符串截取等方式"></a>分析URL字符串的时候，使用 NSURLComponents 类做解析，不要通过字符串截取等方式</h4><p>我看很多人的代码，在解析别人传给他的URL 字符串时（例如自己的APP被拉起时），都是使用 <code>NSString</code> 的各种截取方法，然后再自己做判断，这是有点”危险”的做法。如果你自信逻辑严谨的话，那没的说，如果你不擅长或者懒得做异常处理， <code>NSRange</code>  的 <code>location</code> 存不存在以及 <code>length</code> 越界问题，就可以把程序搞crash。所以建议不要这样做，使用 <code>NSURLComponents</code> 。文档<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/foundation/nsurlcomponents">NSURLComponents</a></p>
+<p>看完文档就会知道，真的好方便。。。</p>
+<ul>
+<li>初始化就不多说了，看自己需要</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Initialize a NSURLComponents with all components undefined. Designated initializer.</span></span><br><span class="line">- (<span class="keyword">instancetype</span>)init;</span><br><span class="line">- (<span class="keyword">nullable</span> <span class="keyword">instancetype</span>)initWithURL:(<span class="built_in">NSURL</span> *)url resolvingAgainstBaseURL:(<span class="built_in">BOOL</span>)resolve;</span><br><span class="line">+ (<span class="keyword">nullable</span> <span class="keyword">instancetype</span>)componentsWithURL:(<span class="built_in">NSURL</span> *)url resolvingAgainstBaseURL:(<span class="built_in">BOOL</span>)resolve;</span><br><span class="line">- (<span class="keyword">nullable</span> <span class="keyword">instancetype</span>)initWithString:(<span class="built_in">NSString</span> *)URLString;</span><br><span class="line">+ (<span class="keyword">nullable</span> <span class="keyword">instancetype</span>)componentsWithString:(<span class="built_in">NSString</span> *)URLString;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>获取URL里的内容，简直不要太方便哦，URLEncode之后的参数都准备好了</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *scheme; <span class="comment">// Attempting to set the scheme with an invalid scheme string will cause an exception.</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *user;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *password;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *host;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSNumber</span> *port; <span class="comment">// Attempting to set a negative port number will cause an exception.</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *path;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *query;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *fragment;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *percentEncodedUser;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *percentEncodedPassword;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *percentEncodedHost;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *percentEncodedPath;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *percentEncodedQuery;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *percentEncodedFragment;</span><br><span class="line"></span><br><span class="line"><span class="comment">//begin ios 9.0</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSRange</span> rangeOfScheme;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSRange</span> rangeOfUser;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSRange</span> rangeOfPassword;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSRange</span> rangeOfHost;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSRange</span> rangeOfPort;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSRange</span> rangeOfPath;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSRange</span> rangeOfQuery;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">readonly</span>) <span class="built_in">NSRange</span> rangeOfFragment;</span><br></pre></td></tr></table></figure>
+
+<p>当然关于 NSRange 的获取，是从ios 9.0 开始有的，适配低版本的话，需要注意一哈。</p>
+<ul>
+<li>参数的集合，<code>NSURLQueryItem</code> 类呢就是通过 key 、value 来取参数们了</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// API_AVAILABLE(macos(10.10), ios(8.0), watchos(2.0), tvos(9.0))</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSArray</span>&lt;<span class="built_in">NSURLQueryItem</span> *&gt; *queryItems;</span><br><span class="line"><span class="comment">// API_AVAILABLE(macosx(10.13), ios(11.0), watchos(4.0), tvos(11.0))</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSArray</span>&lt;<span class="built_in">NSURLQueryItem</span> *&gt; *percentEncodedQueryItems;</span><br></pre></td></tr></table></figure>
+
+<p>我之前不是特别理解，参数要用数组＋Item的方式，直到遇到了那位给我传的URL里，有两个同名参数不同值的仁兄，我才更加体会到了苹果开发者的严谨。。。</p>
+<h2 id="四、-枚举"><a href="#四、-枚举" class="headerlink" title="四、 枚举"></a>四、 枚举</h2><p>举一个简单的场景：聊天软件，会区分 单聊、群聊、聊天室、服务号等等等等 不同类型的会话，开发时在做页面间传值的时候，往往需要把类型传递下去来做不同的事情，怎么明确的传呢？如果这个项目是多人负责，每个人负责不同的模块，像下面这样写代码，时间久了谁也看不懂：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//0单聊,1群聊</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">assign</span>)<span class="built_in">NSInteger</span> type;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vc.type = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>不要笑，你肯定也写过这样的代码，模块多了、时间久了，type  是什么意思？Who JB Know 啊。</p>
+<p><strong>枚举就在这个时候发挥作用了：增加代码可读性。</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, ConversationType) &#123;</span><br><span class="line">    <span class="comment">//单聊</span></span><br><span class="line">    ConversationTypePRIVATE = <span class="number">1</span>,</span><br><span class="line">    <span class="comment">//群组</span></span><br><span class="line">    ConversationTypeGROUP = <span class="number">2</span>,</span><br><span class="line">    <span class="comment">//聊天室</span></span><br><span class="line">    ConversationTypeCHATROOM = <span class="number">3</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这样一来比起单薄的数字，是不是更见名知意了呢？而且 OC 中枚举定义值的时候，都是 枚举名 + 具体分类，例如我们写的这个枚举中单聊的定义就是  <code>ConversationType</code> + <code>PRIVATE</code> = <code>ConversationTypePRIVATE</code>。敲出来的时候好敲，哈哈。</p>
+<p>有的同学可能会问了，应对类型是整型的 type 这个枚举是够用了，那用字符串来分类的呢？没错，这是个问题，尤其是和服务端对接久了，你会发现，他们使用 字符串 多过 数值类型。不急，我们来小探一下 OC 中枚举都怎么用的：</p>
+<h4 id="普通枚举"><a href="#普通枚举" class="headerlink" title="普通枚举"></a>普通枚举</h4><h5 id="1、C-语言的枚举写法-enum"><a href="#1、C-语言的枚举写法-enum" class="headerlink" title="1、C 语言的枚举写法 enum"></a>1、C 语言的枚举写法 enum</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">enum</span>&#123;</span></span><br><span class="line">    ConversationTypePRIVATE = <span class="number">1</span>,</span><br><span class="line">    ConversationTypeGROUP = <span class="number">2</span>,</span><br><span class="line">    ConversationTypeCHATROOM = <span class="number">3</span>,</span><br><span class="line">&#125; ConversationType;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2、OC-整型枚举"><a href="#2、OC-整型枚举" class="headerlink" title="2、OC 整型枚举"></a>2、OC 整型枚举</h5><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, ConversationType) &#123;</span><br><span class="line">    <span class="comment">//单聊</span></span><br><span class="line">    ConversationTypePRIVATE = <span class="number">1</span>,</span><br><span class="line">    <span class="comment">//群组</span></span><br><span class="line">    ConversationTypeGROUP = <span class="number">2</span>,</span><br><span class="line">    <span class="comment">//聊天室</span></span><br><span class="line">    ConversationTypeCHATROOM = <span class="number">3</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h5 id="3、字符串枚举实现方案"><a href="#3、字符串枚举实现方案" class="headerlink" title="3、字符串枚举实现方案"></a>3、字符串枚举实现方案</h5><h6 id="1、基于普通枚举，C-语言实现"><a href="#1、基于普通枚举，C-语言实现" class="headerlink" title="1、基于普通枚举，C 语言实现"></a>1、基于普通枚举，C 语言实现</h6><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//先定义一个普通的整型枚举</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSUInteger</span>, ConversationType) &#123;</span><br><span class="line">    <span class="comment">//单聊</span></span><br><span class="line">    ConversationTypePRIVATE = <span class="number">1</span>,</span><br><span class="line">    <span class="comment">//群组</span></span><br><span class="line">    ConversationTypeGROUP = <span class="number">2</span>,</span><br><span class="line">    <span class="comment">//聊天室</span></span><br><span class="line">    ConversationTypeCHATROOM = <span class="number">3</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//实现一个方法，实现里做 整型 和 字符串 的匹配</span></span><br><span class="line"><span class="built_in">NSString</span> *ConversationTypeString(ConversationType status) &#123;</span><br><span class="line">    <span class="keyword">switch</span> (status) &#123;</span><br><span class="line">        <span class="keyword">case</span> ConversationTypePRIVATE:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">@&quot;private&quot;</span>;</span><br><span class="line">        <span class="keyword">case</span> ConversationTypeGROUP:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">@&quot;group&quot;</span>;</span><br><span class="line">        <span class="keyword">case</span> ConversationTypeCHATROOM:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">@&quot;chatroom&quot;</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">@&quot;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//或者使用 一个 NSString * 类型的数组</span></span><br><span class="line"><span class="built_in">NSString</span> *ConversationTypeStringMap[] = &#123;</span><br><span class="line">    [ConversationTypePRIVATE] = <span class="string">@&quot;private&quot;</span>,</span><br><span class="line">    [ConversationTypeGROUP] = <span class="string">@&quot;group&quot;</span>,</span><br><span class="line">    [ConversationTypeCHATROOM] = <span class="string">@&quot;chatroom&quot;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>但这两种方式有一个弊端，就是不能像枚举类型一样直接作为一个类型 限定传参的类型。</strong></p>
+<h6 id="2、宏定义"><a href="#2、宏定义" class="headerlink" title="2、宏定义"></a>2、宏定义</h6><p>初期我使用宏定义比较多，每个类型值定义一个宏。。。这里不举例了。。。</p>
+<h6 id="3、苹果官方的做法"><a href="#3、苹果官方的做法" class="headerlink" title="3、苹果官方的做法"></a>3、苹果官方的做法</h6><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//.h 中 </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NSString</span> *ConversationTypeKey <span class="built_in">NS_STRING_ENUM</span>;</span><br><span class="line"></span><br><span class="line">FOUNDATION_EXPORT ConversationTypeKey <span class="keyword">const</span> ConversationTypeKeyPRIVATE;</span><br><span class="line">FOUNDATION_EXPORT ConversationTypeKey <span class="keyword">const</span> ConversationTypeKeyGROUP;</span><br><span class="line">FOUNDATION_EXPORT ConversationTypeKey <span class="keyword">const</span> ConversationTypeKeyCHATROOM;</span><br><span class="line"></span><br><span class="line"><span class="comment">//.m 中 </span></span><br><span class="line"><span class="built_in">NSString</span> * <span class="keyword">const</span> ConversationTypeKeyPRIVATE = <span class="string">@&quot;private&quot;</span>;</span><br><span class="line"><span class="built_in">NSString</span> * <span class="keyword">const</span> ConversationTypeKeyGROUP = <span class="string">@&quot;group&quot;</span>;</span><br><span class="line"><span class="built_in">NSString</span> * <span class="keyword">const</span> ConversationTypeKeyCHATROOM = <span class="string">@&quot;chatroom&quot;</span>; </span><br></pre></td></tr></table></figure>
+
+<p><strong>相比会产生过多二进制文件的宏定义方式, 建议用FOUNDATION_EXPORT</strong></p>
+<h4 id="位移枚举"><a href="#位移枚举" class="headerlink" title="位移枚举"></a>位移枚举</h4><p>==</p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A9%BA%E6%A0%BC"><span class="toc-number">1.</span> <span class="toc-text">一、空格</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E9%80%82%E5%BD%93%E7%9A%84%E5%9C%B0%E6%96%B9%E3%80%81%E9%80%82%E5%BD%93%E5%9C%B0%E5%8A%A0%E7%A9%BA%E6%A0%BC%E3%80%81%E5%8F%AF%E4%BB%A5%E9%80%82%E5%BD%93%E5%9C%B0%E6%8F%90%E9%AB%98%E4%BB%A3%E7%A0%81%E5%8F%AF%E8%AF%BB%E6%80%A7"><span class="toc-number">1.0.1.</span> <span class="toc-text">在适当的地方、适当地加空格、可以适当地提高代码可读性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%AE%A1%E6%97%B6%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">二、计时器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NSTimer-%E6%9B%BF%E6%8D%A2%E4%B8%BAdispatch-source-timer"><span class="toc-number">2.0.1.</span> <span class="toc-text">NSTimer 替换为dispatch source timer</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81URL%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">三、URL字符串解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%9E%90URL%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E4%BD%BF%E7%94%A8-NSURLComponents-%E7%B1%BB%E5%81%9A%E8%A7%A3%E6%9E%90%EF%BC%8C%E4%B8%8D%E8%A6%81%E9%80%9A%E8%BF%87%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%88%AA%E5%8F%96%E7%AD%89%E6%96%B9%E5%BC%8F"><span class="toc-number">3.0.1.</span> <span class="toc-text">分析URL字符串的时候，使用 NSURLComponents 类做解析，不要通过字符串截取等方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E6%9E%9A%E4%B8%BE"><span class="toc-number">4.</span> <span class="toc-text">四、 枚举</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E6%9E%9A%E4%B8%BE"><span class="toc-number">4.0.1.</span> <span class="toc-text">普通枚举</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81C-%E8%AF%AD%E8%A8%80%E7%9A%84%E6%9E%9A%E4%B8%BE%E5%86%99%E6%B3%95-enum"><span class="toc-number">4.0.1.1.</span> <span class="toc-text">1、C 语言的枚举写法 enum</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81OC-%E6%95%B4%E5%9E%8B%E6%9E%9A%E4%B8%BE"><span class="toc-number">4.0.1.2.</span> <span class="toc-text">2、OC 整型枚举</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9E%9A%E4%B8%BE%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="toc-number">4.0.1.3.</span> <span class="toc-text">3、字符串枚举实现方案</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1%E3%80%81%E5%9F%BA%E4%BA%8E%E6%99%AE%E9%80%9A%E6%9E%9A%E4%B8%BE%EF%BC%8CC-%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.0.1.3.1.</span> <span class="toc-text">1、基于普通枚举，C 语言实现</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2%E3%80%81%E5%AE%8F%E5%AE%9A%E4%B9%89"><span class="toc-number">4.0.1.3.2.</span> <span class="toc-text">2、宏定义</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3%E3%80%81%E8%8B%B9%E6%9E%9C%E5%AE%98%E6%96%B9%E7%9A%84%E5%81%9A%E6%B3%95"><span class="toc-number">4.0.1.3.3.</span> <span class="toc-text">3、苹果官方的做法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%8D%E7%A7%BB%E6%9E%9A%E4%B8%BE"><span class="toc-number">4.0.2.</span> <span class="toc-text">位移枚举</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&text=iOS编码规范总结"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=iOS编码规范总结"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&is_video=false&description=iOS编码规范总结"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS编码规范总结&body=Check out this article: https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=iOS编码规范总结"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=iOS编码规范总结"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=iOS编码规范总结"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&title=iOS编码规范总结"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&name=iOS编码规范总结&description=&lt;h2 id=&#34;一、空格&#34;&gt;&lt;a href=&#34;#一、空格&#34; class=&#34;headerlink&#34; title=&#34;一、空格&#34;&gt;&lt;/a&gt;一、空格&lt;/h2&gt;&lt;h4 id=&#34;在适当的地方、适当地加空格、可以适当地提高代码可读性&#34;&gt;&lt;a href=&#34;#在适当的地方、适当地加空格、可以适当地提高代码可读性&#34; class=&#34;headerlink&#34; title=&#34;在适当的地方、适当地加空格、可以适当地提高代码可读性&#34;&gt;&lt;/a&gt;在适当的地方、适当地加空格、可以适当地提高代码可读性&lt;/h4&gt;&lt;p&gt;你一定读过”紧凑型”的代码，一个字符挨着一个字符，如果不是会报错，可能类名和变量名之间都没有空格了。用大学 c 语言老师的话说：你们的大拇指是残疾了吗？？&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/&t=iOS编码规范总结"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

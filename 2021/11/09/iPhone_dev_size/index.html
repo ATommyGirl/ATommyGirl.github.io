@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="经常忘了一些重要尺寸，做个备忘： 一、屏幕尺寸&#x2F;启动图作图大小   型号 屏幕尺寸(inch) 屏幕密度(ppi) 屏幕宽高(pt) 屏幕分辨率(px) 倍图 屏幕比例    4&#x2F;4S 3.5 326 320*480 640*960 @2x 3:2   iPhone 5&#x2F;5C&#x2F;5S&#x2F;SE 4.0 326 320*568 640 * 1136 @2x 16:9   iPhone 6&#x2F;6s&#x2F;7&#x2F;8&#x2F;S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 开发中常用的型号和尺寸(最新 iPhone 13)">
+<meta property="og:url" content="https://tommygirl.cn/2021/11/09/iPhone_dev_size/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="经常忘了一些重要尺寸，做个备忘： 一、屏幕尺寸&#x2F;启动图作图大小   型号 屏幕尺寸(inch) 屏幕密度(ppi) 屏幕宽高(pt) 屏幕分辨率(px) 倍图 屏幕比例    4&#x2F;4S 3.5 326 320*480 640*960 @2x 3:2   iPhone 5&#x2F;5C&#x2F;5S&#x2F;SE 4.0 326 320*568 640 * 1136 @2x 16:9   iPhone 6&#x2F;6s&#x2F;7&#x2F;8&#x2F;S">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-09T06:45:21.000Z">
+<meta property="article:modified_time" content="2021-11-09T06:45:21.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>iOS 开发中常用的型号和尺寸(最新 iPhone 13)</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2021/12/01/WKWebView/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/11/09/iOS%20%E9%87%8D%E7%AD%BE%E5%90%8D%E5%B7%A5%E5%85%B7/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/11/09/iPhone_dev_size/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&text=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&title=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&is_video=false&description=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS 开发中常用的型号和尺寸(最新 iPhone 13)&body=Check out this article: https://tommygirl.cn/2021/11/09/iPhone_dev_size/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&title=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&title=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&title=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&title=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&name=iOS 开发中常用的型号和尺寸(最新 iPhone 13)&description=&lt;p&gt;经常忘了一些重要尺寸，做个备忘：&lt;/p&gt;
+&lt;h2 id=&#34;一、屏幕尺寸-启动图作图大小&#34;&gt;&lt;a href=&#34;#一、屏幕尺寸-启动图作图大小&#34; class=&#34;headerlink&#34; title=&#34;一、屏幕尺寸/启动图作图大小&#34;&gt;&lt;/a&gt;一、屏幕尺寸/启动图作图大小&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;型号&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;屏幕尺寸(inch)&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;屏幕密度(ppi)&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;屏幕宽高(pt)&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;屏幕分辨率(px)&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;倍图&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;屏幕比例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;4/4S&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;3.5&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;326&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;320*480&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;640*960&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@2x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;3:2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 5/5C/5S/SE&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;4.0&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;326&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;320*568&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;640 * 1136&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@2x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;16:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 6/6s/7/8/SE 2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;4.7&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;326&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;375*667&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;750 * 1334&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@2x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;16:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 6/6S/7/8 Plus&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;5.5&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;401&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;414*736&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1242 * 2208&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;16:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone X / XS / 11 Pro&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;5.8&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;458&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;375*812&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1125 * 2436&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone XR / 11&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6.1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;326&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;414*896&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;828 * 1792&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@2x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone XS Max / 11 Pro Max&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6.5&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;458&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;414*896&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1242 * 2688&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 12 mini&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;5.4&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;476&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;360*780&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1080 * 2340&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 12 / 12 Pro&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6.1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;460&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;390*844&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1170 * 2532&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 12 Pro Max&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6.7&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;458&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;428*926&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1284 * 2778&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 13 mini&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;5.4&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;476&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;360*780&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1080 * 2340&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 13 / 13 Pro&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6.1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;460&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;390*844&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1170 * 2532&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 13 Pro Max&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6.7&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;458&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;428*926&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1284 * 2778&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&t=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%B1%8F%E5%B9%95%E5%B0%BA%E5%AF%B8-%E5%90%AF%E5%8A%A8%E5%9B%BE%E4%BD%9C%E5%9B%BE%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.</span> <span class="toc-text">一、屏幕尺寸&#x2F;启动图作图大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81APP-%E6%A1%8C%E9%9D%A2logo%E5%9B%BE%E7%89%87%E5%B0%BA%E5%AF%B8"><span class="toc-number">2.</span> <span class="toc-text">二、APP 桌面logo图片尺寸</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AF%BC%E8%88%AA%E6%A0%8F%E4%BD%9C%E5%9B%BE%E5%A4%A7%E5%B0%8F"><span class="toc-number">3.</span> <span class="toc-text">三、导航栏作图大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF-%E8%AE%BE%E5%A4%87%E5%90%8D%E7%A7%B0"><span class="toc-number">4.</span> <span class="toc-text">四、硬件信息&#x2F;设备名称</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        iOS 开发中常用的型号和尺寸(最新 iPhone 13)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-11-09T06:45:21.000Z" itemprop="datePublished">2021-11-09</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>经常忘了一些重要尺寸，做个备忘：</p>
+<h2 id="一、屏幕尺寸-启动图作图大小"><a href="#一、屏幕尺寸-启动图作图大小" class="headerlink" title="一、屏幕尺寸/启动图作图大小"></a>一、屏幕尺寸/启动图作图大小</h2><table>
+<thead>
+<tr>
+<th align="left">型号</th>
+<th align="center">屏幕尺寸(inch)</th>
+<th align="center">屏幕密度(ppi)</th>
+<th align="center">屏幕宽高(pt)</th>
+<th align="center">屏幕分辨率(px)</th>
+<th align="center">倍图</th>
+<th align="center">屏幕比例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">4/4S</td>
+<td align="center">3.5</td>
+<td align="center">326</td>
+<td align="center">320*480</td>
+<td align="center">640*960</td>
+<td align="center">@2x</td>
+<td align="center">3:2</td>
+</tr>
+<tr>
+<td align="left">iPhone 5/5C/5S/SE</td>
+<td align="center">4.0</td>
+<td align="center">326</td>
+<td align="center">320*568</td>
+<td align="center">640 * 1136</td>
+<td align="center">@2x</td>
+<td align="center">16:9</td>
+</tr>
+<tr>
+<td align="left">iPhone 6/6s/7/8/SE 2</td>
+<td align="center">4.7</td>
+<td align="center">326</td>
+<td align="center">375*667</td>
+<td align="center">750 * 1334</td>
+<td align="center">@2x</td>
+<td align="center">16:9</td>
+</tr>
+<tr>
+<td align="left">iPhone 6/6S/7/8 Plus</td>
+<td align="center">5.5</td>
+<td align="center">401</td>
+<td align="center">414*736</td>
+<td align="center">1242 * 2208</td>
+<td align="center">@3x</td>
+<td align="center">16:9</td>
+</tr>
+<tr>
+<td align="left">iPhone X / XS / 11 Pro</td>
+<td align="center">5.8</td>
+<td align="center">458</td>
+<td align="center">375*812</td>
+<td align="center">1125 * 2436</td>
+<td align="center">@3x</td>
+<td align="center">19.5:9</td>
+</tr>
+<tr>
+<td align="left">iPhone XR / 11</td>
+<td align="center">6.1</td>
+<td align="center">326</td>
+<td align="center">414*896</td>
+<td align="center">828 * 1792</td>
+<td align="center">@2x</td>
+<td align="center">19.5:9</td>
+</tr>
+<tr>
+<td align="left">iPhone XS Max / 11 Pro Max</td>
+<td align="center">6.5</td>
+<td align="center">458</td>
+<td align="center">414*896</td>
+<td align="center">1242 * 2688</td>
+<td align="center">@3x</td>
+<td align="center">19.5:9</td>
+</tr>
+<tr>
+<td align="left">iPhone 12 mini</td>
+<td align="center">5.4</td>
+<td align="center">476</td>
+<td align="center">360*780</td>
+<td align="center">1080 * 2340</td>
+<td align="center">@3x</td>
+<td align="center">19.5:9</td>
+</tr>
+<tr>
+<td align="left">iPhone 12 / 12 Pro</td>
+<td align="center">6.1</td>
+<td align="center">460</td>
+<td align="center">390*844</td>
+<td align="center">1170 * 2532</td>
+<td align="center">@3x</td>
+<td align="center">19.5:9</td>
+</tr>
+<tr>
+<td align="left">iPhone 12 Pro Max</td>
+<td align="center">6.7</td>
+<td align="center">458</td>
+<td align="center">428*926</td>
+<td align="center">1284 * 2778</td>
+<td align="center">@3x</td>
+<td align="center">19.5:9</td>
+</tr>
+<tr>
+<td align="left">iPhone 13 mini</td>
+<td align="center">5.4</td>
+<td align="center">476</td>
+<td align="center">360*780</td>
+<td align="center">1080 * 2340</td>
+<td align="center">@3x</td>
+<td align="center">19.5:9</td>
+</tr>
+<tr>
+<td align="left">iPhone 13 / 13 Pro</td>
+<td align="center">6.1</td>
+<td align="center">460</td>
+<td align="center">390*844</td>
+<td align="center">1170 * 2532</td>
+<td align="center">@3x</td>
+<td align="center">19.5:9</td>
+</tr>
+<tr>
+<td align="left">iPhone 13 Pro Max</td>
+<td align="center">6.7</td>
+<td align="center">458</td>
+<td align="center">428*926</td>
+<td align="center">1284 * 2778</td>
+<td align="center">@3x</td>
+<td align="center">19.5:9</td>
+</tr>
+</tbody></table>
+<span id="more"></span>
+
+<h2 id="二、APP-桌面logo图片尺寸"><a href="#二、APP-桌面logo图片尺寸" class="headerlink" title="二、APP 桌面logo图片尺寸"></a>二、APP 桌面logo图片尺寸</h2><table>
+<thead>
+<tr>
+<th align="center">标注</th>
+<th align="center">尺寸(px)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">iPhone Notification 20pt @2x</td>
+<td align="center">40 * 40</td>
+</tr>
+<tr>
+<td align="center">iPhone Notification 20pt @3x</td>
+<td align="center">60 * 60</td>
+</tr>
+<tr>
+<td align="center">iPhone Settings 29pt @2x</td>
+<td align="center">58 * 58</td>
+</tr>
+<tr>
+<td align="center">iPhone Settings 29pt @3x</td>
+<td align="center">87 * 87</td>
+</tr>
+<tr>
+<td align="center">iPhone Spotlight 40pt @2x</td>
+<td align="center">80 * 80</td>
+</tr>
+<tr>
+<td align="center">iPhone Spotlight 40pt @3x</td>
+<td align="center">120 * 120</td>
+</tr>
+<tr>
+<td align="center">iPhone App 60pt @2x</td>
+<td align="center">120 * 120</td>
+</tr>
+<tr>
+<td align="center">iPhone App 60pt @3x</td>
+<td align="center">180 * 180</td>
+</tr>
+<tr>
+<td align="center">App Store 1024pt @1x</td>
+<td align="center">1024 * 1024</td>
+</tr>
+</tbody></table>
+<h2 id="三、导航栏作图大小"><a href="#三、导航栏作图大小" class="headerlink" title="三、导航栏作图大小"></a>三、导航栏作图大小</h2><table>
+<thead>
+<tr>
+<th align="center">型号</th>
+<th align="center">尺寸(px)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">iPhone SE/5S</td>
+<td align="center">640 * 98</td>
+</tr>
+<tr>
+<td align="center">iPhone 6s/7/8</td>
+<td align="center">750 * 98</td>
+</tr>
+<tr>
+<td align="center">iPhone 6/7/8 Plus</td>
+<td align="center">1242 * 147</td>
+</tr>
+<tr>
+<td align="center">iPhone X/XS</td>
+<td align="center">1125 * 249</td>
+</tr>
+<tr>
+<td align="center">iPhone XR</td>
+<td align="center">828 * 166</td>
+</tr>
+<tr>
+<td align="center">iPhone XS Max</td>
+<td align="center">1242 * 249</td>
+</tr>
+<tr>
+<td align="center">iPhone 12 mini/13mini</td>
+<td align="center">1080 * 249</td>
+</tr>
+<tr>
+<td align="center">iPhone 12 / 12 Pro/13/13 Pro</td>
+<td align="center">1170 * 249</td>
+</tr>
+<tr>
+<td align="center">iPhone 12 Pro Max/13 Pro Max</td>
+<td align="center">1284 * 249</td>
+</tr>
+</tbody></table>
+<h2 id="四、硬件信息-设备名称"><a href="#四、硬件信息-设备名称" class="headerlink" title="四、硬件信息/设备名称"></a>四、硬件信息/设备名称</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="built_in">NSString</span> *)getDeviceString &#123;</span><br><span class="line">    <span class="keyword">struct</span> utsname systemInfo;</span><br><span class="line">    uname(&amp;systemInfo);</span><br><span class="line">    <span class="built_in">NSString</span> *platform = [<span class="built_in">NSString</span> stringWithCString:systemInfo.machine encoding:<span class="built_in">NSASCIIStringEncoding</span>];</span><br><span class="line">    <span class="built_in">NSDictionary</span> *dic = @&#123;</span><br><span class="line">                          <span class="comment">//iPhone</span></span><br><span class="line">                          <span class="string">@&quot;iPhone1,1&quot;</span> : <span class="string">@&quot;iPhone 1G&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone1,2&quot;</span> : <span class="string">@&quot;iPhone 3G&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone2,1&quot;</span> : <span class="string">@&quot;iPhone 3GS&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone3,1&quot;</span> : <span class="string">@&quot;iPhone 4&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone3,2&quot;</span> : <span class="string">@&quot;iPhone 4&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone3,3&quot;</span> : <span class="string">@&quot;iPhone 4&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone4,1&quot;</span> : <span class="string">@&quot;iPhone 4S&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone5,1&quot;</span> : <span class="string">@&quot;iPhone 5&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone5,2&quot;</span> : <span class="string">@&quot;iPhone 5&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone5,3&quot;</span> : <span class="string">@&quot;iPhone 5C&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone5,4&quot;</span> : <span class="string">@&quot;iPhone 5C&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone6,1&quot;</span> : <span class="string">@&quot;iPhone 5S&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone6,2&quot;</span> : <span class="string">@&quot;iPhone 5S&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone7,1&quot;</span> : <span class="string">@&quot;iPhone 6 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone7,2&quot;</span> : <span class="string">@&quot;iPhone 6&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone8,1&quot;</span> : <span class="string">@&quot;iPhone 6S&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone8,2&quot;</span> : <span class="string">@&quot;iPhone 6s Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone8,4&quot;</span> : <span class="string">@&quot;iPhone SE&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone9,1&quot;</span> : <span class="string">@&quot;iPhone 7&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone9,3&quot;</span> : <span class="string">@&quot;iPhone 7&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone9,2&quot;</span> : <span class="string">@&quot;iPhone 7 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone9,4&quot;</span> : <span class="string">@&quot;iPhone 7 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,1&quot;</span> : <span class="string">@&quot;iPhone 8&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,4&quot;</span> : <span class="string">@&quot;iPhone 8&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,2&quot;</span> : <span class="string">@&quot;iPhone 8 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,5&quot;</span> : <span class="string">@&quot;iPhone 8 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,3&quot;</span> : <span class="string">@&quot;iPhone X&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,6&quot;</span> : <span class="string">@&quot;iPhone X&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone11,8&quot;</span> : <span class="string">@&quot;iPhone XR&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone11,2&quot;</span> : <span class="string">@&quot;iPhone XS&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone11,6&quot;</span> : <span class="string">@&quot;iPhone XS Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone11,4&quot;</span> : <span class="string">@&quot;iPhone XS Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone12,1&quot;</span> : <span class="string">@&quot;iPhone 11&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone12,3&quot;</span> : <span class="string">@&quot;iPhone 11 Pro&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone12,5&quot;</span> : <span class="string">@&quot;iPhone 11 Pro Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone12,8&quot;</span> : <span class="string">@&quot;iPhone SE 2&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone13,1&quot;</span> : <span class="string">@&quot;iPhone 12 mini&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone13,2&quot;</span> : <span class="string">@&quot;iPhone 12&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone13,3&quot;</span> : <span class="string">@&quot;iPhone 12 Pro&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone13,4&quot;</span> : <span class="string">@&quot;iPhone 12 Pro Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,4&quot;</span> : <span class="string">@&quot;iPhone 13 mini&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,5&quot;</span> : <span class="string">@&quot;iPhone 13&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,2&quot;</span> : <span class="string">@&quot;iPhone 13 Pro&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,3&quot;</span> : <span class="string">@&quot;iPhone 13 Pro Max&quot;</span></span><br><span class="line">                          &#125;;</span><br><span class="line">    <span class="keyword">if</span> ([dic valueForKey:platform]) &#123;</span><br><span class="line">        <span class="keyword">return</span> [dic valueForKey:platform];</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> platform;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%B1%8F%E5%B9%95%E5%B0%BA%E5%AF%B8-%E5%90%AF%E5%8A%A8%E5%9B%BE%E4%BD%9C%E5%9B%BE%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.</span> <span class="toc-text">一、屏幕尺寸&#x2F;启动图作图大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81APP-%E6%A1%8C%E9%9D%A2logo%E5%9B%BE%E7%89%87%E5%B0%BA%E5%AF%B8"><span class="toc-number">2.</span> <span class="toc-text">二、APP 桌面logo图片尺寸</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AF%BC%E8%88%AA%E6%A0%8F%E4%BD%9C%E5%9B%BE%E5%A4%A7%E5%B0%8F"><span class="toc-number">3.</span> <span class="toc-text">三、导航栏作图大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF-%E8%AE%BE%E5%A4%87%E5%90%8D%E7%A7%B0"><span class="toc-number">4.</span> <span class="toc-text">四、硬件信息&#x2F;设备名称</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/11/09/iPhone_dev_size/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&text=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&title=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&is_video=false&description=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS 开发中常用的型号和尺寸(最新 iPhone 13)&body=Check out this article: https://tommygirl.cn/2021/11/09/iPhone_dev_size/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&title=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&title=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&title=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&title=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&name=iOS 开发中常用的型号和尺寸(最新 iPhone 13)&description=&lt;p&gt;经常忘了一些重要尺寸，做个备忘：&lt;/p&gt;
+&lt;h2 id=&#34;一、屏幕尺寸-启动图作图大小&#34;&gt;&lt;a href=&#34;#一、屏幕尺寸-启动图作图大小&#34; class=&#34;headerlink&#34; title=&#34;一、屏幕尺寸/启动图作图大小&#34;&gt;&lt;/a&gt;一、屏幕尺寸/启动图作图大小&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;型号&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;屏幕尺寸(inch)&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;屏幕密度(ppi)&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;屏幕宽高(pt)&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;屏幕分辨率(px)&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;倍图&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;屏幕比例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;4/4S&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;3.5&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;326&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;320*480&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;640*960&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@2x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;3:2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 5/5C/5S/SE&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;4.0&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;326&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;320*568&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;640 * 1136&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@2x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;16:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 6/6s/7/8/SE 2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;4.7&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;326&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;375*667&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;750 * 1334&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@2x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;16:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 6/6S/7/8 Plus&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;5.5&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;401&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;414*736&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1242 * 2208&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;16:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone X / XS / 11 Pro&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;5.8&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;458&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;375*812&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1125 * 2436&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone XR / 11&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6.1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;326&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;414*896&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;828 * 1792&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@2x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone XS Max / 11 Pro Max&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6.5&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;458&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;414*896&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1242 * 2688&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 12 mini&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;5.4&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;476&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;360*780&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1080 * 2340&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 12 / 12 Pro&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6.1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;460&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;390*844&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1170 * 2532&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 12 Pro Max&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6.7&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;458&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;428*926&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1284 * 2778&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 13 mini&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;5.4&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;476&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;360*780&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1080 * 2340&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 13 / 13 Pro&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6.1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;460&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;390*844&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1170 * 2532&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;iPhone 13 Pro Max&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;6.7&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;458&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;428*926&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1284 * 2778&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;@3x&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;19.5:9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/11/09/iPhone_dev_size/&t=iOS 开发中常用的型号和尺寸(最新 iPhone 13)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

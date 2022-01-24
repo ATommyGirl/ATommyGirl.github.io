@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="关于 WKWebView 的几篇文章：WKWebView 基础篇 WKWebView 协议篇 WKWebView 实战篇 DemoWebView 的 Demo  前两篇文章简单学习了 WKWebView 的基础内容和几个协议，今天我们看看在使用中常见的问题。 一、Cookie 同步以往通过 AFNetworking、NSURLSession、UIWebView 等方式得到的 cookie，统统放在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WKWebView 实战篇">
+<meta property="og:url" content="https://tommygirl.cn/2021/12/11/WKWebView-Use/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="关于 WKWebView 的几篇文章：WKWebView 基础篇 WKWebView 协议篇 WKWebView 实战篇 DemoWebView 的 Demo  前两篇文章简单学习了 WKWebView 的基础内容和几个协议，今天我们看看在使用中常见的问题。 一、Cookie 同步以往通过 AFNetworking、NSURLSession、UIWebView 等方式得到的 cookie，统统放在">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/WK01.png">
+<meta property="og:image" content="https://ata2-img.cn-hangzhou.oss-pub.aliyun-inc.com/14158ca87e2f341ff044efd967f3e008.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/WK02.png">
+<meta property="og:image" content="https://ata2-img.cn-hangzhou.oss-pub.aliyun-inc.com/08e6235892053a81603a4c3d7c7f44ad.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/un_do.jpg">
+<meta property="article:published_time" content="2021-12-11T08:29:02.000Z">
+<meta property="article:modified_time" content="2021-12-11T08:29:02.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="WebView">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/WK01.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>WKWebView 实战篇</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2021/12/31/http_referer/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/12/08/Systemd_Go/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/12/11/WKWebView-Use/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&text=WKWebView 实战篇"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&is_video=false&description=WKWebView 实战篇"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WKWebView 实战篇&body=Check out this article: https://tommygirl.cn/2021/12/11/WKWebView-Use/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&name=WKWebView 实战篇&description=&lt;h3 id=&#34;关于-WKWebView-的几篇文章：&#34;&gt;&lt;a href=&#34;#关于-WKWebView-的几篇文章：&#34; class=&#34;headerlink&#34; title=&#34;关于 WKWebView 的几篇文章：&#34;&gt;&lt;/a&gt;关于 WKWebView 的几篇文章：&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;/2021/12/01/WKWebView/&#34;&gt;WKWebView 基础篇&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;/2021/12/02/WKWebView-Protocol/&#34;&gt;WKWebView 协议篇&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;/2021/12/11/WKWebView-Use/&#34;&gt;WKWebView 实战篇&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;Demo&#34;&gt;&lt;a href=&#34;#Demo&#34; class=&#34;headerlink&#34; title=&#34;Demo&#34;&gt;&lt;/a&gt;Demo&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ATommyGirl/WebView&#34;&gt;WebView 的 Demo&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;前两篇文章简单学习了 WKWebView 的基础内容和几个协议，今天我们看看在使用中常见的问题。&lt;/p&gt;
+&lt;h2 id=&#34;一、Cookie-同步&#34;&gt;&lt;a href=&#34;#一、Cookie-同步&#34; class=&#34;headerlink&#34; title=&#34;一、Cookie 同步&#34;&gt;&lt;/a&gt;一、Cookie 同步&lt;/h2&gt;&lt;p&gt;以往通过 AFNetworking、NSURLSession、UIWebView 等方式得到的 cookie，统统放在 NSHTTPCookieStorage 中，一般情况下是不需要我们特别处理的。但对于 WKWebView 我们说过，改为放在 WKHTTPCookieStore 中，而且两者是不互通的。&lt;/p&gt;
+&lt;p&gt;举个例子，对于现在很多 原生 + h5 混合开发的 App 来说，通常在登录成功以后，WebView 访问页面时会希望携带会话信息直接通过服务端的认证，而不是在 WebView 中再登录一次。这个时候我们可能就需要同步一下两个 Storage 中的 cookie。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/12/11/WKWebView-Use/&t=WKWebView 实战篇"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-WKWebView-%E7%9A%84%E5%87%A0%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">关于 WKWebView 的几篇文章：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Demo"><span class="toc-number">2.</span> <span class="toc-text">Demo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Cookie-%E5%90%8C%E6%AD%A5"><span class="toc-number"></span> <span class="toc-text">一、Cookie 同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%B7%A8%E5%9F%9F"><span class="toc-number"></span> <span class="toc-text">二、跨域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Native-%E4%B8%8E-JS-%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="toc-number"></span> <span class="toc-text">三、Native 与 JS 的交互</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-%E8%B0%83%E7%94%A8-Native"><span class="toc-number">1.</span> <span class="toc-text">JS 调用 Native</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Native-%E8%B0%83%E7%94%A8-JS"><span class="toc-number">2.</span> <span class="toc-text">Native 调用 JS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-%E8%B0%83%E7%94%A8-Native-%E5%B9%B6%E4%B8%94%E5%BE%97%E5%88%B0%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">3.</span> <span class="toc-text">JS 调用 Native 并且得到执行结果</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-iOS14-%E6%96%B0%E5%A2%9E"><span class="toc-number">3.1.</span> <span class="toc-text">1. iOS14 新增</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%9F%BA%E4%BA%8E-prompt-%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.2.</span> <span class="toc-text">2. 基于 prompt 的实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81HTTPS-%E5%8D%95%E3%80%81%E5%8F%8C%E5%90%91%E8%AE%A4%E8%AF%81"><span class="toc-number"></span> <span class="toc-text">四、HTTPS 单、双向认证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%90%91%E8%AE%A4%E8%AF%81"><span class="toc-number">1.</span> <span class="toc-text">单向认证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%90%91%E8%AE%A4%E8%AF%81"><span class="toc-number">2.</span> <span class="toc-text">双向认证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">手机端的处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81window-open"><span class="toc-number"></span> <span class="toc-text">五、window.open()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%BF%98%E6%B2%A1%E5%86%99%E5%AE%8C%EF%BC%8C%E7%B4%AF%E4%BA%86%EF%BC%8C%E6%98%8E%E5%A4%A9%E5%86%8D%E8%AF%B4%E3%80%82"><span class="toc-number"></span> <span class="toc-text">六、还没写完，累了，明天再说。</span></a>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        WKWebView 实战篇
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-12-11T08:29:02.000Z" itemprop="datePublished">2021-12-11</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/WebView/" rel="tag">WebView</a>, <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="关于-WKWebView-的几篇文章："><a href="#关于-WKWebView-的几篇文章：" class="headerlink" title="关于 WKWebView 的几篇文章："></a>关于 WKWebView 的几篇文章：</h3><p><a href="/2021/12/01/WKWebView/">WKWebView 基础篇</a></p>
+<p><a href="/2021/12/02/WKWebView-Protocol/">WKWebView 协议篇</a></p>
+<p><a href="/2021/12/11/WKWebView-Use/">WKWebView 实战篇</a></p>
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><p><a target="_blank" rel="noopener" href="https://github.com/ATommyGirl/WebView">WebView 的 Demo</a></p>
+<hr>
+<p>前两篇文章简单学习了 WKWebView 的基础内容和几个协议，今天我们看看在使用中常见的问题。</p>
+<h2 id="一、Cookie-同步"><a href="#一、Cookie-同步" class="headerlink" title="一、Cookie 同步"></a>一、Cookie 同步</h2><p>以往通过 AFNetworking、NSURLSession、UIWebView 等方式得到的 cookie，统统放在 NSHTTPCookieStorage 中，一般情况下是不需要我们特别处理的。但对于 WKWebView 我们说过，改为放在 WKHTTPCookieStore 中，而且两者是不互通的。</p>
+<p>举个例子，对于现在很多 原生 + h5 混合开发的 App 来说，通常在登录成功以后，WebView 访问页面时会希望携带会话信息直接通过服务端的认证，而不是在 WebView 中再登录一次。这个时候我们可能就需要同步一下两个 Storage 中的 cookie。</p>
+<span id="more"></span>
+
+<p>在 <a href="/2020/12/01/WKWebView/#WKProcessPool">WKWebView 基础篇 - WKProcessPool</a> 中，我们留了一个疑问，给不同的 WKWebView 指定不同的 WKProcessPool，他们的 cookie 能否自动同步呢？跟上面的问题一起测试一下：</p>
+<ol>
+<li>使用两个 UIWebView 和 UIWebView-1、两个 WKWebView 和 WKWebView -1，访问同样的页面。</li>
+</ol>
+<p>例如谷歌账号的个人信息页面 <code>https://myaccount.google.com/personal-info</code> ，没有登录而直接访问这个页面的话，会重定向到登录页面。同时，两个 WKWebView 我们指定不同的 WKProcessPool 。</p>
+<img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/WK01.png" width="500px">
+
+<ol start="2">
+<li>在 <code>viewWillAppear</code> 中让 WebView 刷新</li>
+</ol>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillAppear:(<span class="built_in">BOOL</span>)animated &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillAppear:animated];</span><br><span class="line">    [<span class="keyword">self</span>.webView reload];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>选择任意一个页面进行登录，例如第一个 UIWebView 。</li>
+</ol>
+<p>当第一个 UIWebView 登录成功以后，我们切换页签刷新其他三个页面，会发现 UIWebView-1 可以成功访问 personal-info 页面，而两个 WKWebView 依旧是登录页面。同样，如果选择一个 WKWebView 进行登录结果也是一样的。所以，不同的 UIWebView 可以共享 NSHTTPCookieStorage 中的 cookie；不同的 WKWebView 、不同的 WKProcessPool 也可以共享 WKHTTPCookieStore 中的 cookie。当然它们二者是不互通的。</p>
+<ol start="4">
+<li>一个简单的 cookie 同步方案</li>
+</ol>
+<ul>
+<li>NSHTTPCookieStorage 向 WKHTTPCookieStore 同步</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (@available(iOS <span class="number">11.0</span>, *)) &#123;</span><br><span class="line">    <span class="built_in">NSArray</span> *cookies = [[<span class="built_in">NSHTTPCookieStorage</span> sharedHTTPCookieStorage] cookies];</span><br><span class="line">    <span class="built_in">WKHTTPCookieStore</span> *cookieStroe = <span class="keyword">self</span>.webView.configuration.websiteDataStore.httpCookieStore;</span><br><span class="line">    <span class="keyword">if</span> (cookies.count == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSHTTPCookie</span> *cookie <span class="keyword">in</span> cookies) &#123;</span><br><span class="line">        [cookieStroe setCookie:cookie completionHandler:^&#123;</span><br><span class="line">            <span class="keyword">if</span> ([[cookies lastObject] isEqual:cookie]) &#123;</span><br><span class="line">                <span class="comment">//Sync end</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;];</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// Fallback on earlier versions</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li> WKHTTPCookieStore 向 NSHTTPCookieStorage 同步，使用 WKHTTPCookieStoreObserver</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">WKWebViewController</span> () &lt;<span class="title">WKHTTPCookieStoreObserver</span>&gt;</span></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">  </span><br><span class="line">[configuration.websiteDataStore.httpCookieStore addObserver:<span class="keyword">self</span>];</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> mark - WKHTTPCookieStoreObserver</span></span><br><span class="line">- (<span class="keyword">void</span>)cookiesDidChangeInCookieStore:(<span class="built_in">WKHTTPCookieStore</span> *)cookieStore &#123;</span><br><span class="line">    [cookieStore getAllCookies:^(<span class="built_in">NSArray</span>&lt;<span class="built_in">NSHTTPCookie</span> *&gt; * _Nonnull cookies) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSHTTPCookie</span> *cookie <span class="keyword">in</span> cookies) &#123;</span><br><span class="line">            [[<span class="built_in">NSHTTPCookieStorage</span> sharedHTTPCookieStorage] setCookie:cookie];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样实现的一个缺点是 cookie 污染，因为不管三七二十八都同步到一起了。可以做一个简单的筛选？只同步访问目标资源需要的 cookie ？欢迎讨论~</p>
+<h2 id="二、跨域"><a href="#二、跨域" class="headerlink" title="二、跨域"></a>二、跨域</h2><p>关于跨域我接触的也不是很多，这篇 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f880878c1398">什么是跨域请求以及实现跨域的方案</a> 我觉得写的很清楚。iOS 开发中常遇到的跨域问题有两种：无法访问本地 HTML 资源；跨域存取 Cookie 问题。</p>
+<ul>
+<li>对于 无法访问本地 HTML 资源 的情况，修改下面的属性。</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[configuration.preferences setValue:@YES forKey:<span class="string">@&quot;allowFileAccessFromFileURLs&quot;</span>];</span><br><span class="line"><span class="keyword">if</span> (@available(iOS <span class="number">10.0</span>, *)) &#123;</span><br><span class="line">    [configuration setValue:@YES forKey:<span class="string">@&quot;allowUniversalAccessFromFileURLs&quot;</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对于 跨域存取 Cookie 问题</li>
+</ul>
+<p>读了一下这篇博客，算是作为一个参考思路吧。<a target="_blank" rel="noopener" href="https://dib-nhnl.github.io/2018/02/13/WKWebView%E8%B7%A8%E5%9F%9F%E7%9A%84Cookie%E9%97%AE%E9%A2%98/">WKWebView跨域的Cookie问题</a> 。</p>
+<h2 id="三、Native-与-JS-的交互"><a href="#三、Native-与-JS-的交互" class="headerlink" title="三、Native 与 JS 的交互"></a>三、Native 与 JS 的交互</h2><h3 id="JS-调用-Native"><a href="#JS-调用-Native" class="headerlink" title="JS 调用 Native"></a>JS 调用 Native</h3><p>在 <a href="/2020/12/01/WKWebView/#WKUserContentController"><code>WKWebView 基础篇 - WKUserContentController</code></a> 提到过了，通过消息处理器 addScriptMessageHandler 注册一个唯一的 name ，并且实现 WKScriptMessageHandler 协议。 示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//js 测</span></span><br><span class="line"><span class="built_in">window</span>.webkit.messageHandlers.YYWK.postMessage([<span class="string">&#x27;MPWebView&#x27;</span>, <span class="string">&#x27;close&#x27;</span>, []]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//native 测</span></span><br><span class="line">- (<span class="keyword">void</span>)userContentController:(<span class="built_in">WKUserContentController</span> *)userContentController didReceiveScriptMessage:(<span class="built_in">WKScriptMessage</span> *)message &#123;</span><br><span class="line">    <span class="keyword">if</span> ([message.name isEqualToString:<span class="string">@&quot;YYWK&quot;</span>]) &#123;</span><br><span class="line">      <span class="comment">//Call MPWebView&#x27;s selector - close.</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Native-调用-JS"><a href="#Native-调用-JS" class="headerlink" title="Native 调用 JS"></a>Native 调用 JS</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//js 已声明了一个方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">helloWorld</span>(<span class="params">message</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(message);</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;YES&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//native 测</span></span><br><span class="line">[<span class="keyword">self</span>.webView evaluateJavaScript:<span class="string">@&quot;helloWorld(&#x27;Are you kidding me?&#x27;)&quot;</span> completionHandler:^(<span class="keyword">id</span> _Nullable result, <span class="built_in">NSError</span> * _Nullable error) &#123;</span><br><span class="line">  	<span class="built_in">NSLog</span>(<span class="string">@&quot;%@&quot;</span>, result); <span class="comment">//Will be &#x27;YES&#x27;.</span></span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+
+<p>当然，如果调用的 JS 方法不存在，result 会是 nil。</p>
+<h3 id="JS-调用-Native-并且得到执行结果"><a href="#JS-调用-Native-并且得到执行结果" class="headerlink" title="JS 调用 Native 并且得到执行结果"></a>JS 调用 Native 并且得到执行结果</h3><p>我们可以看到，Native 调用 JS 时，苹果提供了 completionHandler 来获得执行结果；但是 JS 通过 postMessage 调用 Native 时，我们是没有办法将 Native 的执行结果同步给 JS 的。苹果应该也注意到了这个问题，所以在 iOS14 中提供了一个新的解决方案，让我们一起康康：</p>
+<h4 id="1-iOS14-新增"><a href="#1-iOS14-新增" class="headerlink" title="1. iOS14 新增"></a>1. iOS14 新增</h4><blockquote>
+<p>WKScriptMessageHandlerWithReply</p>
+</blockquote>
+<p>iOS14.0 新增的协议，同样是 iOS 与 JavaScript 做交互的协议。不过与 WKScriptMessageHandler 相比，多了一个可以向 JS 发送响应结果的处理器，而且还是异步的。是不是用起来很爽？🤓</p>
+<p>示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//js 测使用promise异步回调获取结果。</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">scriptMessageWithReply</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> promise = <span class="built_in">window</span>.webkit.messageHandlers.YYWK.postMessage(<span class="string">&quot;Fulfill me with 42&quot;</span>);</span><br><span class="line">    promise.then(</span><br><span class="line">        <span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            alert(<span class="string">&#x27;result&#x27;</span> + result);</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">            alert(<span class="string">&#x27;error&#x27;</span> + error);</span><br><span class="line">        &#125;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//native 测</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="built_in">WKUserContentController</span> *userContentController = [[<span class="built_in">WKUserContentController</span> alloc] init];</span><br><span class="line">  [userContentController addScriptMessageHandlerWithReply:<span class="keyword">self</span> contentWorld:[<span class="built_in">WKContentWorld</span> pageWorld] name:<span class="string">@&quot;YYWK&quot;</span>];</span><br><span class="line">  <span class="built_in">WKWebViewConfiguration</span> *configuration = [[<span class="built_in">WKWebViewConfiguration</span> alloc] init];</span><br><span class="line">  configuration.userContentController = userContentController;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"> </span><br><span class="line">- (<span class="keyword">void</span>)userContentController:(<span class="built_in">WKUserContentController</span> *)userContentController didReceiveScriptMessage:(<span class="built_in">WKScriptMessage</span> *)message replyHandler:(<span class="keyword">void</span> (^)(<span class="keyword">id</span> _Nullable reply, <span class="built_in">NSString</span> *_Nullable errorMessage))replyHandler &#123;</span><br><span class="line">    <span class="keyword">if</span> ([message.body isEqual:<span class="string">@&quot;Fulfill me with 42&quot;</span>])</span><br><span class="line">        replyHandler(@<span class="number">42</span>, <span class="literal">nil</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        replyHandler(<span class="literal">nil</span>, <span class="string">@&quot;Unexpected message received&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-基于-prompt-的实现"><a href="#2-基于-prompt-的实现" class="headerlink" title="2. 基于 prompt 的实现"></a>2. 基于 prompt 的实现</h4><p><a href="/2021/12/02/WKWebView-Protocol/#WKUIDelegate">WKWebView 协议篇 - WKUIDelegate</a> 中我们提到过关于 Native 实现 JS <code>prompt</code> 函数的操作。JS 会触发一个带输入框的 Alert，等用户输入了信息之后，Native 会将结果异步返回到 JS。所以我们是不是可以利用这个异步时机呢？这个时候 prompt 的参数就不是普通的字符串了，而是作为一个指令。示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUserMessage</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> msg = prompt(<span class="string">&quot;GetUserMessage&quot;</span>, <span class="string">&quot;YYLittleCat&quot;</span>);</span><br><span class="line">    <span class="comment">//Use YYLittleCat&#x27;s msg.</span></span><br><span class="line">  ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Native 的处理就改为：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//native 接收到的prompt: 指令 = 获取用户的信息; defaultText: uid = YYLittleCat</span></span><br><span class="line">- (<span class="keyword">void</span>)webView:(<span class="built_in">WKWebView</span> *)webView runJavaScriptTextInputPanelWithPrompt:(<span class="built_in">NSString</span> *)prompt defaultText:(<span class="built_in">NSString</span> *)defaultText initiatedByFrame:(<span class="built_in">WKFrameInfo</span> *)frame completionHandler:(<span class="keyword">void</span> (^)(<span class="built_in">NSString</span> * _Nullable))completionHandler &#123;</span><br><span class="line">    <span class="keyword">if</span> ([prompt isEqualToString:<span class="string">@&quot;GetUserMessage&quot;</span>]) &#123;</span><br><span class="line">        <span class="comment">//Did get user message.</span></span><br><span class="line">        completionHandler(<span class="string">@&quot;A json object, Like dictionary to string.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、HTTPS-单、双向认证"><a href="#四、HTTPS-单、双向认证" class="headerlink" title="四、HTTPS 单、双向认证"></a>四、HTTPS 单、双向认证</h2><p>以我们当前博客站点儿为例，SSL 证书是向”正经“机构申请的，Nginx 配置 HTTPS，并且 HTTP 请求自动跳转 HTTPS 示例：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span>  tommygirl.cn;</span><br><span class="line">    <span class="attribute">ssl_certificate</span>  certs/server.crt;<span class="comment">#公钥</span></span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> certs/server.key;<span class="comment">#私钥</span></span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">listen</span>       [::]:<span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  tommygirl.cn;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span>   https://tommygirl.cn;</span><br><span class="line">&#125; </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>更多关于 Nginx 配置 HTTPS 单、双向认证的内容 <a target="_blank" rel="noopener" href="https://www.hi-linux.com/posts/38492.html">Here</a> 。</p>
+<h3 id="单向认证"><a href="#单向认证" class="headerlink" title="单向认证"></a>单向认证</h3><p>显然通过浏览器访问 <a href="https://tommygirl.cn/">tommygirl.cn</a> 是可以成功的，并且地址栏有一个小锁头🔒，所以 HTTPS 我们配置成功了。或者说单向认证已经没问题了。那有的同学可能会问，单向认证？谁？哪里认证的？我没有认证呀？我们对照着一个流程图看一下一个完整的 HTTPS 请求都经历了哪些过程：</p>
+<p><img src="https://ata2-img.cn-hangzhou.oss-pub.aliyun-inc.com/14158ca87e2f341ff044efd967f3e008.png" alt="img"></p>
+<ol>
+<li>客户端访问 <a href="https://tommygirl.cn/">https://tommygirl.cn</a> ；</li>
+<li>服务器端将本机的公钥证书 server.crt 发送给客户端；</li>
+<li>客户端读取公钥证书 server.crt ，取出了服务端公钥；</li>
+<li>客户端生成一个随机数（密钥 R），用刚才得到的服务器公钥去加密这个随机数形成密文，发送给服务端；</li>
+<li>服务端用自己的私钥 server.key 去解密这个密文，得到了密钥 R；</li>
+<li>服务端和客户端在后续通讯过程中就使用这个密钥 R 进行通信了。</li>
+</ol>
+<p>所以单向认证是在哪一步完成的？第3步。那浏览器怎么知道应该信任我们的 SSL 证书呢？受信任的根证书，其任何下级证书都是受信任的。根证书在哪里呢？以 Mac 为例，打开钥匙串可以看到有一项是 系统根证书，也就是说系统会内置一部分根证书，浏览器在拿到我们的 SSL 证书后，它使用里面的公钥来验证签名并在证书链上向上移动一层；重复这个过程：对签名进行身份验证，并跟踪签名的证书链，直到最终到达浏览器信任存储中的一个根证书。如果它不能将证书链回到其受信任的根，它就不会信任该证书。（关于证书链的讨论，是一个比较大的话题，可以先参考 <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1458151">证书链</a> ，这里不再赘述。）</p>
+<h3 id="双向认证"><a href="#双向认证" class="headerlink" title="双向认证"></a>双向认证</h3><p>客户端校验服务端的证书可靠性称为单向认证，那顾名思义，双向认证中服务端也需要校验客户端的合法性。为了不影响页面的正常访问，新起了一个 ssl.tommygirl.cn，Nginx 上的测试配置：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span>  ssl.tommygirl.cn;</span><br><span class="line">    <span class="attribute">ssl_certificate</span>  certs/server.crt;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> certs/server.key;</span><br><span class="line">    <span class="attribute">ssl_client_certificate</span> certs/client.crt;</span><br><span class="line">    <span class="attribute">ssl_verify_client</span> <span class="literal">on</span>;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在访问 <a target="_blank" rel="noopener" href="https://ssl.tommygirl.cn/">https://ssl.tommygirl.cn</a> 会收到 Nginx 的错误提示，因为我们没有发送客户端的证书：</p>
+<img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/WK02.png" width="500px">
+
+<p>继续说，一个基于双向认证的请求交互过程：</p>
+<p><img src="https://ata2-img.cn-hangzhou.oss-pub.aliyun-inc.com/08e6235892053a81603a4c3d7c7f44ad.png" alt="img"></p>
+<ol>
+<li>客户端访问 <a target="_blank" rel="noopener" href="https://ssl.tommygirl.cn/">https://ssl.tommygirl.cn</a> ；</li>
+<li>服务端返回 server.crt；</li>
+<li>客户端校验 crt 文件中的证书颁发机构、证书时效、公钥信息等等；</li>
+<li>客户端将客户端公钥证书 client.crt 发送给服务器端；</li>
+<li>服务器端解密客户端公钥证书，拿到客户端公钥；</li>
+<li>客户端发送自己支持的加密方案给服务器端；</li>
+<li>服务器端根据自己和客户端的能力，选择一个双方都能接受的加密方案，使用客户端的公钥加密后发送给客户端；</li>
+<li>客户端使用自己的私钥解密加密方案，生成一个随机数 R，使用服务器公钥加密后传给服务器端；</li>
+<li>服务端用自己的私钥去解密这个密文，得到了密钥 R；</li>
+<li>服务端和客户端在后续通讯过程中就使用这个密钥 R 进行通信了。</li>
+</ol>
+<h3 id="手机端的处理"><a href="#手机端的处理" class="headerlink" title="手机端的处理"></a>手机端的处理</h3><p>简单的单向认证，手机端也是不用特别处理的；以往在 UIWebView 中如果想实现双向认证，需要自己定义 NSURLProtocol 做网络拦截，并且实现 NSURLSessionDelegate 协议方法进行处理。但对于 WKWebView，Bingo~苹果提供了单独的方法供开发者实现。</p>
+<blockquote>
+<p>相关协议： <a href="/2021/08/02/WKWebView-Protocol/#WKNavigationDelegate">WKNavigationDelegate</a></p>
+</blockquote>
+<p>供参考的实现如下，细节看项目需求优化吧。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)webView:(<span class="built_in">WKWebView</span> *)webView didReceiveAuthenticationChallenge:(<span class="built_in">NSURLAuthenticationChallenge</span> *)challenge completionHandler:(<span class="keyword">void</span> (^)(<span class="built_in">NSURLSessionAuthChallengeDisposition</span>, <span class="built_in">NSURLCredential</span> * _Nullable))completionHandler &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@&quot;%s&quot;</span>,__FUNCTION__);</span><br><span class="line">    <span class="built_in">NSString</span> *authenticationMethod = [[challenge protectionSpace] authenticationMethod];</span><br><span class="line">    <span class="keyword">if</span> ([authenticationMethod isEqualToString:<span class="built_in">NSURLAuthenticationMethodServerTrust</span>]) &#123; </span><br><span class="line">      	<span class="comment">//校验服务端证书</span></span><br><span class="line">        SecTrustRef secTrustRef = challenge.protectionSpace.serverTrust;</span><br><span class="line">        <span class="keyword">if</span> (secTrustRef != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            SecTrustResultType result;</span><br><span class="line">            OSErr er = SecTrustEvaluate(secTrustRef, &amp;result);</span><br><span class="line">            <span class="keyword">if</span> (er != noErr)&#123;</span><br><span class="line">                <span class="built_in">NSLog</span>(<span class="string">@&quot;error&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">switch</span> (result) &#123;</span><br><span class="line">                <span class="keyword">case</span> kSecTrustResultProceed:</span><br><span class="line">                    <span class="built_in">NSLog</span>(<span class="string">@&quot;kSecTrustResultProceed&quot;</span>);</span><br><span class="line">                    completionHandler(<span class="built_in">NSURLSessionAuthChallengePerformDefaultHandling</span>, <span class="literal">nil</span>);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> kSecTrustResultUnspecified:</span><br><span class="line">                    <span class="built_in">NSLog</span>(<span class="string">@&quot;kSecTrustResultUnspecified&quot;</span>);</span><br><span class="line">                    completionHandler(<span class="built_in">NSURLSessionAuthChallengeUseCredential</span>, [<span class="built_in">NSURLCredential</span> credentialForTrust:secTrustRef]);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> kSecTrustResultRecoverableTrustFailure:</span><br><span class="line">                    <span class="built_in">NSLog</span>(<span class="string">@&quot;kSecTrustResultRecoverableTrustFailure&quot;</span>);</span><br><span class="line">                    completionHandler(<span class="built_in">NSURLSessionAuthChallengeUseCredential</span>, [<span class="built_in">NSURLCredential</span> credentialForTrust:secTrustRef]);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> ([authenticationMethod isEqualToString:<span class="built_in">NSURLAuthenticationMethodClientCertificate</span>]) &#123; </span><br><span class="line">      	<span class="comment">//发送客户端证书</span></span><br><span class="line">        SecIdentityRef identity = <span class="literal">NULL</span>;</span><br><span class="line">        SecTrustRef trust = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="built_in">NSString</span> *p12 = [[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@&quot;client&quot;</span>ofType:<span class="string">@&quot;p12&quot;</span>];</span><br><span class="line">        <span class="built_in">NSFileManager</span> *fileManager = [<span class="built_in">NSFileManager</span> defaultManager];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(![fileManager fileExistsAtPath:p12]) &#123;</span><br><span class="line">            <span class="built_in">NSLog</span>(<span class="string">@&quot;client.p12: Not exist.&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">NSData</span> *PKCS12Data = [<span class="built_in">NSData</span> dataWithContentsOfFile:p12];</span><br><span class="line">            <span class="keyword">if</span> ([<span class="keyword">self</span> _extractIdentity:&amp;identity andTrust:&amp;trust fromPKCS12Data:PKCS12Data]) &#123;</span><br><span class="line">                SecCertificateRef certificate = <span class="literal">NULL</span>;</span><br><span class="line">                SecIdentityCopyCertificate(identity, &amp;certificate);</span><br><span class="line">                <span class="keyword">const</span> <span class="keyword">void</span>*certs[] = &#123;certificate&#125;;</span><br><span class="line">                <span class="built_in">CFArrayRef</span> certArray = <span class="built_in">CFArrayCreate</span>(kCFAllocatorDefault, certs,<span class="number">1</span>,<span class="literal">NULL</span>);</span><br><span class="line">                <span class="built_in">NSURLCredential</span> *credential = [<span class="built_in">NSURLCredential</span> credentialWithIdentity:identity certificates:(__bridge <span class="built_in">NSArray</span>*)certArray persistence:<span class="built_in">NSURLCredentialPersistencePermanent</span>];</span><br><span class="line">                <span class="built_in">NSURLSessionAuthChallengeDisposition</span> disposition =<span class="built_in">NSURLSessionAuthChallengeUseCredential</span>;</span><br><span class="line">                completionHandler(disposition, credential);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;else&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)_extractIdentity:(SecIdentityRef*)outIdentity andTrust:(SecTrustRef *)outTrust fromPKCS12Data:(<span class="built_in">NSData</span> *)inPKCS12Data &#123;</span><br><span class="line">    OSStatus securityError = errSecSuccess;</span><br><span class="line">    <span class="comment">//client certificate password</span></span><br><span class="line">    <span class="built_in">NSDictionary</span> *optionsDictionary = [<span class="built_in">NSDictionary</span> dictionaryWithObject:<span class="string">@&quot;123456&quot;</span></span><br><span class="line">                                                                 forKey:(__bridge <span class="keyword">id</span>)kSecImportExportPassphrase];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">CFArrayRef</span> items = <span class="built_in">CFArrayCreate</span>(<span class="literal">NULL</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br><span class="line">    securityError = SecPKCS12Import((__bridge <span class="built_in">CFDataRef</span>)inPKCS12Data,(__bridge <span class="built_in">CFDictionaryRef</span>)optionsDictionary,&amp;items);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(securityError == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">CFDictionaryRef</span> myIdentityAndTrust =<span class="built_in">CFArrayGetValueAtIndex</span>(items,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">void</span>*tempIdentity =<span class="literal">NULL</span>;</span><br><span class="line">        tempIdentity= <span class="built_in">CFDictionaryGetValue</span> (myIdentityAndTrust,kSecImportItemIdentity);</span><br><span class="line">        *outIdentity = (SecIdentityRef)tempIdentity;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">void</span>*tempTrust =<span class="literal">NULL</span>;</span><br><span class="line">        tempTrust = <span class="built_in">CFDictionaryGetValue</span>(myIdentityAndTrust,kSecImportItemTrust);</span><br><span class="line">        *outTrust = (SecTrustRef)tempTrust;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@&quot;Failedwith error code %d&quot;</span>,(<span class="keyword">int</span>)securityError);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>PS：对于门户型的网站，同一套服务，想全部做到双向认证似乎不是很现实，客户端的证书一般也不会分发给每一个人。很多人为了网络安全考虑，常用的一个做法是防抓包：在单向认证中加入自己的校验规则-域名比对、CA信息比对、客户端内置 sever.crt 证书链校验等等。对于这种情况，只针对 NSURLAuthenticationMethodServerTrust 进行处理就行了。</p>
+<h2 id="五、window-open"><a href="#五、window-open" class="headerlink" title="五、window.open()"></a>五、window.open()</h2><p>JS 与 Native 最常见的交互就是 window.open(); ，用于打开一个新窗口。更多细节<a target="_blank" rel="noopener" href="https://www.w3schools.com/jsref/met_win_open.asp">见</a> 。常用的写法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在一个新窗口中打开链接</span></span><br><span class="line"><span class="built_in">window</span>.open(<span class="string">&#x27;https://tommygirl.cn&#x27;</span>); <span class="comment">//默认就是_blank。</span></span><br><span class="line"><span class="built_in">window</span>.open(<span class="string">&#x27;https://tommygirl.cn&#x27;</span>, <span class="string">&#x27;_blank&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//在当前窗口打开链接</span></span><br><span class="line"><span class="built_in">window</span>.open(<span class="string">&#x27;https://tommygirl.cn&#x27;</span>, <span class="string">&#x27;_self&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>有的前端人员基于 Cordova 或者 Ionic 这些框架开发久了，会习惯要求 native 支持 <code>window.open(&#39;&#39;, &#39;_system&#39;);</code> ，即用系统浏览器打开链接，但其实标准的 JS 中是没有 <code>_system</code> 参数的，只是 Cordova 框架内部提供了支持而已。所以在单纯的 WebView 使用中有没有问题呢？当然有问题……🙄</p>
+<p>说回 WKWebView ，会发现对于 _blank 类型没有响应，但是 _self 可以打开。这是因为对于新窗口的弹出，苹果独立出了一个协议来让 native 自己实现：<a href="/2021/08/02/WKWebView-Protocol/#%E4%BA%8C%E3%80%81%E5%88%9B%E5%BB%BA%E5%92%8C%E5%85%B3%E9%97%AD%E6%96%B0%E7%9A%84-WebView">WKUIDelegate</a> ，👈上一篇我们提到过了，不再赘述。</p>
+<h2 id="六、还没写完，累了，明天再说。"><a href="#六、还没写完，累了，明天再说。" class="headerlink" title="六、还没写完，累了，明天再说。"></a>六、还没写完，累了，明天再说。</h2><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/un_do.jpg" width="400px">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-WKWebView-%E7%9A%84%E5%87%A0%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">关于 WKWebView 的几篇文章：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Demo"><span class="toc-number">2.</span> <span class="toc-text">Demo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Cookie-%E5%90%8C%E6%AD%A5"><span class="toc-number"></span> <span class="toc-text">一、Cookie 同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%B7%A8%E5%9F%9F"><span class="toc-number"></span> <span class="toc-text">二、跨域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Native-%E4%B8%8E-JS-%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="toc-number"></span> <span class="toc-text">三、Native 与 JS 的交互</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-%E8%B0%83%E7%94%A8-Native"><span class="toc-number">1.</span> <span class="toc-text">JS 调用 Native</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Native-%E8%B0%83%E7%94%A8-JS"><span class="toc-number">2.</span> <span class="toc-text">Native 调用 JS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS-%E8%B0%83%E7%94%A8-Native-%E5%B9%B6%E4%B8%94%E5%BE%97%E5%88%B0%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">3.</span> <span class="toc-text">JS 调用 Native 并且得到执行结果</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-iOS14-%E6%96%B0%E5%A2%9E"><span class="toc-number">3.1.</span> <span class="toc-text">1. iOS14 新增</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%9F%BA%E4%BA%8E-prompt-%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.2.</span> <span class="toc-text">2. 基于 prompt 的实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81HTTPS-%E5%8D%95%E3%80%81%E5%8F%8C%E5%90%91%E8%AE%A4%E8%AF%81"><span class="toc-number"></span> <span class="toc-text">四、HTTPS 单、双向认证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%90%91%E8%AE%A4%E8%AF%81"><span class="toc-number">1.</span> <span class="toc-text">单向认证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%90%91%E8%AE%A4%E8%AF%81"><span class="toc-number">2.</span> <span class="toc-text">双向认证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">手机端的处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81window-open"><span class="toc-number"></span> <span class="toc-text">五、window.open()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%BF%98%E6%B2%A1%E5%86%99%E5%AE%8C%EF%BC%8C%E7%B4%AF%E4%BA%86%EF%BC%8C%E6%98%8E%E5%A4%A9%E5%86%8D%E8%AF%B4%E3%80%82"><span class="toc-number"></span> <span class="toc-text">六、还没写完，累了，明天再说。</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/12/11/WKWebView-Use/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&text=WKWebView 实战篇"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&is_video=false&description=WKWebView 实战篇"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WKWebView 实战篇&body=Check out this article: https://tommygirl.cn/2021/12/11/WKWebView-Use/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&name=WKWebView 实战篇&description=&lt;h3 id=&#34;关于-WKWebView-的几篇文章：&#34;&gt;&lt;a href=&#34;#关于-WKWebView-的几篇文章：&#34; class=&#34;headerlink&#34; title=&#34;关于 WKWebView 的几篇文章：&#34;&gt;&lt;/a&gt;关于 WKWebView 的几篇文章：&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;/2021/12/01/WKWebView/&#34;&gt;WKWebView 基础篇&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;/2021/12/02/WKWebView-Protocol/&#34;&gt;WKWebView 协议篇&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;/2021/12/11/WKWebView-Use/&#34;&gt;WKWebView 实战篇&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;Demo&#34;&gt;&lt;a href=&#34;#Demo&#34; class=&#34;headerlink&#34; title=&#34;Demo&#34;&gt;&lt;/a&gt;Demo&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/ATommyGirl/WebView&#34;&gt;WebView 的 Demo&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;前两篇文章简单学习了 WKWebView 的基础内容和几个协议，今天我们看看在使用中常见的问题。&lt;/p&gt;
+&lt;h2 id=&#34;一、Cookie-同步&#34;&gt;&lt;a href=&#34;#一、Cookie-同步&#34; class=&#34;headerlink&#34; title=&#34;一、Cookie 同步&#34;&gt;&lt;/a&gt;一、Cookie 同步&lt;/h2&gt;&lt;p&gt;以往通过 AFNetworking、NSURLSession、UIWebView 等方式得到的 cookie，统统放在 NSHTTPCookieStorage 中，一般情况下是不需要我们特别处理的。但对于 WKWebView 我们说过，改为放在 WKHTTPCookieStore 中，而且两者是不互通的。&lt;/p&gt;
+&lt;p&gt;举个例子，对于现在很多 原生 + h5 混合开发的 App 来说，通常在登录成功以后，WebView 访问页面时会希望携带会话信息直接通过服务端的认证，而不是在 WebView 中再登录一次。这个时候我们可能就需要同步一下两个 Storage 中的 cookie。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/12/11/WKWebView-Use/&t=WKWebView 实战篇"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

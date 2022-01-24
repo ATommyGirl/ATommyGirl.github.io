@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="概述config.xml 存储着 cordova 应用的全局配置信息。 更多信息请查看 官方参考文档。  widget：config.xml  中的根元素 name：指定 app 名，它会显示在设备的主屏幕上 description：app 描述 author：作者信息  1234567891011&lt;widget ...&gt;  ...  &lt;name&gt;TommyGirl&lt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cordova - config.xml">
+<meta property="og:url" content="https://tommygirl.cn/2021/08/19/Cordova_config.xml/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="概述config.xml 存储着 cordova 应用的全局配置信息。 更多信息请查看 官方参考文档。  widget：config.xml  中的根元素 name：指定 app 名，它会显示在设备的主屏幕上 description：app 描述 author：作者信息  1234567891011&lt;widget ...&gt;  ...  &lt;name&gt;TommyGirl&lt;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-19T02:57:06.000Z">
+<meta property="article:modified_time" content="2021-08-19T02:57:06.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="Cordova">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Cordova - config.xml</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2021/08/29/%E5%A5%B3%E6%80%A7%E7%AE%A1%E7%90%86%E8%80%85/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/08/11/Nginx_HTTPS/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/08/19/Cordova_config.xml/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&text=Cordova - config.xml"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&title=Cordova - config.xml"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&is_video=false&description=Cordova - config.xml"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cordova - config.xml&body=Check out this article: https://tommygirl.cn/2021/08/19/Cordova_config.xml/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&title=Cordova - config.xml"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&title=Cordova - config.xml"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&title=Cordova - config.xml"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&title=Cordova - config.xml"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&name=Cordova - config.xml&description=&lt;h3 id=&#34;概述&#34;&gt;&lt;a href=&#34;#概述&#34; class=&#34;headerlink&#34; title=&#34;概述&#34;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;p&gt;&lt;code&gt;config.xml&lt;/code&gt; 存储着 cordova 应用的全局配置信息。&lt;/p&gt;
+&lt;p&gt;更多信息请查看 &lt;a href=&#34;https://cordova.apache.org/docs/en/10.x/config_ref/&#34;&gt;官方参考文档&lt;/a&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;widget：&lt;code&gt;config.xml &lt;/code&gt; 中的根元素&lt;/li&gt;
+&lt;li&gt;name：指定 app 名，它会显示在设备的主屏幕上&lt;/li&gt;
+&lt;li&gt;description：app 描述&lt;/li&gt;
+&lt;li&gt;author：作者信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight xml&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;widget&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;...&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;name&lt;/span&gt;&amp;gt;&lt;/span&gt;TommyGirl&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;name&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;description&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      A beauty.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;description&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;author&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;email&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;zhengyt_91@163.com&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;href&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;https://tommygirl.cn&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      YYLittleCat&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;author&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;widget&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&t=Cordova - config.xml"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#content"><span class="toc-number">2.</span> <span class="toc-text">content</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#access"><span class="toc-number">3.</span> <span class="toc-text">access</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#allow-navigation"><span class="toc-number">4.</span> <span class="toc-text">allow-navigation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#allow-intent"><span class="toc-number">5.</span> <span class="toc-text">allow-intent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#preference"><span class="toc-number">6.</span> <span class="toc-text">preference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#feature"><span class="toc-number">7.</span> <span class="toc-text">feature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#platform"><span class="toc-number">8.</span> <span class="toc-text">platform</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Cordova - config.xml
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-08-19T02:57:06.000Z" itemprop="datePublished">2021-08-19</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Cordova/" rel="tag">Cordova</a>, <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><code>config.xml</code> 存储着 cordova 应用的全局配置信息。</p>
+<p>更多信息请查看 <a target="_blank" rel="noopener" href="https://cordova.apache.org/docs/en/10.x/config_ref/">官方参考文档</a>。</p>
+<ul>
+<li>widget：<code>config.xml </code> 中的根元素</li>
+<li>name：指定 app 名，它会显示在设备的主屏幕上</li>
+<li>description：app 描述</li>
+<li>author：作者信息</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">widget</span> <span class="attr">...</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>TommyGirl<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span></span><br><span class="line">      A beauty.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">author</span> <span class="attr">email</span>=<span class="string">&quot;zhengyt_91@163.com&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://tommygirl.cn&quot;</span>&gt;</span></span><br><span class="line">      YYLittleCat</span><br><span class="line">  <span class="tag">&lt;/<span class="name">author</span>&gt;</span></span><br><span class="line">  ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">widget</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h3 id="content"><a href="#content" class="headerlink" title="content"></a>content</h3><p>指定 App 的根页面，默认是 <code>index.html</code><br>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">widget</span> <span class="attr">...</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">content</span> <span class="attr">src</span>=<span class="string">&quot;startPage.html&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">content</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">widget</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="access"><a href="#access" class="headerlink" title="access"></a>access</h3><p>配置允许 App 发起的网络请求（images, XHRs, etc）地址</p>
+<p>注意：没有配置 <code>access</code> 标签时，，只有 <code>file://</code> URL 被允许访问。但一般情况，App 包含一个默认的 <code>&lt;access origin=&quot;*&quot;&gt;</code> 标签。</p>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--允许访问 google.com:--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">access</span> <span class="attr">origin</span>=<span class="string">&quot;http://google.com&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--允许访问安全地址 google.com (https://):--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">access</span> <span class="attr">origin</span>=<span class="string">&quot;https://google.com&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--允许访问 google.com 的所有子域名, 比如 mail.google.com and docs.google.com:--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">access</span> <span class="attr">origin</span>=<span class="string">&quot;http://*.google.com&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--不阻止任何网络请求，比如 google.com and developer.mozilla.org:--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">access</span> <span class="attr">origin</span>=<span class="string">&quot;*&quot;</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!--This is the default value for newly created CLI projects.--&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="allow-navigation"><a href="#allow-navigation" class="headerlink" title="allow-navigation"></a>allow-navigation</h3><p>控制内部的 <code>WebView</code> 可以加载的 <code>URL</code>，只适用于顶级导航。</p>
+<p>默认情况下，只允许 <code>file://</code> 类型的 URL 访问。如果要加载其他的 URL，需要配置 <code>&lt;allow-navigation&gt;</code> 标签</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 允许访问 example.com --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">&quot;http://example.com/*&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 允许使用通配符，协议，主机，地址都可以使用 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">&quot;*://*.example.com/*&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 使用通配符，允许所有网址访问，包括HTTP and HTTPS and file</span></span><br><span class="line"><span class="comment">     *不推荐使用* --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">&quot;*&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 上面的和下面这三条等价 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">&quot;http://*/*&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">&quot;https://*/*&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-navigation</span> <span class="attr">href</span>=<span class="string">&quot;data:*&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>为什么说不推荐使用 <code>&lt;allow-navigation href=&quot;*&quot; /&gt;</code> 允许所有网址访问呢，昨天有个页面使用 <code>window.location.href=&#39;sms://10086&#39;;</code> 的方式想打开发短信的功能，但 Cordova 提示 “不支持的URL” ，说明没有直接调用系统能力，而是作为一个新的导航去打开了。所以对于 sms、tel、mail 等系统能力的调用，应该使用 allow-intent ，并且 allow-navigation 不允许通配所有的访问。</p>
+<h3 id="allow-intent"><a href="#allow-intent" class="headerlink" title="allow-intent"></a>allow-intent</h3><p>定义 App 可以要求操作系统打开的链接地址，默认任何外部请求链接都被禁止。</p>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 允许在浏览器中打开网址 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">&quot;http://*/*&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">&quot;https://*/*&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 允许在浏览器中打开 example.com --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">&quot;http://example.com/*&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 允许通配符的使用，在协议、主机、地址 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">&quot;*://*.example.com/*&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 允许在短信应用中打开sms:链接 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">&quot;sms:*&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 允许在电话应用中打开tel:链接 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">&quot;tel:*&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 允许在地图应用中打开geo:链接 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">&quot;geo:*&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 允许在已安装的app中打开未被识别的url地址</span></span><br><span class="line"><span class="comment">     *NOT RECOMMENDED* --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">allow-intent</span> <span class="attr">href</span>=<span class="string">&quot;*&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="preference"><a href="#preference" class="headerlink" title="preference"></a>preference</h3><p>关于 WebView 和页面行为的偏好设置。</p>
+<p>配置详情：<a target="_blank" rel="noopener" href="https://cordova.apache.org/docs/en/10.x/config_ref/#preference">preference</a></p>
+<h3 id="feature"><a href="#feature" class="headerlink" title="feature"></a>feature</h3><p>官方的翻译我没仔细看，这里我一般写需要启用的插件类。</p>
+<p>更多请参考：<a target="_blank" rel="noopener" href="https://cordova.apache.org/docs/en/10.x/config_ref/#feature">feature</a></p>
+<h3 id="platform"><a href="#platform" class="headerlink" title="platform"></a>platform</h3><p>对应的平台，iOS、Android 等等。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">platform</span> <span class="attr">name</span>=<span class="string">&quot;android&quot;</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">preference</span> <span class="attr">name</span>=<span class="string">&quot;Fullscreen&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">platform</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#content"><span class="toc-number">2.</span> <span class="toc-text">content</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#access"><span class="toc-number">3.</span> <span class="toc-text">access</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#allow-navigation"><span class="toc-number">4.</span> <span class="toc-text">allow-navigation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#allow-intent"><span class="toc-number">5.</span> <span class="toc-text">allow-intent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#preference"><span class="toc-number">6.</span> <span class="toc-text">preference</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#feature"><span class="toc-number">7.</span> <span class="toc-text">feature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#platform"><span class="toc-number">8.</span> <span class="toc-text">platform</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/08/19/Cordova_config.xml/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&text=Cordova - config.xml"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&title=Cordova - config.xml"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&is_video=false&description=Cordova - config.xml"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cordova - config.xml&body=Check out this article: https://tommygirl.cn/2021/08/19/Cordova_config.xml/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&title=Cordova - config.xml"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&title=Cordova - config.xml"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&title=Cordova - config.xml"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&title=Cordova - config.xml"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&name=Cordova - config.xml&description=&lt;h3 id=&#34;概述&#34;&gt;&lt;a href=&#34;#概述&#34; class=&#34;headerlink&#34; title=&#34;概述&#34;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;p&gt;&lt;code&gt;config.xml&lt;/code&gt; 存储着 cordova 应用的全局配置信息。&lt;/p&gt;
+&lt;p&gt;更多信息请查看 &lt;a href=&#34;https://cordova.apache.org/docs/en/10.x/config_ref/&#34;&gt;官方参考文档&lt;/a&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;widget：&lt;code&gt;config.xml &lt;/code&gt; 中的根元素&lt;/li&gt;
+&lt;li&gt;name：指定 app 名，它会显示在设备的主屏幕上&lt;/li&gt;
+&lt;li&gt;description：app 描述&lt;/li&gt;
+&lt;li&gt;author：作者信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight xml&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;widget&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;...&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;name&lt;/span&gt;&amp;gt;&lt;/span&gt;TommyGirl&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;name&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;description&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      A beauty.&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;description&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;author&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;email&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;zhengyt_91@163.com&amp;quot;&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;href&lt;/span&gt;=&lt;span class=&#34;string&#34;&gt;&amp;quot;https://tommygirl.cn&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      YYLittleCat&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;author&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;widget&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/08/19/Cordova_config.xml/&t=Cordova - config.xml"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

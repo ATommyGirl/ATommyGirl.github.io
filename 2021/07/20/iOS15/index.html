@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="苹果前两天推出了iOS 15的beta-3。这个消息还是从客户那儿知道的😂，没想到他们比我还前卫，秋天都等不及~~ 测试背景Xcode 13 beta版，iOS 15 beta 3的系统。除了客户提出的问题，自己还发现了两处UI异常，不过说不定苹果能良心发现，在正式版中给修复一下。 坑一、企业签名的 App 无法使用客户反馈说 App 不能正常打开，并且提示下面的这种信息：  “xxx”Need">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 15 适配踩坑">
+<meta property="og:url" content="https://tommygirl.cn/2021/07/20/iOS15/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="苹果前两天推出了iOS 15的beta-3。这个消息还是从客户那儿知道的😂，没想到他们比我还前卫，秋天都等不及~~ 测试背景Xcode 13 beta版，iOS 15 beta 3的系统。除了客户提出的问题，自己还发现了两处UI异常，不过说不定苹果能良心发现，在正式版中给修复一下。 坑一、企业签名的 App 无法使用客户反馈说 App 不能正常打开，并且提示下面的这种信息：  “xxx”Need">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/iOS15.jpg">
+<meta property="article:published_time" content="2021-07-20T03:47:11.000Z">
+<meta property="article:modified_time" content="2021-07-20T03:47:11.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/iOS15.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>iOS 15 适配踩坑</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2021/07/23/Systemd_Command/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/07/14/suggestedFilename%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/07/20/iOS15/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/07/20/iOS15/&text=iOS 15 适配踩坑"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/07/20/iOS15/&is_video=false&description=iOS 15 适配踩坑"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS 15 适配踩坑&body=Check out this article: https://tommygirl.cn/2021/07/20/iOS15/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/07/20/iOS15/&name=iOS 15 适配踩坑&description=&lt;p&gt;苹果前两天推出了iOS 15的beta-3。这个消息还是从客户那儿知道的😂，没想到他们比我还前卫，秋天都等不及~~&lt;/p&gt;
+&lt;h2 id=&#34;测试背景&#34;&gt;&lt;a href=&#34;#测试背景&#34; class=&#34;headerlink&#34; title=&#34;测试背景&#34;&gt;&lt;/a&gt;测试背景&lt;/h2&gt;&lt;p&gt;Xcode 13 beta版，iOS 15 beta 3的系统。&lt;br&gt;除了客户提出的问题，自己还发现了两处UI异常，不过说不定苹果能良心发现，在正式版中给修复一下。&lt;/p&gt;
+&lt;h2 id=&#34;坑&#34;&gt;&lt;a href=&#34;#坑&#34; class=&#34;headerlink&#34; title=&#34;坑&#34;&gt;&lt;/a&gt;坑&lt;/h2&gt;&lt;h3 id=&#34;一、企业签名的-App-无法使用&#34;&gt;&lt;a href=&#34;#一、企业签名的-App-无法使用&#34; class=&#34;headerlink&#34; title=&#34;一、企业签名的 App 无法使用&#34;&gt;&lt;/a&gt;一、企业签名的 App 无法使用&lt;/h3&gt;&lt;p&gt;客户反馈说 App 不能正常打开，并且提示下面的这种信息：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“xxx”Needs to Be Updated : The developer of this app needs to update it to work with this version of iOS.&lt;/p&gt;
+&lt;p&gt;“xxx”需要更新 ：App开发者需要更新此App以在此iOS版本上正常工作。&lt;/p&gt;
+&lt;/blockquote&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/07/20/iOS15/&t=iOS 15 适配踩坑"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">测试背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9D%91"><span class="toc-number">2.</span> <span class="toc-text">坑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BC%81%E4%B8%9A%E7%AD%BE%E5%90%8D%E7%9A%84-App-%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">一、企业签名的 App 无法使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-NavigationBar-%E9%A2%9C%E8%89%B2%E5%8F%8A%E8%83%8C%E6%99%AF%E5%A4%B1%E6%95%88"><span class="toc-number">2.2.</span> <span class="toc-text">二、 NavigationBar 颜色及背景失效</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="toc-number">2.2.1.</span> <span class="toc-text">1. 问题描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-iOS-13%E6%96%B0%E5%A2%9E-API"><span class="toc-number">2.2.2.</span> <span class="toc-text">2. iOS 13新增 API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="toc-number">2.2.3.</span> <span class="toc-text">3. 解决办法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E9%81%97%E7%95%99%E9%97%AE%E9%A2%98"><span class="toc-number">2.2.4.</span> <span class="toc-text">4. 遗留问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%AF%BC%E8%88%AA%E6%A0%8F%E5%BA%95%E9%83%A8%E7%9A%84%E9%BB%91%E7%BA%BF"><span class="toc-number">2.2.5.</span> <span class="toc-text">5. 导航栏底部的黑线</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81UITabBar-%E8%83%8C%E6%99%AF%E5%9B%BE%E5%A4%B1%E6%95%88"><span class="toc-number">2.3.</span> <span class="toc-text">三、UITabBar 背景图失效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81UITabBarItem-%E6%96%87%E5%AD%97%E9%A2%9C%E8%89%B2%E5%A4%B1%E6%95%88"><span class="toc-number">2.4.</span> <span class="toc-text">四、UITabBarItem 文字颜色失效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81-UITableView-Header-%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88"><span class="toc-number">2.5.</span> <span class="toc-text">五、 UITableView Header 高度失效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81UITextField-%E7%9A%84-clearButton-%E5%90%91%E5%8F%B3%E5%81%8F%E7%A7%BB"><span class="toc-number">2.6.</span> <span class="toc-text">六、UITextField 的 clearButton 向右偏移</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        iOS 15 适配踩坑
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-07-20T03:47:11.000Z" itemprop="datePublished">2021-07-20</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>苹果前两天推出了iOS 15的beta-3。这个消息还是从客户那儿知道的😂，没想到他们比我还前卫，秋天都等不及~~</p>
+<h2 id="测试背景"><a href="#测试背景" class="headerlink" title="测试背景"></a>测试背景</h2><p>Xcode 13 beta版，iOS 15 beta 3的系统。<br>除了客户提出的问题，自己还发现了两处UI异常，不过说不定苹果能良心发现，在正式版中给修复一下。</p>
+<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><h3 id="一、企业签名的-App-无法使用"><a href="#一、企业签名的-App-无法使用" class="headerlink" title="一、企业签名的 App 无法使用"></a>一、企业签名的 App 无法使用</h3><p>客户反馈说 App 不能正常打开，并且提示下面的这种信息：</p>
+<blockquote>
+<p>“xxx”Needs to Be Updated : The developer of this app needs to update it to work with this version of iOS.</p>
+<p>“xxx”需要更新 ：App开发者需要更新此App以在此iOS版本上正常工作。</p>
+</blockquote>
+  <span id="more"></span>
+
+<center>
+<div style="display:inline-block;"><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/iOS15.jpg" class width="300"></div>
+</center>
+
+<p>猜测是需要重签名或者使用最新的 Xcode 打包。</p>
+<p>我看苹果论坛上有人说必须使用新的 Xcode 以适配 iOS 15，但我用旧版的 Xcode 重新打了一个包，也可以解决这个问题。所以，不方便更新 Xcode 的话，可以尝试重签名试试。</p>
+<p><strong>睡了一觉之究极补充：</strong> 签名问题与 Xcode 版本无关，而是 Mac 系统导致的，将 macOS 升级到 11.* Big Sur 以上再进行重新签名，可以解决 App 无法使用的问题。</p>
+<h3 id="二、-NavigationBar-颜色及背景失效"><a href="#二、-NavigationBar-颜色及背景失效" class="headerlink" title="二、 NavigationBar 颜色及背景失效"></a>二、 NavigationBar 颜色及背景失效</h3><h4 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1. 问题描述"></a>1. 问题描述</h4><p>项目中往往会自定义一个导航控制器，方便全局指定导航条的背景色、标题颜色等等。以设置背景色和标题颜色为例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//背景色</span></span><br><span class="line"><span class="keyword">self</span>.navigationBar.barTintColor = RGB(<span class="number">42</span>, <span class="number">109</span>, <span class="number">240</span>);</span><br><span class="line"><span class="comment">//Title 颜色</span></span><br><span class="line"><span class="built_in">NSDictionary</span> *titleTextAttributes = @&#123;<span class="built_in">NSFontAttributeName</span>:[<span class="built_in">UIFont</span> fontWithName:<span class="string">@&quot;&quot;</span> size:<span class="number">18</span>], <span class="built_in">NSForegroundColorAttributeName</span>:RGB(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>)&#125;;</span><br><span class="line">[<span class="keyword">self</span>.navigationBar setTitleTextAttributes:titleTextAttributes];</span><br></pre></td></tr></table></figure>
+
+<p>但在 iOS 15上发现，指定的背景色失效了，但滚动控制器的视图时，导航条的背景又出现了。看了一眼 UINavigationBar 的 API，15中并没有新增的。倒是有几个 iOS 13新增的 API 我没用过……哈哈哈，写到这里觉得自己以前的功课落下太多了，13的更新还没学习呢😂😂😂😂😂</p>
+<h4 id="2-iOS-13新增-API"><a href="#2-iOS-13新增-API" class="headerlink" title="2. iOS 13新增 API"></a>2. iOS 13新增 API</h4><ul>
+<li>standardAppearance : 描述导航栏以标准高度显示时要使用的外观属性。</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readwrite</span>, <span class="keyword">copy</span>) <span class="built_in">UINavigationBarAppearance</span> *standardAppearance;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>compactAppearance : 描述导航栏在紧凑高度时使用的外观属性。如果未设置，则将使用标准外观。</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readwrite</span>, <span class="keyword">copy</span>, <span class="keyword">nullable</span>) <span class="built_in">UINavigationBarAppearance</span> *compactAppearance;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>scrollEdgeAppearance : 描述当关联的 UIScrollView 向上滚动时要使用的导航栏的外观属性。如果未设置，将改用修改后的standardAppearance。</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readwrite</span>, <span class="keyword">copy</span>, <span class="keyword">nullable</span>) <span class="built_in">UINavigationBarAppearance</span> *scrollEdgeAppearance;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>compactScrollEdgeAppearance : 描述当导航栏以紧凑的高度显示时，以及关联的 UIScrollView 往上滚动时，要使用的导航栏的外观属性。如果未设置，则首先尝试 scrollEdgeAppearance，如果为nil，则尝试 compactAppearance，然后尝试修改 standardAppearance。</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readwrite</span>, <span class="keyword">copy</span>, <span class="keyword">nullable</span>) <span class="built_in">UINavigationBarAppearance</span> *compactScrollEdgeAppearance;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-解决办法"><a href="#3-解决办法" class="headerlink" title="3. 解决办法"></a>3. 解决办法</h4><p>根据我们的问题现象，猜测是 <code>standardAppearance</code> 和 <code>scrollEdgeAppearance</code> 需要调整，如果正常状态和滚动状态颜色一样，可以修改如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSDictionary</span> *titleTextAttributes = @&#123;<span class="built_in">NSFontAttributeName</span>:[<span class="built_in">UIFont</span> fontWithName:MAIN_FONT_FAMILY size:<span class="number">18</span>], <span class="built_in">NSForegroundColorAttributeName</span>:RGB(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>)&#125;;</span><br><span class="line"><span class="keyword">if</span> (@available(iOS <span class="number">13.0</span>, *)) &#123;</span><br><span class="line">    <span class="built_in">UINavigationBarAppearance</span> *appearance = [<span class="built_in">UINavigationBarAppearance</span> new];</span><br><span class="line">    appearance.backgroundColor = RGB(<span class="number">42</span>, <span class="number">109</span>, <span class="number">240</span>);</span><br><span class="line">    appearance.titleTextAttributes = titleTextAttributes;    </span><br><span class="line">    <span class="keyword">self</span>.navigationBar.standardAppearance = appearance;</span><br><span class="line">    <span class="keyword">self</span>.navigationBar.scrollEdgeAppearance = appearance;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// Fallback on earlier versions</span></span><br><span class="line">    <span class="keyword">self</span>.navigationBar.barTintColor = RGB(<span class="number">42</span>, <span class="number">109</span>, <span class="number">240</span>);</span><br><span class="line">    [<span class="keyword">self</span>.navigationBar setTitleTextAttributes:titleTextAttributes];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Bingo！颜色显示正常啦</p>
+<p>所以这是什么意思？强买强卖吗？必须设置 Appearance 才可以？</p>
+<h4 id="4-遗留问题"><a href="#4-遗留问题" class="headerlink" title="4. 遗留问题"></a>4. 遗留问题</h4><p>在 Xcode 13-beta 中，必须同时指定 <code>standardAppearance</code> 和 <code>scrollEdgeAppearance</code> 才可以。但根据苹果的注释，如果 <code>scrollEdgeAppearance</code> 为nil，会默认使用 <code>standardAppearance</code> 啊。燃鹅并不行。不知道是苹果的 bug 还是怎么的……朋友昨天叫我一起转行了，因为他觉得苹果的系统做的一年不如一年~ 😂</p>
+<h4 id="5-导航栏底部的黑线"><a href="#5-导航栏底部的黑线" class="headerlink" title="5. 导航栏底部的黑线"></a>5. 导航栏底部的黑线</h4><p><code>shadowColor</code> 阴影属性设置为透明。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//去掉导航栏底部的黑线</span></span><br><span class="line"><span class="keyword">if</span> (@available(iOS <span class="number">13.0</span>, *)) &#123;</span><br><span class="line">    ...</span><br><span class="line">    appearance.shadowColor = [<span class="built_in">UIColor</span> clearColor];</span><br><span class="line">    ...</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// Fallback on earlier versions</span></span><br><span class="line">    ...  </span><br><span class="line">    [<span class="keyword">self</span>.navigationBar setBackgroundImage:[<span class="built_in">UIImage</span> new] forBarMetrics:<span class="built_in">UIBarMetricsDefault</span>];</span><br><span class="line">    <span class="keyword">self</span>.navigationBar.shadowImage = [[<span class="built_in">UIImage</span> alloc] init];</span><br><span class="line">  	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="三、UITabBar-背景图失效"><a href="#三、UITabBar-背景图失效" class="headerlink" title="三、UITabBar 背景图失效"></a>三、UITabBar 背景图失效</h3><p>这个问题有点类似上一个，<code>UITabBar</code> 之前设置的背景图片，老版本可以，iOS 15上表现为空白。参考问题二的思路，找到了下面的 API，做个兼容就可以了。当然，遗留问题同上，必须同时指定 <code>standardAppearance</code> 和 <code>scrollEdgeAppearance</code> 才可以……🙄……而且，如果在初始化以后，某个时机单独修改了 <code>standardAppearance</code>，也必须要同步指定一下 <code>scrollEdgeAppearance</code> ……🙄</p>
+<ul>
+<li>API</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readwrite</span>, <span class="keyword">copy</span>) <span class="built_in">UITabBarAppearance</span> *standardAppearance;<span class="comment">//ios 13.0.</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readwrite</span>, <span class="keyword">copy</span>, <span class="keyword">nullable</span>) <span class="built_in">UITabBarAppearance</span> *scrollEdgeAppearance;<span class="comment">//ios 15.0.</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>老方式</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">self</span>.tabBar setBackgroundImage:[img imageWithRenderingMode:(<span class="built_in">UIImageRenderingModeAlwaysOriginal</span>)]];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>兼容新的API</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIImage</span> *img = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@&quot;ahaaaaa&quot;</span>];</span><br><span class="line"><span class="keyword">if</span> (@available(iOS <span class="number">13.0</span>, *)) &#123;</span><br><span class="line">    <span class="built_in">UITabBarAppearance</span> *appearance = [[<span class="built_in">UITabBarAppearance</span> alloc] init];</span><br><span class="line">    appearance.backgroundImage = img;</span><br><span class="line">    appearance.backgroundImageContentMode = <span class="built_in">UIViewContentModeScaleToFill</span>;</span><br><span class="line">    <span class="keyword">self</span>.tabBar.standardAppearance = appearance;</span><br><span class="line">    <span class="keyword">if</span> (@available(iOS <span class="number">15.0</span>, *)) &#123;</span><br><span class="line">        <span class="keyword">self</span>.tabBar.scrollEdgeAppearance = appearance;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Fallback on earlier versions</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// Fallback on earlier versions</span></span><br><span class="line">    [<span class="keyword">self</span>.tabBar setBackgroundImage:[img imageWithRenderingMode:(<span class="built_in">UIImageRenderingModeAlwaysOriginal</span>)]];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="四、UITabBarItem-文字颜色失效"><a href="#四、UITabBarItem-文字颜色失效" class="headerlink" title="四、UITabBarItem 文字颜色失效"></a>四、UITabBarItem 文字颜色失效</h3><p>……还是同上，新版本中 UITabBarItem 文字颜色的修改不起作用。同样是在 iOS 13 中新增的 <code>UITabBarItemAppearance</code> 来修改 Item 的不同状态下的不同表现。遗留问题同上。</p>
+<ul>
+<li>相关的类型如下，其他的API就不贴了：</li>
+</ul>
+<p><code>UITabBarItemAppearance</code> 、 <code>UITabBarItemStateAppearance</code></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// The appearance when the tab bar item is in the normal state</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">strong</span>) <span class="built_in">UITabBarItemStateAppearance</span> *normal;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// The appearance when the tab bar item is in the selected state</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">strong</span>) <span class="built_in">UITabBarItemStateAppearance</span> *selected;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// The appearance when the tab bar item is in the disabled state</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">strong</span>) <span class="built_in">UITabBarItemStateAppearance</span> *disabled;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// The appearance when the tab bar item is in the focused state</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">strong</span>) <span class="built_in">UITabBarItemStateAppearance</span> *focused;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>兼容新的API</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Set tabBar style.</span></span><br><span class="line"><span class="built_in">UIColor</span> *normalTitleColor = RGBA(<span class="number">80</span>, <span class="number">80</span>, <span class="number">81</span>, <span class="number">1</span>);</span><br><span class="line"><span class="built_in">UIColor</span> *selectedTitleColor = RGBA(<span class="number">42</span>, <span class="number">109</span>, <span class="number">240</span>, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">if</span> (@available(iOS <span class="number">13.0</span>, *)) &#123;</span><br><span class="line">    <span class="built_in">UITabBarItemAppearance</span> *itemAppearance = [[<span class="built_in">UITabBarItemAppearance</span> alloc] init];</span><br><span class="line">    itemAppearance.normal.titleTextAttributes = @&#123;<span class="built_in">NSForegroundColorAttributeName</span> : normalTitleColor&#125;;</span><br><span class="line">    itemAppearance.selected.titleTextAttributes = @&#123;<span class="built_in">NSForegroundColorAttributeName</span> : selectedTitleColor&#125;;</span><br><span class="line">    <span class="built_in">UITabBarAppearance</span> *appearance = [[<span class="built_in">UITabBarAppearance</span> alloc] init];</span><br><span class="line">    appearance.stackedLayoutAppearance = itemAppearance;</span><br><span class="line">    <span class="keyword">self</span>.tabBar.standardAppearance = appearance;</span><br><span class="line">    <span class="keyword">if</span> (@available(iOS <span class="number">15.0</span>, *)) &#123;</span><br><span class="line">        <span class="keyword">self</span>.tabBar.scrollEdgeAppearance = appearance;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// Fallback on earlier versions</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span> (@available(iOS <span class="number">10.0</span>, *)) &#123;</span><br><span class="line">    <span class="keyword">self</span>.tabBar.tintColor = normalTitleColor;</span><br><span class="line">    <span class="keyword">self</span>.tabBar.unselectedItemTintColor = selectedTitleColor;</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// Fallback on earlier versions</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="五、-UITableView-Header-高度失效"><a href="#五、-UITableView-Header-高度失效" class="headerlink" title="五、 UITableView Header 高度失效"></a>五、 UITableView Header 高度失效</h3><p>通常 TableView 第一个分组如果不需要 Header 的话，我们会给个0.01的高度，看上去就是顶部没有空白的效果。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">CGFloat</span>)tableView:(<span class="built_in">UITableView</span> *)tableView heightForHeaderInSection:(<span class="built_in">NSInteger</span>)section &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.01</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但在 iOS 15上视图的顶部默认会下沉几个像素，我以为磨人的 <code>automaticallyAdjustsScrollIndicatorInsets</code> 这类小妖精又出现了，尝试了一下好像不是这类问题。😂</p>
+<p>看了一眼官网的 API 变动，发现了一个小秘密：</p>
+<blockquote>
+<p>The amount of padding above each section header.</p>
+<p>每个分组Header上方的填充量。</p>
+</blockquote>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>) <span class="built_in">CGFloat</span> sectionHeaderTopPadding;</span><br></pre></td></tr></table></figure>
+
+<p>所以我就这样:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (@available(iOS <span class="number">15.0</span>, *)) &#123;</span><br><span class="line">    <span class="keyword">self</span>.tableView.sectionHeaderTopPadding = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>试着改了一下，毕竟试试又不会怀孕。好了……有那么一瞬间我仿佛能理解苹果为什么加这个属性，貌似真的有场景会用到这个间距。冷静了一下，我发现我还是太菜了，理解不了~~~</p>
+<h3 id="六、UITextField-的-clearButton-向右偏移"><a href="#六、UITextField-的-clearButton-向右偏移" class="headerlink" title="六、UITextField 的 clearButton 向右偏移"></a>六、UITextField 的 clearButton 向右偏移</h3><p>_UITextFieldClearButton 向右偏移了一点儿点儿…有点压到边框，倒是不影响使用，然后我也不知道怎么改，谁知道告诉我一下。阿里嘎多~</p>
+<p>2021-08-12：关于问题六，iOS 15 beta-4 版本中貌似已经好了~~</p>
+<hr>
+<p>目前就发现了这几个问题。希望秋天到来的时候，开发者们不用花太多时间在 UI 适配上。</p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">测试背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9D%91"><span class="toc-number">2.</span> <span class="toc-text">坑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BC%81%E4%B8%9A%E7%AD%BE%E5%90%8D%E7%9A%84-App-%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">一、企业签名的 App 无法使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-NavigationBar-%E9%A2%9C%E8%89%B2%E5%8F%8A%E8%83%8C%E6%99%AF%E5%A4%B1%E6%95%88"><span class="toc-number">2.2.</span> <span class="toc-text">二、 NavigationBar 颜色及背景失效</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="toc-number">2.2.1.</span> <span class="toc-text">1. 问题描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-iOS-13%E6%96%B0%E5%A2%9E-API"><span class="toc-number">2.2.2.</span> <span class="toc-text">2. iOS 13新增 API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="toc-number">2.2.3.</span> <span class="toc-text">3. 解决办法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E9%81%97%E7%95%99%E9%97%AE%E9%A2%98"><span class="toc-number">2.2.4.</span> <span class="toc-text">4. 遗留问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%AF%BC%E8%88%AA%E6%A0%8F%E5%BA%95%E9%83%A8%E7%9A%84%E9%BB%91%E7%BA%BF"><span class="toc-number">2.2.5.</span> <span class="toc-text">5. 导航栏底部的黑线</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81UITabBar-%E8%83%8C%E6%99%AF%E5%9B%BE%E5%A4%B1%E6%95%88"><span class="toc-number">2.3.</span> <span class="toc-text">三、UITabBar 背景图失效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81UITabBarItem-%E6%96%87%E5%AD%97%E9%A2%9C%E8%89%B2%E5%A4%B1%E6%95%88"><span class="toc-number">2.4.</span> <span class="toc-text">四、UITabBarItem 文字颜色失效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81-UITableView-Header-%E9%AB%98%E5%BA%A6%E5%A4%B1%E6%95%88"><span class="toc-number">2.5.</span> <span class="toc-text">五、 UITableView Header 高度失效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81UITextField-%E7%9A%84-clearButton-%E5%90%91%E5%8F%B3%E5%81%8F%E7%A7%BB"><span class="toc-number">2.6.</span> <span class="toc-text">六、UITextField 的 clearButton 向右偏移</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/07/20/iOS15/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/07/20/iOS15/&text=iOS 15 适配踩坑"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/07/20/iOS15/&is_video=false&description=iOS 15 适配踩坑"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS 15 适配踩坑&body=Check out this article: https://tommygirl.cn/2021/07/20/iOS15/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/07/20/iOS15/&name=iOS 15 适配踩坑&description=&lt;p&gt;苹果前两天推出了iOS 15的beta-3。这个消息还是从客户那儿知道的😂，没想到他们比我还前卫，秋天都等不及~~&lt;/p&gt;
+&lt;h2 id=&#34;测试背景&#34;&gt;&lt;a href=&#34;#测试背景&#34; class=&#34;headerlink&#34; title=&#34;测试背景&#34;&gt;&lt;/a&gt;测试背景&lt;/h2&gt;&lt;p&gt;Xcode 13 beta版，iOS 15 beta 3的系统。&lt;br&gt;除了客户提出的问题，自己还发现了两处UI异常，不过说不定苹果能良心发现，在正式版中给修复一下。&lt;/p&gt;
+&lt;h2 id=&#34;坑&#34;&gt;&lt;a href=&#34;#坑&#34; class=&#34;headerlink&#34; title=&#34;坑&#34;&gt;&lt;/a&gt;坑&lt;/h2&gt;&lt;h3 id=&#34;一、企业签名的-App-无法使用&#34;&gt;&lt;a href=&#34;#一、企业签名的-App-无法使用&#34; class=&#34;headerlink&#34; title=&#34;一、企业签名的 App 无法使用&#34;&gt;&lt;/a&gt;一、企业签名的 App 无法使用&lt;/h3&gt;&lt;p&gt;客户反馈说 App 不能正常打开，并且提示下面的这种信息：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“xxx”Needs to Be Updated : The developer of this app needs to update it to work with this version of iOS.&lt;/p&gt;
+&lt;p&gt;“xxx”需要更新 ：App开发者需要更新此App以在此iOS版本上正常工作。&lt;/p&gt;
+&lt;/blockquote&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/07/20/iOS15/&t=iOS 15 适配踩坑"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

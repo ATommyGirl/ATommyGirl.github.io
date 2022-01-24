@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="git 是一个分散式版本控制软件。最初目的是为更好地管理 Linux 内核开发而设计。  什么是版本控制？什么是“版本控制”，你为什么要关心？版本控制是一种系统，它记录一段时间内对一个文件或一组文件的更改，以便您以后可以调用特定版本。对于开发来讲，多数以软件源代码作为受版本控制的文件，但实际上几乎可以对计算机上的任何类型的文件执行此操作。 常见的版本控制系统：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 的各种骚操作">
+<meta property="og:url" content="https://tommygirl.cn/2021/09/22/Git/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="git 是一个分散式版本控制软件。最初目的是为更好地管理 Linux 内核开发而设计。  什么是版本控制？什么是“版本控制”，你为什么要关心？版本控制是一种系统，它记录一段时间内对一个文件或一组文件的更改，以便您以后可以调用特定版本。对于开发来讲，多数以软件源代码作为受版本控制的文件，但实际上几乎可以对计算机上的任何类型的文件执行此操作。 常见的版本控制系统：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com2/distributed.png">
+<meta property="article:published_time" content="2021-09-22T08:17:06.000Z">
+<meta property="article:modified_time" content="2021-09-22T08:17:06.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="7788">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Git 的各种骚操作</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2021/09/23/Subway3/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/09/18/Git-Flow/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/09/22/Git/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/09/22/Git/&text=Git 的各种骚操作"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/09/22/Git/&title=Git 的各种骚操作"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/09/22/Git/&is_video=false&description=Git 的各种骚操作"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git 的各种骚操作&body=Check out this article: https://tommygirl.cn/2021/09/22/Git/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/09/22/Git/&title=Git 的各种骚操作"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/09/22/Git/&title=Git 的各种骚操作"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/09/22/Git/&title=Git 的各种骚操作"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/09/22/Git/&title=Git 的各种骚操作"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/09/22/Git/&name=Git 的各种骚操作&description=&lt;p&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git.png&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;git 是一个分散式版本控制软件。最初目的是为更好地管理 Linux 内核开发而设计。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;什么是版本控制？&#34;&gt;&lt;a href=&#34;#什么是版本控制？&#34; class=&#34;headerlink&#34; title=&#34;什么是版本控制？&#34;&gt;&lt;/a&gt;什么是版本控制？&lt;/h2&gt;&lt;p&gt;什么是“版本控制”，你为什么要关心？版本控制是一种系统，它记录一段时间内对一个文件或一组文件的更改，以便您以后可以调用特定版本。对于开发来讲，多数以软件源代码作为受版本控制的文件，但实际上几乎可以对计算机上的任何类型的文件执行此操作。&lt;/p&gt;
+&lt;p&gt;常见的版本控制系统：&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/09/22/Git/&t=Git 的各种骚操作"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是版本控制？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-%E7%AE%80%E5%8F%B2"><span class="toc-number">2.</span> <span class="toc-text">Git 简史</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Git 的各种骚操作
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-09-22T08:17:06.000Z" itemprop="datePublished">2021-09-22</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/7788/" rel="tag">7788</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git.png"></p>
+<blockquote>
+<p>git 是一个分散式版本控制软件。最初目的是为更好地管理 Linux 内核开发而设计。</p>
+</blockquote>
+<h2 id="什么是版本控制？"><a href="#什么是版本控制？" class="headerlink" title="什么是版本控制？"></a>什么是版本控制？</h2><p>什么是“版本控制”，你为什么要关心？版本控制是一种系统，它记录一段时间内对一个文件或一组文件的更改，以便您以后可以调用特定版本。对于开发来讲，多数以软件源代码作为受版本控制的文件，但实际上几乎可以对计算机上的任何类型的文件执行此操作。</p>
+<p>常见的版本控制系统：</p>
+<span id="more"></span>
+
+<ul>
+<li>本地版本控制系统 - VCS，例如 RCS</li>
+<li>集中版本控制系统 - CVCS，例如 CVS、Subversion、Perforce</li>
+<li>分布式版本控制系统 - DVCS，例如 Git、Mercurial、Bazaar 或 Darcs</li>
+</ul>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com2/distributed.png"></p>
+<p>今天的主题 Git 就属于 DVCS，在 DVCS  中，客户端不仅仅查看文件的最新快照，相反，它们完全镜像存储库，包括其完整历史记录。因此，如果任何服务器死机，这些系统通过该服务器进行协作，则可以将任何客户端存储库复制回服务器以恢复它。每个克隆实际上都是所有数据的完整备份。</p>
+<h2 id="Git-简史"><a href="#Git-简史" class="headerlink" title="Git 简史"></a>Git 简史</h2><p>与生活中的许多伟大事物一样，Git 始于一些创造性的破坏和激烈的争议。</p>
+<p>Linux 内核是一个规模相当大的开源软件项目。在 Linux 内核维护的早期（1991-2002 年），对软件的更改以补丁和存档文件的形式传递。2002 年，Linux 内核项目开始使用名为 BitKeeper 的专有 DVCS。</p>
+<p>2005 年，开发 Linux 内核的社区与开发 BitKeeper 的商业公司之间的关系破裂，该工具的免费状态被取消。这促使 Linux 开发社区（尤其是 Linux 的创建者 Linus Torvalds）根据他们在使用 BitKeeper 时学到的一些经验教训开发自己的工具。新系统的一些目标如下：</p>
+<ul>
+<li>速度</li>
+<li>简单的设计</li>
+<li>对非线性开发的强力支持（数千个并行分支）</li>
+<li>完全分布式</li>
+<li>能够高效地处理像 Linux 内核这样的大型项目（速度和数据大小）</li>
+</ul>
+<p>自 2005 年诞生以来，Git 已经发展并成熟为易于使用并保留了这些最初的品质。它非常快，对于大型项目非常有效，并且它具有用于非线性开发的令人难以置信的分支系统。</p>
+<hr>
+<p>还没写完，被领导叫去写 bug 了~~</p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是版本控制？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-%E7%AE%80%E5%8F%B2"><span class="toc-number">2.</span> <span class="toc-text">Git 简史</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/09/22/Git/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/09/22/Git/&text=Git 的各种骚操作"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/09/22/Git/&title=Git 的各种骚操作"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/09/22/Git/&is_video=false&description=Git 的各种骚操作"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git 的各种骚操作&body=Check out this article: https://tommygirl.cn/2021/09/22/Git/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/09/22/Git/&title=Git 的各种骚操作"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/09/22/Git/&title=Git 的各种骚操作"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/09/22/Git/&title=Git 的各种骚操作"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/09/22/Git/&title=Git 的各种骚操作"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/09/22/Git/&name=Git 的各种骚操作&description=&lt;p&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git.png&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;git 是一个分散式版本控制软件。最初目的是为更好地管理 Linux 内核开发而设计。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;什么是版本控制？&#34;&gt;&lt;a href=&#34;#什么是版本控制？&#34; class=&#34;headerlink&#34; title=&#34;什么是版本控制？&#34;&gt;&lt;/a&gt;什么是版本控制？&lt;/h2&gt;&lt;p&gt;什么是“版本控制”，你为什么要关心？版本控制是一种系统，它记录一段时间内对一个文件或一组文件的更改，以便您以后可以调用特定版本。对于开发来讲，多数以软件源代码作为受版本控制的文件，但实际上几乎可以对计算机上的任何类型的文件执行此操作。&lt;/p&gt;
+&lt;p&gt;常见的版本控制系统：&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/09/22/Git/&t=Git 的各种骚操作"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

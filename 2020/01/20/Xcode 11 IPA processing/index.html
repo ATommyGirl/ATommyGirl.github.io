@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="问题：warning: Configuration issue: platform iPhoneSimulator.platform doesn’t have any non-simulator SDKs; ignoring itAssertion failed: Expected 2 archs in otool output:今天准备打一个企业ipa的时候，报了一个错，吓出了一身冷汗：IPA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xcode 11 IPA processing failed 初见">
+<meta property="og:url" content="https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="问题：warning: Configuration issue: platform iPhoneSimulator.platform doesn’t have any non-simulator SDKs; ignoring itAssertion failed: Expected 2 archs in otool output:今天准备打一个企业ipa的时候，报了一个错，吓出了一身冷汗：IPA">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/35.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/36.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/37.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/flag.jpeg">
+<meta property="article:published_time" content="2020-01-20T10:23:00.000Z">
+<meta property="article:modified_time" content="2020-01-20T10:23:00.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="Xcode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/35.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Xcode 11 IPA processing failed 初见</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2020/02/14/LaunchImage/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&text=Xcode 11 IPA processing failed 初见"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&title=Xcode 11 IPA processing failed 初见"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&is_video=false&description=Xcode 11 IPA processing failed 初见"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xcode 11 IPA processing failed 初见&body=Check out this article: https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&title=Xcode 11 IPA processing failed 初见"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&title=Xcode 11 IPA processing failed 初见"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&title=Xcode 11 IPA processing failed 初见"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&title=Xcode 11 IPA processing failed 初见"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&name=Xcode 11 IPA processing failed 初见&description=&lt;h2 id=&#34;问题：&#34;&gt;&lt;a href=&#34;#问题：&#34; class=&#34;headerlink&#34; title=&#34;问题：&#34;&gt;&lt;/a&gt;问题：&lt;/h2&gt;&lt;h4 id=&#34;warning-Configuration-issue-platform-iPhoneSimulator-platform-doesn’t-have-any-non-simulator-SDKs-ignoring-it&#34;&gt;&lt;a href=&#34;#warning-Configuration-issue-platform-iPhoneSimulator-platform-doesn’t-have-any-non-simulator-SDKs-ignoring-it&#34; class=&#34;headerlink&#34; title=&#34;warning: Configuration issue: platform iPhoneSimulator.platform doesn’t have any non-simulator SDKs; ignoring it&#34;&gt;&lt;/a&gt;warning: Configuration issue: platform iPhoneSimulator.platform doesn’t have any non-simulator SDKs; ignoring it&lt;/h4&gt;&lt;h4 id=&#34;Assertion-failed-Expected-2-archs-in-otool-output&#34;&gt;&lt;a href=&#34;#Assertion-failed-Expected-2-archs-in-otool-output&#34; class=&#34;headerlink&#34; title=&#34;Assertion failed: Expected 2 archs in otool output:&#34;&gt;&lt;/a&gt;Assertion failed: Expected 2 archs in otool output:&lt;/h4&gt;&lt;p&gt;今天准备打一个企业ipa的时候，报了一个错，吓出了一身冷汗：&lt;code&gt;IPA processing failed&lt;/code&gt;&lt;br&gt;看到了 Show Logs，就抱着试试看的态度，点开了，毕竟试试又不会怀孕~~~&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/35.png&#34; alt=&#34;IPA processing failed&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&t=Xcode 11 IPA processing failed 初见"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">问题：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#warning-Configuration-issue-platform-iPhoneSimulator-platform-doesn%E2%80%99t-have-any-non-simulator-SDKs-ignoring-it"><span class="toc-number">1.0.1.</span> <span class="toc-text">warning: Configuration issue: platform iPhoneSimulator.platform doesn’t have any non-simulator SDKs; ignoring it</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Assertion-failed-Expected-2-archs-in-otool-output"><span class="toc-number">1.0.2.</span> <span class="toc-text">Assertion failed: Expected 2 archs in otool output:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Framework-%E7%98%A6%E8%BA%AB%E5%A4%A7%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">Framework 瘦身大法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E4%B9%8C%E9%BE%99"><span class="toc-number">3.</span> <span class="toc-text">小乌龙</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Xcode 11 IPA processing failed 初见
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-01-20T10:23:00.000Z" itemprop="datePublished">2020-01-20</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Xcode/" rel="tag">Xcode</a>, <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><h4 id="warning-Configuration-issue-platform-iPhoneSimulator-platform-doesn’t-have-any-non-simulator-SDKs-ignoring-it"><a href="#warning-Configuration-issue-platform-iPhoneSimulator-platform-doesn’t-have-any-non-simulator-SDKs-ignoring-it" class="headerlink" title="warning: Configuration issue: platform iPhoneSimulator.platform doesn’t have any non-simulator SDKs; ignoring it"></a>warning: Configuration issue: platform iPhoneSimulator.platform doesn’t have any non-simulator SDKs; ignoring it</h4><h4 id="Assertion-failed-Expected-2-archs-in-otool-output"><a href="#Assertion-failed-Expected-2-archs-in-otool-output" class="headerlink" title="Assertion failed: Expected 2 archs in otool output:"></a>Assertion failed: Expected 2 archs in otool output:</h4><p>今天准备打一个企业ipa的时候，报了一个错，吓出了一身冷汗：<code>IPA processing failed</code><br>看到了 Show Logs，就抱着试试看的态度，点开了，毕竟试试又不会怀孕~~~</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/35.png" alt="IPA processing failed"></p>
+<span id="more"></span>
+
+<p>Show Logs 我们会看到下面四个日志文件，就是我们本次Archive~Package过程中的日志，然后我们着重看一下第二个选中的log</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/36.png" alt="log"></p>
+<p>搜索一下 <code>error</code> 或者 <code>failed</code> 总会发现什么的，喏，我们发现了就包含一个failed，注意上下文划线的几句话，应该是提示的那个framework包含了模拟器架构，上架肯定是要移除的，所以我们需要忽略它，换句话说，它太胖了，我们需要给它瘦个身🤹‍♂️🤹‍♂️🤹‍♂️🤹‍♂️🤹‍♂️</p>
+<blockquote>
+<p>模拟器32位处理器测试需要i386架构，（iphone5，iphone5s以下的模拟器）<br>模拟器64位处理器测试需要x86_64架构，(iphone6以上的模拟器)<br>真机32位处理器需要armv7,或者armv7s架构，（iphone4真机/armv7, ipnone5，iphone5s真机/armv7s）<br>真机64位处理器需要arm64架构，(iphone6，iphone6p以上的真机)</p>
+</blockquote>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/37.png" alt="寻找恐惧"></p>
+<h2 id="Framework-瘦身大法"><a href="#Framework-瘦身大法" class="headerlink" title="Framework 瘦身大法"></a>Framework 瘦身大法</h2><blockquote>
+<p>本段内容来自于：<a href="%5Bhttps://www.jianshu.com/p/3c6b1dd7a0ed%5D(https://www.jianshu.com/p/3c6b1dd7a0ed)">xcode11打包失败 IPA processing failed 问题解决</a></p>
+</blockquote>
+<ul>
+<li><p>1、 进入framework所在的目录（以下的框架名称换成自己的即可）</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> [your framework path]</span><br></pre></td></tr></table></figure></li>
+<li><p>2、查看SDK的二进制文件支持的CPU架构，如果只显示armv7 arm64，那么就没问题，如果有模拟器的架构x86_64, i386那就是有问题</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo -info OAChatClient.framework/OAChatClient</span><br></pre></td></tr></table></figure></li>
+<li><p>3、移除支持x86_64,i386的二进制文件<br>ps：移除自己对应的类型就可以，这里只是举个例子。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo OAChatClient.framework/OAChatClient -remove x86_64 -remove i386 -output OAChatClient</span><br></pre></td></tr></table></figure></li>
+<li><p>4、用第3步生成的新的可执行文件 替换framwork内部的可执行文件[记得备份]</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv OAChatClient OAChatClient.framework/OAChatClient</span><br></pre></td></tr></table></figure></li>
+<li><p>5、查看我们瘦身后的可执行文件是否正确，显示armv7或arm64，就完成剥离，再打包应该就可以了，啊哈哈哈</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo -info OAChatClient.framework/OAChatClient</span><br></pre></td></tr></table></figure></li>
+<li><p>如果你觉得以上操作比较麻烦，每次模拟器调试和打包还要替换对应的SDK,那么以下方式将更加简便的解决你的问题：<br>buildPhases-&gt;New Run Script Phase添加以下内容</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">APP_PATH=<span class="string">&quot;<span class="variable">$&#123;TARGET_BUILD_DIR&#125;</span>/<span class="variable">$&#123;WRAPPER_NAME&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># This script loops through the frameworks embedded in the application and</span></span><br><span class="line"><span class="comment"># removes unused architectures.</span></span><br><span class="line">find <span class="string">&quot;<span class="variable">$APP_PATH</span>&quot;</span> -name <span class="string">&#x27;*.framework&#x27;</span> -<span class="built_in">type</span> d | <span class="keyword">while</span> <span class="built_in">read</span> -r FRAMEWORK</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">FRAMEWORK_EXECUTABLE_NAME=$(defaults <span class="built_in">read</span> <span class="string">&quot;<span class="variable">$FRAMEWORK</span>/Info.plist&quot;</span> CFBundleExecutable)</span><br><span class="line">FRAMEWORK_EXECUTABLE_PATH=<span class="string">&quot;<span class="variable">$FRAMEWORK</span>/<span class="variable">$FRAMEWORK_EXECUTABLE_NAME</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Executable is <span class="variable">$FRAMEWORK_EXECUTABLE_PATH</span>&quot;</span></span><br><span class="line"></span><br><span class="line">EXTRACTED_ARCHS=()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ARCH <span class="keyword">in</span> <span class="variable">$ARCHS</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Extracting <span class="variable">$ARCH</span> from <span class="variable">$FRAMEWORK_EXECUTABLE_NAME</span>&quot;</span></span><br><span class="line">lipo -extract <span class="string">&quot;<span class="variable">$ARCH</span>&quot;</span> <span class="string">&quot;<span class="variable">$FRAMEWORK_EXECUTABLE_PATH</span>&quot;</span> -o <span class="string">&quot;<span class="variable">$FRAMEWORK_EXECUTABLE_PATH</span>-<span class="variable">$ARCH</span>&quot;</span></span><br><span class="line">EXTRACTED_ARCHS+=(<span class="string">&quot;<span class="variable">$FRAMEWORK_EXECUTABLE_PATH</span>-<span class="variable">$ARCH</span>&quot;</span>)</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Merging extracted architectures: <span class="variable">$&#123;ARCHS&#125;</span>&quot;</span></span><br><span class="line">lipo -o <span class="string">&quot;<span class="variable">$FRAMEWORK_EXECUTABLE_PATH</span>-merged&quot;</span> -create <span class="string">&quot;<span class="variable">$&#123;EXTRACTED_ARCHS[@]&#125;</span>&quot;</span></span><br><span class="line">rm <span class="string">&quot;<span class="variable">$&#123;EXTRACTED_ARCHS[@]&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Replacing original executable with thinned version&quot;</span></span><br><span class="line">rm <span class="string">&quot;<span class="variable">$FRAMEWORK_EXECUTABLE_PATH</span>&quot;</span></span><br><span class="line">mv <span class="string">&quot;<span class="variable">$FRAMEWORK_EXECUTABLE_PATH</span>-merged&quot;</span> <span class="string">&quot;<span class="variable">$FRAMEWORK_EXECUTABLE_PATH</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="小乌龙"><a href="#小乌龙" class="headerlink" title="小乌龙"></a>小乌龙</h2><p>PS：发现这个问题，是因为想使用人家野火的IM demo，自己打个包，结果就报了上面的问题，按照上面的步骤改完一个framework后，发现，其实野火的工程里，已经写好了脚本（文件：removex86.sh，是不是看名字就知道是干嘛的了），哈哈哈，只需要运行一下就ok了🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓</p>
+<p>这是人家的shell，如果有和我一样的人，一定要注意哦：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> Frameworks</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;朋友圈的库如果不存在，脚本会报错误，可以忽略掉！&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#lipo WFChatUIKit.framework/WFChatUIKit -thin armv7 -output XXXX_armv7</span></span><br><span class="line">lipo WFChatUIKit.framework/WFChatUIKit -thin arm64 -output XXXX_arm64</span><br><span class="line"><span class="comment">#lipo -create XXXX_armv7 XXXX_arm64 -output XXXX</span></span><br><span class="line">mv XXXX_arm64 WFChatUIKit.framework/WFChatUIKit</span><br><span class="line">rm -rf XXXX*</span><br><span class="line"></span><br><span class="line"><span class="comment"># lipo WFAVEngineKit.framework/WFAVEngineKit -thin armv7 -output XXXX_armv7</span></span><br><span class="line">lipo WFAVEngineKit.framework/WFAVEngineKit -thin arm64 -output XXXX_arm64</span><br><span class="line"><span class="comment"># lipo -create XXXX_armv7 XXXX_arm64 -output XXXX</span></span><br><span class="line">mv XXXX_arm64 WFAVEngineKit.framework/WFAVEngineKit</span><br><span class="line">rm -rf XXXX*</span><br><span class="line"></span><br><span class="line"><span class="comment"># lipo WFChatClient.framework/WFChatClient -thin armv7 -output XXXX_armv7</span></span><br><span class="line">lipo WFChatClient.framework/WFChatClient -thin arm64 -output XXXX_arm64</span><br><span class="line"><span class="comment"># lipo -create XXXX_armv7 XXXX_arm64 -output XXXX</span></span><br><span class="line">mv XXXX_arm64 WFChatClient.framework/WFChatClient</span><br><span class="line">rm -rf XXXX*</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ../WildFireChat/Moments</span><br><span class="line"><span class="comment">#lipo WFMomentClient.framework/WFMomentClient -thin armv7 -output XXXX_armv7</span></span><br><span class="line">lipo WFMomentClient.framework/WFMomentClient -thin arm64 -output XXXX_arm64</span><br><span class="line"><span class="comment">#lipo -create XXXX_armv7 XXXX_arm64 -output XXXX</span></span><br><span class="line">mv XXXX_arm64 WFMomentClient.framework/WFMomentClient</span><br><span class="line">rm -rf XXXX*</span><br><span class="line"></span><br><span class="line"><span class="comment"># lipo WFMomentUIKit.framework/WFMomentUIKit -thin armv7 -output XXXX_armv7</span></span><br><span class="line">lipo WFMomentUIKit.framework/WFMomentUIKit -thin arm64 -output XXXX_arm64</span><br><span class="line"><span class="comment"># lipo -create XXXX_armv7 XXXX_arm64 -output XXXX</span></span><br><span class="line">mv XXXX_arm64 WFMomentUIKit.framework/WFMomentUIKit</span><br><span class="line">rm -rf XXXX*</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ../../Frameworks</span><br><span class="line"></span><br><span class="line"><span class="comment">#lipo GoogleWebRTC/Frameworks/frameworks/WebRTC.framework/WebRTC -thin armv7 -output XXXX_armv7</span></span><br><span class="line">lipo GoogleWebRTC/Frameworks/frameworks/WebRTC.framework/WebRTC -thin arm64 -output XXXX_arm64</span><br><span class="line"><span class="comment">#lipo -create XXXX_armv7 XXXX_arm64 -output XXXX</span></span><br><span class="line">mv XXXX_arm64 GoogleWebRTC/Frameworks/frameworks/WebRTC.framework/WebRTC</span><br><span class="line">rm -rf XXXX*</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;朋友圈的库如果不存在，脚本会报错误，可以忽略掉！&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;执行这个脚本后，打包时一定不要打开ios-chat这个项目空间进行打包，因为会重新生成这些被瘦身的库。要打开wfchat这个项目进行打包！&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>PPS：运行脚本的命令就是<code>sh ***.sh</code></p>
+<div contenteditable="plaintext-only"><div contenteditable="plaintext-only"><center>
+  <div style="display:inline-block;"><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/flag.jpeg" class width="200"></div>
+</center>
+
+
+</div></div>
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">问题：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#warning-Configuration-issue-platform-iPhoneSimulator-platform-doesn%E2%80%99t-have-any-non-simulator-SDKs-ignoring-it"><span class="toc-number">1.0.1.</span> <span class="toc-text">warning: Configuration issue: platform iPhoneSimulator.platform doesn’t have any non-simulator SDKs; ignoring it</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Assertion-failed-Expected-2-archs-in-otool-output"><span class="toc-number">1.0.2.</span> <span class="toc-text">Assertion failed: Expected 2 archs in otool output:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Framework-%E7%98%A6%E8%BA%AB%E5%A4%A7%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">Framework 瘦身大法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E4%B9%8C%E9%BE%99"><span class="toc-number">3.</span> <span class="toc-text">小乌龙</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&text=Xcode 11 IPA processing failed 初见"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&title=Xcode 11 IPA processing failed 初见"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&is_video=false&description=Xcode 11 IPA processing failed 初见"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Xcode 11 IPA processing failed 初见&body=Check out this article: https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&title=Xcode 11 IPA processing failed 初见"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&title=Xcode 11 IPA processing failed 初见"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&title=Xcode 11 IPA processing failed 初见"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&title=Xcode 11 IPA processing failed 初见"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&name=Xcode 11 IPA processing failed 初见&description=&lt;h2 id=&#34;问题：&#34;&gt;&lt;a href=&#34;#问题：&#34; class=&#34;headerlink&#34; title=&#34;问题：&#34;&gt;&lt;/a&gt;问题：&lt;/h2&gt;&lt;h4 id=&#34;warning-Configuration-issue-platform-iPhoneSimulator-platform-doesn’t-have-any-non-simulator-SDKs-ignoring-it&#34;&gt;&lt;a href=&#34;#warning-Configuration-issue-platform-iPhoneSimulator-platform-doesn’t-have-any-non-simulator-SDKs-ignoring-it&#34; class=&#34;headerlink&#34; title=&#34;warning: Configuration issue: platform iPhoneSimulator.platform doesn’t have any non-simulator SDKs; ignoring it&#34;&gt;&lt;/a&gt;warning: Configuration issue: platform iPhoneSimulator.platform doesn’t have any non-simulator SDKs; ignoring it&lt;/h4&gt;&lt;h4 id=&#34;Assertion-failed-Expected-2-archs-in-otool-output&#34;&gt;&lt;a href=&#34;#Assertion-failed-Expected-2-archs-in-otool-output&#34; class=&#34;headerlink&#34; title=&#34;Assertion failed: Expected 2 archs in otool output:&#34;&gt;&lt;/a&gt;Assertion failed: Expected 2 archs in otool output:&lt;/h4&gt;&lt;p&gt;今天准备打一个企业ipa的时候，报了一个错，吓出了一身冷汗：&lt;code&gt;IPA processing failed&lt;/code&gt;&lt;br&gt;看到了 Show Logs，就抱着试试看的态度，点开了，毕竟试试又不会怀孕~~~&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/35.png&#34; alt=&#34;IPA processing failed&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2020/01/20/Xcode%2011%20IPA%20processing/&t=Xcode 11 IPA processing failed 初见"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

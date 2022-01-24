@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Git-Flow 是构建在 Git 之上的一个组织软件开发活动的模型，是在 Git 之上构建的一项软件开发最佳实践。 2010 年 Vincent Driessen 提出了 A Successful Git Branching Model 分支模型，用来帮助开发人员在大型软件项目中追踪 feature，hotfix 和 release。Gitflow 使整个分支模型自动化完成，更加易用。  分支">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git-Flow 使用规范">
+<meta property="og:url" content="https://tommygirl.cn/2021/09/18/Git-Flow/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="Git-Flow 是构建在 Git 之上的一个组织软件开发活动的模型，是在 Git 之上构建的一项软件开发最佳实践。 2010 年 Vincent Driessen 提出了 A Successful Git Branching Model 分支模型，用来帮助开发人员在大型软件项目中追踪 feature，hotfix 和 release。Gitflow 使整个分支模型自动化完成，更加易用。  分支">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git-flow-main.jpeg">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git-flow-branch.jpeg">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git-flow.png">
+<meta property="article:published_time" content="2021-09-18T09:15:06.000Z">
+<meta property="article:modified_time" content="2021-09-18T09:15:06.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="7788">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git-flow-main.jpeg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Git-Flow 使用规范</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2021/09/22/Git/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/08/29/%E5%A5%B3%E6%80%A7%E7%AE%A1%E7%90%86%E8%80%85/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/09/18/Git-Flow/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/09/18/Git-Flow/&text=Git-Flow 使用规范"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/09/18/Git-Flow/&title=Git-Flow 使用规范"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/09/18/Git-Flow/&is_video=false&description=Git-Flow 使用规范"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git-Flow 使用规范&body=Check out this article: https://tommygirl.cn/2021/09/18/Git-Flow/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/09/18/Git-Flow/&title=Git-Flow 使用规范"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/09/18/Git-Flow/&title=Git-Flow 使用规范"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/09/18/Git-Flow/&title=Git-Flow 使用规范"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/09/18/Git-Flow/&title=Git-Flow 使用规范"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/09/18/Git-Flow/&name=Git-Flow 使用规范&description=&lt;blockquote&gt;
+&lt;p&gt;Git-Flow 是构建在 Git 之上的一个组织软件开发活动的模型，是在 Git 之上构建的一项软件开发最佳实践。&lt;/p&gt;
+&lt;p&gt;2010 年 Vincent Driessen 提出了 &lt;a href=&#34;http://nvie.com/posts/a-successful-git-branching-model/&#34;&gt;A Successful Git Branching Model&lt;/a&gt; 分支模型，用来帮助开发人员在大型软件项目中追踪 feature，hotfix 和 release。Gitflow 使整个分支模型自动化完成，更加易用。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;分支说明&#34;&gt;&lt;a href=&#34;#分支说明&#34; class=&#34;headerlink&#34; title=&#34;分支说明&#34;&gt;&lt;/a&gt;分支说明&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;主分支：maser 分支和 develop 分支为主分支，是受保护分支，只有 master 权限可以操作，&lt;strong&gt;只接受代码合并不接受代码提交&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;辅助分支：feature 功能分支、bugfix 功能修复分支、release 发布分支、hotfix 热修复分支为辅助分支，完成功能之后合并会主分支，并删除。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Git-Flow 模型中定义了主分支和辅助分支两类分支。其中主分支用于组织与软件开发、部署相关的活动；辅助分支用于组织为了解决特定的问题而进行的各种开发活动。&lt;/p&gt;
+&lt;h2 id=&#34;主分支&#34;&gt;&lt;a href=&#34;#主分支&#34; class=&#34;headerlink&#34; title=&#34;主分支&#34;&gt;&lt;/a&gt;主分支&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git-flow-main.jpeg&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/09/18/Git-Flow/&t=Git-Flow 使用规范"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E8%AF%B4%E6%98%8E"><span class="toc-number">1.</span> <span class="toc-text">分支说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E5%88%86%E6%94%AF"><span class="toc-number">2.</span> <span class="toc-text">主分支</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#master-%E5%88%86%E6%94%AF"><span class="toc-number">2.1.</span> <span class="toc-text">master 分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#develop-%E5%88%86%E6%94%AF"><span class="toc-number">2.2.</span> <span class="toc-text">develop 分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%88%86%E6%94%AF"><span class="toc-number">3.</span> <span class="toc-text">辅助分支</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#feature-%E5%88%86%E6%94%AF"><span class="toc-number">3.1.</span> <span class="toc-text">feature 分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#release-%E5%88%86%E6%94%AF"><span class="toc-number">3.2.</span> <span class="toc-text">release 分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bugfix-%E5%88%86%E6%94%AF"><span class="toc-number">3.3.</span> <span class="toc-text">bugfix 分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hotfix-%E5%88%86%E6%94%AF"><span class="toc-number">3.4.</span> <span class="toc-text">hotfix 分支</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Git-Flow 使用规范
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-09-18T09:15:06.000Z" itemprop="datePublished">2021-09-18</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/7788/" rel="tag">7788</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>Git-Flow 是构建在 Git 之上的一个组织软件开发活动的模型，是在 Git 之上构建的一项软件开发最佳实践。</p>
+<p>2010 年 Vincent Driessen 提出了 <a target="_blank" rel="noopener" href="http://nvie.com/posts/a-successful-git-branching-model/">A Successful Git Branching Model</a> 分支模型，用来帮助开发人员在大型软件项目中追踪 feature，hotfix 和 release。Gitflow 使整个分支模型自动化完成，更加易用。</p>
+</blockquote>
+<h2 id="分支说明"><a href="#分支说明" class="headerlink" title="分支说明"></a>分支说明</h2><ol>
+<li>主分支：maser 分支和 develop 分支为主分支，是受保护分支，只有 master 权限可以操作，<strong>只接受代码合并不接受代码提交</strong>。</li>
+<li>辅助分支：feature 功能分支、bugfix 功能修复分支、release 发布分支、hotfix 热修复分支为辅助分支，完成功能之后合并会主分支，并删除。</li>
+</ol>
+<p>Git-Flow 模型中定义了主分支和辅助分支两类分支。其中主分支用于组织与软件开发、部署相关的活动；辅助分支用于组织为了解决特定的问题而进行的各种开发活动。</p>
+<h2 id="主分支"><a href="#主分支" class="headerlink" title="主分支"></a>主分支</h2><p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git-flow-main.jpeg" alt="img"></p>
+<span id="more"></span>
+
+<p>Git-Flow 定义了两个主分支，是长期支持分支，不会被删除。<strong>注意，主分支只接受代码合并，不接受代码提交</strong>。</p>
+<h3 id="master-分支"><a href="#master-分支" class="headerlink" title="master 分支"></a>master 分支</h3><blockquote>
+<p>We consider origin/master to be the main branch where the source code of HEAD always reflects a production-ready state.</p>
+</blockquote>
+<p>引用原作者的描述，master 分支上的代码始终指向生产就绪状态。</p>
+<p>我理解这句话的意思就是：master 分支上的代码应该是<strong>最近发布</strong>到生产环境的代码。</p>
+<p>master 分支规定：</p>
+<ul>
+<li>和生产的代码保持一致</li>
+<li><strong>仅在上线前才更新 master 分支上的代码</strong></li>
+<li>每次更新 master，都需对 master 添加指定格式的 tag，用于发布或回滚</li>
+<li>master 分支是保护分支，不可直接 push 到远程 master 分支</li>
+<li>master 分支代码只能被 release 分支或 hotfix 分支合并，不接受其他分支的合并</li>
+</ul>
+<p>所以我们规定 (请大家牢记)：</p>
+<p><strong>master 分支上的代码，随时可以上线</strong>。</p>
+<p><strong>master 分支上的代码，随时可以上线。</strong></p>
+<p><strong>master 分支上的代码，随时可以上线。</strong></p>
+<h3 id="develop-分支"><a href="#develop-分支" class="headerlink" title="develop 分支"></a>develop 分支</h3><blockquote>
+<p>We consider origin/develop to be the main branch where the source code of HEAD always reflects a state with the latest delivered development changes for the next release. Some would call this the “integration branch”. This is where any automatic nightly builds are built from.</p>
+</blockquote>
+<p>引用原作者的描述，develop 分支是下一个发布的最新交付代码，叫做 “集成分支”。每日构建应该在 develop 分支上。</p>
+<p>我理解这句话的意思就是：develop 分支是我们的主要开发分支，为下一阶段需要上线功能的集成分支。</p>
+<p>develop 分支规定：</p>
+<ul>
+<li>develop 分支不能与 master 分支直接交互</li>
+</ul>
+<p>这里我们就有几个问题了：</p>
+<ol>
+<li>develop 是开发分支，但是又不能提交代码？咋办？</li>
+<li>master 分支是生产分支，develop 测试完了，又不能直接交互，咋办？</li>
+<li>如果不合并，那要是不能及时上线，develop 没办法继续合并新的功能了，工作就停了？</li>
+<li>但是有个问题，合并到 master 分之后，线上环境有个 bug 需要修复，咋办？</li>
+</ol>
+<p>Bingo~这个时候就用到了辅助分支。</p>
+<h2 id="辅助分支"><a href="#辅助分支" class="headerlink" title="辅助分支"></a>辅助分支</h2><p>辅助分支是辅助团队进行并行开发，功能跟踪，线上快速修复，与主分支不同，这些分支不是长期支持分支，完成之后会删除。</p>
+<p>这些分支每一个都有特定目的，必须遵守关于分支的起始分支以及合并目标分支的规则。</p>
+<p>辅助分支有以下几种：</p>
+<ul>
+<li>feature 功能分支</li>
+<li>bugfix 缺陷修复分支 (在原文中并未提及，但是 <a target="_blank" rel="noopener" href="https://github.com/petervanderdoes/gitflow-avh/wiki/Installing-on-Mac-OS-X">avh</a> 版本 git-flow 包含此分支)</li>
+<li>release 发布分支</li>
+<li>hotfix 热修复分支</li>
+<li>support 长期支持分支</li>
+</ul>
+<p>先来一张图，大家感受一下。</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git-flow-branch.jpeg" alt="img"></p>
+<h3 id="feature-分支"><a href="#feature-分支" class="headerlink" title="feature 分支"></a>feature 分支</h3><p>【强制】出自：develop 分支<br>【强制】合并回：develop 分支<br>【强制】命名规范：/feature/[英文功能名称]</p>
+<p>功能分支的本质是，只要功能处于开发阶段，它就会存在，但最终会合并回 develop 或丢弃。</p>
+<p>原文中提到一句话“Feature branches typically exist in developer repos only, not in origin. ”功能分支通常只存在于开发者本地仓库，而不在远程仓库。</p>
+<p>这里我们根据实际情况来调整，功能开发多人协作很常见，所以我们认为功能分支应该存在远程仓库。</p>
+<p>feature 规定：</p>
+<ol>
+<li>以功能为单位从 develop 拉一个 feature 分支</li>
+<li>每个 feature 分支颗粒要尽量小，以利于快速迭代和避免冲突</li>
+<li>在本地单元测试及 review 通过后，向项目主管申请，由项目主管或专人合并推送到 Gitlab 的 develop</li>
+<li>合并前，应先拉取远程 develop 将本地 develop 更新</li>
+<li>feature 分支只与 develop 分支交互，不能与 master 分支直接交互</li>
+</ol>
+<p>此分支解决了我们第一个疑问</p>
+<ul>
+<li>develop 是开发分支，但是又不能提交代码？咋办？</li>
+</ul>
+<p>所有的开发都是在 feature 分支上进行，最终合并回 develop 分支上。</p>
+<h3 id="release-分支"><a href="#release-分支" class="headerlink" title="release 分支"></a>release 分支</h3><p>【强制】出自：develop 分支<br>【强制】合并回：develop 和 master 分支<br>【强制】命名规范：/release/[发布版本号]</p>
+<p>发布分支为下一个生产版本，只允许小错误的修复和准备发布的元数据 [版本号，发布日志，日期等] 的修改。最终发布版本号，在发布分支决定。</p>
+<p>通过发布分支，可以释放 develop 分支，以进行下一阶段的工作。</p>
+<p>发布分支我们规定：</p>
+<ol>
+<li>生成 release 分支，首先修改版本号，以区别 develop 分支的版本</li>
+<li>只存在一个发布分支 (这个是 gitflow 目前的规定，可以讨论一下)</li>
+<li>当需要为发布新版做准备时，从 develop 衍生出一个 release 分支</li>
+<li>release 分支也可以从 develop 分支上指定 commit 派生出</li>
+<li>release 分支测试通过后，合并到 master 分支并且给 master 标记一个版本号</li>
+<li><strong>release 分支一旦建立就将独立，不再从其他分支合并代码</strong></li>
+<li>必须合并回 develop 分支和 master 分支或废弃</li>
+</ol>
+<p>此分支解决了我们两个疑问</p>
+<ul>
+<li>master 分支是生产分支，develop 测试完了，又不能直接交互，咋办？</li>
+<li>如果不合并，那要是不能及时上线，develop 没办法继续合并新的功能了，工作就停了？</li>
+</ul>
+<p>master 通过引入 release 分支来进行 develop 进行交互，使用 release 分支，既能进行发布前的独立验证，又能不影响其他的功能分支合并会 develop 进行每日构建。</p>
+<h3 id="bugfix-分支"><a href="#bugfix-分支" class="headerlink" title="bugfix 分支"></a>bugfix 分支</h3><p>【强制】出自：develop 分支<br>【强制】合并回：develop 分支<br>【强制】命名规范：/bugfix/[bug - 英文缺陷名称或者 bug 编号]</p>
+<p>缺陷分支，主要进行缺陷的修复记录，和功能分支类似，gitflow 流程中，没有定义缺陷分支，为了区分缺陷与功能，新建缺陷分支用于区别功能，也可以忽略此分支，直接在功能分支中进行修复。注意在 commit message 中做区分。</p>
+<h3 id="hotfix-分支"><a href="#hotfix-分支" class="headerlink" title="hotfix 分支"></a>hotfix 分支</h3><p>【强制】出自：master 分支<br>【强制】合并回：master 分支 和 [develop 分支 release 分支]<br>【强制】命名规范：/hotfix/[发布版本号]</p>
+<p>热修复分支，类似于发布分支，都是为了准备新的生产上线版本。</p>
+<p>当线上版本出现了不得不立即修复的缺陷时，可以从 master 分支新建热修复分支。修复完成之后，更改版本号，合并回 master 分支以及 develop 分支。</p>
+<p><strong>注意，当在热修复之前已经发布了下一个发布版本的时候，此时热修复分支应该合并回 master 和 release 分支，release 分支完成之后，会把热修复的分支合并回 develop 分支。</strong></p>
+<p>hotfix 分支规定：</p>
+<ol>
+<li>hotfix 分支用来快速给已发布产品修复 bug 或微调功能</li>
+<li>只能从 master 分支指定 tag 版本衍生出来</li>
+<li>一旦完成修复 bug，必须合并回 master 分支和 develop 分支</li>
+<li>master 被合并后，应该被标记一个新的版本号</li>
+<li>hotfix 分支一旦建立就将独立，不可再从其他分支 pull 代码</li>
+</ol>
+<p>此分支解决了我们最后一个疑问</p>
+<ul>
+<li>但是有个问题，合并到 master 分之后，线上环境有个 bug 需要修复，咋办？</li>
+</ul>
+<p>生产环境的 bug 修复由 hotfix 分支负责。</p>
+<p>再来个大图 引自 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d46da933c180">https://www.jianshu.com/p/d46da933c180</a></p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git-flow.png" alt="img"></p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E8%AF%B4%E6%98%8E"><span class="toc-number">1.</span> <span class="toc-text">分支说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E5%88%86%E6%94%AF"><span class="toc-number">2.</span> <span class="toc-text">主分支</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#master-%E5%88%86%E6%94%AF"><span class="toc-number">2.1.</span> <span class="toc-text">master 分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#develop-%E5%88%86%E6%94%AF"><span class="toc-number">2.2.</span> <span class="toc-text">develop 分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%88%86%E6%94%AF"><span class="toc-number">3.</span> <span class="toc-text">辅助分支</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#feature-%E5%88%86%E6%94%AF"><span class="toc-number">3.1.</span> <span class="toc-text">feature 分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#release-%E5%88%86%E6%94%AF"><span class="toc-number">3.2.</span> <span class="toc-text">release 分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bugfix-%E5%88%86%E6%94%AF"><span class="toc-number">3.3.</span> <span class="toc-text">bugfix 分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hotfix-%E5%88%86%E6%94%AF"><span class="toc-number">3.4.</span> <span class="toc-text">hotfix 分支</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/09/18/Git-Flow/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/09/18/Git-Flow/&text=Git-Flow 使用规范"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/09/18/Git-Flow/&title=Git-Flow 使用规范"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/09/18/Git-Flow/&is_video=false&description=Git-Flow 使用规范"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git-Flow 使用规范&body=Check out this article: https://tommygirl.cn/2021/09/18/Git-Flow/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/09/18/Git-Flow/&title=Git-Flow 使用规范"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/09/18/Git-Flow/&title=Git-Flow 使用规范"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/09/18/Git-Flow/&title=Git-Flow 使用规范"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/09/18/Git-Flow/&title=Git-Flow 使用规范"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/09/18/Git-Flow/&name=Git-Flow 使用规范&description=&lt;blockquote&gt;
+&lt;p&gt;Git-Flow 是构建在 Git 之上的一个组织软件开发活动的模型，是在 Git 之上构建的一项软件开发最佳实践。&lt;/p&gt;
+&lt;p&gt;2010 年 Vincent Driessen 提出了 &lt;a href=&#34;http://nvie.com/posts/a-successful-git-branching-model/&#34;&gt;A Successful Git Branching Model&lt;/a&gt; 分支模型，用来帮助开发人员在大型软件项目中追踪 feature，hotfix 和 release。Gitflow 使整个分支模型自动化完成，更加易用。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;分支说明&#34;&gt;&lt;a href=&#34;#分支说明&#34; class=&#34;headerlink&#34; title=&#34;分支说明&#34;&gt;&lt;/a&gt;分支说明&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;主分支：maser 分支和 develop 分支为主分支，是受保护分支，只有 master 权限可以操作，&lt;strong&gt;只接受代码合并不接受代码提交&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;辅助分支：feature 功能分支、bugfix 功能修复分支、release 发布分支、hotfix 热修复分支为辅助分支，完成功能之后合并会主分支，并删除。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Git-Flow 模型中定义了主分支和辅助分支两类分支。其中主分支用于组织与软件开发、部署相关的活动；辅助分支用于组织为了解决特定的问题而进行的各种开发活动。&lt;/p&gt;
+&lt;h2 id=&#34;主分支&#34;&gt;&lt;a href=&#34;#主分支&#34; class=&#34;headerlink&#34; title=&#34;主分支&#34;&gt;&lt;/a&gt;主分支&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/git-flow-main.jpeg&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/09/18/Git-Flow/&t=Git-Flow 使用规范"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

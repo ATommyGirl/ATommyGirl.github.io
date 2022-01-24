@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="WKWebView 是 iOS 8.0 以后用于替代 UIWebView 的浏览器组件。和 UIWebView 相比，具有渲染性能更好、支持更多的 HTML5 特性、控制更加细致等诸多优点。 一直没沉下心来学习，我们一起好好看看里面都有什么吧🤓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WKWebView 基础篇">
+<meta property="og:url" content="https://tommygirl.cn/2021/12/01/WKWebView/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="WKWebView 是 iOS 8.0 以后用于替代 UIWebView 的浏览器组件。和 UIWebView 相比，具有渲染性能更好、支持更多的 HTML5 特性、控制更加细致等诸多优点。 一直没沉下心来学习，我们一起好好看看里面都有什么吧🤓">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-01T02:40:36.000Z">
+<meta property="article:modified_time" content="2021-12-01T02:40:36.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="WebView">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>WKWebView 基础篇</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2021/12/02/WKWebView-Protocol/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/11/09/iPhone_dev_size/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/12/01/WKWebView/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/12/01/WKWebView/&text=WKWebView 基础篇"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/12/01/WKWebView/&title=WKWebView 基础篇"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/12/01/WKWebView/&is_video=false&description=WKWebView 基础篇"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WKWebView 基础篇&body=Check out this article: https://tommygirl.cn/2021/12/01/WKWebView/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/12/01/WKWebView/&title=WKWebView 基础篇"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/12/01/WKWebView/&title=WKWebView 基础篇"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/12/01/WKWebView/&title=WKWebView 基础篇"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/12/01/WKWebView/&title=WKWebView 基础篇"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/12/01/WKWebView/&name=WKWebView 基础篇&description=&lt;p&gt;WKWebView 是 iOS 8.0 以后用于替代 UIWebView 的浏览器组件。和 UIWebView 相比，具有渲染性能更好、支持更多的 HTML5 特性、控制更加细致等诸多优点。&lt;/p&gt;
+&lt;p&gt;一直没沉下心来学习，我们一起好好看看里面都有什么吧🤓&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/12/01/WKWebView/&t=WKWebView 基础篇"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WKWebView"><span class="toc-number">1.</span> <span class="toc-text">WKWebView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKWebView-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">WKWebView 初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKWebViewConfiguration"><span class="toc-number">3.</span> <span class="toc-text">WKWebViewConfiguration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKProcessPool"><span class="toc-number">4.</span> <span class="toc-text">WKProcessPool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKPreferences"><span class="toc-number">5.</span> <span class="toc-text">WKPreferences</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKUserContentController"><span class="toc-number">6.</span> <span class="toc-text">WKUserContentController</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WKScriptMessage"><span class="toc-number">6.1.</span> <span class="toc-text">WKScriptMessage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WKUserScript"><span class="toc-number">6.2.</span> <span class="toc-text">WKUserScript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WKContentWorld"><span class="toc-number">6.3.</span> <span class="toc-text">WKContentWorld</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKWebsiteDataStore"><span class="toc-number">7.</span> <span class="toc-text">WKWebsiteDataStore</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKHTTPCookieStore"><span class="toc-number">8.</span> <span class="toc-text">WKHTTPCookieStore</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKBackForwardList"><span class="toc-number">9.</span> <span class="toc-text">WKBackForwardList</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKNavigation"><span class="toc-number">10.</span> <span class="toc-text">WKNavigation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#WKNavigationAction"><span class="toc-number">10.0.1.</span> <span class="toc-text">WKNavigationAction</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WKFrameInfo"><span class="toc-number">10.0.2.</span> <span class="toc-text">WKFrameInfo</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-WKWebView-%E7%9A%84%E5%87%A0%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%9A"><span class="toc-number">11.</span> <span class="toc-text">关于 WKWebView 的几篇文章：</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        WKWebView 基础篇
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-12-01T02:40:36.000Z" itemprop="datePublished">2021-12-01</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/WebView/" rel="tag">WebView</a>, <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>WKWebView 是 iOS 8.0 以后用于替代 UIWebView 的浏览器组件。和 UIWebView 相比，具有渲染性能更好、支持更多的 HTML5 特性、控制更加细致等诸多优点。</p>
+<p>一直没沉下心来学习，我们一起好好看看里面都有什么吧🤓</p>
+<span id="more"></span>
+
+<h2 id="WKWebView"><a href="#WKWebView" class="headerlink" title="WKWebView"></a>WKWebView</h2><p>主要的</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">WKWebView</span> : <span class="title">UIView</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//重要属性</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="built_in">WKWebViewConfiguration</span> *configuration;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span> &lt;<span class="built_in">WKNavigationDelegate</span>&gt; navigationDelegate;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span> &lt;<span class="built_in">WKUIDelegate</span>&gt; <span class="built_in">UIDelegate</span>;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">strong</span>) <span class="built_in">WKBackForwardList</span> *backForwardList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">nullable</span>) SecTrustRef serverTrust;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *customUserAgent;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> allowsLinkPreview;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">strong</span>) <span class="built_in">UIScrollView</span> *scrollView;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">//加载方法</span></span><br><span class="line">- (<span class="keyword">nullable</span> <span class="built_in">WKNavigation</span> *)loadRequest:(<span class="built_in">NSURLRequest</span> *)request;</span><br><span class="line">- (<span class="keyword">nullable</span> <span class="built_in">WKNavigation</span> *)loadFileURL:(<span class="built_in">NSURL</span> *)URL allowingReadAccessToURL:(<span class="built_in">NSURL</span> *)readAccessURL;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">nullable</span> <span class="built_in">WKNavigation</span> *)goBack;</span><br><span class="line">- (<span class="keyword">nullable</span> <span class="built_in">WKNavigation</span> *)goForward;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">nullable</span> <span class="built_in">WKNavigation</span> *)reload;</span><br><span class="line">- (<span class="keyword">nullable</span> <span class="built_in">WKNavigation</span> *)reloadFromOrigin;</span><br><span class="line"></span><br><span class="line"><span class="comment">//类方法</span></span><br><span class="line">+ (<span class="built_in">BOOL</span>)handlesURLScheme:(<span class="built_in">NSString</span> *)urlScheme;</span><br><span class="line"></span><br><span class="line"><span class="comment">//与JS交互接口</span></span><br><span class="line">- (<span class="keyword">void</span>)evaluateJavaScript:(<span class="built_in">NSString</span> *)javaScriptString completionHandler:(<span class="keyword">void</span> (^ _Nullable)(_Nullable <span class="keyword">id</span>, <span class="built_in">NSError</span> * _Nullable error))completionHandler;</span><br><span class="line"><span class="comment">//iOS 14新增的API</span></span><br><span class="line">- (<span class="keyword">void</span>)evaluateJavaScript:(<span class="built_in">NSString</span> *)javaScriptString inFrame:(<span class="keyword">nullable</span> <span class="built_in">WKFrameInfo</span> *)frame inContentWorld:(<span class="built_in">WKContentWorld</span> *)contentWorld completionHandler:(<span class="keyword">void</span> (^ _Nullable)(_Nullable <span class="keyword">id</span>, <span class="built_in">NSError</span> * _Nullable error))completionHandler;</span><br><span class="line">- (<span class="keyword">void</span>)callAsyncJavaScript:(<span class="built_in">NSString</span> *)functionBody arguments:(<span class="keyword">nullable</span> <span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSString</span> *, <span class="keyword">id</span>&gt; *)arguments inFrame:(<span class="keyword">nullable</span> <span class="built_in">WKFrameInfo</span> *)frame inContentWorld:(<span class="built_in">WKContentWorld</span> *)contentWorld completionHandler:(<span class="keyword">void</span> (^ _Nullable)(_Nullable <span class="keyword">id</span>, <span class="built_in">NSError</span> * _Nullable error))completionHandler;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="WKWebView-初始化"><a href="#WKWebView-初始化" class="headerlink" title="WKWebView 初始化"></a>WKWebView 初始化</h2><p>一个简单用于展示的 WebView 可以是这样的：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">WKWebViewConfiguration</span> *configuration = [[<span class="built_in">WKWebViewConfiguration</span> alloc] init];</span><br><span class="line"><span class="built_in">WKWebView</span> *webView = (&#123;</span><br><span class="line">    webView = [[<span class="built_in">WKWebView</span> alloc] initWithFrame:<span class="keyword">self</span>.view.bounds configuration:configuration];</span><br><span class="line">    webView.scrollView.bounces = <span class="literal">NO</span>;</span><br><span class="line">    webView.backgroundColor = [<span class="built_in">UIColor</span> whiteColor];</span><br><span class="line">    webView;</span><br><span class="line">&#125;);</span><br><span class="line">    </span><br><span class="line">[<span class="keyword">self</span>.view addSubview:webView];</span><br><span class="line">[webView loadRequest:[<span class="built_in">NSURLRequest</span> requestWithURL:[<span class="built_in">NSURL</span> URLWithString:<span class="string">@&quot;http://baidu.com&quot;</span>]]];</span><br></pre></td></tr></table></figure>
+
+<p>这样一个单纯用于展示网页、没有任何配置项的 WebView 就算完成了。相较于 <code>UIWebView</code>，我们看到多了一个 <code>configuration</code> 配置类型，那我们就来 Read the fucking source code……</p>
+<h2 id="WKWebViewConfiguration"><a href="#WKWebViewConfiguration" class="headerlink" title="WKWebViewConfiguration"></a>WKWebViewConfiguration</h2><p>官方文档是这样描述这个类型的：</p>
+<blockquote>
+<p>A <code>WKWebViewConfiguration</code> object is a collection of properties with which to initialize a web view.</p>
+<p>一个用于初始化 web view 属性的集合。</p>
+</blockquote>
+<p>我们可以用它做什么呢？</p>
+<blockquote>
+<ul>
+<li>设置用于网站的初始cookie</li>
+<li>处理自定义的 URL schemes</li>
+<li>设置如何处理媒体内容</li>
+<li>管理网页中选中的信息</li>
+<li>自定义注入网页的脚本</li>
+<li>自定义内容的展示规则</li>
+<li>……</li>
+</ul>
+</blockquote>
+<p>我们可以通过创建一个 <code>WKWebViewConfiguration</code> 对象来设置网页的属性，并且在 WebView 初始化的时候传递给它。注意的是只能在初始化的时候配置 <code>configuration</code> 中的属性，后面是没办法动态再去修改这些配置的。</p>
+<p>我们通过这个类看看 WebKit 里面有哪些主要的内容：</p>
+<h2 id="WKProcessPool"><a href="#WKProcessPool" class="headerlink" title="WKProcessPool"></a>WKProcessPool</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*! @abstract The process pool from which to obtain the view&#x27;s web content</span></span><br><span class="line"><span class="comment"> process.</span></span><br><span class="line"><span class="comment"> @discussion When a web view is initialized, a new web content process</span></span><br><span class="line"><span class="comment"> will be created for it from the specified pool, or an existing process in</span></span><br><span class="line"><span class="comment"> that pool will be used.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">WKProcessPool</span> *processPool;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">WKProcessPool</span> : <span class="title">NSObject</span> &lt;<span class="title">NSSecureCoding</span>&gt;</span></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+<p>官方文档解释为一个可以在单个进程中运行多个 web 视图的不可见 token？令牌？。进程池。可以看到 WKProcessPool 类没有暴漏任何接口，这意味着我们只能创建和读取该对象，通过对象地址判断是否在相同进程。</p>
+<p>WKWebView 为了安全和稳定性考虑，会为每一个 WKWebView 实例分配独立的进程（而不是直接使用APP的进程空间），系统会有一个设定的进程个数上线。相同 WKProcessPool 对象的 WKWebView 共享相同的进程空间。这也是与 <code>UIWebView</code> 最大不同的一点：<code>NSHTTPCookieStorage</code> 中的 cookie ，<code>UIWebView</code> 是可以自动携带使用的，但 <code>WKWebView</code> 无法获取 Storage中 的 cookie。</p>
+<p>诶，那是不是放在同一个进程池中的 web view 就可以共享 cookie 了呢？带着这个问题，稍后我们会提到 cookie 有关的处理。</p>
+<h2 id="WKPreferences"><a href="#WKPreferences" class="headerlink" title="WKPreferences"></a>WKPreferences</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*! @abstract The preference settings to be used by the web view.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">WKPreferences</span> *preferences;</span><br></pre></td></tr></table></figure>
+
+<p>针对 web 视图的偏好设置，如果是针对 web 内容的设置还是使用 <code>WKWebViewConfiguration</code> ，感觉这个类还在完善、扩充中，内容很少。比较值得注意的是与 JavaScript 有关的两个属性。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//字体</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>) <span class="built_in">CGFloat</span> minimumFontSize;</span><br><span class="line"><span class="comment">//是否允许在没有用户交互的情况下，JavaScript可以打开windows</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> javaScriptCanOpenWindowsAutomatically;</span><br><span class="line"><span class="comment">//是否启用javaScript，14.0 以后就废弃了，有对应替换的 API</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> javaScriptEnabled;<span class="comment">//ios(8.0, 14.0)</span></span><br><span class="line"><span class="comment">//是否提醒 如网络钓鱼或恶意软件 等可疑的欺诈内容</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>) <span class="built_in">BOOL</span> fraudulentWebsiteWarningEnabled;<span class="comment">//ios(13.0)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="WKUserContentController"><a href="#WKUserContentController" class="headerlink" title="WKUserContentController"></a>WKUserContentController</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*! @abstract The user content controller to associate with the web view.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">WKUserContentController</span> *userContentController;</span><br></pre></td></tr></table></figure>
+
+<p>这个类提供了一个 JavaScript 向 web view 发送消息的途径，可以增删用户脚本。</p>
+<p>JavaScript 与原生做交互，比较多的一个场景是需要调用原生的某些能力。在 <code>UIWebView</code> 中简单的方式是拦截请求，根据特定的 scheme 或者参数来区分，那在 <code>WKWebView</code> 中则是通过 <code>WKUserContentController</code> 添加消息处理器。例如打开相机功能：</p>
+<ul>
+<li>添加脚本处理器</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">WKUserContentController</span> *userContentController = [[<span class="built_in">WKUserContentController</span> alloc] init];</span><br><span class="line">[userContentController addScriptMessageHandler:<span class="keyword">self</span> name:<span class="string">@&quot;OpenCamera&quot;</span>];</span><br><span class="line"><span class="built_in">WKWebViewConfiguration</span> *configuration = [[<span class="built_in">WKWebViewConfiguration</span> alloc] init];</span><br><span class="line">configuration.userContentController = userContentController;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>实现 WKScriptMessageHandler 代理的方法</li>
+</ul>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> mark - WKScriptMessageHandler</span></span><br><span class="line">- (<span class="keyword">void</span>)userContentController:(<span class="built_in">WKUserContentController</span> *)userContentController didReceiveScriptMessage:(<span class="built_in">WKScriptMessage</span> *)message &#123;</span><br><span class="line">    <span class="keyword">if</span> ([message.name caseInsensitiveCompare:<span class="string">@&quot;OpenCamera&quot;</span>] == <span class="built_in">NSOrderedSame</span>) &#123;</span><br><span class="line">        <span class="comment">//Call your open camera action.</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>JS 中调用</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.webkit.messageHandlers.OpenCamera.postMessage(<span class="comment">/*需要传的参数，两端约定好*/</span>);</span><br></pre></td></tr></table></figure>
+
+<p>我们看到接收 JavaScript 的消息是通过一个 <code>WKScriptMessage</code> 类型，我们再来简单看下这个类</p>
+<h3 id="WKScriptMessage"><a href="#WKScriptMessage" class="headerlink" title="WKScriptMessage"></a>WKScriptMessage</h3><blockquote>
+<p>A WKScriptMessage object contains information about a message sent from a webpage.</p>
+</blockquote>
+<p>他的注释就很简单了：一个包含网页发来的消息内容的对象。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 消息体、参数。允许的类型 NSNumber, NSString, NSDate, NSArray, NSDictionary, and NSNull.</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="keyword">id</span> body;</span><br><span class="line"><span class="comment">// 发送消息的 web view。</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">weak</span>) <span class="built_in">WKWebView</span> *webView;</span><br><span class="line"><span class="comment">// 前端中发送消息的 frame。</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="built_in">WKFrameInfo</span> *frameInfo;</span><br><span class="line"><span class="comment">// 用于接收前端消息的处理器的名字。</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"><span class="comment">// The content world from which the message was sent. ？我也还没用过不清楚是干嘛的。</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">WKContentWorld</span> *world API_AVAILABLE(macos(<span class="number">11.0</span>), ios(<span class="number">14.0</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="WKUserScript"><a href="#WKUserScript" class="headerlink" title="WKUserScript"></a>WKUserScript</h3><blockquote>
+<p>A script that the web view injects into a webpage.</p>
+</blockquote>
+<p>当需要将自定义脚本代码注入 Web 页面时，可以创建一个 WKUserScript 对象。使用此对象指定要注入的 JavaScript 代码，以及与注入该代码的时间和方式相关的参数。通过前面提到的 WKUserContentController 调用 <code>addUserScript:</code> 完成注入。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">WKUserScript</span> : <span class="title">NSObject</span> &lt;<span class="title">NSCopying</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//JS 代码</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *source;</span><br><span class="line"><span class="comment">//JS 注入的时机</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>) <span class="built_in">WKUserScriptInjectionTime</span> injectionTime;</span><br><span class="line"><span class="comment">//是否只用于主视图</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">getter</span>=isForMainFrameOnly) <span class="built_in">BOOL</span> forMainFrameOnly;</span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化</span></span><br><span class="line">- (<span class="keyword">instancetype</span>)initWithSource:(<span class="built_in">NSString</span> *)source injectionTime:(<span class="built_in">WKUserScriptInjectionTime</span>)injectionTime forMainFrameOnly:(<span class="built_in">BOOL</span>)forMainFrameOnly;</span><br><span class="line"><span class="comment">//iOS14 新增的一个方法，区分JS的“作用域”</span></span><br><span class="line">- (<span class="keyword">instancetype</span>)initWithSource:(<span class="built_in">NSString</span> *)source injectionTime:(<span class="built_in">WKUserScriptInjectionTime</span>)injectionTime forMainFrameOnly:(<span class="built_in">BOOL</span>)forMainFrameOnly inContentWorld:(<span class="built_in">WKContentWorld</span> *)contentWorld <span class="built_in">WK_API_AVAILABLE</span>(macos(<span class="number">11.0</span>), ios(<span class="number">14.0</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="WKContentWorld"><a href="#WKContentWorld" class="headerlink" title="WKContentWorld"></a>WKContentWorld</h3><blockquote>
+<p>An object that defines a scope of execution for JavaScript code, and which you use to prevent conflicts between different scripts.</p>
+</blockquote>
+<p>WKContentWorld 是 iOS 14 的新增内容，可以理解为不同的命名空间、不同的运行环境。显而易见的，在逻辑上，原生的 JS 环境和 web JS 运行环境存在命名冲突的可能。WKContentWorld 有两个类属性 <code>defaultClientWorld</code> 、<code>pageWorld</code>，分别代表原生和 web 容器的 JS 运行空间。开发者也可以通过：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="built_in">WKContentWorld</span> *)worldWithName:(<span class="built_in">NSString</span> *)name;</span><br></pre></td></tr></table></figure>
+
+<p>工厂方法创建一个独立的 JS 运行环境。</p>
+<h2 id="WKWebsiteDataStore"><a href="#WKWebsiteDataStore" class="headerlink" title="WKWebsiteDataStore"></a>WKWebsiteDataStore</h2><p>这个类貌似包含了一个 web view 的所有数据，我看完这个类的介绍，第一感觉是，哇，我可以窥探一切了。然而，除了 cookie，一毛钱都拿不到……不讲了，有兴趣自己试吧~~</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(</span><br><span class="line">    <span class="built_in">WKWebsiteDataTypeDiskCache</span>,</span><br><span class="line">    <span class="built_in">WKWebsiteDataTypeOfflineWebApplicationCache</span>,</span><br><span class="line">    <span class="built_in">WKWebsiteDataTypeMemoryCache</span>,</span><br><span class="line">    <span class="built_in">WKWebsiteDataTypeLocalStorage</span>,</span><br><span class="line">    <span class="built_in">WKWebsiteDataTypeFetchCache</span>,</span><br><span class="line">    <span class="built_in">WKWebsiteDataTypeCookies</span>,</span><br><span class="line">    <span class="built_in">WKWebsiteDataTypeSessionStorage</span>,</span><br><span class="line">    <span class="built_in">WKWebsiteDataTypeIndexedDBDatabases</span>,</span><br><span class="line">    <span class="built_in">WKWebsiteDataTypeWebSQLDatabases</span>,</span><br><span class="line">    <span class="built_in">WKWebsiteDataTypeServiceWorkerRegistrations</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="WKHTTPCookieStore"><a href="#WKHTTPCookieStore" class="headerlink" title="WKHTTPCookieStore"></a>WKHTTPCookieStore</h2><blockquote>
+<p> A WKHTTPCookieStore object allows managing the HTTP cookies associated with a particular WKWebsiteDataStore.</p>
+<p> 用来管理与特定 <code>WKWebsiteDataStore</code> 相关联的 HTTP cookie。</p>
+</blockquote>
+<p>API 看上去很简单…但获得 cookie 是异步操作，与 <code>NSHTTPCookieStorage</code> 的同步操作不同，处理起来可能要注意下。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)getAllCookies:(<span class="keyword">void</span> (^)(<span class="built_in">NSArray</span>&lt;<span class="built_in">NSHTTPCookie</span> *&gt; *))completionHandler;</span><br><span class="line">- (<span class="keyword">void</span>)setCookie:(<span class="built_in">NSHTTPCookie</span> *)cookie completionHandler:(<span class="keyword">nullable</span> <span class="keyword">void</span> (^)(<span class="keyword">void</span>))completionHandler;</span><br><span class="line">- (<span class="keyword">void</span>)deleteCookie:(<span class="built_in">NSHTTPCookie</span> *)cookie completionHandler:(<span class="keyword">nullable</span> <span class="keyword">void</span> (^)(<span class="keyword">void</span>))completionHandler;</span><br><span class="line">- (<span class="keyword">void</span>)addObserver:(<span class="keyword">id</span>&lt;<span class="built_in">WKHTTPCookieStoreObserver</span>&gt;)observer;</span><br><span class="line">- (<span class="keyword">void</span>)removeObserver:(<span class="keyword">id</span>&lt;<span class="built_in">WKHTTPCookieStoreObserver</span>&gt;)observer;</span><br></pre></td></tr></table></figure>
+
+<p>对应观察者的协议方法：</p>
+<p>在 cookie 发生变化时，可以异步通知，但经测试是有一点延迟的，有兴趣可以测一测？</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">WKHTTPCookieStoreObserver</span> &lt;<span class="title">NSObject</span>&gt;</span></span><br><span class="line"><span class="keyword">@optional</span></span><br><span class="line">- (<span class="keyword">void</span>)cookiesDidChangeInCookieStore:(<span class="built_in">WKHTTPCookieStore</span> *)cookieStore;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="WKBackForwardList"><a href="#WKBackForwardList" class="headerlink" title="WKBackForwardList"></a>WKBackForwardList</h2><p>访问过的 web 页面历史记录。</p>
+<h2 id="WKNavigation"><a href="#WKNavigation" class="headerlink" title="WKNavigation"></a>WKNavigation</h2><p>WKNavigation 对象可以用来了解网页的加载进度。通过 loadRequest、goBack 等方法加载页面时，将返回一个 WKNavigation 对象。通过 WKNavigationDelegate 代理的以下几个方法，可以知道页面的加载情况。WKNavigationDelegate 稍后我们再说。</p>
+<h4 id="WKNavigationAction"><a href="#WKNavigationAction" class="headerlink" title="WKNavigationAction"></a>WKNavigationAction</h4><p>包含网页导航信息，需要据此显示对应的操作界面。</p>
+<h4 id="WKFrameInfo"><a href="#WKFrameInfo" class="headerlink" title="WKFrameInfo"></a>WKFrameInfo</h4><p>标识当前网页内容信息的对象。</p>
+<h2 id="关于-WKWebView-的几篇文章："><a href="#关于-WKWebView-的几篇文章：" class="headerlink" title="关于 WKWebView 的几篇文章："></a>关于 WKWebView 的几篇文章：</h2><p><a href="/2021/12/01/WKWebView/">WKWebView 基础篇</a></p>
+<p><a href="/2021/12/02/WKWebView-Protocol/">WKWebView 协议篇</a></p>
+<p><a href="/2021/12/11/WKWebView-Use/">WKWebView 实战篇</a></p>
+<p>##Demo</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ATommyGirl/WebView">WebView 的 Demo</a></p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WKWebView"><span class="toc-number">1.</span> <span class="toc-text">WKWebView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKWebView-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">WKWebView 初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKWebViewConfiguration"><span class="toc-number">3.</span> <span class="toc-text">WKWebViewConfiguration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKProcessPool"><span class="toc-number">4.</span> <span class="toc-text">WKProcessPool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKPreferences"><span class="toc-number">5.</span> <span class="toc-text">WKPreferences</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKUserContentController"><span class="toc-number">6.</span> <span class="toc-text">WKUserContentController</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WKScriptMessage"><span class="toc-number">6.1.</span> <span class="toc-text">WKScriptMessage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WKUserScript"><span class="toc-number">6.2.</span> <span class="toc-text">WKUserScript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WKContentWorld"><span class="toc-number">6.3.</span> <span class="toc-text">WKContentWorld</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKWebsiteDataStore"><span class="toc-number">7.</span> <span class="toc-text">WKWebsiteDataStore</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKHTTPCookieStore"><span class="toc-number">8.</span> <span class="toc-text">WKHTTPCookieStore</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKBackForwardList"><span class="toc-number">9.</span> <span class="toc-text">WKBackForwardList</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WKNavigation"><span class="toc-number">10.</span> <span class="toc-text">WKNavigation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#WKNavigationAction"><span class="toc-number">10.0.1.</span> <span class="toc-text">WKNavigationAction</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WKFrameInfo"><span class="toc-number">10.0.2.</span> <span class="toc-text">WKFrameInfo</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-WKWebView-%E7%9A%84%E5%87%A0%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%9A"><span class="toc-number">11.</span> <span class="toc-text">关于 WKWebView 的几篇文章：</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/12/01/WKWebView/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/12/01/WKWebView/&text=WKWebView 基础篇"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/12/01/WKWebView/&title=WKWebView 基础篇"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/12/01/WKWebView/&is_video=false&description=WKWebView 基础篇"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WKWebView 基础篇&body=Check out this article: https://tommygirl.cn/2021/12/01/WKWebView/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/12/01/WKWebView/&title=WKWebView 基础篇"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/12/01/WKWebView/&title=WKWebView 基础篇"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/12/01/WKWebView/&title=WKWebView 基础篇"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/12/01/WKWebView/&title=WKWebView 基础篇"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/12/01/WKWebView/&name=WKWebView 基础篇&description=&lt;p&gt;WKWebView 是 iOS 8.0 以后用于替代 UIWebView 的浏览器组件。和 UIWebView 相比，具有渲染性能更好、支持更多的 HTML5 特性、控制更加细致等诸多优点。&lt;/p&gt;
+&lt;p&gt;一直没沉下心来学习，我们一起好好看看里面都有什么吧🤓&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/12/01/WKWebView/&t=WKWebView 基础篇"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="1、KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField​    解决方案是做版本判断 iOS13 的 searchbar 新增了一个 searchTextField 属性 2、Segement、SearchBar的样式变了，注意一下​    for 循环查找子视图失效，改为  searchBar.searchTextField">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS13 适配注意点">
+<meta property="og:url" content="https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="1、KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField​    解决方案是做版本判断 iOS13 的 searchbar 新增了一个 searchTextField 属性 2、Segement、SearchBar的样式变了，注意一下​    for 循环查找子视图失效，改为  searchBar.searchTextField">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-05T08:47:04.000Z">
+<meta property="article:modified_time" content="2019-11-05T08:47:04.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>iOS13 适配注意点</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2020/01/20/Xcode%2011%20IPA%20processing/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2019/11/05/iOS_Problem/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&text=iOS13 适配注意点"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&title=iOS13 适配注意点"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&is_video=false&description=iOS13 适配注意点"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS13 适配注意点&body=Check out this article: https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&title=iOS13 适配注意点"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&title=iOS13 适配注意点"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&title=iOS13 适配注意点"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&title=iOS13 适配注意点"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&name=iOS13 适配注意点&description=&lt;h5 id=&#34;1、KVC-获取私有属性-直接崩溃，比方说获取-SearchBar-的-TextField&#34;&gt;&lt;a href=&#34;#1、KVC-获取私有属性-直接崩溃，比方说获取-SearchBar-的-TextField&#34; class=&#34;headerlink&#34; title=&#34;1、KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField&#34;&gt;&lt;/a&gt;1、KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField&lt;/h5&gt;&lt;p&gt;​    解决方案是做版本判断 iOS13 的 searchbar 新增了一个 searchTextField 属性&lt;/p&gt;
+&lt;h5 id=&#34;2、Segement、SearchBar的样式变了，注意一下&#34;&gt;&lt;a href=&#34;#2、Segement、SearchBar的样式变了，注意一下&#34; class=&#34;headerlink&#34; title=&#34;2、Segement、SearchBar的样式变了，注意一下&#34;&gt;&lt;/a&gt;2、Segement、SearchBar的样式变了，注意一下&lt;/h5&gt;&lt;p&gt;​    for 循环查找子视图失效，改为  searchBar.searchTextField  &lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&t=iOS13 适配注意点"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81KVC-%E8%8E%B7%E5%8F%96%E7%A7%81%E6%9C%89%E5%B1%9E%E6%80%A7-%E7%9B%B4%E6%8E%A5%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%AF%94%E6%96%B9%E8%AF%B4%E8%8E%B7%E5%8F%96-SearchBar-%E7%9A%84-TextField"><span class="toc-number">1.</span> <span class="toc-text">1、KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81Segement%E3%80%81SearchBar%E7%9A%84%E6%A0%B7%E5%BC%8F%E5%8F%98%E4%BA%86%EF%BC%8C%E6%B3%A8%E6%84%8F%E4%B8%80%E4%B8%8B"><span class="toc-number">2.</span> <span class="toc-text">2、Segement、SearchBar的样式变了，注意一下</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81UIWebView-%E7%BB%88%E6%9E%81%E5%BA%9F%E5%BC%83%EF%BC%8C%E9%9C%80%E8%A6%81%E6%9B%BF%E6%8D%A2-WKWebView%EF%BC%8C%E4%B8%8D%E7%84%B6-AppStore-%E5%AE%A1%E6%A0%B8%E6%98%AF%E4%B8%8D%E9%80%9A%E8%BF%87%E7%9A%84%E3%80%82"><span class="toc-number">3.</span> <span class="toc-text">3、UIWebView 终极废弃，需要替换 WKWebView，不然 AppStore 审核是不通过的。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%E3%80%81%E9%BB%91%E5%A4%9C%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">4、黑夜模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5%E3%80%81TextField%EF%BC%9ALeftView%E5%A6%82%E6%9E%9C%E6%98%AF%E5%9B%BE%E7%89%87%E7%9A%84%E8%AF%9D-%E4%BC%9A%E8%A6%86%E7%9B%96%E6%95%B4%E4%B8%AA-TextField-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%E6%98%AF%E7%94%A8%E4%B8%80%E4%B8%AA-view-%E5%8C%85%E8%A3%B9%E4%B8%80%E4%B8%8B%E5%9B%BE%E7%89%87%E4%BD%9C%E4%B8%BALeftView"><span class="toc-number">5.</span> <span class="toc-text">5、TextField：LeftView如果是图片的话 会覆盖整个 TextField 解决办法是用一个 view 包裹一下图片作为LeftView</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6%E3%80%81UniversalLink"><span class="toc-number">6.</span> <span class="toc-text">6、UniversalLink</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#https-www-jianshu-com-p-03e6b7828307"><span class="toc-number">7.</span> <span class="toc-text">https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;03e6b7828307</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7%E3%80%81%E6%A8%A1%E6%80%81%E5%87%BA%E7%9A%84%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%9C%80%E8%A6%81%E6%8C%87%E5%AE%9A%E5%AF%B9%E5%BA%94%E7%9A%84%E5%BC%B9%E5%87%BA%E6%A8%A1%E5%BC%8F"><span class="toc-number">8.</span> <span class="toc-text">7、模态出的页面，需要指定对应的弹出模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8%E3%80%81Tabbar%E7%9A%84%E6%96%87%E5%AD%97%E9%A2%9C%E8%89%B2"><span class="toc-number">9.</span> <span class="toc-text">8、Tabbar的文字颜色</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#9%E3%80%81%E9%80%9A%E8%BF%87-NSURLSessionDataTask-%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E6%B5%81"><span class="toc-number">10.</span> <span class="toc-text">9、通过 NSURLSessionDataTask 下载文件流</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#10%E3%80%81Cocoapods"><span class="toc-number">11.</span> <span class="toc-text">10、Cocoapods</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        iOS13 适配注意点
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-11-05T08:47:04.000Z" itemprop="datePublished">2019-11-05</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h5 id="1、KVC-获取私有属性-直接崩溃，比方说获取-SearchBar-的-TextField"><a href="#1、KVC-获取私有属性-直接崩溃，比方说获取-SearchBar-的-TextField" class="headerlink" title="1、KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField"></a>1、KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField</h5><p>​    解决方案是做版本判断 iOS13 的 searchbar 新增了一个 searchTextField 属性</p>
+<h5 id="2、Segement、SearchBar的样式变了，注意一下"><a href="#2、Segement、SearchBar的样式变了，注意一下" class="headerlink" title="2、Segement、SearchBar的样式变了，注意一下"></a>2、Segement、SearchBar的样式变了，注意一下</h5><p>​    for 循环查找子视图失效，改为  searchBar.searchTextField  </p>
+ <span id="more"></span>
+
+<h5 id="3、UIWebView-终极废弃，需要替换-WKWebView，不然-AppStore-审核是不通过的。"><a href="#3、UIWebView-终极废弃，需要替换-WKWebView，不然-AppStore-审核是不通过的。" class="headerlink" title="3、UIWebView 终极废弃，需要替换 WKWebView，不然 AppStore 审核是不通过的。"></a>3、UIWebView 终极废弃，需要替换 WKWebView，不然 AppStore 审核是不通过的。</h5><h5 id="4、黑夜模式"><a href="#4、黑夜模式" class="headerlink" title="4、黑夜模式"></a>4、黑夜模式</h5><h5 id="5、TextField：LeftView如果是图片的话-会覆盖整个-TextField-解决办法是用一个-view-包裹一下图片作为LeftView"><a href="#5、TextField：LeftView如果是图片的话-会覆盖整个-TextField-解决办法是用一个-view-包裹一下图片作为LeftView" class="headerlink" title="5、TextField：LeftView如果是图片的话 会覆盖整个 TextField 解决办法是用一个 view 包裹一下图片作为LeftView"></a>5、TextField：LeftView如果是图片的话 会覆盖整个 TextField 解决办法是用一个 view 包裹一下图片作为LeftView</h5><h5 id="6、UniversalLink"><a href="#6、UniversalLink" class="headerlink" title="6、UniversalLink"></a>6、UniversalLink</h5><h5 id="https-www-jianshu-com-p-03e6b7828307"><a href="#https-www-jianshu-com-p-03e6b7828307" class="headerlink" title="https://www.jianshu.com/p/03e6b7828307"></a><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/03e6b7828307">https://www.jianshu.com/p/03e6b7828307</a></h5><p>​    微信分享强制使用。注册微信开放平台的时候 iOS的项目必须填这个。</p>
+<h5 id="7、模态出的页面，需要指定对应的弹出模式"><a href="#7、模态出的页面，需要指定对应的弹出模式" class="headerlink" title="7、模态出的页面，需要指定对应的弹出模式"></a>7、模态出的页面，需要指定对应的弹出模式</h5><p>​    例如：UIModalPresentationOverFullScreen</p>
+<p>​    检查图片选择器？</p>
+<h5 id="8、Tabbar的文字颜色"><a href="#8、Tabbar的文字颜色" class="headerlink" title="8、Tabbar的文字颜色"></a>8、Tabbar的文字颜色</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[tabbarItem setTitleTextAttributes:@&#123;NSForegroundColorAttributeName:selectColor&#125; forState:UIControlStateSelected];</span><br></pre></td></tr></table></figure>
+
+<p>​    此方法在 iOS 13 会有 bug，当我们 push 到下一页再次返回时 tabbar 字体颜色设置会失效。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.tabBar.tintColor = selectColor;</span><br></pre></td></tr></table></figure>
+
+<h5 id="9、通过-NSURLSessionDataTask-下载文件流"><a href="#9、通过-NSURLSessionDataTask-下载文件流" class="headerlink" title="9、通过 NSURLSessionDataTask 下载文件流"></a>9、通过 NSURLSessionDataTask 下载文件流</h5><p>​    需要在头部指定接受的返回格式：<code>application/octet-stream</code></p>
+<h5 id="10、Cocoapods"><a href="#10、Cocoapods" class="headerlink" title="10、Cocoapods"></a>10、Cocoapods</h5><p>​    升级 CocoaPods 到 1.8.4 版本</p>
+<p>​    但是随即问题就来了, 执行 pod install 下载库时，出现错误</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[!] <span class="symbol">CDN:</span> trunk URL couldn<span class="string">&#x27;t be downloaded: https://cdn.cocoapods.org/all_pods_versions_a_7_5.txt, error: execution expired</span></span><br></pre></td></tr></table></figure>
+
+<p>后来查了半天资料, 最终在 <a target="_blank" rel="noopener" href="https://github.com/CocoaPods/CocoaPods/issues/9303">github CocoaPods issues</a> 找到解决方案：在 Podfile 加上 source <code>https://github.com/CocoaPods/Specs.git</code> 不使用新版本的 CDN</p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#1%E3%80%81KVC-%E8%8E%B7%E5%8F%96%E7%A7%81%E6%9C%89%E5%B1%9E%E6%80%A7-%E7%9B%B4%E6%8E%A5%E5%B4%A9%E6%BA%83%EF%BC%8C%E6%AF%94%E6%96%B9%E8%AF%B4%E8%8E%B7%E5%8F%96-SearchBar-%E7%9A%84-TextField"><span class="toc-number">1.</span> <span class="toc-text">1、KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2%E3%80%81Segement%E3%80%81SearchBar%E7%9A%84%E6%A0%B7%E5%BC%8F%E5%8F%98%E4%BA%86%EF%BC%8C%E6%B3%A8%E6%84%8F%E4%B8%80%E4%B8%8B"><span class="toc-number">2.</span> <span class="toc-text">2、Segement、SearchBar的样式变了，注意一下</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3%E3%80%81UIWebView-%E7%BB%88%E6%9E%81%E5%BA%9F%E5%BC%83%EF%BC%8C%E9%9C%80%E8%A6%81%E6%9B%BF%E6%8D%A2-WKWebView%EF%BC%8C%E4%B8%8D%E7%84%B6-AppStore-%E5%AE%A1%E6%A0%B8%E6%98%AF%E4%B8%8D%E9%80%9A%E8%BF%87%E7%9A%84%E3%80%82"><span class="toc-number">3.</span> <span class="toc-text">3、UIWebView 终极废弃，需要替换 WKWebView，不然 AppStore 审核是不通过的。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4%E3%80%81%E9%BB%91%E5%A4%9C%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">4、黑夜模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5%E3%80%81TextField%EF%BC%9ALeftView%E5%A6%82%E6%9E%9C%E6%98%AF%E5%9B%BE%E7%89%87%E7%9A%84%E8%AF%9D-%E4%BC%9A%E8%A6%86%E7%9B%96%E6%95%B4%E4%B8%AA-TextField-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%E6%98%AF%E7%94%A8%E4%B8%80%E4%B8%AA-view-%E5%8C%85%E8%A3%B9%E4%B8%80%E4%B8%8B%E5%9B%BE%E7%89%87%E4%BD%9C%E4%B8%BALeftView"><span class="toc-number">5.</span> <span class="toc-text">5、TextField：LeftView如果是图片的话 会覆盖整个 TextField 解决办法是用一个 view 包裹一下图片作为LeftView</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6%E3%80%81UniversalLink"><span class="toc-number">6.</span> <span class="toc-text">6、UniversalLink</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#https-www-jianshu-com-p-03e6b7828307"><span class="toc-number">7.</span> <span class="toc-text">https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;03e6b7828307</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7%E3%80%81%E6%A8%A1%E6%80%81%E5%87%BA%E7%9A%84%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%9C%80%E8%A6%81%E6%8C%87%E5%AE%9A%E5%AF%B9%E5%BA%94%E7%9A%84%E5%BC%B9%E5%87%BA%E6%A8%A1%E5%BC%8F"><span class="toc-number">8.</span> <span class="toc-text">7、模态出的页面，需要指定对应的弹出模式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#8%E3%80%81Tabbar%E7%9A%84%E6%96%87%E5%AD%97%E9%A2%9C%E8%89%B2"><span class="toc-number">9.</span> <span class="toc-text">8、Tabbar的文字颜色</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#9%E3%80%81%E9%80%9A%E8%BF%87-NSURLSessionDataTask-%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E6%B5%81"><span class="toc-number">10.</span> <span class="toc-text">9、通过 NSURLSessionDataTask 下载文件流</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#10%E3%80%81Cocoapods"><span class="toc-number">11.</span> <span class="toc-text">10、Cocoapods</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&text=iOS13 适配注意点"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&title=iOS13 适配注意点"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&is_video=false&description=iOS13 适配注意点"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS13 适配注意点&body=Check out this article: https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&title=iOS13 适配注意点"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&title=iOS13 适配注意点"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&title=iOS13 适配注意点"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&title=iOS13 适配注意点"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&name=iOS13 适配注意点&description=&lt;h5 id=&#34;1、KVC-获取私有属性-直接崩溃，比方说获取-SearchBar-的-TextField&#34;&gt;&lt;a href=&#34;#1、KVC-获取私有属性-直接崩溃，比方说获取-SearchBar-的-TextField&#34; class=&#34;headerlink&#34; title=&#34;1、KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField&#34;&gt;&lt;/a&gt;1、KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField&lt;/h5&gt;&lt;p&gt;​    解决方案是做版本判断 iOS13 的 searchbar 新增了一个 searchTextField 属性&lt;/p&gt;
+&lt;h5 id=&#34;2、Segement、SearchBar的样式变了，注意一下&#34;&gt;&lt;a href=&#34;#2、Segement、SearchBar的样式变了，注意一下&#34; class=&#34;headerlink&#34; title=&#34;2、Segement、SearchBar的样式变了，注意一下&#34;&gt;&lt;/a&gt;2、Segement、SearchBar的样式变了，注意一下&lt;/h5&gt;&lt;p&gt;​    for 循环查找子视图失效，改为  searchBar.searchTextField  &lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/&t=iOS13 适配注意点"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

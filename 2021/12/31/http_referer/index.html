@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="案件起因震惊！全员震惊😱！一位程序员哈某举报有人偷走了他两天两夜的时间，经过我们24小时的跟踪暗访，嫌疑人竟是 Mr.Referrer ？请看详细报道：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="震惊！由 Referer 引发的一桩“惨案”？">
+<meta property="og:url" content="https://tommygirl.cn/2021/12/31/http_referer/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="案件起因震惊！全员震惊😱！一位程序员哈某举报有人偷走了他两天两夜的时间，经过我们24小时的跟踪暗访，嫌疑人竟是 Mr.Referrer ？请看详细报道：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/shark01.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/shark02.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/google_copy.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/flag.jpeg">
+<meta property="article:published_time" content="2021-12-31T13:30:46.000Z">
+<meta property="article:modified_time" content="2021-12-31T13:30:46.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/shark01.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>震惊！由 Referer 引发的一桩“惨案”？</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2022/01/14/http_head/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/12/11/WKWebView-Use/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/12/31/http_referer/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/12/31/http_referer/&text=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/12/31/http_referer/&title=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/12/31/http_referer/&is_video=false&description=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=震惊！由 Referer 引发的一桩“惨案”？&body=Check out this article: https://tommygirl.cn/2021/12/31/http_referer/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/12/31/http_referer/&title=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/12/31/http_referer/&title=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/12/31/http_referer/&title=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/12/31/http_referer/&title=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/12/31/http_referer/&name=震惊！由 Referer 引发的一桩“惨案”？&description=&lt;h2 id=&#34;案件起因&#34;&gt;&lt;a href=&#34;#案件起因&#34; class=&#34;headerlink&#34; title=&#34;案件起因&#34;&gt;&lt;/a&gt;案件起因&lt;/h2&gt;&lt;p&gt;震惊！全员震惊😱！一位程序员哈某举报有人偷走了他两天两夜的时间，经过我们24小时的跟踪暗访，嫌疑人竟是 Mr.Referrer ？请看详细报道：&lt;/p&gt;
+&lt;center&gt;
+    &lt;div style=&#34;display:inline-block;&#34;&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/shark01.png&#34; class width=&#34;300&#34;&gt;&lt;/div&gt;
+    &lt;div style=&#34;display:inline-block;margin-left:10px;&#34;&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/shark02.png&#34; class width=&#34;300&#34;&gt;&lt;/div&gt;
+&lt;/center&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/12/31/http_referer/&t=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BB%B6%E8%B5%B7%E5%9B%A0"><span class="toc-number">1.</span> <span class="toc-text">案件起因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">分析过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%B0%B7%E6%AD%8C%E4%B8%80%E4%B8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">1.谷歌一下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A3%80%E6%9F%A5-Nginx-%E9%85%8D%E7%BD%AE"><span class="toc-number">2.2.</span> <span class="toc-text">2.检查 Nginx 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%B2%9F%E9%80%9A"><span class="toc-number">2.3.</span> <span class="toc-text">3.沟通</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Charles"><span class="toc-number">2.4.</span> <span class="toc-text">4.Charles</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-cURL"><span class="toc-number">2.5.</span> <span class="toc-text">5.cURL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E7%A0%B4%E6%A1%88"><span class="toc-number">2.6.</span> <span class="toc-text">6.破案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Referrer-or-Referer"><span class="toc-number">3.</span> <span class="toc-text">Referrer or Referer ?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Referer-%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-number">3.1.</span> <span class="toc-text">1.Referer 的含义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Referer-%E7%9A%84%E5%8F%91%E7%94%9F%E5%9C%BA%E6%99%AF"><span class="toc-number">3.2.</span> <span class="toc-text">2.Referer 的发生场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Referer-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">3.3.</span> <span class="toc-text">3.Referer 的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-rel%E5%B1%9E%E6%80%A7"><span class="toc-number">3.4.</span> <span class="toc-text">4.rel属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Referrer-Policy-%E7%9A%84%E5%80%BC"><span class="toc-number">3.5.</span> <span class="toc-text">5.Referrer Policy 的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Referrer-Policy-%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-number">3.6.</span> <span class="toc-text">6.Referrer Policy 的用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%96%91%E6%83%91"><span class="toc-number">4.</span> <span class="toc-text">疑惑</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        震惊！由 Referer 引发的一桩“惨案”？
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-12-31T13:30:46.000Z" itemprop="datePublished">2021-12-31</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="案件起因"><a href="#案件起因" class="headerlink" title="案件起因"></a>案件起因</h2><p>震惊！全员震惊😱！一位程序员哈某举报有人偷走了他两天两夜的时间，经过我们24小时的跟踪暗访，嫌疑人竟是 Mr.Referrer ？请看详细报道：</p>
+<center>
+    <div style="display:inline-block;"><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/shark01.png" class width="300"></div>
+    <div style="display:inline-block;margin-left:10px;"><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/shark02.png" class width="300"></div>
+</center>
+
+<span id="more"></span>
+
+<blockquote>
+<p>前端同事的一个 jsp 资源A，通过浏览器去访问第三方业务的某个资源B，资源B会做一个 login 认证请求，如果 login 成功则返回资源B的详细页面信息，反之进入 ErrorPage。在测试环境中，login 是可以成功的；但是在生产环境中，login 请求提示了如下错误：</p>
+</blockquote>
+<blockquote>
+<p><strong>Provisional headers are shown.</strong></p>
+</blockquote>
+<blockquote>
+<p>直译是：显示了临时的（暂定的）标题。经抓包查看网络状况是：HTTP Code 200 OK，但是 Response 是空的，更像是浏览器主动取消了这个请求，Google 和 Safari 都是一样的现象。</p>
+</blockquote>
+<p>哈某排查了许久也没有定位到原因，面临客户提出的紧急上线，情况很是焦灼。</p>
+<p>FYI: 不想听我讲废话的话，请直接跳转至 <a href="/2021/12/31/http_referer/#Referrer-or-Referer">Referer</a> 😂</p>
+<h2 id="分析过程"><a href="#分析过程" class="headerlink" title="分析过程"></a>分析过程</h2><h3 id="1-谷歌一下"><a href="#1-谷歌一下" class="headerlink" title="1.谷歌一下"></a>1.谷歌一下</h3><p>相信大部分程序员遇到问题时，第一个排查步骤都是施展 CV 大法粘到谷歌搜索一下。同样，我们和哈某也采取了这一步，搜索 <code>Provisional headers are shown</code> 得到的结果都大同小异。以下几个原因<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000018191614">粘贴自这里</a></p>
+<p>具体原因有多种总结如下：<br>1.请求被某些扩展如 Adblock 拦截了，请求被浏览器插件拦截。解决方案：用 chrome://net-internals 来帮助你查找被屏蔽的请求以及可能的原因。（本人发现现在这个用不了了）；<br>2.请求被墙了；<br>3.走本地缓存或者 dataurl 的请求。强缓存 from disk cache 或者 from memory cache，此时也不会显示；<br>4.服务器未及时响应（超时）；<br>5.跨域，请求被浏览器拦截；<br>6.<a target="_blank" rel="noopener" href="https://link.segmentfault.com/?enc=XF6fR2q9AZND/ujtgtszDg==.2MOJqWSs0judvuIA1tJF0rNFn1/t0QMFah/F8CbkeEnIj5LdNIg83y5I67gI9uu1">其他原因</a>；</p>
+<p>这里的原因6，我们就当他在钻研废话文学吧……总而言之，网友们提供的这几个原因，经尝试，依旧没有定位到问题。</p>
+<h3 id="2-检查-Nginx-配置"><a href="#2-检查-Nginx-配置" class="headerlink" title="2.检查 Nginx 配置"></a>2.检查 Nginx 配置</h3><p>经过上面“专业”的排查~依旧懵逼。随后哈某联系了服务端的同事，想比对一下测试环境、生产环境中 Nginx 的配置是否有区别，燃鹅并没有区别。为了避开 Nginx 存在的未知干扰，从内网访问资源B，login 的操作显示 404 🙄……</p>
+<p>二度懵逼~😳</p>
+<h3 id="3-沟通"><a href="#3-沟通" class="headerlink" title="3.沟通"></a>3.沟通</h3><p>通过专业手段没有定位到原因，只能尝试和第三方业务的人沟通了。按照我们大部门的管理理念，没有什么事情是沟通解决不了的。</p>
+<p>很不幸的是，对端的人只反馈给我们 login 请求并没有到达他们那儿。听到这个回答笑哭了有没有~用哈某的话说：“我都快看他内裤了，还不承认”，今天凌晨躺在床上帮他们分析这个问题时（其实我不懂后端，就是跟着瞎掺和顺便学习新知识），被这句话逗笑了，也算是通宵加班的一个慰藉了。😂</p>
+<h3 id="4-Charles"><a href="#4-Charles" class="headerlink" title="4.Charles"></a>4.Charles</h3><p>通过对 App 抓包，login 请求同样显示 HTTP Code 200 OK，但是 Response 是空的。但是跟 Google 浏览器中 NetWork 调试器的表现不太一样。</p>
+<h3 id="5-cURL"><a href="#5-cURL" class="headerlink" title="5.cURL"></a>5.cURL</h3><p>为了排除浏览器对 Response 可能存在特殊的解析规则，亦或者服务器针对浏览器发出的请求做一些限制，可以通过 cURL 作网络请求。cURL入门学习：<a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2019/09/curl-reference.html">阮一峰-curl 的用法指南</a> 。</p>
+<p>通过 cURL 访问资源B以及 login 请求，Ummmmmmmm，请求是成功的！经过一位”神棍”的提点，我们从 Google 浏览器中选中目标请求 -&gt; 右击 -&gt; Copy -&gt; Copy as cURL：</p>
+<center>
+    <div style="display:inline-block;margin-left:10px;"><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/google_copy.png" class width="500"></div>
+</center>
+
+<p>比对一下和自己使用 cURL 写的请求区别在哪里，结果如下：</p>
+<ul>
+<li><p>页面关系</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、先访问资源A： https://hhh.com:0000/aaa/test.jsp</span><br><span class="line">2、由1跳转到资源B： https://hhh.com:0000/aaa/index.html</span><br><span class="line">3、由2发起 login 认证请求 https://hhh.com:0000/aaa/loginAction.do</span><br></pre></td></tr></table></figure></li>
+<li><p>Google 发出的请求（失败的情况）</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">curl</span> <span class="string">&#x27;https://hhh.com:0000/aaa/loginAction.do&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;Connection: keep-alive&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;Pragma: no-cache&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;Cache-Control: no-cache&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;sec-ch-ua: &quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;96&quot;, &quot;Google Chrome&quot;;v=&quot;96&quot;&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;Accept: application/json, text/plain, */*&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;sec-ch-ua-mobile: ?0&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;sec-ch-ua-platform: &quot;macOS&quot;&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;Sec-Fetch-Site: same-origin&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;Sec-Fetch-Mode: cors&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;Sec-Fetch-Dest: empty&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;Referer: https://hhh.com:0000/aaa/index.html&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;Accept-Language: zh-CN,zh;q=0.9,en;q=0.8&#x27;</span> \</span><br><span class="line">  <span class="literal">-H</span> <span class="string">&#x27;Cookie: JSESSIONID=68ED14BCB51A01E5DA08FA2009333BA2&#x27;</span> \</span><br><span class="line">  -<span class="literal">-compressed</span> <span class="literal">-i</span></span><br></pre></td></tr></table></figure></li>
+<li><p>自己发的 cURL 请求（成功的情况）</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">curl</span> <span class="string">&#x27;https://hhh.com:0000/aaa/loginAction.do&#x27;</span> <span class="literal">-i</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>所以区别在哪里呢？header ！</p>
+<h3 id="6-破案"><a href="#6-破案" class="headerlink" title="6.破案"></a>6.破案</h3><p>经过修改几个主要的 header 信息，最终确定了真凶就是 <code>Referer</code> 字段。去掉 <code>Referer</code> 之后页面可以正常访问了。无奈由于资源B是三方系统，我们无法要求对方修改代码，采用了临时的解决方案：</p>
+<blockquote>
+<p> <strong>修改 DMZ 区 Nginx 的配置，所有经过这台 Nginx 的请求都不携带 Referer 头部。</strong></p>
+</blockquote>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">add_header</span> Referrer-Policy <span class="literal">no</span>-referrer;</span><br></pre></td></tr></table></figure>
+
+<p>所以  <code>Provisional headers are shown</code>  翻译为”临时的头部信息“更为贴切对吗？不知道是否因为 Referer 涉及用户隐私的问题。</p>
+<h2 id="Referrer-or-Referer"><a href="#Referrer-or-Referer" class="headerlink" title="Referrer or Referer ?"></a>Referrer or Referer ?</h2><p><code>Referer</code> 是 HTTP 请求头里一个常见的字段，包含了当前请求页面的来源页面的地址，即表示当前页面是通过此来源页面里的链接进入的。服务端一般使用 <code>Referer</code> 请求头识别访问来源，可能会以此进行统计分析、日志记录以及缓存优化等。</p>
+<h3 id="1-Referer-的含义"><a href="#1-Referer-的含义" class="headerlink" title="1.Referer 的含义"></a>1.Referer 的含义</h3><p>现实生活中，你一定填过这样的问卷调查：”你从哪里知道了我们？”。这叫做引荐人（referrer），谁引荐了你？对于公司来说，这是很有用的信息。互联网也是一样，你不会无缘无故访问一个网页，总是有人告诉你，可以去那里看看。服务器也想知道，你的 “引荐人” 是谁？</p>
+<p>HTTP 协议在请求（request）的头信息里面，设计了一个 <code>Referer</code> 字段，给出 “引荐网页” 的 URL。这个字段是可选的。客户端发送请求的时候，自主决定是否加上该字段。</p>
+<p>很有趣的是，这个字段的拼写是错的。<code>Referer</code> 的正确拼写是 <code>Referrer</code>，但是写入标准的时候，不知为何，没人发现少了一个字母<code>r</code>。标准定案以后，只能将错就错，所有头信息的该字段都一律错误拼写成 <code>Referer</code>。Nginx 采用的是正确拼写~</p>
+<h3 id="2-Referer-的发生场景"><a href="#2-Referer-的发生场景" class="headerlink" title="2.Referer 的发生场景"></a>2.Referer 的发生场景</h3><p>浏览器向服务器请求资源的时候，<code>Referer</code> 字段的逻辑是这样的，用户在地址栏输入网址，或者选中浏览器书签，就不发送 <code>Referer</code> 字段。</p>
+<p>主要是以下三种场景，会发送 <code>Referer</code> 字段：</p>
+<p>（1）用户点击网页上的链接。</p>
+<p>（2）用户发送表单。</p>
+<p>（3）网页加载静态资源，比如加载图片、脚本、样式。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 加载图片 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;foo.jpg&quot;</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 加载脚本 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;foo.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 加载样式 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">&quot;foo.css&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面这些场景，浏览器都会将当前网址作为 <code>Referer</code> 字段，放在 HTTP 请求的头信息发送。</p>
+<p>浏览器的 JavaScript 引擎提供 <code>document.referrer</code> 属性，可以查看当前页面的引荐来源。注意，这里采用的是正确拼写。</p>
+<h3 id="3-Referer-的作用"><a href="#3-Referer-的作用" class="headerlink" title="3.Referer 的作用"></a>3.Referer 的作用</h3><p><code>Referer</code> 字段实际上告诉了服务器，用户在访问当前资源之前的位置。这往往可以用来用户跟踪。一个典型的应用是，有些网站不允许图片外链，只有自家的网站才能显示图片，外部网站加载图片就会报错。它的实现就是基于 <code>Referer</code> 字段，如果该字段的网址是自家网址，就放行。</p>
+<p>由于涉及隐私，很多时候不适合发送 <code>Referer</code> 字段。这里举两个例子，都不适合暴露 URL。一个是功能 URL，即有的 URL 不要登录，可以访问，就能直接完成密码重置、邮件退订等功能。另一个是内网 URL，不希望外部用户知道内网有这样的地址。<code>Referer</code> 字段很可能把这些 URL 暴露出去。</p>
+<p>此外，还有一种特殊情况，需要定制 <code>Referer</code> 字段。比如社交网站上，用户在对话中提到某个网址。这时，不希望暴露用户所在的原始网址，但是可以暴露社交网站的域名，让对方知道，是我贡献了你的流量。</p>
+<h3 id="4-rel属性"><a href="#4-rel属性" class="headerlink" title="4.rel属性"></a>4.<code>rel</code>属性</h3><p>由于上一节的原因，浏览器提供一系列手段，允许改变默认的 <code>Referer</code> 行为。</p>
+<p>对于开发者来说，<code>rel=&quot;noreferrer&quot;</code> 属性是最简单的一种方法。<code>&lt;a&gt;</code>、<code>&lt;area&gt;</code> 和 <code>&lt;form&gt;</code> 三个标签可以使用这个属性，一旦使用，该元素就不会发送<code>Referer</code>字段。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;...&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;noreferrer&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>xxx<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面链接点击产生的 HTTP 请求，不会带有  <code>Referer</code>  字段。</p>
+<p>注意，<code>rel=&quot;noreferrer&quot;</code> 采用的是正确的拼写。</p>
+<h3 id="5-Referrer-Policy-的值"><a href="#5-Referrer-Policy-的值" class="headerlink" title="5.Referrer Policy 的值"></a>5.Referrer Policy 的值</h3><p><code>rel</code> 属性只能定制单个元素的 <code>Referer</code> 行为，而且选择比较少，只能发送或不发送。W3C 为此制定了更强大的 <a target="_blank" rel="noopener" href="https://w3c.github.io/webappsec-referrer-policy/">Referrer Policy</a>。</p>
+<p>Referrer Policy 可以设定 8 个值：</p>
+<p><strong>（1）no-referrer</strong></p>
+<p>不发送 <code>Referer</code> 字段。</p>
+<p><strong>（2）no-referrer-when-downgrade</strong></p>
+<p>如果从 HTTPS 网址链接到 HTTP 网址，不发送 <code>Referer</code> 字段，其他情况发送（包括 HTTP 网址链接到 HTTP 网址）。这是浏览器的默认行为。</p>
+<p><strong>（3）same-origin</strong></p>
+<p>链接到同源网址（协议 + 域名 + 端口 都相同）时发送，否则不发送。注意，<code>https://foo.com</code> 链接到 <code>http://foo.com</code> 也属于跨域。</p>
+<p><strong>（4）origin</strong></p>
+<p><code>Referer</code> 字段一律只发送源信息（协议 + 域名 + 端口），不管是否跨域。</p>
+<p><strong>（5）strict-origin</strong></p>
+<p>如果从 HTTPS 网址链接到 HTTP 网址，不发送 <code>Referer</code> 字段，其他情况只发送源信息。</p>
+<p><strong>（6）origin-when-cross-origin</strong></p>
+<p>同源时，发送完整的 <code>Referer</code> 字段，跨域时发送源信息。</p>
+<p><strong>（7）strict-origin-when-cross-origin</strong></p>
+<p>同源时，发送完整的 <code>Referer</code> 字段；跨域时，如果 HTTPS 网址链接到 HTTP 网址，不发送 <code>Referer</code> 字段，否则发送源信息。</p>
+<p><strong>（8）unsafe-url</strong></p>
+<p><code>Referer</code> 字段包含源信息、路径和查询字符串，不包含锚点、用户名和密码。</p>
+<h3 id="6-Referrer-Policy-的用法"><a href="#6-Referrer-Policy-的用法" class="headerlink" title="6.Referrer Policy 的用法"></a>6.Referrer Policy 的用法</h3><p>Referrer Policy 有<a target="_blank" rel="noopener" href="https://w3c.github.io/webappsec-referrer-policy/#referrer-policy-delivery">多种使用方法</a>。</p>
+<p><strong>（1）HTTP 头信息</strong></p>
+<p>服务器发送网页的时候，通过 HTTP 头信息的 <code>Referrer-Policy</code> 告诉浏览器。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Referrer-Policy</span><span class="punctuation">: </span>origin</span><br></pre></td></tr></table></figure>
+
+<p><strong>（2）<code>&lt;meta&gt;</code> 标签</strong></p>
+<p>也可以使用 <code>&lt;meta&gt;</code> 标签，在网页头部设置。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;referrer&quot;</span> <span class="attr">content</span>=<span class="string">&quot;origin&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>（3）<code>referrerpolicy</code> 属性</strong></p>
+<p><code>&lt;a&gt;</code>、<code>&lt;area&gt;</code>、<code>&lt;img&gt;</code>、<code>&lt;iframe&gt;</code> 和 <code>&lt;link&gt;</code> 标签，可以设置 referrerpolicy 属性。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;...&quot;</span> <span class="attr">referrerpolicy</span>=<span class="string">&quot;origin&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span>&gt;</span>xxx<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>PS：更多内容见 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Referer">参考1-MDN</a>、<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2019/06/http-referer.html">参考2-阮一峰</a></p>
+<h2 id="疑惑"><a href="#疑惑" class="headerlink" title="疑惑"></a>疑惑</h2><p>资源B的测试环境同样有 Referer 头部，但所有网络请求都是没问题的。虽然这次通过修改 Nginx 的配置临时解决了问题，但生产环境上为何存在这个问题，根本原因依旧没搞清楚。同事也咨询了对方是否针对 Referer 做了类似防盗链的处理，得到的答案是否定的。所以可能是哪里的问题呢？😳</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/flag.jpeg"></p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BB%B6%E8%B5%B7%E5%9B%A0"><span class="toc-number">1.</span> <span class="toc-text">案件起因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">分析过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%B0%B7%E6%AD%8C%E4%B8%80%E4%B8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">1.谷歌一下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A3%80%E6%9F%A5-Nginx-%E9%85%8D%E7%BD%AE"><span class="toc-number">2.2.</span> <span class="toc-text">2.检查 Nginx 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%B2%9F%E9%80%9A"><span class="toc-number">2.3.</span> <span class="toc-text">3.沟通</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Charles"><span class="toc-number">2.4.</span> <span class="toc-text">4.Charles</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-cURL"><span class="toc-number">2.5.</span> <span class="toc-text">5.cURL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E7%A0%B4%E6%A1%88"><span class="toc-number">2.6.</span> <span class="toc-text">6.破案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Referrer-or-Referer"><span class="toc-number">3.</span> <span class="toc-text">Referrer or Referer ?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Referer-%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-number">3.1.</span> <span class="toc-text">1.Referer 的含义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Referer-%E7%9A%84%E5%8F%91%E7%94%9F%E5%9C%BA%E6%99%AF"><span class="toc-number">3.2.</span> <span class="toc-text">2.Referer 的发生场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Referer-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">3.3.</span> <span class="toc-text">3.Referer 的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-rel%E5%B1%9E%E6%80%A7"><span class="toc-number">3.4.</span> <span class="toc-text">4.rel属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Referrer-Policy-%E7%9A%84%E5%80%BC"><span class="toc-number">3.5.</span> <span class="toc-text">5.Referrer Policy 的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Referrer-Policy-%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-number">3.6.</span> <span class="toc-text">6.Referrer Policy 的用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%96%91%E6%83%91"><span class="toc-number">4.</span> <span class="toc-text">疑惑</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/12/31/http_referer/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/12/31/http_referer/&text=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/12/31/http_referer/&title=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/12/31/http_referer/&is_video=false&description=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=震惊！由 Referer 引发的一桩“惨案”？&body=Check out this article: https://tommygirl.cn/2021/12/31/http_referer/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/12/31/http_referer/&title=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/12/31/http_referer/&title=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/12/31/http_referer/&title=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/12/31/http_referer/&title=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/12/31/http_referer/&name=震惊！由 Referer 引发的一桩“惨案”？&description=&lt;h2 id=&#34;案件起因&#34;&gt;&lt;a href=&#34;#案件起因&#34; class=&#34;headerlink&#34; title=&#34;案件起因&#34;&gt;&lt;/a&gt;案件起因&lt;/h2&gt;&lt;p&gt;震惊！全员震惊😱！一位程序员哈某举报有人偷走了他两天两夜的时间，经过我们24小时的跟踪暗访，嫌疑人竟是 Mr.Referrer ？请看详细报道：&lt;/p&gt;
+&lt;center&gt;
+    &lt;div style=&#34;display:inline-block;&#34;&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/shark01.png&#34; class width=&#34;300&#34;&gt;&lt;/div&gt;
+    &lt;div style=&#34;display:inline-block;margin-left:10px;&#34;&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/shark02.png&#34; class width=&#34;300&#34;&gt;&lt;/div&gt;
+&lt;/center&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/12/31/http_referer/&t=震惊！由 Referer 引发的一桩“惨案”？"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

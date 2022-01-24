@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="参考自：阮一峰老师博客  上一篇文章，我介绍了 Systemd 的主要命令，今天介绍如何使用它完成一些基本的任务。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转载】Systemd 入门教程：实战篇">
+<meta property="og:url" content="https://tommygirl.cn/2021/07/23/Systemd_Use/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="参考自：阮一峰老师博客  上一篇文章，我介绍了 Systemd 的主要命令，今天介绍如何使用它完成一些基本的任务。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.ruanyifeng.com/blogimg/asset/2016/bg2016030801.jpg">
+<meta property="article:published_time" content="2021-07-23T08:15:32.000Z">
+<meta property="article:modified_time" content="2021-07-23T08:15:32.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="转载">
+<meta property="article:tag" content="服务器">
+<meta property="article:tag" content="CentOS">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.ruanyifeng.com/blogimg/asset/2016/bg2016030801.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>【转载】Systemd 入门教程：实战篇</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2021/08/11/Nginx_HTTPS/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/07/23/Systemd_Command/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/07/23/Systemd_Use/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&text=【转载】Systemd 入门教程：实战篇"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&is_video=false&description=【转载】Systemd 入门教程：实战篇"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【转载】Systemd 入门教程：实战篇&body=Check out this article: https://tommygirl.cn/2021/07/23/Systemd_Use/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&name=【转载】Systemd 入门教程：实战篇&description=&lt;p&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html&#34;&gt;参考自：阮一峰老师博客&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;上一篇文章，我介绍了 Systemd 的&lt;a href=&#34;https://tommygirl.cn/2021/07/23/Systemd_Command/&#34;&gt;主要命令&lt;/a&gt;，今天介绍如何使用它完成一些基本的任务。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.ruanyifeng.com/blogimg/asset/2016/bg2016030801.jpg&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/07/23/Systemd_Use/&t=【转载】Systemd 入门教程：实战篇"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="toc-number">1.</span> <span class="toc-text">一、开机启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="toc-number">2.</span> <span class="toc-text">二、启动服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%81%9C%E6%AD%A2%E6%9C%8D%E5%8A%A1"><span class="toc-number">3.</span> <span class="toc-text">三、停止服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%AF%BB%E6%87%82%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">四、读懂配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81-Unit-%E5%8C%BA%E5%9D%97%EF%BC%9A%E5%90%AF%E5%8A%A8%E9%A1%BA%E5%BA%8F%E4%B8%8E%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E3%80%82"><span class="toc-number">5.</span> <span class="toc-text">五、 [Unit] 区块：启动顺序与依赖关系。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81-Service-%E5%8C%BA%E5%9D%97%EF%BC%9A%E5%90%AF%E5%8A%A8%E8%A1%8C%E4%B8%BA"><span class="toc-number">6.</span> <span class="toc-text">六、[Service] 区块：启动行为</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 启动命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%9E%8B"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 启动类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E9%87%8D%E5%90%AF%E8%A1%8C%E4%B8%BA"><span class="toc-number">6.3.</span> <span class="toc-text">6.3 重启行为</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81-Install-%E5%8C%BA%E5%9D%97"><span class="toc-number">7.</span> <span class="toc-text">七、[Install] 区块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81Target-%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">8.</span> <span class="toc-text">八、Target 的配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%8E%E9%87%8D%E5%90%AF"><span class="toc-number">9.</span> <span class="toc-text">九、修改配置文件后重启</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        【转载】Systemd 入门教程：实战篇
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-07-23T08:15:32.000Z" itemprop="datePublished">2021-07-23</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/CentOS/" rel="tag">CentOS</a>, <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>, <a class="tag-link-link" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag">服务器</a>, <a class="tag-link-link" href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag">转载</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html">参考自：阮一峰老师博客</a></p>
+<hr>
+<p>上一篇文章，我介绍了 Systemd 的<a href="https://tommygirl.cn/2021/07/23/Systemd_Command/">主要命令</a>，今天介绍如何使用它完成一些基本的任务。</p>
+<p><img src="https://www.ruanyifeng.com/blogimg/asset/2016/bg2016030801.jpg" alt="img"></p>
+<span id="more"></span>
+
+<h2 id="一、开机启动"><a href="#一、开机启动" class="headerlink" title="一、开机启动"></a>一、开机启动</h2><p>对于那些支持 Systemd 的软件，安装的时候，会自动在<code>/usr/lib/systemd/system</code>目录添加一个配置文件。</p>
+<p>如果你想让该软件开机启动，就执行下面的命令（以<code>httpd.service</code>为例）。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable httpd</span><br></pre></td></tr></table></figure>
+
+<p>上面的命令相当于在<code>/etc/systemd/system</code>目录添加一个符号链接，指向<code>/usr/lib/systemd/system</code>里面的<code>httpd.service</code>文件。</p>
+<p>这是因为开机时，<code>Systemd</code>只执行<code>/etc/systemd/system</code>目录里面的配置文件。这也意味着，如果把修改后的配置文件放在该目录，就可以达到覆盖原始配置的效果。</p>
+<h2 id="二、启动服务"><a href="#二、启动服务" class="headerlink" title="二、启动服务"></a>二、启动服务</h2><p>设置开机启动以后，软件并不会立即启动，必须等到下一次开机。如果想现在就运行该软件，那么要执行<code>systemctl start</code>命令。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">start</span> httpd</span><br></pre></td></tr></table></figure>
+
+<p>执行上面的命令以后，有可能启动失败，因此要用<code>systemctl status</code>命令查看一下该服务的状态。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status httpd</span><br><span class="line"></span><br><span class="line">httpd.service - The Apache HTTP Server</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled)</span><br><span class="line">   Active: active (running) since 金 <span class="number">2014</span><span class="literal">-12</span><span class="literal">-05</span> <span class="number">12</span>:<span class="number">18</span>:<span class="number">22</span> JST; <span class="number">7</span>min ago</span><br><span class="line"> Main PID: <span class="number">4349</span> (httpd)</span><br><span class="line">   Status: <span class="string">&quot;Total requests: 1; Current requests/sec: 0; Current traffic:   0 B/sec&quot;</span></span><br><span class="line">   CGroup: /system.slice/httpd.service</span><br><span class="line">           ├─<span class="number">4349</span> /usr/sbin/httpd <span class="literal">-DFOREGROUND</span></span><br><span class="line">           ├─<span class="number">4350</span> /usr/sbin/httpd <span class="literal">-DFOREGROUND</span></span><br><span class="line">           ├─<span class="number">4351</span> /usr/sbin/httpd <span class="literal">-DFOREGROUND</span></span><br><span class="line">           ├─<span class="number">4352</span> /usr/sbin/httpd <span class="literal">-DFOREGROUND</span></span><br><span class="line">           ├─<span class="number">4353</span> /usr/sbin/httpd <span class="literal">-DFOREGROUND</span></span><br><span class="line">           └─<span class="number">4354</span> /usr/sbin/httpd <span class="literal">-DFOREGROUND</span></span><br><span class="line"></span><br><span class="line"><span class="number">12</span>月 <span class="number">05</span> <span class="number">12</span>:<span class="number">18</span>:<span class="number">22</span> localhost.localdomain systemd[<span class="number">1</span>]: Starting The Apache HTTP Server...</span><br><span class="line"><span class="number">12</span>月 <span class="number">05</span> <span class="number">12</span>:<span class="number">18</span>:<span class="number">22</span> localhost.localdomain systemd[<span class="number">1</span>]: Started The Apache HTTP Server.</span><br><span class="line"><span class="number">12</span>月 <span class="number">05</span> <span class="number">12</span>:<span class="number">22</span>:<span class="number">40</span> localhost.localdomain systemd[<span class="number">1</span>]: Started The Apache HTTP Server.</span><br></pre></td></tr></table></figure>
+
+<p>上面的输出结果含义如下。</p>
+<p><code>Loaded</code>行：配置文件的位置，是否设为开机启动<code>Active</code>行：表示正在运行<code>Main PID</code>行：主进程 ID<code>Status</code>行：由应用本身（这里是 httpd ）提供的软件当前状态<code>CGroup</code>块：应用的所有子进程日志块：应用的日志</p>
+<h2 id="三、停止服务"><a href="#三、停止服务" class="headerlink" title="三、停止服务"></a>三、停止服务</h2><p>终止正在运行的服务，需要执行<code>systemctl stop</code>命令。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop httpd.service</span><br></pre></td></tr></table></figure>
+
+<p>有时候，该命令可能没有响应，服务停不下来。这时候就不得不 “杀进程” 了，向正在运行的进程发出<code>kill</code>信号。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">kill</span> httpd.service</span><br></pre></td></tr></table></figure>
+
+<p>此外，重启服务要执行<code>systemctl restart</code>命令。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart httpd.service</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="四、读懂配置文件"><a href="#四、读懂配置文件" class="headerlink" title="四、读懂配置文件"></a>四、读懂配置文件</h2><p>一个服务怎么启动，完全由它的配置文件决定。下面就来看，配置文件有些什么内容。</p>
+<p>前面说过，配置文件主要放在<code>/usr/lib/systemd/system</code>目录，也可能在<code>/etc/systemd/system</code>目录。找到配置文件以后，使用文本编辑器打开即可。</p>
+<p><code>systemctl cat</code>命令可以用来查看配置文件，下面以<code>sshd.service</code>文件为例，它的作用是启动一个 SSH 服务器，供其他用户以 SSH 方式登录。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">cat</span> sshd.service</span><br><span class="line"></span><br><span class="line">[<span class="type">Unit</span>]</span><br><span class="line">Description=OpenSSH server daemon</span><br><span class="line">Documentation=<span class="built_in">man</span>:sshd(<span class="number">8</span>) <span class="built_in">man</span>:sshd_config(<span class="number">5</span>)</span><br><span class="line">After=network.target sshd<span class="literal">-keygen</span>.service</span><br><span class="line">Wants=sshd<span class="literal">-keygen</span>.service</span><br><span class="line"></span><br><span class="line">[<span class="type">Service</span>]</span><br><span class="line">EnvironmentFile=/etc/sysconfig/sshd</span><br><span class="line">ExecStart=/usr/sbin/sshd <span class="literal">-D</span> <span class="variable">$OPTIONS</span></span><br><span class="line">ExecReload=/bin/<span class="built_in">kill</span> <span class="literal">-HUP</span> <span class="variable">$MAINPID</span></span><br><span class="line"><span class="built_in">Type</span>=simple</span><br><span class="line">KillMode=<span class="keyword">process</span></span><br><span class="line">Restart=on<span class="literal">-failure</span></span><br><span class="line">RestartSec=<span class="number">42</span>s</span><br><span class="line"></span><br><span class="line">[<span class="type">Install</span>]</span><br><span class="line">WantedBy=multi<span class="literal">-user</span>.target</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，配置文件分成几个区块，每个区块包含若干条键值对。</p>
+<p>下面依次解释每个区块的内容。</p>
+<h2 id="五、-Unit-区块：启动顺序与依赖关系。"><a href="#五、-Unit-区块：启动顺序与依赖关系。" class="headerlink" title="五、 [Unit] 区块：启动顺序与依赖关系。"></a>五、 [Unit] 区块：启动顺序与依赖关系。</h2><p><code>Unit</code>区块的<code>Description</code>字段给出当前服务的简单描述，<code>Documentation</code>字段给出文档位置。</p>
+<p>接下来的设置是启动顺序和依赖关系，这个比较重要。</p>
+<blockquote>
+<p><code>After</code>字段：表示如果<code>network.target</code>或<code>sshd-keygen.service</code>需要启动，那么<code>sshd.service</code>应该在它们之后启动。</p>
+</blockquote>
+<p>相应地，还有一个<code>Before</code>字段，定义<code>sshd.service</code>应该在哪些服务之前启动。</p>
+<p>注意，<code>After</code>和<code>Before</code>字段只涉及启动顺序，不涉及依赖关系。</p>
+<p>举例来说，某 Web 应用需要 postgresql 数据库储存数据。在配置文件中，它只定义要在 postgresql 之后启动，而没有定义依赖 postgresql 。上线后，由于某种原因，postgresql 需要重新启动，在停止服务期间，该 Web 应用就会无法建立数据库连接。</p>
+<p>设置依赖关系，需要使用<code>Wants</code>字段和<code>Requires</code>字段。</p>
+<blockquote>
+<p><code>Wants</code>字段：表示<code>sshd.service</code>与<code>sshd-keygen.service</code>之间存在 “弱依赖” 关系，即如果 “sshd-keygen.service” 启动失败或停止运行，不影响<code>sshd.service</code>继续执行。</p>
+</blockquote>
+<p><code>Requires</code>字段则表示 “强依赖” 关系，即如果该服务启动失败或异常退出，那么<code>sshd.service</code>也必须退出。</p>
+<p>注意，<code>Wants</code>字段与<code>Requires</code>字段只涉及依赖关系，与启动顺序无关，默认情况下是同时启动的。</p>
+<h2 id="六、-Service-区块：启动行为"><a href="#六、-Service-区块：启动行为" class="headerlink" title="六、[Service] 区块：启动行为"></a>六、[Service] 区块：启动行为</h2><p><code>Service</code>区块定义如何启动当前服务。</p>
+<h3 id="6-1-启动命令"><a href="#6-1-启动命令" class="headerlink" title="6.1 启动命令"></a>6.1 启动命令</h3><p>许多软件都有自己的环境参数文件，该文件可以用<code>EnvironmentFile</code>字段读取。</p>
+<blockquote>
+<p><code>EnvironmentFile</code>字段：指定当前服务的环境参数文件。该文件内部的<code>key=value</code>键值对，可以用<code>$key</code>的形式，在当前配置文件中获取。</p>
+</blockquote>
+<p>上面的例子中，sshd 的环境参数文件是<code>/etc/sysconfig/sshd</code>。</p>
+<p>配置文件里面最重要的字段是<code>ExecStart</code>。</p>
+<blockquote>
+<p><code>ExecStart</code>字段：定义启动进程时执行的命令。</p>
+</blockquote>
+<p>上面的例子中，启动<code>sshd</code>，执行的命令是<code>/usr/sbin/sshd -D $OPTIONS</code>，其中的变量<code>$OPTIONS</code>就来自<code>EnvironmentFile</code>字段指定的环境参数文件。</p>
+<p>与之作用相似的，还有如下这些字段。</p>
+<ul>
+<li><code>ExecReload</code>字段：重启服务时执行的命令</li>
+<li><code>ExecStop</code>字段：停止服务时执行的命令</li>
+<li><code>ExecStartPre</code>字段：启动服务之前执行的命令</li>
+<li><code>ExecStartPost</code>字段：启动服务之后执行的命令</li>
+<li><code>ExecStopPost</code>字段：停止服务之后执行的命令</li>
+</ul>
+<p>请看下面的例子。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">Service</span>]</span><br><span class="line">ExecStart=/bin/<span class="built_in">echo</span> execstart1</span><br><span class="line">ExecStart=</span><br><span class="line">ExecStart=/bin/<span class="built_in">echo</span> execstart2</span><br><span class="line">ExecStartPost=/bin/<span class="built_in">echo</span> post1</span><br><span class="line">ExecStartPost=/bin/<span class="built_in">echo</span> post2</span><br></pre></td></tr></table></figure>
+
+<p>上面这个配置文件，第二行<code>ExecStart</code>设为空值，等于取消了第一行的设置，运行结果如下。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">execstart2</span><br><span class="line">post1</span><br><span class="line">post2</span><br></pre></td></tr></table></figure>
+
+<p>所有的启动设置之前，都可以加上一个连词号（<code>-</code>），表示 “抑制错误”，即发生错误的时候，不影响其他命令的执行。比如，<code>EnvironmentFile=-/etc/sysconfig/sshd</code>（注意等号后面的那个连词号），就表示即使<code>/etc/sysconfig/sshd</code>文件不存在，也不会抛出错误。</p>
+<h3 id="6-2-启动类型"><a href="#6-2-启动类型" class="headerlink" title="6.2 启动类型"></a>6.2 启动类型</h3><p><code>Type</code>字段定义启动类型。它可以设置的值如下。</p>
+<ul>
+<li>simple（默认值）：<code>ExecStart</code>字段启动的进程为主进程</li>
+<li>forking：<code>ExecStart</code>字段将以<code>fork()</code>方式启动，此时父进程将会退出，子进程将成为主进程</li>
+<li>oneshot：类似于<code>simple</code>，但只执行一次，Systemd 会等它执行完，才启动其他服务</li>
+<li>dbus：类似于<code>simple</code>，但会等待 D-Bus 信号后启动</li>
+<li>notify：类似于<code>simple</code>，启动结束后会发出通知信号，然后 Systemd 再启动其他服务</li>
+<li>idle：类似于<code>simple</code>，但是要等到其他任务都执行完，才会启动该服务。一种使用场合是为让该服务的输出，不与其他服务的输出相混合</li>
+</ul>
+<p>下面是一个<code>oneshot</code>的例子，笔记本电脑启动时，要把触摸板关掉，配置文件可以这样写。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">Unit</span>]</span><br><span class="line">Description=<span class="built_in">Switch-off</span> Touchpad</span><br><span class="line"></span><br><span class="line">[<span class="type">Service</span>]</span><br><span class="line"><span class="built_in">Type</span>=oneshot</span><br><span class="line">ExecStart=/usr/bin/touchpad<span class="literal">-off</span></span><br><span class="line"></span><br><span class="line">[<span class="type">Install</span>]</span><br><span class="line">WantedBy=multi<span class="literal">-user</span>.target</span><br></pre></td></tr></table></figure>
+
+<p>上面的配置文件，启动类型设为<code>oneshot</code>，就表明这个服务只要运行一次就够了，不需要长期运行。</p>
+<p>如果关闭以后，将来某个时候还想打开，配置文件修改如下。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">Unit</span>]</span><br><span class="line">Description=<span class="built_in">Switch-off</span> Touchpad</span><br><span class="line"></span><br><span class="line">[<span class="type">Service</span>]</span><br><span class="line"><span class="built_in">Type</span>=oneshot</span><br><span class="line">ExecStart=/usr/bin/touchpad<span class="literal">-off</span> <span class="built_in">start</span></span><br><span class="line">ExecStop=/usr/bin/touchpad<span class="literal">-off</span> stop</span><br><span class="line">RemainAfterExit=yes</span><br><span class="line"></span><br><span class="line">[<span class="type">Install</span>]</span><br><span class="line">WantedBy=multi<span class="literal">-user</span>.target</span><br></pre></td></tr></table></figure>
+
+<p>上面配置文件中，<code>RemainAfterExit</code>字段设为<code>yes</code>，表示进程退出以后，服务仍然保持执行。这样的话，一旦使用<code>systemctl stop</code>命令停止服务，<code>ExecStop</code>指定的命令就会执行，从而重新开启触摸板。</p>
+<h3 id="6-3-重启行为"><a href="#6-3-重启行为" class="headerlink" title="6.3 重启行为"></a>6.3 重启行为</h3><p><code>Service</code>区块有一些字段，定义了重启行为。</p>
+<blockquote>
+<p><code>KillMode</code>字段：定义 Systemd 如何停止 sshd 服务。</p>
+</blockquote>
+<p>上面这个例子中，将<code>KillMode</code>设为<code>process</code>，表示只停止主进程，不停止任何 sshd 子进程，即子进程打开的 SSH session 仍然保持连接。这个设置不太常见，但对 sshd 很重要，否则你停止服务的时候，会连自己打开的 SSH session 一起杀掉。</p>
+<p><code>KillMode</code>字段可以设置的值如下。</p>
+<ul>
+<li>control-group（默认值）：当前控制组里面的所有子进程，都会被杀掉</li>
+<li>process：只杀主进程</li>
+<li>mixed：主进程将收到 SIGTERM 信号，子进程收到 SIGKILL 信号</li>
+<li>none：没有进程会被杀掉，只是执行服务的 stop 命令。</li>
+</ul>
+<p>接下来是<code>Restart</code>字段。</p>
+<blockquote>
+<p><code>Restart</code>字段：定义了 sshd 退出后，Systemd 的重启方式。</p>
+</blockquote>
+<p>上面的例子中，<code>Restart</code>设为<code>on-failure</code>，表示任何意外的失败，就将重启 sshd。如果 sshd 正常停止（比如执行<code>systemctl stop</code>命令），它就不会重启。</p>
+<p><code>Restart</code>字段可以设置的值如下。</p>
+<ul>
+<li>no（默认值）：退出后不会重启</li>
+<li>on-success：只有正常退出时（退出状态码为 0），才会重启</li>
+<li>on-failure：非正常退出时（退出状态码非 0），包括被信号终止和超时，才会重启</li>
+<li>on-abnormal：只有被信号终止和超时，才会重启</li>
+<li>on-abort：只有在收到没有捕捉到的信号终止时，才会重启</li>
+<li>on-watchdog：超时退出，才会重启always：不管是什么退出原因，总是重启</li>
+</ul>
+<p>对于守护进程，推荐设为<code>on-failure</code>。对于那些允许发生错误退出的服务，可以设为<code>on-abnormal</code>。</p>
+<p>最后是<code>RestartSec</code>字段。</p>
+<blockquote>
+<p><code>RestartSec</code>字段：表示 Systemd 重启服务之前，需要等待的秒数。上面的例子设为等待 42 秒。</p>
+</blockquote>
+<h2 id="七、-Install-区块"><a href="#七、-Install-区块" class="headerlink" title="七、[Install] 区块"></a>七、[Install] 区块</h2><p><code>Install</code>区块，定义如何安装这个配置文件，即怎样做到开机启动。</p>
+<blockquote>
+<p><code>WantedBy</code>字段：表示该服务所在的 Target。</p>
+</blockquote>
+<p><code>Target</code>的含义是服务组，表示一组服务。<code>WantedBy=multi-user.target</code>指的是，sshd 所在的 Target 是<code>multi-user.target</code>。</p>
+<p>这个设置非常重要，因为执行<code>systemctl enable sshd.service</code>命令时，<code>sshd.service</code>的一个符号链接，就会放在<code>/etc/systemd/system</code>目录下面的<code>multi-user.target.wants</code>子目录之中。</p>
+<p>Systemd 有默认的启动 Target。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">get-default</span></span><br><span class="line">multi<span class="literal">-user</span>.target</span><br></pre></td></tr></table></figure>
+
+<p>上面的结果表示，默认的启动 Target 是<code>multi-user.target</code>。在这个组里的所有服务，都将开机启动。这就是为什么<code>systemctl enable</code>命令能设置开机启动的原因。</p>
+<p>使用 Target 的时候，<code>systemctl list-dependencies</code>命令和<code>systemctl isolate</code>命令也很有用。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看 multi-user.target 包含的所有服务</span></span><br><span class="line">systemctl list<span class="literal">-dependencies</span> multi<span class="literal">-user</span>.target</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到另一个 target</span></span><br><span class="line"><span class="comment"># shutdown.target 就是关机状态</span></span><br><span class="line">sudo systemctl isolate shutdown.target</span><br></pre></td></tr></table></figure>
+
+<p>一般来说，常用的 Target 有两个：一个是<code>multi-user.target</code>，表示多用户命令行状态；另一个是<code>graphical.target</code>，表示图形用户状态，它依赖于<code>multi-user.target</code>。官方文档有一张非常清晰的 [Target 依赖关系图](<a target="_blank" rel="noopener" href="https://www.freedesktop.org/software/systemd/man/bootup.html#System">https://www.freedesktop.org/software/systemd/man/bootup.html#System</a> Manager Bootup)。</p>
+<h2 id="八、Target-的配置文件"><a href="#八、Target-的配置文件" class="headerlink" title="八、Target 的配置文件"></a>八、Target 的配置文件</h2><p>Target 也有自己的配置文件。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">cat</span> multi<span class="literal">-user</span>.target</span><br><span class="line"></span><br><span class="line">[<span class="type">Unit</span>]</span><br><span class="line">Description=Multi<span class="literal">-User</span> System</span><br><span class="line">Documentation=<span class="built_in">man</span>:systemd.special(<span class="number">7</span>)</span><br><span class="line">Requires=basic.target</span><br><span class="line">Conflicts=rescue.service rescue.target</span><br><span class="line">After=basic.target rescue.service rescue.target</span><br><span class="line">AllowIsolate=yes</span><br></pre></td></tr></table></figure>
+
+<p>注意，Target 配置文件里面没有启动命令。</p>
+<p>上面输出结果中，主要字段含义如下。</p>
+<blockquote>
+<p><code>Requires</code>字段：要求<code>basic.target</code>一起运行。</p>
+<p><code>Conflicts</code>字段：冲突字段。如果<code>rescue.service</code>或<code>rescue.target</code>正在运行，<code>multi-user.target</code>就不能运行，反之亦然。</p>
+<p><code>After</code>：表示<code>multi-user.target</code>在<code>basic.target</code> 、 <code>rescue.service</code>、 <code>rescue.target</code>之后启动，如果它们有启动的话。</p>
+<p><code>AllowIsolate</code>：允许使用<code>systemctl isolate</code>命令切换到<code>multi-user.target</code>。</p>
+</blockquote>
+<h2 id="九、修改配置文件后重启"><a href="#九、修改配置文件后重启" class="headerlink" title="九、修改配置文件后重启"></a>九、修改配置文件后重启</h2><p>修改配置文件以后，需要重新加载配置文件，然后重新启动相关服务。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重新加载配置文件</span></span><br><span class="line">sudo systemctl daemon<span class="literal">-reload</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启相关服务</span></span><br><span class="line">sudo systemctl restart foobarhttps://www.ruanyifeng.com/blog/<span class="number">2016</span>/<span class="number">03</span>/systemd<span class="literal">-tutorial</span><span class="literal">-part</span><span class="literal">-two</span>.html<span class="comment">#sr-toc-11)</span></span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8"><span class="toc-number">1.</span> <span class="toc-text">一、开机启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="toc-number">2.</span> <span class="toc-text">二、启动服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%81%9C%E6%AD%A2%E6%9C%8D%E5%8A%A1"><span class="toc-number">3.</span> <span class="toc-text">三、停止服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%AF%BB%E6%87%82%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">四、读懂配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81-Unit-%E5%8C%BA%E5%9D%97%EF%BC%9A%E5%90%AF%E5%8A%A8%E9%A1%BA%E5%BA%8F%E4%B8%8E%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E3%80%82"><span class="toc-number">5.</span> <span class="toc-text">五、 [Unit] 区块：启动顺序与依赖关系。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81-Service-%E5%8C%BA%E5%9D%97%EF%BC%9A%E5%90%AF%E5%8A%A8%E8%A1%8C%E4%B8%BA"><span class="toc-number">6.</span> <span class="toc-text">六、[Service] 区块：启动行为</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 启动命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%9E%8B"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 启动类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E9%87%8D%E5%90%AF%E8%A1%8C%E4%B8%BA"><span class="toc-number">6.3.</span> <span class="toc-text">6.3 重启行为</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81-Install-%E5%8C%BA%E5%9D%97"><span class="toc-number">7.</span> <span class="toc-text">七、[Install] 区块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81Target-%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">8.</span> <span class="toc-text">八、Target 的配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%8E%E9%87%8D%E5%90%AF"><span class="toc-number">9.</span> <span class="toc-text">九、修改配置文件后重启</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/07/23/Systemd_Use/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&text=【转载】Systemd 入门教程：实战篇"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&is_video=false&description=【转载】Systemd 入门教程：实战篇"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【转载】Systemd 入门教程：实战篇&body=Check out this article: https://tommygirl.cn/2021/07/23/Systemd_Use/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&name=【转载】Systemd 入门教程：实战篇&description=&lt;p&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html&#34;&gt;参考自：阮一峰老师博客&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;上一篇文章，我介绍了 Systemd 的&lt;a href=&#34;https://tommygirl.cn/2021/07/23/Systemd_Command/&#34;&gt;主要命令&lt;/a&gt;，今天介绍如何使用它完成一些基本的任务。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.ruanyifeng.com/blogimg/asset/2016/bg2016030801.jpg&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/07/23/Systemd_Use/&t=【转载】Systemd 入门教程：实战篇"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>
