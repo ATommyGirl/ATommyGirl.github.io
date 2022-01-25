@@ -400,7 +400,7 @@ body abbr {
 body ul,
 body ol,
 body dl {
-  line-height: 1.5;
+  line-height: 1.725;
 }
 body ul ul,
 body ol ul,
@@ -419,7 +419,7 @@ body table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 13px;
+  font-size: 12px;
   overflow: auto;
   display: block;
 }
@@ -428,7 +428,7 @@ body th {
   border-bottom: 1px dashed #908d8d;
   color: #eee;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
 }
 body td {
   padding: 0 8px;
@@ -459,9 +459,9 @@ body {
   color: #c9cacc;
   font-display: swap;
   font-weight: 400;
-  font-size: 15px;
-  font-family: "PingFang SC";
-  line-height: 1.5;
+  font-size: 14px;
+  font-family: "Menlo", "Meslo LG", monospace;
+  line-height: 1.725;
   text-rendering: geometricPrecision;
   flex: 1;
   -moz-osx-font-smoothing: grayscale;
@@ -540,7 +540,7 @@ body {
 @media (min-width: 540px) {
   .image-wrap {
     flex-direction: row;
-    margin-bottom: 0rem;
+    margin-bottom: 2rem;
   }
   .image-wrap .image-block {
     flex: 1 0 35%;
@@ -551,7 +551,7 @@ body {
   }
 }
 .max-width {
-  max-width: 55rem;
+  max-width: 48rem;
 }
 @media (max-width: 480px) {
   .px3 {
@@ -1382,9 +1382,9 @@ article .content .caption {
   color: #1d1f21;
   font-display: swap;
   font-weight: 400;
-  font-size: 12px;
-  font-family: "PingFang SC";
-  line-height: 1.5;
+  font-size: 11.200000000000001px;
+  font-family: "Menlo", "Meslo LG", monospace;
+  line-height: 1.725;
   text-rendering: geometricPrecision;
   text-align: center;
   word-wrap: break-word;
@@ -1553,7 +1553,7 @@ pre {
   border: 1px dotted #908d8d;
   border-radius: 4px;
   font-size: 13px;
-  font-family: "PingFang SC";
+  font-family: "Menlo", "Meslo LG", monospace;
   line-height: 22px;
   -webkit-border-radius: 4px;
 }
@@ -1574,7 +1574,7 @@ code {
   padding: 10px 15px;
   border-radius: 4px;
   background: #212326;
-  font-family: "PingFang SC";
+  font-family: "Menlo", "Meslo LG", monospace;
   -webkit-border-radius: 4px;
 }
 .highlight figcaption {
