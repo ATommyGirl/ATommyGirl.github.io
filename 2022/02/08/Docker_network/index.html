@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="原文链接 Docker 网络实现原理Docker 使用 Linux 桥接（参考《Linux 虚拟网络技术》），在宿主机虚拟一个 Docker 容器网桥 (docker0)，Docker 启动一个容器时会根据 Docker 网桥的网段分配给容器一个 IP 地址，称为 Container-IP，同时 Docker 网桥是每个容器的默认网关。因为在同一宿主机内的容器都接入同一个网桥，这样容器之间就能够通">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转载】Docker 的四种网络模式">
+<meta property="og:url" content="https://tommygirl.cn/2022/02/08/Docker_network/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="原文链接 Docker 网络实现原理Docker 使用 Linux 桥接（参考《Linux 虚拟网络技术》），在宿主机虚拟一个 Docker 容器网桥 (docker0)，Docker 启动一个容器时会根据 Docker 网桥的网段分配给容器一个 IP 地址，称为 Container-IP，同时 Docker 网桥是每个容器的默认网关。因为在同一宿主机内的容器都接入同一个网桥，这样容器之间就能够通">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/docker_network_host.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/docker_network_container.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/docker_network_none.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/docker_network_bridge.png">
+<meta property="article:published_time" content="2022-02-08T04:23:34.000Z">
+<meta property="article:modified_time" content="2022-02-08T04:23:34.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="转载">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/docker_network_host.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>【转载】Docker 的四种网络模式</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2022/02/16/Apple%20Configurator%202/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2022/01/19/2021%E5%B9%B4%E5%B0%8F%E7%BB%93%E5%84%BF/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/02/08/Docker_network/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/02/08/Docker_network/&text=【转载】Docker 的四种网络模式"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/02/08/Docker_network/&title=【转载】Docker 的四种网络模式"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/02/08/Docker_network/&is_video=false&description=【转载】Docker 的四种网络模式"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【转载】Docker 的四种网络模式&body=Check out this article: https://tommygirl.cn/2022/02/08/Docker_network/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/02/08/Docker_network/&title=【转载】Docker 的四种网络模式"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/08/Docker_network/&title=【转载】Docker 的四种网络模式"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/08/Docker_network/&title=【转载】Docker 的四种网络模式"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/08/Docker_network/&title=【转载】Docker 的四种网络模式"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/08/Docker_network/&name=【转载】Docker 的四种网络模式&description=&lt;p&gt;&lt;a href=&#34;https://www.jianshu.com/p/22a7032bb7bd&#34;&gt;原文链接&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;Docker-网络实现原理&#34;&gt;&lt;a href=&#34;#Docker-网络实现原理&#34; class=&#34;headerlink&#34; title=&#34;Docker 网络实现原理&#34;&gt;&lt;/a&gt;Docker 网络实现原理&lt;/h2&gt;&lt;p&gt;Docker 使用 Linux 桥接（参考《Linux 虚拟网络技术》），在宿主机虚拟一个 Docker 容器网桥 (docker0)，Docker 启动一个容器时会根据 Docker 网桥的网段分配给容器一个 IP 地址，称为 Container-IP，同时 Docker 网桥是每个容器的默认网关。因为在同一宿主机内的容器都接入同一个网桥，这样容器之间就能够通过容器的 Container-IP 直接通信。&lt;/p&gt;
+&lt;p&gt;Docker 网桥是宿主机虚拟出来的，并不是真实存在的网络设备，外部网络是无法寻址到的，这也意味着外部网络无法通过直接 Container-IP 访问到容器。如果容器希望外部访问能够访问到，可以通过映射容器端口到宿主主机（端口映射），即 &lt;code&gt;docker run&lt;/code&gt; 创建容器时候通过 &lt;code&gt;-p&lt;/code&gt; 或 &lt;code&gt;-P&lt;/code&gt; 参数来启用，访问容器的时候就通过 [宿主机 IP]:[容器端口] 访问容器。&lt;/p&gt;
+&lt;h2 id=&#34;四类网络模式&#34;&gt;&lt;a href=&#34;#四类网络模式&#34; class=&#34;headerlink&#34; title=&#34;四类网络模式&#34;&gt;&lt;/a&gt;四类网络模式&lt;/h2&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/08/Docker_network/&t=【转载】Docker 的四种网络模式"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">Docker 网络实现原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%B1%BB%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">四类网络模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#host-%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">host 模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#container-%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">container 模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#none-%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">none 模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bridge-%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.4.</span> <span class="toc-text">bridge 模式</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        【转载】Docker 的四种网络模式
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-02-08T04:23:34.000Z" itemprop="datePublished">2022-02-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a>, <a class="tag-link-link" href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag">转载</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/22a7032bb7bd">原文链接</a></p>
+<h2 id="Docker-网络实现原理"><a href="#Docker-网络实现原理" class="headerlink" title="Docker 网络实现原理"></a>Docker 网络实现原理</h2><p>Docker 使用 Linux 桥接（参考《Linux 虚拟网络技术》），在宿主机虚拟一个 Docker 容器网桥 (docker0)，Docker 启动一个容器时会根据 Docker 网桥的网段分配给容器一个 IP 地址，称为 Container-IP，同时 Docker 网桥是每个容器的默认网关。因为在同一宿主机内的容器都接入同一个网桥，这样容器之间就能够通过容器的 Container-IP 直接通信。</p>
+<p>Docker 网桥是宿主机虚拟出来的，并不是真实存在的网络设备，外部网络是无法寻址到的，这也意味着外部网络无法通过直接 Container-IP 访问到容器。如果容器希望外部访问能够访问到，可以通过映射容器端口到宿主主机（端口映射），即 <code>docker run</code> 创建容器时候通过 <code>-p</code> 或 <code>-P</code> 参数来启用，访问容器的时候就通过 [宿主机 IP]:[容器端口] 访问容器。</p>
+<h2 id="四类网络模式"><a href="#四类网络模式" class="headerlink" title="四类网络模式"></a>四类网络模式</h2><span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th align="left">Docker 网络模式</th>
+<th>配置</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">host 模式</td>
+<td>-net=host</td>
+<td>容器和宿主机共享 Network namespace。</td>
+</tr>
+<tr>
+<td align="left">container 模式</td>
+<td>-net=container:NAME_or_ID</td>
+<td>容器和另外一个容器共享 Network namespace。 kubernetes 中的 pod 就是多个容器共享一个 Network namespace。</td>
+</tr>
+<tr>
+<td align="left">none 模式</td>
+<td>-net=none</td>
+<td>容器有独立的 Network namespace，但并没有对其进行任何网络设置，如分配 veth pair 和网桥连接，配置 IP 等。</td>
+</tr>
+<tr>
+<td align="left">bridge 模式</td>
+<td>-net=bridge （默认为该模式）</td>
+<td>-net=bridge （默认为该模式）</td>
+</tr>
+</tbody></table>
+<h3 id="host-模式"><a href="#host-模式" class="headerlink" title="host 模式"></a>host 模式</h3><p>如果启动容器的时候使用 host 模式，那么这个容器将不会获得一个独立的 Network Namespace，而是和宿主机共用一个 Network Namespace。容器将不会虚拟出自己的网卡，配置自己的 IP 等，而是使用宿主机的 IP 和端口。但是，容器的其他方面，如文件系统、进程列表等还是和宿主机隔离的。</p>
+<p>使用 host 模式的容器可以直接使用宿主机的 IP 地址与外界通信，容器内部的服务端口也可以使用宿主机的端口，不需要进行 NAT，host 最大的优势就是网络性能比较好，但是 docker host 上已经使用的端口就不能再用了，网络的隔离性不好。</p>
+<p>Host 模式如下图所示：</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/docker_network_host.png" alt="img"></p>
+<h3 id="container-模式"><a href="#container-模式" class="headerlink" title="container 模式"></a>container 模式</h3><p>这个模式指定新创建的容器和已经存在的一个容器共享一个 Network Namespace，而不是和宿主机共享。新创建的容器不会创建自己的网卡，配置自己的 IP，而是和一个指定的容器共享 IP、端口范围等。同样，两个容器除了网络方面，其他的如文件系统、进程列表等还是隔离的。两个容器的进程可以通过 lo 网卡设备通信。</p>
+<p>Container 模式示意图：</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/docker_network_container.png" alt="img"></p>
+<h3 id="none-模式"><a href="#none-模式" class="headerlink" title="none 模式"></a>none 模式</h3><p>使用 none 模式，Docker 容器拥有自己的 Network Namespace，但是，并不为 Docker 容器进行任何网络配置。也就是说，这个 Docker 容器没有网卡、IP、路由等信息。需要我们自己为 Docker 容器添加网卡、配置 IP 等。</p>
+<p>这种网络模式下容器只有 lo 回环网络，没有其他网卡。none 模式可以在容器创建时通过 <code>-network=none</code> 来指定。这种类型的网络没有办法联网，封闭的网络能很好的保证容器的安全性。</p>
+<p>None 模式示意图:</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/docker_network_none.png" alt="None 网络模式"></p>
+<h3 id="bridge-模式"><a href="#bridge-模式" class="headerlink" title="bridge 模式"></a>bridge 模式</h3><p>当 Docker 进程启动时，会在主机上创建一个名为 docker0 的虚拟网桥，此主机上启动的 Docker 容器会连接到这个虚拟网桥上。虚拟网桥的工作方式和物理交换机类似，这样主机上的所有容器就通过交换机连在了一个二层网络中。</p>
+<p>从 docker0 子网中分配一个 IP 给容器使用，并设置 docker0 的 IP 地址为容器的默认网关。在主机上创建一对虚拟网卡 veth pair 设备，Docker 将 veth pair 设备的一端放在新创建的容器中，并命名为 eth0（容器的网卡），另一端放在主机中，以 vethxxx 这样类似的名字命名，并将这个网络设备加入到 docker0 网桥中。可以通过 brctl show 命令查看。</p>
+<p>bridge 模式是 docker 的默认网络模式，不写–net 参数，就是 bridge 模式。使用 <code>docker run -p</code> 时，docker 实际是在 iptables 做了 DNAT 规则，实现端口转发功能。可以使用<code> iptables -t nat -vnL</code> 查看。</p>
+<p>Bridge 模式如下图所示：</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/docker_network_bridge.png" alt="img"></p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-%E7%BD%91%E7%BB%9C%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">Docker 网络实现原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E7%B1%BB%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">四类网络模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#host-%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">host 模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#container-%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">container 模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#none-%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">none 模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bridge-%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.4.</span> <span class="toc-text">bridge 模式</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/02/08/Docker_network/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/02/08/Docker_network/&text=【转载】Docker 的四种网络模式"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/02/08/Docker_network/&title=【转载】Docker 的四种网络模式"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/02/08/Docker_network/&is_video=false&description=【转载】Docker 的四种网络模式"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【转载】Docker 的四种网络模式&body=Check out this article: https://tommygirl.cn/2022/02/08/Docker_network/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/02/08/Docker_network/&title=【转载】Docker 的四种网络模式"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/08/Docker_network/&title=【转载】Docker 的四种网络模式"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/08/Docker_network/&title=【转载】Docker 的四种网络模式"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/08/Docker_network/&title=【转载】Docker 的四种网络模式"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/08/Docker_network/&name=【转载】Docker 的四种网络模式&description=&lt;p&gt;&lt;a href=&#34;https://www.jianshu.com/p/22a7032bb7bd&#34;&gt;原文链接&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;Docker-网络实现原理&#34;&gt;&lt;a href=&#34;#Docker-网络实现原理&#34; class=&#34;headerlink&#34; title=&#34;Docker 网络实现原理&#34;&gt;&lt;/a&gt;Docker 网络实现原理&lt;/h2&gt;&lt;p&gt;Docker 使用 Linux 桥接（参考《Linux 虚拟网络技术》），在宿主机虚拟一个 Docker 容器网桥 (docker0)，Docker 启动一个容器时会根据 Docker 网桥的网段分配给容器一个 IP 地址，称为 Container-IP，同时 Docker 网桥是每个容器的默认网关。因为在同一宿主机内的容器都接入同一个网桥，这样容器之间就能够通过容器的 Container-IP 直接通信。&lt;/p&gt;
+&lt;p&gt;Docker 网桥是宿主机虚拟出来的，并不是真实存在的网络设备，外部网络是无法寻址到的，这也意味着外部网络无法通过直接 Container-IP 访问到容器。如果容器希望外部访问能够访问到，可以通过映射容器端口到宿主主机（端口映射），即 &lt;code&gt;docker run&lt;/code&gt; 创建容器时候通过 &lt;code&gt;-p&lt;/code&gt; 或 &lt;code&gt;-P&lt;/code&gt; 参数来启用，访问容器的时候就通过 [宿主机 IP]:[容器端口] 访问容器。&lt;/p&gt;
+&lt;h2 id=&#34;四类网络模式&#34;&gt;&lt;a href=&#34;#四类网络模式&#34; class=&#34;headerlink&#34; title=&#34;四类网络模式&#34;&gt;&lt;/a&gt;四类网络模式&lt;/h2&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/08/Docker_network/&t=【转载】Docker 的四种网络模式"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>
