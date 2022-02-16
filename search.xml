@@ -202,7 +202,7 @@
   <entry>
     <title>Apple Configurator 2</title>
     <url>/2022/02/16/Apple%20Configurator%202/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>平时的开发测试中，基于各种原因…不是所有的 App 都会上线 App Store ，经常需要把 IPA 直接安装在手机上，之前一直用的 <code>iFunBox</code>，但最近换了电脑以后这个软件不好用了，据说是升级了版本，但不知道是我眼瞎了还是怎么样，找不到以往安装 IPA 的入口。搜来搜去发现苹果自己提供了一个工具：<code>Apple Configurator 2</code>，UI 和功能都很“苹果”，直接把其他工具都卸载了，哈哈~</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>平时的开发测试中，基于各种原因…不是所有的 App 都会上线 App Store ，经常需要通过 Mac 把 IPA 直接安装在 iPhone 上，之前一直用的 <code>iFunBox</code>，但最近换了电脑以后这个软件不好用了，据说是升级了版本，但不知道是我眼瞎了还是怎么样，找不到以往安装 IPA 的入口。搜来搜去发现苹果自己提供了一个工具：<code>Apple Configurator 2</code>，UI 和功能都很“苹果”，直接把其他工具都卸载了，哈哈~</p>
 <ul>
 <li>手机连线到 Mac </li>
 <li>选中自己的设备</li>
