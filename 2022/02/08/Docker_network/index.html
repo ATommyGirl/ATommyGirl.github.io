@@ -208,7 +208,7 @@
 <p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/docker_network_none.png" alt="None 网络模式"></p>
 <h3 id="bridge-模式"><a href="#bridge-模式" class="headerlink" title="bridge 模式"></a>bridge 模式</h3><p>当 Docker 进程启动时，会在主机上创建一个名为 docker0 的虚拟网桥，此主机上启动的 Docker 容器会连接到这个虚拟网桥上。虚拟网桥的工作方式和物理交换机类似，这样主机上的所有容器就通过交换机连在了一个二层网络中。</p>
 <p>从 docker0 子网中分配一个 IP 给容器使用，并设置 docker0 的 IP 地址为容器的默认网关。在主机上创建一对虚拟网卡 veth pair 设备，Docker 将 veth pair 设备的一端放在新创建的容器中，并命名为 eth0（容器的网卡），另一端放在主机中，以 vethxxx 这样类似的名字命名，并将这个网络设备加入到 docker0 网桥中。可以通过 brctl show 命令查看。</p>
-<p>bridge 模式是 docker 的默认网络模式，不写–net 参数，就是 bridge 模式。使用 <code>docker run -p</code> 时，docker 实际是在 iptables 做了 DNAT 规则，实现端口转发功能。可以使用<code> iptables -t nat -vnL</code> 查看。</p>
+<p>bridge 模式是 docker 的默认网络模式，不写–net 参数，就是 bridge 模式。使用 <code>docker run -p</code> 时，docker 实际是在 iptables 做了 DNAT 规则，实现端口转发功能。可以使用 <code>iptables -t nat -vnL</code> 查看。</p>
 <p>Bridge 模式如下图所示：</p>
 <p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/docker_network_bridge.png" alt="img"></p>
 

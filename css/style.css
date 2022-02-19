@@ -343,7 +343,7 @@ body .h2 {
 }
 body h3 {
   color: #eee;
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: bold;
   font-size: 0.9rem;
 }
@@ -400,7 +400,7 @@ body abbr {
 body ul,
 body ol,
 body dl {
-  line-height: 1.725;
+  line-height: 1.7;
 }
 body ul ul,
 body ol ul,
@@ -460,8 +460,8 @@ body {
   font-display: swap;
   font-weight: 400;
   font-size: 14px;
-  font-family: "Menlo", "Meslo LG", monospace;
-  line-height: 1.725;
+  font-family: "SimHei", 'Verdana', sans-serif, monospace;
+  line-height: 1.7;
   text-rendering: geometricPrecision;
   flex: 1;
   -moz-osx-font-smoothing: grayscale;
@@ -1383,8 +1383,8 @@ article .content .caption {
   font-display: swap;
   font-weight: 400;
   font-size: 11.200000000000001px;
-  font-family: "Menlo", "Meslo LG", monospace;
-  line-height: 1.725;
+  font-family: "SimHei", 'Verdana', sans-serif, monospace;
+  line-height: 1.7;
   text-rendering: geometricPrecision;
   text-align: center;
   word-wrap: break-word;
@@ -1550,7 +1550,7 @@ pre {
   overflow-x: auto;
   padding: 10px 15px;
   padding-bottom: 0;
-  border: 1px dotted #908d8d;
+  border: none1px dotted #908d8d;
   border-radius: 4px;
   font-size: 13px;
   font-family: "Menlo", "Meslo LG", monospace;
@@ -1563,6 +1563,7 @@ pre code {
   border: none;
 }
 code {
+  color: #2bbc8a;
   padding: 0 5px;
   border: 1px dotted #908d8d;
   border-radius: 2px;
