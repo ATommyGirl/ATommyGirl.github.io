@@ -77,6 +77,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" aria-label="上一篇 " href="/2022/02/23/Linux_Shell/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" aria-label="下一篇 " href="/2022/02/16/Apple%20Configurator%202/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -100,7 +102,20 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/18/Linux_user/&name=Linux 学习笔记（一）- 用户&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/18/Linux_user/&name=Linux 学习笔记（一）- 用户&description=&lt;hr&gt;
+&lt;p&gt;一直想学习 Linux，但无奈小白不知道从何入手。经常看群里服务端的同事提到 root 、sudo，那我想着从用户管理入手，先认清楚大小王总是可以的吧，趁工作的空档学习了一些基本知识，大部分描述来自于《Linux从入门到精通》一书。&lt;/p&gt;
+&lt;p&gt;记录一下尝试过的命令：&lt;/p&gt;
+&lt;h2 id=&#34;root-可以做什么&#34;&gt;&lt;a href=&#34;#root-可以做什么&#34; class=&#34;headerlink&#34; title=&#34;root 可以做什么&#34;&gt;&lt;/a&gt;root 可以做什么&lt;/h2&gt;&lt;p&gt;这个问题的答案是 anything。没错，作为整个系统中拥有最高权限的用户，root 可以对系统做任何事情。root 可以访问、修改、删除系统中的任何文件和目录。另外，对于如下这些受限的操作，一般只有 root 用户能够执行。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;添加删除用户;&lt;/li&gt;
+&lt;li&gt;安装软件;&lt;/li&gt;
+&lt;li&gt;添加删除设备;&lt;/li&gt;
+&lt;li&gt;启动和停止网络服务;&lt;/li&gt;
+&lt;li&gt;某些系统调用(例如对内核的请求) ;&lt;/li&gt;
+&lt;li&gt;关闭系统。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;提示&lt;/strong&gt;：像“关闭系统”这样的操作都需要 root 用户来执行，看起来是一件特别古怪的事情。事实上，作为 Linux 的祖先，UNIX 是一种典型的服务器操作系统。而服务器的关闭和启动都必须得到管理员的授权(试想一个普通用户登录服务器，然后随意执行关机命令会怎样)。出于操作简易性的考虑，桌面版的 Linux 允许普通用户在图形界面下关闭系统。但在命令行下执行关机命令仍然需要 root 口令。Linux 系统上的每个文件和目录都属于某个特定的用户，没有得到许可，其他用户就不能访问这些对象。但 root 用户却可以访问所有用户的文件，就像使用自己的东西一样。&lt;/p&gt;
+&lt;p&gt;系统不会因为用户输入的命令足够“愚蠢”而拒绝执行。相反，系统会乐滋滋地执行这样一条命令，然后把自己完完整整地删除了，例如：&lt;code&gt;rm -fr /*&lt;/code&gt;。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/18/Linux_user/&t=Linux 学习笔记（一）- 用户"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
@@ -162,10 +177,12 @@
 <li>某些系统调用(例如对内核的请求) ;</li>
 <li>关闭系统。</li>
 </ul>
-<p><strong>提示</strong>：像“关闭系统”这样的操作都需要 root 用户来执行，看起来是一件特别古怪的事情。事实上，作为 Linux 的祖先，UNIX 是一种典型的服务器操作系统。而服务器的关闭和启动都必须得到管理员的授权(试想一个普通用户登录服务器，然后随意执行关机命令会怎样)。出于操作简易性的考虑，桌面版的 Linux 允许普通用户在图形界面下关闭系统。但在命令行下执行关机命令仍然需要 root 口令。Linux 系统上的每个文件和目录都属于某个特定的用户，没有得到许可，其他用户就不能访问这些对象。但 root 用户却可以访问所有用户的文件，就像使用自己的东西一一样。</p>
-<p>系统不会因为用户输入的命令足够“愚蠢”而拒绝执行。相反，系统会乐滋滋地执行这样一一条命令，然后把自己完完整整地删除了，例如：<code>rm -fr /*</code>。</p>
+<p><strong>提示</strong>：像“关闭系统”这样的操作都需要 root 用户来执行，看起来是一件特别古怪的事情。事实上，作为 Linux 的祖先，UNIX 是一种典型的服务器操作系统。而服务器的关闭和启动都必须得到管理员的授权(试想一个普通用户登录服务器，然后随意执行关机命令会怎样)。出于操作简易性的考虑，桌面版的 Linux 允许普通用户在图形界面下关闭系统。但在命令行下执行关机命令仍然需要 root 口令。Linux 系统上的每个文件和目录都属于某个特定的用户，没有得到许可，其他用户就不能访问这些对象。但 root 用户却可以访问所有用户的文件，就像使用自己的东西一样。</p>
+<p>系统不会因为用户输入的命令足够“愚蠢”而拒绝执行。相反，系统会乐滋滋地执行这样一条命令，然后把自己完完整整地删除了，例如：<code>rm -fr /*</code>。</p>
+<span id="more"></span>
+
 <h3 id="root-口令"><a href="#root-口令" class="headerlink" title="root 口令"></a>root 口令</h3><blockquote>
-<p>仅在必要的时候才时候 root 账号，例如新建普通用户。</p>
+<p>仅在必要的时候才使用 root 账号，例如新建普通用户。</p>
 </blockquote>
 <h3 id="su"><a href="#su" class="headerlink" title="su"></a>su</h3><p>用户可以执行不带参数的 <code>su</code> 命令将自己提升至 root 权限，需要 root 口令。</p>
 <h3 id="sudo"><a href="#sudo" class="headerlink" title="sudo"></a>sudo</h3><p>可以临时使用 root 身份运行一个程序，并在程序执行完毕后返回普通用户权限。<code>sudo -s</code> 将自己提升为 root 用户，等同于 <code>su</code>，<code>exit</code> 回到先前的用户状态。</p>
@@ -405,7 +422,20 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/18/Linux_user/&name=Linux 学习笔记（一）- 用户&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/18/Linux_user/&name=Linux 学习笔记（一）- 用户&description=&lt;hr&gt;
+&lt;p&gt;一直想学习 Linux，但无奈小白不知道从何入手。经常看群里服务端的同事提到 root 、sudo，那我想着从用户管理入手，先认清楚大小王总是可以的吧，趁工作的空档学习了一些基本知识，大部分描述来自于《Linux从入门到精通》一书。&lt;/p&gt;
+&lt;p&gt;记录一下尝试过的命令：&lt;/p&gt;
+&lt;h2 id=&#34;root-可以做什么&#34;&gt;&lt;a href=&#34;#root-可以做什么&#34; class=&#34;headerlink&#34; title=&#34;root 可以做什么&#34;&gt;&lt;/a&gt;root 可以做什么&lt;/h2&gt;&lt;p&gt;这个问题的答案是 anything。没错，作为整个系统中拥有最高权限的用户，root 可以对系统做任何事情。root 可以访问、修改、删除系统中的任何文件和目录。另外，对于如下这些受限的操作，一般只有 root 用户能够执行。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;添加删除用户;&lt;/li&gt;
+&lt;li&gt;安装软件;&lt;/li&gt;
+&lt;li&gt;添加删除设备;&lt;/li&gt;
+&lt;li&gt;启动和停止网络服务;&lt;/li&gt;
+&lt;li&gt;某些系统调用(例如对内核的请求) ;&lt;/li&gt;
+&lt;li&gt;关闭系统。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;提示&lt;/strong&gt;：像“关闭系统”这样的操作都需要 root 用户来执行，看起来是一件特别古怪的事情。事实上，作为 Linux 的祖先，UNIX 是一种典型的服务器操作系统。而服务器的关闭和启动都必须得到管理员的授权(试想一个普通用户登录服务器，然后随意执行关机命令会怎样)。出于操作简易性的考虑，桌面版的 Linux 允许普通用户在图形界面下关闭系统。但在命令行下执行关机命令仍然需要 root 口令。Linux 系统上的每个文件和目录都属于某个特定的用户，没有得到许可，其他用户就不能访问这些对象。但 root 用户却可以访问所有用户的文件，就像使用自己的东西一样。&lt;/p&gt;
+&lt;p&gt;系统不会因为用户输入的命令足够“愚蠢”而拒绝执行。相反，系统会乐滋滋地执行这样一条命令，然后把自己完完整整地删除了，例如：&lt;code&gt;rm -fr /*&lt;/code&gt;。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/18/Linux_user/&t=Linux 学习笔记（一）- 用户"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 

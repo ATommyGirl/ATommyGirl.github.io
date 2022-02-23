@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="什么是 Shell之前我一直混淆了几个概念：命令行、脚本、命令解释器、Shell。  从严格意义上讲，命令行指的是供用户输入命令的界面，其本身只是接受输入，然后把命令传递给命令解释器。后者就是 Shell。从本质上讲，Shell 是一个程序，它在用户和操作系统之间提供了一个面向行的可交互接口。用户在命令行中输入命令，运行在后台的 Shell 把命令转换成指令代码发送给操作系统。Shell 提供了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 学习笔记（二）- Shell 初识">
+<meta property="og:url" content="https://tommygirl.cn/2022/02/23/Linux_Shell/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="什么是 Shell之前我一直混淆了几个概念：命令行、脚本、命令解释器、Shell。  从严格意义上讲，命令行指的是供用户输入命令的界面，其本身只是接受输入，然后把命令传递给命令解释器。后者就是 Shell。从本质上讲，Shell 是一个程序，它在用户和操作系统之间提供了一个面向行的可交互接口。用户在命令行中输入命令，运行在后台的 Shell 把命令转换成指令代码发送给操作系统。Shell 提供了">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-23T14:01:34.000Z">
+<meta property="article:modified_time" content="2022-02-23T14:01:34.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux 学习笔记（二）- Shell 初识</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2022/02/18/Linux_user/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/02/23/Linux_Shell/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&text=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&is_video=false&description=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（二）- Shell 初识&body=Check out this article: https://tommygirl.cn/2022/02/23/Linux_Shell/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&name=Linux 学习笔记（二）- Shell 初识&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/23/Linux_Shell/&t=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Shell"><span class="toc-number">1.</span> <span class="toc-text">什么是 Shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E8%AF%95%E7%89%9B%E5%88%80"><span class="toc-number">2.</span> <span class="toc-text">小试牛刀</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cd"><span class="toc-number">2.1.</span> <span class="toc-text">cd &#x2F;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ls"><span class="toc-number">2.2.</span> <span class="toc-text">ls</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cd-home"><span class="toc-number">2.3.</span> <span class="toc-text">cd home&#x2F;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cd-1"><span class="toc-number">2.4.</span> <span class="toc-text">cd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cd-etc"><span class="toc-number">2.5.</span> <span class="toc-text">cd &#x2F;etc&#x2F;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cat-fstab"><span class="toc-number">2.6.</span> <span class="toc-text">cat fstab</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A1%A5%E5%85%A8%EF%BC%9ATab-%E9%94%AE"><span class="toc-number">3.</span> <span class="toc-text">命令行补全：Tab 键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">通配符：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.1.</span> <span class="toc-text">*</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-number">4.2.</span> <span class="toc-text">?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-2"><span class="toc-number">4.3.</span> <span class="toc-text">[]</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Linux 学习笔记（二）- Shell 初识
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-02-23T14:01:34.000Z" itemprop="datePublished">2022-02-23</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <hr>
+<h2 id="什么是-Shell"><a href="#什么是-Shell" class="headerlink" title="什么是 Shell"></a>什么是 Shell</h2><p>之前我一直混淆了几个概念：命令行、脚本、命令解释器、Shell。</p>
+<blockquote>
+<p>从严格意义上讲，命令行指的是供用户输入命令的界面，其本身只是接受输入，然后把命令传递给命令解释器。后者就是 Shell。从本质上讲，Shell 是一个程序，它在用户和操作系统之间提供了一个面向行的可交互接口。用户在命令行中输入命令，运行在后台的 Shell 把命令转换成指令代码发送给操作系统。Shell 提供了很多高级特性，使得用户和操作系统间的交互变得简便和高效。</p>
+<p>目前，在 Linux 环境下有几种不同类型的 Shell, 常用的有 Bourne Again Shell(BASH)、TCSH Shell、 Z-Shell 等。不同的 Shell 提供不尽相同的语法和特性，用户可以使用任何一种 Shell。在 Linux 上，BASH shell 是默认安装和使用的 Shell。</p>
+</blockquote>
+<p>在 BASH 中，命令行以 <code>$</code> 为提示符，表示我们可以开始输入命令了，以 root 身份执行命令时，Shell 提示符号为 <code>#</code>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##[用户名@主机名 目录]提示符 命令</span></span><br><span class="line">[<span class="type">root</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> ~]<span class="comment"># 登出</span></span><br><span class="line">[<span class="type">tommy</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> ~]<span class="variable">$</span> 登出</span><br></pre></td></tr></table></figure>
+
+<p><strong>FYI</strong>：Linux 中命令和文件名都是区分大小写的。</p>
+<h2 id="小试牛刀"><a href="#小试牛刀" class="headerlink" title="小试牛刀"></a>小试牛刀</h2><h3 id="cd"><a href="#cd" class="headerlink" title="cd /"></a>cd /</h3><blockquote>
+<p>进入根目录</p>
+</blockquote>
+<h3 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h3><blockquote>
+<p>列出文件和目录</p>
+</blockquote>
+<h3 id="cd-home"><a href="#cd-home" class="headerlink" title="cd home/"></a>cd home/</h3><blockquote>
+<p>进入 /home 目录，home 目录中存放着系统中所有用户的主目录，主目录的名字就是用户名。</p>
+</blockquote>
+<h3 id="cd-1"><a href="#cd-1" class="headerlink" title="cd"></a>cd</h3><blockquote>
+<p>不带任何参数的 cd 命令进入当前用户的主目录。用户主目录默认对其他用户关闭访问权限。</p>
+</blockquote>
+<h3 id="cd-etc"><a href="#cd-etc" class="headerlink" title="cd /etc/"></a>cd /etc/</h3><blockquote>
+<p>进入 /etc/ 目录，这个目录存放着系统以及绝大部分应用软件的配置文件。</p>
+</blockquote>
+<h3 id="cat-fstab"><a href="#cat-fstab" class="headerlink" title="cat fstab"></a>cat fstab</h3><blockquote>
+<p>查看 fstab 文件，这个文件定义了各硬盘分区所挂载到的目录路径。（这里我有点儿懵）</p>
+</blockquote>
+<h2 id="命令行补全：Tab-键"><a href="#命令行补全：Tab-键" class="headerlink" title="命令行补全：Tab 键"></a>命令行补全：Tab 键</h2><p>有些命令并不是一个单词，亦或者文件名作为最常见的参数有的名字也很长不容易记住。BASH 提供了一种特性：<strong>命令行补全</strong>。例如我们输入 ss，然后点击 Tab 键，Shell 会把 ss 开头的命令打印出来，我们也可以继续按 Tab 键进行选择：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> ss&lt;TAB&gt;</span><br><span class="line">SSH_AUTH_SOCK  ssh<span class="literal">-add</span>        ssh<span class="literal">-copy</span><span class="literal">-id</span>    ssh<span class="literal">-keyscan</span>    sso_util</span><br><span class="line">ssh            ssh<span class="literal">-agent</span>      ssh<span class="literal">-keygen</span>     sshd</span><br></pre></td></tr></table></figure>
+
+<p>那对于输入文件名的时候，只需要输入前面几个字符，然后按 Tab 键，Shell 会自动把文件名补全，当然这得是对应目录里面存在这个文件，并且只有一个：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">tommy</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> ~]<span class="variable">$</span> <span class="built_in">cd</span> /etc/</span><br><span class="line">[<span class="type">tommy</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">cat</span> fs&lt;TAB&gt;</span><br><span class="line"><span class="comment">#自动补全为：</span></span><br><span class="line">[<span class="type">tommy</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">cat</span> fscat</span><br></pre></td></tr></table></figure>
+
+<p>如果以输入的字符开头的文件不止一个，Shell 会列出字符开头的文件列表：(我看有的书上说要按两次 Tab？)</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">tommy</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">cat</span> b&lt;TAB&gt;</span><br><span class="line">bash_completion.d/ bashrc             bashrc.rpmnew      binfmt.d/</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><strong>FYI</strong>：系统命令本质上就是一些可执行文件，可以在 /usr/bin/ 目录下找到。从这种意义上讲，命令补全和文件名补全其实是一回事。</p>
+<h2 id="通配符："><a href="#通配符：" class="headerlink" title="通配符："></a>通配符：</h2><h3 id><a href="#" class="headerlink" title="*"></a>*</h3><blockquote>
+<p>“*” 用于匹配文件名中任意长度的字符串。</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">tommy</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">ls</span> *.conf</span><br><span class="line">asound.conf    libuser.conf    sos.conf</span><br><span class="line">chrony.conf    locale.conf     sudo.conf</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h3 id="-1"><a href="#-1" class="headerlink" title="?"></a>?</h3><blockquote>
+<p>和“/*” 相类似的通配符是“?”。但和“/*” 匹配任意长度的字符串不同，“?” 只匹配一个字符。</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">tommy</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">ls</span> host?</span><br><span class="line">hosts</span><br><span class="line">[<span class="type">tommy</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">ls</span> host*</span><br><span class="line">host.conf  hostname  hosts  hosts.allow  hosts.deny</span><br></pre></td></tr></table></figure>
+
+<h3 id="-2"><a href="#-2" class="headerlink" title="[]"></a>[]</h3><blockquote>
+<p>“[]”用于匹配所有出现在方括号内的字符。</p>
+</blockquote>
+<p>例如，列出以 rp 开头而仅以 c 或 m 结尾的文件名或目录。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">tommy</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">ls</span> <span class="built_in">rp</span>[<span class="type">cm</span>]</span><br><span class="line">rpc</span><br><span class="line"></span><br><span class="line">rpm:</span><br><span class="line">macros.dist  macros.perl</span><br></pre></td></tr></table></figure>
+
+<p>其他用法：<code>ls text[1-3]</code> 列出所有以 text 开头并以 1~3 中某个字符(包括1和3)结束的文件；也可以使用字母范围，在 ASCII 字符集中，A-Z 匹配所有大写字母：<code>ls text[A-C]</code>。</p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Shell"><span class="toc-number">1.</span> <span class="toc-text">什么是 Shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E8%AF%95%E7%89%9B%E5%88%80"><span class="toc-number">2.</span> <span class="toc-text">小试牛刀</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#cd"><span class="toc-number">2.1.</span> <span class="toc-text">cd &#x2F;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ls"><span class="toc-number">2.2.</span> <span class="toc-text">ls</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cd-home"><span class="toc-number">2.3.</span> <span class="toc-text">cd home&#x2F;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cd-1"><span class="toc-number">2.4.</span> <span class="toc-text">cd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cd-etc"><span class="toc-number">2.5.</span> <span class="toc-text">cd &#x2F;etc&#x2F;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cat-fstab"><span class="toc-number">2.6.</span> <span class="toc-text">cat fstab</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A1%A5%E5%85%A8%EF%BC%9ATab-%E9%94%AE"><span class="toc-number">3.</span> <span class="toc-text">命令行补全：Tab 键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">通配符：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.1.</span> <span class="toc-text">*</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-number">4.2.</span> <span class="toc-text">?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-2"><span class="toc-number">4.3.</span> <span class="toc-text">[]</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/02/23/Linux_Shell/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&text=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&is_video=false&description=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（二）- Shell 初识&body=Check out this article: https://tommygirl.cn/2022/02/23/Linux_Shell/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&name=Linux 学习笔记（二）- Shell 初识&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/23/Linux_Shell/&t=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>
