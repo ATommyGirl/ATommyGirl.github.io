@@ -637,13 +637,6 @@
   </url>
   
   <url>
-    <loc>https://tommygirl.cn/tags/iOS/</loc>
-    <lastmod>2022-03-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://tommygirl.cn/tags/Mac/</loc>
     <lastmod>2022-03-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -652,6 +645,13 @@
   
   <url>
     <loc>https://tommygirl.cn/tags/Tool/</loc>
+    <lastmod>2022-03-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://tommygirl.cn/tags/iOS/</loc>
     <lastmod>2022-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
