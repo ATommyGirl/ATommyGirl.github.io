@@ -77,6 +77,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" aria-label="上一篇 " href="/2022/02/24/Linux_Shell1/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" aria-label="下一篇 " href="/2022/02/18/Linux_user/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -100,7 +102,17 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&name=Linux 学习笔记（二）- Shell 初识&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&name=Linux 学习笔记（二）- Shell 初识&description=&lt;hr&gt;
+&lt;h2 id=&#34;什么是-Shell&#34;&gt;&lt;a href=&#34;#什么是-Shell&#34; class=&#34;headerlink&#34; title=&#34;什么是 Shell&#34;&gt;&lt;/a&gt;什么是 Shell&lt;/h2&gt;&lt;p&gt;之前我一直混淆了几个概念：命令行、脚本、命令解释器、Shell。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;从严格意义上讲，命令行指的是供用户输入命令的界面，其本身只是接受输入，然后把命令传递给命令解释器。后者就是 Shell。从本质上讲，Shell 是一个程序，它在用户和操作系统之间提供了一个面向行的可交互接口。用户在命令行中输入命令，运行在后台的 Shell 把命令转换成指令代码发送给操作系统。Shell 提供了很多高级特性，使得用户和操作系统间的交互变得简便和高效。&lt;/p&gt;
+&lt;p&gt;目前，在 Linux 环境下有几种不同类型的 Shell, 常用的有 Bourne Again Shell(BASH)、TCSH Shell、 Z-Shell 等。不同的 Shell 提供不尽相同的语法和特性，用户可以使用任何一种 Shell。在 Linux 上，BASH shell 是默认安装和使用的 Shell。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在 BASH 中，命令行以 &lt;code&gt;$&lt;/code&gt; 为提示符，表示我们可以开始输入命令了，以 root 身份执行命令时，Shell 提示符号为 &lt;code&gt;#&lt;/code&gt;：&lt;/p&gt;
+&lt;figure class=&#34;highlight powershell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;##[用户名@主机名 目录]提示符 命令&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[&lt;span class=&#34;type&#34;&gt;root&lt;/span&gt;@&lt;span class=&#34;type&#34;&gt;VM&lt;/span&gt;-&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;-&lt;span class=&#34;number&#34;&gt;13&lt;/span&gt;-&lt;span class=&#34;type&#34;&gt;centos&lt;/span&gt; ~]&lt;span class=&#34;comment&#34;&gt;# 登出&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[&lt;span class=&#34;type&#34;&gt;tommy&lt;/span&gt;@&lt;span class=&#34;type&#34;&gt;VM&lt;/span&gt;-&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;-&lt;span class=&#34;number&#34;&gt;13&lt;/span&gt;-&lt;span class=&#34;type&#34;&gt;centos&lt;/span&gt; ~]&lt;span class=&#34;variable&#34;&gt;$&lt;/span&gt; 登出&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;FYI&lt;/strong&gt;：Linux 中命令和文件名都是区分大小写的。&lt;/p&gt;
+&lt;h2 id=&#34;小试牛刀&#34;&gt;&lt;a href=&#34;#小试牛刀&#34; class=&#34;headerlink&#34; title=&#34;小试牛刀&#34;&gt;&lt;/a&gt;小试牛刀&lt;/h2&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/23/Linux_Shell/&t=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
@@ -160,7 +172,9 @@
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##[用户名@主机名 目录]提示符 命令</span></span><br><span class="line">[<span class="type">root</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> ~]<span class="comment"># 登出</span></span><br><span class="line">[<span class="type">tommy</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> ~]<span class="variable">$</span> 登出</span><br></pre></td></tr></table></figure>
 
 <p><strong>FYI</strong>：Linux 中命令和文件名都是区分大小写的。</p>
-<h2 id="小试牛刀"><a href="#小试牛刀" class="headerlink" title="小试牛刀"></a>小试牛刀</h2><h3 id="cd"><a href="#cd" class="headerlink" title="cd /"></a>cd /</h3><blockquote>
+<h2 id="小试牛刀"><a href="#小试牛刀" class="headerlink" title="小试牛刀"></a>小试牛刀</h2><span id="more"></span>
+
+<h3 id="cd"><a href="#cd" class="headerlink" title="cd /"></a>cd /</h3><blockquote>
 <p>进入根目录</p>
 </blockquote>
 <h3 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h3><blockquote>
@@ -280,7 +294,17 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&name=Linux 学习笔记（二）- Shell 初识&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&name=Linux 学习笔记（二）- Shell 初识&description=&lt;hr&gt;
+&lt;h2 id=&#34;什么是-Shell&#34;&gt;&lt;a href=&#34;#什么是-Shell&#34; class=&#34;headerlink&#34; title=&#34;什么是 Shell&#34;&gt;&lt;/a&gt;什么是 Shell&lt;/h2&gt;&lt;p&gt;之前我一直混淆了几个概念：命令行、脚本、命令解释器、Shell。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;从严格意义上讲，命令行指的是供用户输入命令的界面，其本身只是接受输入，然后把命令传递给命令解释器。后者就是 Shell。从本质上讲，Shell 是一个程序，它在用户和操作系统之间提供了一个面向行的可交互接口。用户在命令行中输入命令，运行在后台的 Shell 把命令转换成指令代码发送给操作系统。Shell 提供了很多高级特性，使得用户和操作系统间的交互变得简便和高效。&lt;/p&gt;
+&lt;p&gt;目前，在 Linux 环境下有几种不同类型的 Shell, 常用的有 Bourne Again Shell(BASH)、TCSH Shell、 Z-Shell 等。不同的 Shell 提供不尽相同的语法和特性，用户可以使用任何一种 Shell。在 Linux 上，BASH shell 是默认安装和使用的 Shell。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在 BASH 中，命令行以 &lt;code&gt;$&lt;/code&gt; 为提示符，表示我们可以开始输入命令了，以 root 身份执行命令时，Shell 提示符号为 &lt;code&gt;#&lt;/code&gt;：&lt;/p&gt;
+&lt;figure class=&#34;highlight powershell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;##[用户名@主机名 目录]提示符 命令&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[&lt;span class=&#34;type&#34;&gt;root&lt;/span&gt;@&lt;span class=&#34;type&#34;&gt;VM&lt;/span&gt;-&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;-&lt;span class=&#34;number&#34;&gt;13&lt;/span&gt;-&lt;span class=&#34;type&#34;&gt;centos&lt;/span&gt; ~]&lt;span class=&#34;comment&#34;&gt;# 登出&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;[&lt;span class=&#34;type&#34;&gt;tommy&lt;/span&gt;@&lt;span class=&#34;type&#34;&gt;VM&lt;/span&gt;-&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;-&lt;span class=&#34;number&#34;&gt;13&lt;/span&gt;-&lt;span class=&#34;type&#34;&gt;centos&lt;/span&gt; ~]&lt;span class=&#34;variable&#34;&gt;$&lt;/span&gt; 登出&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;FYI&lt;/strong&gt;：Linux 中命令和文件名都是区分大小写的。&lt;/p&gt;
+&lt;h2 id=&#34;小试牛刀&#34;&gt;&lt;a href=&#34;#小试牛刀&#34; class=&#34;headerlink&#34; title=&#34;小试牛刀&#34;&gt;&lt;/a&gt;小试牛刀&lt;/h2&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/23/Linux_Shell/&t=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
