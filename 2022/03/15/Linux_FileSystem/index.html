@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="说实话我看了一下文件系统架构的介绍，不是很明白，至少按照《Linux 从入门到精通》的顺序读到这里的时候，我没看明白，只知道 Linux 里几乎所有操作最终都可以理解为对文件的修改。所以我就不在这里写太多的学习笔记了，借用作者书中的一段话：  要理解Linux的文件系统架构，看来的确需要耗费一定的脑力。 如果经过努力仍然不明白上面这些文字在说些什么，一个好的建议是：不要管那么多，先使用。没有人会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 学习笔记（四）- 文件系统">
+<meta property="og:url" content="https://tommygirl.cn/2022/03/15/Linux_FileSystem/index.html">
+<meta property="og:site_name" content="迷">
+<meta property="og:description" content="说实话我看了一下文件系统架构的介绍，不是很明白，至少按照《Linux 从入门到精通》的顺序读到这里的时候，我没看明白，只知道 Linux 里几乎所有操作最终都可以理解为对文件的修改。所以我就不在这里写太多的学习笔记了，借用作者书中的一段话：  要理解Linux的文件系统架构，看来的确需要耗费一定的脑力。 如果经过努力仍然不明白上面这些文字在说些什么，一个好的建议是：不要管那么多，先使用。没有人会">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/sudo-rm.gif">
+<meta property="article:published_time" content="2022-03-15T14:01:34.000Z">
+<meta property="article:modified_time" content="2022-03-15T14:01:34.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/sudo-rm.gif">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux 学习笔记（四）- 文件系统</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2022/02/24/Linux_Shell1/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/03/15/Linux_FileSystem/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&text=Linux 学习笔记（四）- 文件系统"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&title=Linux 学习笔记（四）- 文件系统"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&is_video=false&description=Linux 学习笔记（四）- 文件系统"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（四）- 文件系统&body=Check out this article: https://tommygirl.cn/2022/03/15/Linux_FileSystem/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&title=Linux 学习笔记（四）- 文件系统"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&title=Linux 学习笔记（四）- 文件系统"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&title=Linux 学习笔记（四）- 文件系统"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&title=Linux 学习笔记（四）- 文件系统"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&name=Linux 学习笔记（四）- 文件系统&description=&lt;hr&gt;
+&lt;p&gt;说实话我看了一下文件系统架构的介绍，不是很明白，至少按照《Linux 从入门到精通》的顺序读到这里的时候，我没看明白，只知道 Linux 里几乎所有操作最终都可以理解为对文件的修改。所以我就不在这里写太多的学习笔记了，借用作者书中的一段话：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;要理解Linux的文件系统架构，看来的确需要耗费一定的脑力。 如果经过努力仍然不明白上面这些文字在说些什么，一个好的建议是：不要管那么多，先使用。没有人会为了上网而首先去学习路由器原理，但一个接触了几年网络的人总能对路由器是什么这个问题说上几句。所以无论如何，首先去&lt;strong&gt;实践&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So…… 管他呢，先实践起来~&lt;/p&gt;
+&lt;h2 id=&#34;Linux-系统主要目录及其内容&#34;&gt;&lt;a href=&#34;#Linux-系统主要目录及其内容&#34; class=&#34;headerlink&#34; title=&#34;Linux 系统主要目录及其内容&#34;&gt;&lt;/a&gt;Linux 系统主要目录及其内容&lt;/h2&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&t=Linux 学习笔记（四）- 文件系统"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-%E7%B3%BB%E7%BB%9F%E4%B8%BB%E8%A6%81%E7%9B%AE%E5%BD%95%E5%8F%8A%E5%85%B6%E5%86%85%E5%AE%B9"><span class="toc-number">1.</span> <span class="toc-text">Linux 系统主要目录及其内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%EF%BC%9A%E6%90%9E%E4%B8%80%E4%B8%AA%E5%B0%8F%E5%9B%A2%E4%BD%93"><span class="toc-number">2.</span> <span class="toc-text">快速上手：搞一个小团体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E7%9A%84%E6%9D%83%E9%99%90"><span class="toc-number">3.</span> <span class="toc-text">文件和目录的权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#chmod"><span class="toc-number">3.1.</span> <span class="toc-text">chmod</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%AD%97%E6%AF%8D%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90%EF%BC%9A"><span class="toc-number">3.1.1.</span> <span class="toc-text">使用字母修改权限：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%95%B0%E5%AD%97%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90%EF%BC%9A"><span class="toc-number">3.1.2.</span> <span class="toc-text">使用数字修改权限：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chown"><span class="toc-number">3.2.</span> <span class="toc-text">chown</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chgrp"><span class="toc-number">3.3.</span> <span class="toc-text">chgrp</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95"><span class="toc-number">4.</span> <span class="toc-text">操作文件和目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%9B%AE%E5%BD%95-mkdir"><span class="toc-number">4.1.</span> <span class="toc-text">建立目录 - mkdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E6%8E%A9%E7%A0%81-umask"><span class="toc-number">4.2.</span> <span class="toc-text">权限掩码 - umask</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%A9%BA%E6%96%87%E4%BB%B6-touch"><span class="toc-number">4.3.</span> <span class="toc-text">建立空文件 - touch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E5%92%8C%E9%87%8D%E5%91%BD%E5%90%8D-mv"><span class="toc-number">4.4.</span> <span class="toc-text">移动和重命名 - mv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95-cp"><span class="toc-number">4.5.</span> <span class="toc-text">复制文件和目录 - cp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E5%92%8C%E6%96%87%E4%BB%B6-rmdir%E3%80%81rm"><span class="toc-number">4.6.</span> <span class="toc-text">删除目录和文件 - rmdir、rm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E7%AE%A1%E9%81%93"><span class="toc-number">5.</span> <span class="toc-text">输入输出重定向和管道</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91-gt-%E3%80%81-gt-gt"><span class="toc-number">5.1.</span> <span class="toc-text">输出重定向 - &gt;、&gt;&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E9%87%8D%E5%AE%9A%E5%90%91-lt-%E3%80%81-lt-lt"><span class="toc-number">5.2.</span> <span class="toc-text">输入重定向 - &lt;、&lt;&lt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E9%81%93"><span class="toc-number">5.3.</span> <span class="toc-text">管道 - |</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Linux 学习笔记（四）- 文件系统
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-03-15T14:01:34.000Z" itemprop="datePublished">2022-03-15</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <hr>
+<p>说实话我看了一下文件系统架构的介绍，不是很明白，至少按照《Linux 从入门到精通》的顺序读到这里的时候，我没看明白，只知道 Linux 里几乎所有操作最终都可以理解为对文件的修改。所以我就不在这里写太多的学习笔记了，借用作者书中的一段话：</p>
+<blockquote>
+<p>要理解Linux的文件系统架构，看来的确需要耗费一定的脑力。 如果经过努力仍然不明白上面这些文字在说些什么，一个好的建议是：不要管那么多，先使用。没有人会为了上网而首先去学习路由器原理，但一个接触了几年网络的人总能对路由器是什么这个问题说上几句。所以无论如何，首先去<strong>实践</strong>。</p>
+</blockquote>
+<p>So…… 管他呢，先实践起来~</p>
+<h2 id="Linux-系统主要目录及其内容"><a href="#Linux-系统主要目录及其内容" class="headerlink" title="Linux 系统主要目录及其内容"></a>Linux 系统主要目录及其内容</h2><span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/bin</td>
+<td>构建最小系统所需要的命令(最常用的命令)</td>
+</tr>
+<tr>
+<td>/boot</td>
+<td>内核与启动文件</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>各种设备文件</td>
+</tr>
+<tr>
+<td>/etc</td>
+<td>系统软件的启动和配置文件</td>
+</tr>
+<tr>
+<td>/home</td>
+<td>用户的主目录</td>
+</tr>
+<tr>
+<td>/lib</td>
+<td>C 编译器的库</td>
+</tr>
+<tr>
+<td>/media</td>
+<td>可移动介质的安装点</td>
+</tr>
+<tr>
+<td>/opt</td>
+<td>可选的应用软件包(很少使用)</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>进程的映像</td>
+</tr>
+<tr>
+<td>/root</td>
+<td>超级用户 root 的主目录</td>
+</tr>
+<tr>
+<td>/sbin</td>
+<td>和系统操作有关的命令</td>
+</tr>
+<tr>
+<td>/tmp</td>
+<td>临时文件存放点</td>
+</tr>
+<tr>
+<td>/usr</td>
+<td>非系统的程序和命令</td>
+</tr>
+<tr>
+<td>/var</td>
+<td>系统专用的数据和配置文件</td>
+</tr>
+</tbody></table>
+<h2 id="快速上手：搞一个小团体"><a href="#快速上手：搞一个小团体" class="headerlink" title="快速上手：搞一个小团体"></a>快速上手：搞一个小团体</h2><p>共享文件对一个团队而言非常重要。团队的成员常常需要在一台服务器上共同完成一项任务。那我们来创建一个“小团体”吧，看看如何实现成员间的文件共享，假设团队成员如下：</p>
+<p>用户组：fancy<br>工作目录：/home/blog/<br>组长：yylittlecat<br>成员：tommy、archie<br>编外人员：apple</p>
+<ul>
+<li>创建用户组和用户成员：</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新建一个名为 fancy 的用户组</span></span><br><span class="line"><span class="variable">$</span> sudo groupadd fancy</span><br><span class="line"><span class="comment"># 新建用户，并归入 fancy 组</span></span><br><span class="line"><span class="variable">$</span> sudo useradd <span class="literal">-G</span> fancy yylittlecat</span><br><span class="line"><span class="variable">$</span> sudo passwd yylittlecat <span class="comment"># 为用户 yylittlecat 设置登录密码</span></span><br><span class="line"><span class="variable">$</span> sudo useradd <span class="literal">-G</span> fancy tommy</span><br><span class="line"><span class="variable">$</span> sudo passwd tommy <span class="comment"># 为用户 tommy 设置登录密码</span></span><br><span class="line"><span class="variable">$</span> sudo useradd <span class="literal">-G</span> fancy archie</span><br><span class="line"><span class="variable">$</span> sudo passwd archie <span class="comment"># 为用户 archie 设置登录密码</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建编外用户，不在分享范畴内</span></span><br><span class="line"><span class="variable">$</span> sudo useradd <span class="literal">-G</span> apple apple</span><br><span class="line"><span class="variable">$</span> sudo passwd apple <span class="comment">#为用户 apple 设置登录密码</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>新建博客的工作目录：</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> /home</span><br><span class="line"><span class="variable">$</span> sudo mkdir blog</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>现在，任何人都可以访问这个新建的目录，而只有 root 用户才拥有该目录的写权限，我们希望让 fancy 组的成员拥有这个目录的读写权限，并禁止其他无关的用户查看这个目录：</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> sudo chgrp fancy blog/        <span class="comment"># 将 blog 目录的所有权交给 fancy 组</span></span><br><span class="line"><span class="variable">$</span> sudo chmod g+rwx blog/        <span class="comment"># 增加 fancy 组对 blog 目录的读、写、执行权限</span></span><br><span class="line"><span class="variable">$</span> sudo chmod o<span class="literal">-rwx</span> blog/        <span class="comment"># 撤销其他用户对 blog 目录的读、写、执行权限</span></span><br><span class="line"><span class="variable">$</span> sudo chown yylittlecat blog/	<span class="comment"># 将 blog 目录的所有者改为 yylittlecat</span></span><br></pre></td></tr></table></figure>
+
+<p>这个时候我们 /home 目录下的文件列表和他们的权限是这样的，为了方便查看，我们把主机和目录信息贴上：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">yylittlecat</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">home</span>]<span class="variable">$</span> <span class="built_in">ls</span> <span class="literal">-l</span></span><br><span class="line">总用量 <span class="number">20</span></span><br><span class="line">drwxrwx--- <span class="number">4</span> yylittlecat fancy <span class="number">4096</span> <span class="number">7</span>月  <span class="number">22</span> <span class="number">2021</span>  blog</span><br><span class="line">drwxr<span class="literal">-xr</span><span class="literal">-x</span> <span class="number">2</span> root        root  <span class="number">4096</span> <span class="number">7</span>月  <span class="number">22</span> <span class="number">2021</span>  httpbin</span><br><span class="line">drwx------ <span class="number">2</span> archie      fancy <span class="number">4096</span> <span class="number">3</span>月  <span class="number">16</span> <span class="number">17</span>:<span class="number">23</span> archie</span><br><span class="line">drwx------ <span class="number">2</span> apple       apple <span class="number">4096</span> <span class="number">3</span>月  <span class="number">16</span> <span class="number">18</span>:<span class="number">35</span> apple</span><br><span class="line">drwx------ <span class="number">2</span> tommy       fancy <span class="number">4096</span> <span class="number">2</span>月  <span class="number">21</span> <span class="number">14</span>:<span class="number">03</span> tommy</span><br><span class="line">drwx------ <span class="number">2</span> yylittlecat fancy <span class="number">4096</span> <span class="number">3</span>月  <span class="number">11</span> <span class="number">09</span>:<span class="number">43</span> yylittlecat</span><br></pre></td></tr></table></figure>
+
+<p>此刻 /home/blog 目录的权限，对于拥有者 yylittlecat 和属于 fancy 用户组的成员都具备可读可写可执行的权限，但我们计划了一位“编外人员” apple 对吧，我们切换到 apple ，会发现他没有权限访问该目录：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">apple</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">home</span>]<span class="variable">$</span> <span class="built_in">cd</span> blog</span><br><span class="line">bash: <span class="built_in">cd</span>: blog: 权限不够</span><br></pre></td></tr></table></figure>
+
+
+<p>截止到这里，建立小团体体验完毕了。/home/blog/ 存放的是我们的博客内容，这个时候会发现访问博客 403 了，哈哈哈…403 状态码意为服务器成功解析了请求但是客户端没有访问该资源的权限。那这又是怎么回事儿呢？</p>
+<h2 id="文件和目录的权限"><a href="#文件和目录的权限" class="headerlink" title="文件和目录的权限"></a>文件和目录的权限</h2><p>上面我们通过 <code>ll</code> 或者 <code>ls -l</code> 命令查看到的文件属性，(选几行为例)从左至右依次是：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">文件的权限标志 | 文件的链接个数 | 文件所有者的用户名 | 该用户所在的用户组 | 文件的大小 | 最后一次被修改的日期 | 目录/文件名 </span><br><span class="line">drwxrwx---     	<span class="number">4</span>              yylittlecat        fancy              <span class="number">4096</span>       <span class="number">7</span>月  <span class="number">22</span> <span class="number">2021</span>         blog        </span><br><span class="line">drwxr<span class="literal">-xr</span><span class="literal">-x</span>      <span class="number">2</span>              root               root               <span class="number">4096</span>       <span class="number">7</span>月  <span class="number">22</span> <span class="number">2021</span>         httpbin     </span><br><span class="line">drwx------    	<span class="number">2</span>              archie             fancy              <span class="number">4096</span>       <span class="number">3</span>月  <span class="number">16</span> <span class="number">17</span>:<span class="number">23</span>        archie      </span><br><span class="line"><span class="literal">-rwxr</span><span class="literal">-xr</span><span class="literal">-x</span>      <span class="number">1</span>              root               root               <span class="number">24323</span>      <span class="number">3</span>月  <span class="number">14</span> <span class="number">17</span>:<span class="number">23</span>        gDark.css   </span><br></pre></td></tr></table></figure>
+
+<p>我们注意到，权限标志貌似是一些特殊的符号：d、r、w、x 、- 等等，通过 chmod 命令修改的也是这些内容，这几个符号到底代表什么呢？让我们一探究竟：</p>
+<p>​    Linux 为 3 种人准备了权限————文件所有者 (属主)、文件属组用户和其他人。因为有了“其他人”，这样的分类将世界上所有的人都包含进来了。但 root 用户其实是不应该被算在“其他人”里面的。root 用户可以查看、修改、删除所有人的文件————即不要忘了 root 拥有控制一台计算机的完整权限。<br>​    <strong>文件所有者</strong>通常是文件的创建者，但这也不是一定的。可以中途改变一个文件的属主用户，这必须直接由 root 用户来实施。这句话换一种说法或许更贴切：文件的创建者自动成为文件所有者(属主)，文件的所有权可以转让，转让“手续”必须使用 root 权限办理。<br>​    可以(也必须)把文件交给一个组，这个组就是<strong>文件的属组</strong>。文件属组中的用户按照设置对该文件享有特定的权限。通常来说，当某个用户(如 tommy)建立一个文件时，这个文件的属主就是 tommy，文件的属组是只包含一个用户 tommy 的 tommy 组。当然，也可以设置文件的属组是一个不包括文件所有者的组，在文件所有者执行文件操作时，系统只关心属主权限，而组权限对属主是没有影响的。<br>​    最后，“<strong>其他人</strong>” 就是不包括前两类人和root用户在内的“其他”用户。通常来说，“其他人”总是享有最低的权限(或者干脆没有权限)。</p>
+<p>那都需要设置哪些权限呢？</p>
+<p>​    可以赋予某类用户对文件和目录享有 3 种权限：可读(read)权限，可写(write)权限，可执行(execute)权限。对于文件而言，拥有读取权限意味着可以打开并查看文件的内容，写入位控制着对文件的修改权限。而是否能够删除和重命名一个文件则是由其父目录的权限设置所控制的。<br>​    要让一个文件可执行，必须设置其执行权限。可执行文件有两类，一类是可以直接由 CPU 执行的二进制代码；另一类是 Shell 脚本程序，例如我们常用的命令。<br>​    对目录而言，所谓的可执行权限实际控制了用户能否进入该目录；而可读权限则负责确定能否列出该目录中的内容；可写权限控制着在目录中创建、删除和重命名文件。因此目录的可执行权限是其最基本的权限，换句话说是想访问一个目录以及里面的文件，至少要给到可读可执行两个权限，只有可读，我们还是访问不了的。</p>
+<p><strong>FYI：只有文件的所有者和 root 用户才有权修改文件的权限。</strong></p>
+<p><strong>drwxrwxrwx</strong> 这个权限标志一共10位，<strong>第 1 位</strong> 代表文件类型，常用有两个数值：<code>d</code> 和 <code>-</code>，<code>d</code> 代表目录，<code>-</code> 代表非目录，当然还有其他的（、b、c）。后面 9 位可以拆分为 3 组来看，分别对应不同用户：<strong>2-4</strong> 位代表所有者 user 的权限说明，<strong>5-7</strong> 位代表组群 group 的权限说明，<strong>8-10</strong> 位代表其他人 other 的权限说明。<code>r</code> 代表可读(read)权限，<code>w</code> 代表可写(write)权限，<code>x</code> 代表可执行(execute)权限，后 9 位中 <code>-</code> 表示不具备对应的权限。<code>drwxrwxrwx</code> 表示所有用户都对这个目录有可读可写可执行权限。</p>
+<p>Linux 中的文件类型：</p>
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th align="center">符号</th>
+<th>文件类型</th>
+<th align="center">符号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通文件</td>
+<td align="center">-</td>
+<td>本地域套接口</td>
+<td align="center">s</td>
+</tr>
+<tr>
+<td>目录</td>
+<td align="center">d</td>
+<td>有名管道</td>
+<td align="center">p</td>
+</tr>
+<tr>
+<td>符号设备文件</td>
+<td align="center">c</td>
+<td>符号链接</td>
+<td align="center">l</td>
+</tr>
+<tr>
+<td>块设备文件</td>
+<td align="center">b</td>
+<td></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h3 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h3><p>说回修改权限的命令，不好记的话，笔者觉得记英文缩写是个不错的选择：</p>
+<blockquote>
+<p>chmod - change file mode bits</p>
+</blockquote>
+<h4 id="使用字母修改权限："><a href="#使用字母修改权限：" class="headerlink" title="使用字母修改权限："></a>使用字母修改权限：</h4><p>u 代表所有者（user）<br>g 代表所有者所在的组群（group）<br>o 代表其他人，但不是 u 和 g （other）<br>a 代表全部的人，也就是包括 u、g 和 o</p>
+<p>所以 chmod 参数的简单拼接方式就是，修改谁的权限就使用对应位置的字母，授予权限就是 +，删除权限就是 - ，直接设置权限用 =，后面跟上想修改的权限、要操作的目录。</p>
+<p>举例 - 给其他人(other)授予写 /home/apple/test 这个文件的权限：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> sudo chmod o+w /home/apple/test</span><br></pre></td></tr></table></figure>
+
+<p>举例 - 删除组群(group)和其他人(other)对 /home/apple/test 这个文件的读和写的权限：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> sudo chmod go<span class="literal">-rw</span> /home/apple/test</span><br></pre></td></tr></table></figure>
+
+<p>举例 - 给所有者（user）、用户组（group）设置读写权限，其他人（other）只读：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> sudo chmod ug=rw,o=<span class="built_in">r</span> /home/apple/test</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用数字修改权限："><a href="#使用数字修改权限：" class="headerlink" title="使用数字修改权限："></a>使用数字修改权限：</h4><p>r、w、x 有对应的数字：r - 4，w - 2，x - 1。那这些数字是怎么来的呢？rwx 在计算中实际上占用了 3 位，对于一个权限只有 1 和 0 ，也就是有没有的区别，对应到二进制上，3 位二进制数对应 1 位八进制数，因此就可以用一个八进制数字表示一组权限。前面说了权限标志十位中的后九位分为三组，用数字修改权限时也是对应三组，每三个一组把想修改的权限数字加起来，得到三位数的一个数字。</p>
+<p>举例 - 针对 /home/blog/www 目录，给所有人授予可读可写可执行的权限：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> sudo chmod  <span class="literal">-R</span> <span class="number">777</span> /home/blog/www</span><br></pre></td></tr></table></figure>
+
+<p>按照规则：user 的三个加起来 4+2+1=7，group 的三个加起来 4+2+1=7，other 的三个加起来 4+2+1=7，=&gt;777。对应的：5=4+1，表示拥有可读可执行权限，但是没有写权限；0 代表没有任何权限。想记的话，也可以算几个常用的：<br><code>-rw-------</code> (600) 只有所有者才有读和写的权限<br><code>-rw-r--r--</code> (644) 只有所有者才有读和写的权限，组群和其他人只有读的权限<br><code>-rwx------</code> (700) 只有所有者才有读，写，执行的权限<br><code>-rwxr-xr-x</code> (755) 只有所有者才有读，写，执行的权限，组群和其他人只有读和执行的权限<br><code>-rwx–-x--x</code> (711) 只有所有者才有读，写，执行的权限，组群和其他人只有执行的权限<br><code>-rw-rw-rw-</code> (666) 每个人都有读写的权限</p>
+<table>
+<thead>
+<tr>
+<th align="center">八进制</th>
+<th align="center">二进制</th>
+<th align="center">权限</th>
+<th align="center">八进制</th>
+<th align="center">二进制</th>
+<th align="center">权限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">000</td>
+<td align="center">—</td>
+<td align="center">4</td>
+<td align="center">100</td>
+<td align="center">r–</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">001</td>
+<td align="center">–x</td>
+<td align="center">5</td>
+<td align="center">101</td>
+<td align="center">r-x</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">010</td>
+<td align="center">-w-</td>
+<td align="center">6</td>
+<td align="center">110</td>
+<td align="center">rw-</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">011</td>
+<td align="center">-wx</td>
+<td align="center">7</td>
+<td align="center">111</td>
+<td align="center">rwx</td>
+</tr>
+</tbody></table>
+<p>这个好像也不用死记硬背，会 8 以内的加减法是不是就可以了~😂</p>
+<h3 id="chown"><a href="#chown" class="headerlink" title="chown"></a>chown</h3><blockquote>
+<p>chown - change file owner and group</p>
+</blockquote>
+<p>用于设置文件所有者和文件关联的组，需要 root 权限。</p>
+<h3 id="chgrp"><a href="#chgrp" class="headerlink" title="chgrp"></a>chgrp</h3><blockquote>
+<p>chgrp - change group ownership</p>
+</blockquote>
+<p>用于变更文件或目录的所属群组，与 chown 命令不同，chgrp 允许普通用户改变文件所属的组，只要该用户是该组的一员。</p>
+<p>更多的使用方式在实践中进行吧~~</p>
+<h2 id="操作文件和目录"><a href="#操作文件和目录" class="headerlink" title="操作文件和目录"></a>操作文件和目录</h2><p>学会建立文件和目录，是 Linux 系统管理的第一步。虽然我没有先学这里，哈哈…</p>
+<h3 id="建立目录-mkdir"><a href="#建立目录-mkdir" class="headerlink" title="建立目录 - mkdir"></a>建立目录 - mkdir</h3><blockquote>
+<p>mkdir - make directories</p>
+<p>可以建立一个或多个目录。</p>
+<p>-m, –mode=MODE<br>    set file mode (as in chmod), not a=rwx - umask</p>
+<p>-p, –parents<br>    no error if existing, make parent directories as needed</p>
+</blockquote>
+<p>举例 - 在用户主目录下新建两个文件夹 document、picture：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> ~ <span class="comment"># 进入用户主目录</span></span><br><span class="line"><span class="variable">$</span> mkdir document picture <span class="comment"># 新建两个目录</span></span><br></pre></td></tr></table></figure>
+
+<p>举例 - 用户也可以使用绝对路径来新建目录：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> mkdir ~/picture/temp <span class="comment"># 在主目录下新建名为temp的目录</span></span><br></pre></td></tr></table></figure>
+
+<p>由于主目录下 picture 已经存在，因此这条命令是合法的。但是当用户试图运行下面这条命令时，mkdir 将提示错误：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> mkdir ~/test/temp</span><br><span class="line">mkdir: 无法创建目录<span class="string">&quot;/home/tommy/test/temp&quot;</span>: 没有那个文件或目录</span><br></pre></td></tr></table></figure>
+
+<p>这是因为当前在用户主目录下并没有 test 这个目录,自然也无法在 test 下创建 temp 目录了。为此 mkdir 提供了 <code>-p</code> 选项，用于完整地创建一个子目录结构：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> mkdir <span class="literal">-p</span> ~/test/temp</span><br></pre></td></tr></table></figure>
+
+
+<p>在这个例子中，mkdir 会首先创建 test 目录，然后创建 temp，在需要创建一个完整目录结构的时候，这个选项是非常有用的。</p>
+<p>另外一个常用的选项是 <code>-m</code> ，在新建目录的同时指定对应的权限：<code>mkdir -p -m 700 ~/test/tempx</code>，到这里不禁要问了，不特意指定的话默认权限是什么样的呢？这就涉及到另一个命令：umask。</p>
+<h3 id="权限掩码-umask"><a href="#权限掩码-umask" class="headerlink" title="权限掩码 - umask"></a>权限掩码 - umask</h3><blockquote>
+<p>umask (1) - bash built-in commands, see bash(1)?<br>指定在建立文件时预设的权限掩码。</p>
+</blockquote>
+<p>umask 可用来设定[权限掩码]。[权限掩码]是由3个八进制的数字所组成，将”满级(a=rwx)(777)”的权限减掉权限掩码后，即可产生建立文件时预设的权限。使用 <code>umask</code> 查看8进制数字或者 <code>umask -S</code> 查看以符号形式表示的权限掩码，如果后面跟上参数，那意味着重新指定权限掩码或设定默认权限：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> umask</span><br><span class="line"><span class="number">0022</span></span><br><span class="line"><span class="variable">$</span> umask <span class="literal">-S</span></span><br><span class="line">u=rwx,g=rx,o=rx</span><br><span class="line"><span class="variable">$</span> umask <span class="literal">-S</span> g=rwx  <span class="comment"># 以符号类型设置默认权限</span></span><br><span class="line">u=rwx,g=rwx,o=rx  <span class="comment"># 修改以后，新目录的默认权限就是 drwxrwxr-x 了</span></span><br><span class="line"><span class="variable">$</span> umask <span class="number">0002</span>      <span class="comment"># 以数字形式恢复掩码</span></span><br></pre></td></tr></table></figure>
+
+<p>所以我用的这台虚拟机上，目录的默认权限就是 <code>drwxr-xr-x</code> ，也就是 <code>777-022=755</code> 。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">yylittlecat</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">test</span>]<span class="variable">$</span> ll</span><br><span class="line">总用量 <span class="number">20</span></span><br><span class="line">drwxr<span class="literal">-xr</span><span class="literal">-x</span> <span class="number">2</span> yylittlecat fancy <span class="number">4096</span> <span class="number">3</span>月  <span class="number">22</span> <span class="number">17</span>:<span class="number">59</span> temp    <span class="comment"># 使用 mkdir -p ~/test/temp 创建</span></span><br><span class="line">drwx------ <span class="number">2</span> yylittlecat fancy <span class="number">4096</span> <span class="number">3</span>月  <span class="number">22</span> <span class="number">18</span>:<span class="number">01</span> tempx   <span class="comment"># 使用 mkdir -p -m 700 ~/test/tempx 创建</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="建立空文件-touch"><a href="#建立空文件-touch" class="headerlink" title="建立空文件 - touch"></a>建立空文件 - touch</h3><blockquote>
+<p>touch – change file access and modification times</p>
+<p>设置文件的访问和修改时间，如果文件不存在的话，会使用默认权限创建一个空文件。</p>
+</blockquote>
+<p>举例 - 在当前目录下新建一个名为 test 的文件。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> touch test</span><br></pre></td></tr></table></figure>
+
+<p>用 touch 命令建立的文件是空文件(也就是不包含任何内容的文件)。空文件对建立某些特定的实验环境是有用。另外，当某些应用程序因为缺少文件而无法启动，而这个文件实际上并不那么重要时，可以建立一个空文件暂时“骗过”这个程序。<br>touch 命令的另一个用途是更新一个文件的建立日期和时间。例如，对于 hello 这个文件，使用 <code>ls-l</code> 命令显示这个文件的建立时间为2022年2月18日的10点30分，并且文件是有内容的。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">ls</span> <span class="literal">-l</span></span><br><span class="line"><span class="literal">-rwxrwxrwx</span>  <span class="number">1</span> yylittlecat fancy    <span class="number">6</span> <span class="number">2</span>月  <span class="number">18</span> <span class="number">10</span>:<span class="number">30</span> hello</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> hello</span><br><span class="line">Hello, World!</span><br></pre></td></tr></table></figure>
+
+<p>使用 touch 命令更新后，建立时间变成了2022年3月15日的15点18分，但内容并没有变化。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> touch hello</span><br><span class="line"><span class="variable">$</span> <span class="built_in">ls</span> <span class="literal">-l</span></span><br><span class="line"><span class="literal">-rwxrwxrwx</span>  <span class="number">1</span> yylittlecat fancy   <span class="number">14</span> <span class="number">3</span>月  <span class="number">15</span> <span class="number">15</span>:<span class="number">18</span> hello</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> hello</span><br><span class="line">Hello, World!</span><br></pre></td></tr></table></figure>
+
+<p>touch 命令的这个功能在自动备份和整理文件时非常有用，这使得程序可以决定哪些文件已经被备份或整理过了。</p>
+<h3 id="移动和重命名-mv"><a href="#移动和重命名-mv" class="headerlink" title="移动和重命名 - mv"></a>移动和重命名 - mv</h3><blockquote>
+<p>mv - move (rename) files</p>
+<p>对文件或目录进行移动、重命名。</p>
+</blockquote>
+<p>测试目录：用户主目录 ~ 和主目录下的 test/ 目录。<br>可以移动文件或者目录：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">mv</span> hello test/</span><br><span class="line"><span class="variable">$</span> <span class="built_in">mv</span> Photo/ test/</span><br></pre></td></tr></table></figure>
+
+<p>mv 命令在执行过程中不会显示任何提示信息，那如果目录下有一个同名文件会怎么样呢？做一个小测试：<br>(1) 首先在主目录下新建一个名为 hello 的文件：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> ~</span><br><span class="line"><span class="variable">$</span> <span class="built_in">echo</span> <span class="string">&quot;Hello in ~, named hello.&quot;</span> &gt; hello</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> hello</span><br><span class="line">Hello <span class="keyword">in</span> ~, named hello.</span><br></pre></td></tr></table></figure>
+
+<p>(2) 在主目录下新建一个 test 目录，然后在 test/ 下同样建立一个名为 hello 的文件：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> mkdir test</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> test/</span><br><span class="line"><span class="variable">$</span> <span class="built_in">echo</span> <span class="string">&quot;Hello in ~/test/, named hello.&quot;</span> &gt; hello</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> hello</span><br><span class="line">Hello <span class="keyword">in</span> ~/test/, named hello.</span><br></pre></td></tr></table></figure>
+
+<p>(3) 我们在两个 hello 文件的内容上做了区分，现在把主目录下的 hello 移动到 test/ 目录下，并且查看 test/hello 的内容，会发现文件中原本的内容已经被覆盖了，也就是 mv 把 test/ 目录下的同名文件替换了，但却没有给出任何警告：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> ..</span><br><span class="line"><span class="variable">$</span> <span class="built_in">mv</span> hello test/</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> test/</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> hello</span><br><span class="line">Hello <span class="keyword">in</span> ~, named hello.</span><br></pre></td></tr></table></figure>
+
+<p>这样有没有问题呢？可能有。用户可能不经意间就把一个重要文件给删除了。为此 mv 提供了一个 <code>-i</code> 选项用于发现这样的情况：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">mv</span> <span class="literal">-i</span> hello test/</span><br><span class="line"><span class="built_in">mv</span>: 是否覆盖<span class="string">&quot;test/hello&quot;</span>？</span><br></pre></td></tr></table></figure>
+
+<p>回答 y 表示覆盖，回答 n 表示跳过这个文件（保持原样不动）。<br>另一个比较有用的选项是 <code>-b</code>。这个选项用一种不同的方式来处理刚才这个问题。在移动文件前，首先在目标目录的同名文件的文件名后加一个“~”号，从而避免这个文件被覆盖。例如:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">mv</span> <span class="literal">-b</span> hello test/</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> test/</span><br><span class="line"><span class="variable">$</span> <span class="built_in">ls</span></span><br><span class="line">hello</span><br><span class="line">hello~</span><br></pre></td></tr></table></figure>
+
+<p>Linux 没有“重命名”这个命令，原因很简单，即没有这个必要。重命名无非就是将一个文件在同一个目录里移动，这是 mv 最擅长的工作。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">mv</span> hello~ hello_bak</span><br><span class="line"><span class="variable">$</span> <span class="built_in">ls</span></span><br><span class="line">hello</span><br><span class="line">hello_bak</span><br></pre></td></tr></table></figure>
+
+<p>因此对 mv 比较准确的描述是，mv 可以在移动文件和目录的同时对其重命名。<br>诶，那如果 test/ 目录下已经存在一个 <code>hello~</code>，重复执行 <code>mv -b hello test/</code> 会是什么效果呢？又或者同时使用这两个选项 <code>mv -i -b hello test/</code> 会发生什么呢？我有够无聊，是不是~哈哈😂</p>
+<h3 id="复制文件和目录-cp"><a href="#复制文件和目录-cp" class="headerlink" title="复制文件和目录 - cp"></a>复制文件和目录 - cp</h3><blockquote>
+<p>cp – copy files<br>复制文件和目录。</p>
+</blockquote>
+<p>cp命令用来复制文件和目录。下面这条命令将文件 hello.log 复制到 test 目录下。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cp</span> test.php test/</span><br></pre></td></tr></table></figure>
+
+<p>和 mv命令一样，cp 默认情况下会覆盖目标目录中的同名文件。可以使用 -i 选项对这种情况进行提示，也可以使用 -b 选项对同名文件改名后再复制。这两个选项的使用和 mv 命令中一样。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cp</span> <span class="literal">-i</span> hello.log test/</span><br><span class="line"><span class="built_in">cp</span>:是否覆盖<span class="string">&quot;test/hello.log&quot;</span>?</span><br></pre></td></tr></table></figure>
+
+<p>回答 y 表示覆盖，回答 n 表示跳过这个文件。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cp</span> <span class="literal">-b</span> hello.log test/</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> test/</span><br><span class="line"><span class="variable">$</span> <span class="built_in">ls</span></span><br><span class="line">hello.log</span><br><span class="line">hello.log~</span><br></pre></td></tr></table></figure>
+
+<p>cp命令在执行复制任务的时候会自动跳过目录。例如:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cp</span> test/ document/</span><br><span class="line"><span class="built_in">cp</span>:略过目录<span class="string">&quot;test/&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>为此，可以使用 -r 选项，这个选项将子目录连同其中的文件一起复制到另一个子目录下。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cp</span> <span class="literal">-r</span> test/ document/</span><br></pre></td></tr></table></figure>
+
+<h3 id="删除目录和文件-rmdir、rm"><a href="#删除目录和文件-rmdir、rm" class="headerlink" title="删除目录和文件 - rmdir、rm"></a>删除目录和文件 - rmdir、rm</h3><blockquote>
+<p>rmdir – remove directories</p>
+<p>删除目录。</p>
+<p>rm, unlink – remove files or directories</p>
+<p>删除文件、目录。</p>
+</blockquote>
+<p>rmdir 命令用于删除目录。使用起来很简单，只需要在后面跟上要删除的目录作为参数即可，也可以同时删除多个目录：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">rmdir</span> temp</span><br><span class="line"><span class="variable">$</span> <span class="built_in">rmdir</span> tempx tempxx tempxxx    <span class="comment">#或者 rmdir temp*</span></span><br></pre></td></tr></table></figure>
+
+<p>但是 rmdir 只能删除空目录，删除非空目录会提示错误：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">rmdir</span> test</span><br><span class="line"><span class="built_in">rmdir</span>: 删除 <span class="string">&quot;test&quot;</span> 失败: 目录非空</span><br><span class="line"><span class="variable">$</span> <span class="built_in">ls</span> test/</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+
+<p>因此，在使用 rmdir 删除一个目录之前，首先要将这个目录下的文件和子目录删除。删除文件需要用到 rm 命令了，当然 rm 也可以用来删除目录，而且比 rmdir 更为“高效”。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">ls</span> test/</span><br><span class="line">hello hello1 hello2 hello3</span><br><span class="line"><span class="variable">$</span> <span class="built_in">rm</span> test/hello*	<span class="comment">#删除 test 目录下所有以 hello 开头的文件</span></span><br></pre></td></tr></table></figure>
+
+<p>和 mv 等命令一样，rm 不会对此作任何提示。通过 rm 命令删除的文件将永远地从系统中消失了，而不会被放入一个称作“回收站”的临时目录下(尽管某些恢复软件可能找回一些文件，但只是“可能”而已)。一个比较安全的使用 rm 命令的方式是使用 -i 选项，这个选项会在删除文件前给出提示，并等待用户确认。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">rm</span><span class="literal">-i</span> test/hello</span><br><span class="line"><span class="built_in">rm</span>：是否删除普通文件 “test/hello<span class="string">&quot; ?</span></span><br></pre></td></tr></table></figure>
+
+<p>回答 y 表示确认删除，回答 n 表示跳过这个文件。对于只读文件，即便不加上 -i 选项，rm 命令也会对此进行提示。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">rm</span> hello_bak</span><br><span class="line"><span class="built_in">rm</span>：是否删除有写保护的普通文件 “hello_bak<span class="string">&quot;?</span></span><br></pre></td></tr></table></figure>
+
+<p>可以使用 -f 选项来避免这样的交互式操作。rm 会自动对这些问题回答 y。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">rm</span> <span class="operator">-f</span> hello_bak</span><br></pre></td></tr></table></figure>
+
+<p>带有 -r 参数的 rm 命令会递归地删除目录下所有的文件和子目录。例如，下面这个命令会删除  Photos 目录下所有的目录、子目录及子目录下的文件和子目…..最后删除 Photos目录。也就是说，把 Photos 目录完整地从磁盘上移除了(当然前提是拥有这样操作的权限)。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">rm</span> <span class="literal">-r</span> Photos/</span><br></pre></td></tr></table></figure>
+
+<p>使用 rm 命令的时候应该格外小心，特别是以 root 身份执行该命令时。无论熟不熟悉 Linux，可能大家都看过下面这个动图，哈哈，说的就是这个意思：</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/sudo-rm.gif"></p>
+<p>所以在删除一个文件/目录前，一定要认真评估后果。如果要使用 -f 和 -r 选项，请确定这是必须的。</p>
+<h2 id="输入输出重定向和管道"><a href="#输入输出重定向和管道" class="headerlink" title="输入输出重定向和管道"></a>输入输出重定向和管道</h2><h3 id="输出重定向-gt-、-gt-gt"><a href="#输出重定向-gt-、-gt-gt" class="headerlink" title="输出重定向 - &gt;、&gt;&gt;"></a>输出重定向 - &gt;、&gt;&gt;</h3><p>程序在默认情况下输出结果的地方被称为标准输出(stdout)。通常来说，标准输出总是指向显示器。例如，下面的 ls 命令获取当前目录下的文件列表,并将其输出到标准输出，于是用户在屏幕上看到了这些文件名：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> ~</span><br><span class="line"><span class="variable">$</span> <span class="built_in">ls</span> ~</span><br><span class="line">document  hello  picture  test</span><br></pre></td></tr></table></figure>
+
+<p>输出重定向用于把程序的输出转移到另一个地方去。下面这条命令将 ls 的输出重定向到 ls_out 文件中：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">ls</span> ~ &gt; test/ls_out</span><br></pre></td></tr></table></figure>
+
+<p>这样，ls 的输出就不会在显示器上显示出来，而是出现在 test 目录下的 ls_out 文件中，每行显示一个文件名:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> test/ls_out</span><br><span class="line">document</span><br><span class="line">hello</span><br><span class="line">picture</span><br><span class="line">test</span><br></pre></td></tr></table></figure>
+
+<p>如果 ls_out 文件不存在，那么输出重定向符号“&gt;”会试图建立这个文件。如果 ls_out 文件已经存在了，那么 <code>&gt;</code> 会删除文件中原有的内容，然后用新内容替代：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> uname <span class="literal">-r</span> &gt; test/ls_out</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> test/ls_out</span><br><span class="line"><span class="number">3.10</span>.<span class="number">0</span><span class="literal">-1160</span>.<span class="number">31.1</span>.el7.x86_64</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，<code>&gt;</code> 并不会礼貌地在原来那堆文件名的后面添上版本信息，而是直接覆盖了刚刚 ls 命令的输出。如果要保留原来文件中的内容，应该使用输出重定向符号 <code>&gt;&gt;</code>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> date &gt; test/date_out                 <span class="comment"># 将 date 命令的输出重定向到 date_out 文件</span></span><br><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> test/date_out	                   <span class="comment"># 查看 date_out 文件的内容</span></span><br><span class="line"><span class="number">2022</span>年 <span class="number">03</span>月 <span class="number">15</span>日 星期二 <span class="number">16</span>:<span class="number">12</span>:<span class="number">00</span> CST</span><br><span class="line"><span class="variable">$</span> uname <span class="literal">-r</span> &gt;&gt; test/date_out	           <span class="comment"># 将 uname 命令产生的版本信息追加到 date_out 文件的末尾</span></span><br><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> test/date_out	                   <span class="comment"># 再次查看 date_out 文件的内容</span></span><br><span class="line"><span class="number">2022</span>年 <span class="number">03</span>月 <span class="number">15</span>日 星期二 <span class="number">16</span>:<span class="number">12</span>:<span class="number">00</span> CST</span><br><span class="line"><span class="number">3.10</span>.<span class="number">0</span><span class="literal">-1160</span>.<span class="number">31.1</span>.el7.x86_64</span><br></pre></td></tr></table></figure>
+
+<h3 id="输入重定向-lt-、-lt-lt"><a href="#输入重定向-lt-、-lt-lt" class="headerlink" title="输入重定向 - &lt;、&lt;&lt;"></a>输入重定向 - &lt;、&lt;&lt;</h3><p>​    和标准输出类似，程序默认情况下接收输入的地方被称为标准输入(stdin)。通常来说，标准输入总是指向键盘。例如，如果使用不带任何参数的 cat 命令，那么 cat 会停在那里，等待从标准输入(也就是键盘)获取数据。书上说使用 <code>&lt;</code> 重定向符号可以让程序从一个文本中获取输入……所以下面的两个命令是一回事儿吧：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> ~</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> &lt; test/date_out</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> test/data_out</span><br></pre></td></tr></table></figure>
+
+<p>​    另一种输入重定向的例子被称为立即文档(here document)。这种重定向方式使用操作符 <code>&lt;&lt;</code>。立即文档明确告诉 Shell 从键盘接受输入，并传递给程序。现在看下面这个例子:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cat</span>&lt;&lt; EOF</span><br><span class="line">&gt; Hello</span><br><span class="line">&gt; Bye</span><br><span class="line">Hello</span><br><span class="line">Bye</span><br></pre></td></tr></table></figure>
+
+<p>​    cat 命令从键盘接受两行输入，并将其送往标准输出。和本节开头的例子不同的是，给立即文档指定了一个代表输入结束的分隔符(在这里是单词 EOF)，当 Shell 遇到这个单词的时候，即认为输入结束，并把刚才的键盘输入一起传递给命令。所以这次 cat 命令会将用户的输入一块显示，而不是每收到一行就迫不及待地把它打印出来。<br>​    用户可以选择任意一个单词作为立即文档的分隔符，像 EOF、END、eof 等都是不错的选择，只要可以确保它不是正文的一部分即可。<br>​    那么，是否可以让输入重定向和输出重定向结合在一起使用？答案是肯定的。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> &lt;&lt; <span class="keyword">END</span> &gt;&gt; test/date_out</span><br><span class="line">&gt; Hi Tommy,</span><br><span class="line">&gt; it<span class="string">&#x27;s time to be off duty!</span></span><br><span class="line"><span class="string">&gt; Let&#x27;</span>s go to the bar.</span><br><span class="line">&gt; <span class="keyword">END</span></span><br></pre></td></tr></table></figure>
+
+<p>​    这条命令首先让 cat 命令以立即文档的方式获取输入，然后再把 cat 的输出重定向到 date_out 文件。查看 date_out 文件，应该可以看到拼接的这些内容:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> test/date_out</span><br><span class="line"><span class="number">2022</span>年 <span class="number">03</span>月 <span class="number">15</span>日 星期二 <span class="number">16</span>:<span class="number">12</span>:<span class="number">00</span> CST</span><br><span class="line"><span class="number">3.10</span>.<span class="number">0</span><span class="literal">-1160</span>.<span class="number">31.1</span>.el7.x86_64</span><br><span class="line">Hi Tommy,</span><br><span class="line">it<span class="string">&#x27;s time to be off duty!</span></span><br><span class="line"><span class="string">Let&#x27;</span>s go to the bar.</span><br></pre></td></tr></table></figure>
+
+<h3 id="管道"><a href="#管道" class="headerlink" title="管道 - |"></a>管道 - |</h3><p>管道将“重定向”再向前推进了一步。通过一根竖线 <code>|</code>，将一条命令的输出连接到另一条命令输入。下面这条命令显示了如何在文件列表中查找文件名中包含某个特定字符串的文件:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> test/</span><br><span class="line"><span class="variable">$</span> <span class="built_in">ls</span> | grep out</span><br><span class="line">date_out</span><br><span class="line">ls_out</span><br></pre></td></tr></table></figure>
+
+<p>ls 首先列出当前目录下的所有文件名，管道 <code>|</code> 接收到这些输出，并把它们发送给 grep命令作为其输入，最后 grep 在这堆文件列表中查找包含字符串 out 的文件名，并在标准输出(也就是显示器)显示。<br>可以在以行命令中使用多个管道，将多个命令结合起来，写出复杂的 Shell 脚本。看书看到这里，我仿佛已经会写脚本了一样，哈哈哈~🤓</p>
+<hr>
+<p>Linux 的文件系统，暂时学习到这里。</p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-%E7%B3%BB%E7%BB%9F%E4%B8%BB%E8%A6%81%E7%9B%AE%E5%BD%95%E5%8F%8A%E5%85%B6%E5%86%85%E5%AE%B9"><span class="toc-number">1.</span> <span class="toc-text">Linux 系统主要目录及其内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%EF%BC%9A%E6%90%9E%E4%B8%80%E4%B8%AA%E5%B0%8F%E5%9B%A2%E4%BD%93"><span class="toc-number">2.</span> <span class="toc-text">快速上手：搞一个小团体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E7%9A%84%E6%9D%83%E9%99%90"><span class="toc-number">3.</span> <span class="toc-text">文件和目录的权限</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#chmod"><span class="toc-number">3.1.</span> <span class="toc-text">chmod</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%AD%97%E6%AF%8D%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90%EF%BC%9A"><span class="toc-number">3.1.1.</span> <span class="toc-text">使用字母修改权限：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%95%B0%E5%AD%97%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90%EF%BC%9A"><span class="toc-number">3.1.2.</span> <span class="toc-text">使用数字修改权限：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chown"><span class="toc-number">3.2.</span> <span class="toc-text">chown</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chgrp"><span class="toc-number">3.3.</span> <span class="toc-text">chgrp</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95"><span class="toc-number">4.</span> <span class="toc-text">操作文件和目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%9B%AE%E5%BD%95-mkdir"><span class="toc-number">4.1.</span> <span class="toc-text">建立目录 - mkdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E6%8E%A9%E7%A0%81-umask"><span class="toc-number">4.2.</span> <span class="toc-text">权限掩码 - umask</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%A9%BA%E6%96%87%E4%BB%B6-touch"><span class="toc-number">4.3.</span> <span class="toc-text">建立空文件 - touch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E5%92%8C%E9%87%8D%E5%91%BD%E5%90%8D-mv"><span class="toc-number">4.4.</span> <span class="toc-text">移动和重命名 - mv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95-cp"><span class="toc-number">4.5.</span> <span class="toc-text">复制文件和目录 - cp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95%E5%92%8C%E6%96%87%E4%BB%B6-rmdir%E3%80%81rm"><span class="toc-number">4.6.</span> <span class="toc-text">删除目录和文件 - rmdir、rm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E7%AE%A1%E9%81%93"><span class="toc-number">5.</span> <span class="toc-text">输入输出重定向和管道</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E9%87%8D%E5%AE%9A%E5%90%91-gt-%E3%80%81-gt-gt"><span class="toc-number">5.1.</span> <span class="toc-text">输出重定向 - &gt;、&gt;&gt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E9%87%8D%E5%AE%9A%E5%90%91-lt-%E3%80%81-lt-lt"><span class="toc-number">5.2.</span> <span class="toc-text">输入重定向 - &lt;、&lt;&lt;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E9%81%93"><span class="toc-number">5.3.</span> <span class="toc-text">管道 - |</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/03/15/Linux_FileSystem/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&text=Linux 学习笔记（四）- 文件系统"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&title=Linux 学习笔记（四）- 文件系统"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&is_video=false&description=Linux 学习笔记（四）- 文件系统"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（四）- 文件系统&body=Check out this article: https://tommygirl.cn/2022/03/15/Linux_FileSystem/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&title=Linux 学习笔记（四）- 文件系统"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&title=Linux 学习笔记（四）- 文件系统"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&title=Linux 学习笔记（四）- 文件系统"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&title=Linux 学习笔记（四）- 文件系统"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&name=Linux 学习笔记（四）- 文件系统&description=&lt;hr&gt;
+&lt;p&gt;说实话我看了一下文件系统架构的介绍，不是很明白，至少按照《Linux 从入门到精通》的顺序读到这里的时候，我没看明白，只知道 Linux 里几乎所有操作最终都可以理解为对文件的修改。所以我就不在这里写太多的学习笔记了，借用作者书中的一段话：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;要理解Linux的文件系统架构，看来的确需要耗费一定的脑力。 如果经过努力仍然不明白上面这些文字在说些什么，一个好的建议是：不要管那么多，先使用。没有人会为了上网而首先去学习路由器原理，但一个接触了几年网络的人总能对路由器是什么这个问题说上几句。所以无论如何，首先去&lt;strong&gt;实践&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So…… 管他呢，先实践起来~&lt;/p&gt;
+&lt;h2 id=&#34;Linux-系统主要目录及其内容&#34;&gt;&lt;a href=&#34;#Linux-系统主要目录及其内容&#34; class=&#34;headerlink&#34; title=&#34;Linux 系统主要目录及其内容&#34;&gt;&lt;/a&gt;Linux 系统主要目录及其内容&lt;/h2&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/03/15/Linux_FileSystem/&t=Linux 学习笔记（四）- 文件系统"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>
