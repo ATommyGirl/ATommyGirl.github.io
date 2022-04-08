@@ -491,7 +491,7 @@
 
 <p>使用 rm 命令的时候应该格外小心，特别是以 root 身份执行该命令时。无论熟不熟悉 Linux，可能大家都看过下面这个动图，哈哈，说的就是这个意思：</p>
 <p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/sudo-rm.gif"></p>
-<p>所以在删除一个文件/目录前，一定要认真评估后果。如果要使用 -f 和 -r 选项，请确定这是必须的。</p>
+<p>前面的学习中提到过，<code>/</code> 表示 Linux 的根目录，<code>~</code> 表示用户的主目录，图中的命令是把根目录的一切都删除掉了。我怀疑是不是有人习惯性的把 <code>/</code> 理解为当前所工作的目录了，因为我有两次手贱也在想要打开的子目录前面输入 <code>/</code> ，提示我目录不存在，才反应过来输错了😂……<br>所以在删除一个文件/目录前，一定要认真评估后果。如果要使用 -f 和 -r 选项，要确定这是必须的。</p>
 <h2 id="输入输出重定向和管道"><a href="#输入输出重定向和管道" class="headerlink" title="输入输出重定向和管道"></a>输入输出重定向和管道</h2><h3 id="输出重定向-gt-、-gt-gt"><a href="#输出重定向-gt-、-gt-gt" class="headerlink" title="输出重定向 - &gt;、&gt;&gt;"></a>输出重定向 - &gt;、&gt;&gt;</h3><p>程序在默认情况下输出结果的地方被称为标准输出(stdout)。通常来说，标准输出总是指向显示器。例如，下面的 ls 命令获取当前目录下的文件列表,并将其输出到标准输出，于是用户在屏幕上看到了这些文件名：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> ~</span><br><span class="line"><span class="variable">$</span> <span class="built_in">ls</span> ~</span><br><span class="line">document  hello  picture  test</span><br></pre></td></tr></table></figure>
 

@@ -110,6 +110,8 @@
 &lt;h2 id=&#34;root-可以做什么&#34;&gt;&lt;a href=&#34;#root-可以做什么&#34; class=&#34;headerlink&#34; title=&#34;root 可以做什么&#34;&gt;&lt;/a&gt;root 可以做什么&lt;/h2&gt;&lt;p&gt;这个问题的答案是 anything。没错，作为整个系统中拥有最高权限的用户，root 可以对系统做任何事情。root 可以访问、修改、删除系统中的任何文件和目录。另外，对于如下这些受限的操作，一般只有 root 用户能够执行。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;添加删除用户;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
 &lt;li&gt;安装软件;&lt;/li&gt;
 &lt;li&gt;添加删除设备;&lt;/li&gt;
 &lt;li&gt;启动和停止网络服务;&lt;/li&gt;
@@ -175,6 +177,8 @@
 <h2 id="root-可以做什么"><a href="#root-可以做什么" class="headerlink" title="root 可以做什么"></a>root 可以做什么</h2><p>这个问题的答案是 anything。没错，作为整个系统中拥有最高权限的用户，root 可以对系统做任何事情。root 可以访问、修改、删除系统中的任何文件和目录。另外，对于如下这些受限的操作，一般只有 root 用户能够执行。</p>
 <ul>
 <li>添加删除用户;</li>
+</ul>
+<ul>
 <li>安装软件;</li>
 <li>添加删除设备;</li>
 <li>启动和停止网络服务;</li>
@@ -260,9 +264,7 @@
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root:<span class="variable">$1</span><span class="variable">$Bg1H</span>/<span class="number">4</span>mz<span class="variable">$X89TqH7tpi9dX1B9j5YsF</span>.:<span class="number">14838</span>:<span class="number">0</span>:<span class="number">99999</span>:<span class="number">7</span>:::</span><br></pre></td></tr></table></figure>
 
 <p>其格式为：</p>
-<p>{用户名}：{加密后的口令密码}：{口令最后修改时间距原点(1970-1-1)的天数}：{口令最小修改间隔(防止修改口令，如果时限未到，将恢复至旧口令)：{口令最大修改间隔}：{口令失效前的警告天数}：{账户不活动天数}：{账号失效天数}：{保留}</p>
-<p>【注】：shadow 文件为可读文件，普通用户没有读写权限，超级用户拥有读写权限。如果密码字符串为*，则表示系统用户不能被登入；如果字符串为！，则表示用户名被禁用；如果字符串为空，则表示没有密码。</p>
-<p>我们可以使用 <code>passwd –d 用户名</code> 清空一个用户的口令密码。</p>
+<p>{用户名}：{加密后的口令密码}：{口令最后修改时间距原点(1970-1-1)的天数}：{口令最小修改间隔(防止修改口令，如果时限未到，将恢复至旧口令)：{口令最大修改间隔}：{口令失效前的警告天数}：{账户不活动天数}：{账号失效天数}：{保留}<br>【注】：shadow 文件为可读文件，普通用户没有读写权限，超级用户拥有读写权限。如果密码字符串为*，则表示系统用户不能被登入；如果字符串为！，则表示用户名被禁用；如果字符串为空，则表示没有密码。<br>我们可以使用 <code>passwd –d 用户名</code> 清空一个用户的口令密码。</p>
 <h2 id="userdel"><a href="#userdel" class="headerlink" title="userdel"></a>userdel</h2><blockquote>
 <p>删除用户。</p>
 </blockquote>
@@ -343,8 +345,7 @@
 <li>该用户可以运行的命令；</li>
 <li>该命令应该以哪个用户身份执行。</li>
 </ul>
-<p><strong>提示</strong>：sudoers 中的命令应该使用绝对路径来指定，这样可以防止一些人以 root 身份执行自己的脚本程序。</p>
-<p>修改sudoers文件应该使用 <code>visudo</code> 命令。这个命令依次执行下面这些操作:</p>
+<p><strong>提示</strong>：sudoers 中的命令应该使用绝对路径来指定，这样可以防止一些人以 root 身份执行自己的脚本程序。<br>修改sudoers文件应该使用 <code>visudo</code> 命令。这个命令依次执行下面这些操作:</p>
 <ul>
 <li>检查以确保没有其他人正在编辑这个文件。</li>
 <li>调用一个编辑器编辑该文件。</li>
@@ -432,6 +433,8 @@
 &lt;h2 id=&#34;root-可以做什么&#34;&gt;&lt;a href=&#34;#root-可以做什么&#34; class=&#34;headerlink&#34; title=&#34;root 可以做什么&#34;&gt;&lt;/a&gt;root 可以做什么&lt;/h2&gt;&lt;p&gt;这个问题的答案是 anything。没错，作为整个系统中拥有最高权限的用户，root 可以对系统做任何事情。root 可以访问、修改、删除系统中的任何文件和目录。另外，对于如下这些受限的操作，一般只有 root 用户能够执行。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;添加删除用户;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
 &lt;li&gt;安装软件;&lt;/li&gt;
 &lt;li&gt;添加删除设备;&lt;/li&gt;
 &lt;li&gt;启动和停止网络服务;&lt;/li&gt;

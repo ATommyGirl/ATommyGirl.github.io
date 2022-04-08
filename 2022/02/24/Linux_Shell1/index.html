@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="查看目录和文件pwd 显示当前所在的位置，即工作目录。  12[blog@VM-0-13-centos ~]$ pwd&#x2F;home&#x2F;blog  cd 改变目录。  日常用法： cd &#x2F;home&#x2F;blog 进入 &#x2F;home&#x2F;blog 目录； cd .. 返回上一层目录； cd &#x2F; 进入根目录，cd .. &#x2F; .. 也是进入根目录； cd 不带参数总是可以回到自己用户的主目录，或者 cd ~ 也是一样">
+    <meta name="description" content="查看目录和文件pwd 显示当前所在的位置，即工作目录。  12[blog@VM-0-13-centos ~]$ pwd&#x2F;home&#x2F;blog  cd 改变目录。  日常用法：cd &#x2F;home&#x2F;blog 进入 &#x2F;home&#x2F;blog 目录；cd .. 返回上一层目录；cd &#x2F; 进入根目录，cd .. &#x2F; .. 也是进入根目录；cd 不带参数总是可以回到自己用户的主目录，或者 cd ~ 也是一样的效果。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 学习笔记（三）- Shell 基础命令">
 <meta property="og:url" content="https://tommygirl.cn/2022/02/24/Linux_Shell1/index.html">
 <meta property="og:site_name" content="迷">
-<meta property="og:description" content="查看目录和文件pwd 显示当前所在的位置，即工作目录。  12[blog@VM-0-13-centos ~]$ pwd&#x2F;home&#x2F;blog  cd 改变目录。  日常用法： cd &#x2F;home&#x2F;blog 进入 &#x2F;home&#x2F;blog 目录； cd .. 返回上一层目录； cd &#x2F; 进入根目录，cd .. &#x2F; .. 也是进入根目录； cd 不带参数总是可以回到自己用户的主目录，或者 cd ~ 也是一样">
+<meta property="og:description" content="查看目录和文件pwd 显示当前所在的位置，即工作目录。  12[blog@VM-0-13-centos ~]$ pwd&#x2F;home&#x2F;blog  cd 改变目录。  日常用法：cd &#x2F;home&#x2F;blog 进入 &#x2F;home&#x2F;blog 目录；cd .. 返回上一层目录；cd &#x2F; 进入根目录，cd .. &#x2F; .. 也是进入根目录；cd 不带参数总是可以回到自己用户的主目录，或者 cd ~ 也是一样的效果。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-24T14:01:34.000Z">
 <meta property="article:modified_time" content="2022-02-24T14:01:34.000Z">
@@ -111,12 +111,7 @@
 &lt;h3 id=&#34;cd&#34;&gt;&lt;a href=&#34;#cd&#34; class=&#34;headerlink&#34; title=&#34;cd&#34;&gt;&lt;/a&gt;cd&lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;改变目录。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;日常用法：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;cd /home/blog&lt;/code&gt; 进入 /home/blog 目录；&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;cd ..&lt;/code&gt; 返回上一层目录；&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;cd /&lt;/code&gt; 进入根目录，&lt;code&gt;cd .. / ..&lt;/code&gt; 也是进入根目录；&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;cd&lt;/code&gt; 不带参数总是可以回到自己用户的主目录，或者 &lt;code&gt;cd ~&lt;/code&gt; 也是一样的效果。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;FYI&lt;/strong&gt;：在 Shell 中，&lt;code&gt;..&lt;/code&gt; 代表当前目录的上一级目录，而 &lt;code&gt;.&lt;/code&gt; 则代表当前目录，另外，&lt;code&gt;~&lt;/code&gt; 代表用户主目录。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+&lt;p&gt;日常用法：&lt;br&gt;&lt;code&gt;cd /home/blog&lt;/code&gt; 进入 /home/blog 目录；&lt;br&gt;&lt;code&gt;cd ..&lt;/code&gt; 返回上一层目录；&lt;br&gt;&lt;code&gt;cd /&lt;/code&gt; 进入根目录，&lt;code&gt;cd .. / ..&lt;/code&gt; 也是进入根目录；&lt;br&gt;&lt;code&gt;cd&lt;/code&gt; 不带参数总是可以回到自己用户的主目录，或者 &lt;code&gt;cd ~&lt;/code&gt; 也是一样的效果。&lt;br&gt;&lt;strong&gt;FYI&lt;/strong&gt;：在 Shell 中，&lt;code&gt;..&lt;/code&gt; 代表当前目录的上一级目录，而 &lt;code&gt;.&lt;/code&gt; 则代表当前目录，另外，&lt;code&gt;~&lt;/code&gt; 代表用户主目录。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/24/Linux_Shell1/&t=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
@@ -175,26 +170,19 @@
 <h3 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h3><blockquote>
 <p>改变目录。</p>
 </blockquote>
-<p>日常用法：</p>
-<p><code>cd /home/blog</code> 进入 /home/blog 目录；</p>
-<p><code>cd ..</code> 返回上一层目录；</p>
-<p><code>cd /</code> 进入根目录，<code>cd .. / ..</code> 也是进入根目录；</p>
-<p><code>cd</code> 不带参数总是可以回到自己用户的主目录，或者 <code>cd ~</code> 也是一样的效果。</p>
-<p><strong>FYI</strong>：在 Shell 中，<code>..</code> 代表当前目录的上一级目录，而 <code>.</code> 则代表当前目录，另外，<code>~</code> 代表用户主目录。</p>
+<p>日常用法：<br><code>cd /home/blog</code> 进入 /home/blog 目录；<br><code>cd ..</code> 返回上一层目录；<br><code>cd /</code> 进入根目录，<code>cd .. / ..</code> 也是进入根目录；<br><code>cd</code> 不带参数总是可以回到自己用户的主目录，或者 <code>cd ~</code> 也是一样的效果。<br><strong>FYI</strong>：在 Shell 中，<code>..</code> 代表当前目录的上一级目录，而 <code>.</code> 则代表当前目录，另外，<code>~</code> 代表用户主目录。</p>
 <span id="more"></span>
 
 <h3 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h3><blockquote>
 <p>列出目录内容。</p>
 </blockquote>
-<p>ls 是 list 的简写。常用选项：</p>
-<p><code>ls</code> 不带参数时，会列出当前目录下的所有文件和子目录。默认情况下，目录显示为蓝色，普通文件显示为黑色，可执行文件显示为草绿色，淡蓝色则表示这个文件是一个链接文件(相当于 Windows 下的快捷方式)。</p>
+<p>ls 是 list 的简写。常用选项：<br><code>ls</code> 不带参数时，会列出当前目录下的所有文件和子目录。默认情况下，目录显示为蓝色，普通文件显示为黑色，可执行文件显示为草绿色，淡蓝色则表示这个文件是一个链接文件(相当于 Windows 下的快捷方式)。</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> ~]<span class="variable">$</span> <span class="built_in">cd</span> /etc/</span><br><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">ls</span></span><br><span class="line">acpi                     e2fsck.conf    libreport                 pm              shells.rpmnew</span><br><span class="line">adjtime                  environment    libuser.conf              polkit<span class="literal">-1</span>        skel</span><br><span class="line">aliases                  ethertypes     locale.conf               popt.d          sos.conf</span><br><span class="line">alternatives             exports        localtime                 postfix         ssh</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 <p><code>ls -F</code> 用户也可以使用带 -F 选项的 ls 命令。可以看到，-F 选项会在每个目录后加上 /，在可执行文件后加 *，在链接文件后加上 @。这个选项在某些无法显示颜色的终端上会比较有用:</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> ~]<span class="variable">$</span> <span class="built_in">cd</span> /etc/</span><br><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">ls</span> <span class="operator">-F</span></span><br><span class="line">acpi/                    e2fsck.conf    libreport/                pm/              shells.rpmnew</span><br><span class="line">adjtime                  environment    libuser.conf              polkit<span class="literal">-1</span>/        skel/</span><br><span class="line">aliases                  ethertypes     locale.conf               popt.d/          sos.conf</span><br><span class="line">alternatives/            exports        localtime<span class="selector-tag">@</span>                postfix/         ssh/</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
-<p><code>ls -a</code> 查看所有文件，包括隐藏文件。</p>
-<p><code>ls -aF</code> 命令的选项也可以组合使用，只需要一个 - 符号：</p>
+<p><code>ls -a</code> 查看所有文件，包括隐藏文件。<br><code>ls -aF</code> 命令的选项也可以组合使用，只需要一个 <code>-</code> 符号：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">ls</span> <span class="literal">-aF</span></span><br><span class="line">./                       dracut.conf.d/  libreport/                polkit<span class="literal">-1</span>/        skel/</span><br><span class="line">../                      e2fsck.conf     libuser.conf              popt.d/          sos.conf</span><br><span class="line">acpi/                    environment     locale.conf               postfix/         ssh/</span><br><span class="line">adjtime                  ethertypes      localtime<span class="selector-tag">@</span>                ppp/             ssl/</span><br></pre></td></tr></table></figure>
 
 <p><code>ls -l</code> 查看文件的属性，从左至右依次是：文件的权限标志；文件的链接个数；文件所有者的用户名；该用户所在的用户组；文件的大小；最后一次被修改的日期；文件名。</p>
@@ -253,8 +241,7 @@
 <p>命令格式：<code>grep [OPTION] PATTERN [FILE...]</code> 。还是以博客主页为例，我们搜索“能改变自己的都是神，想改变别人的都是神经病。🍊” ：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> grep 能改变自己的都是神，想改变别人的都是神经病。 index.html</span><br><span class="line">    &lt;meta name=<span class="string">&quot;description&quot;</span> content=<span class="string">&quot;能改变自己的都是神，想改变别人的都是神经病。🍊&quot;</span>&gt;</span><br><span class="line">&lt;meta property=<span class="string">&quot;og:description&quot;</span> content=<span class="string">&quot;能改变自己的都是神，想改变别人的都是神经病。🍊&quot;</span>&gt;</span><br><span class="line">    &lt;p&gt;能改变自己的都是神，想改变别人的都是神经病。🍊&lt;/p&gt;</span><br></pre></td></tr></table></figure>
 
-<p>把包含这行文字的标签都列出来了，并且在控制台是高亮显示的。</p>
-<p>命令和参数是以空格来分割的，那如果我们想查找的关键字是 Red Hat 这种包含空格呢？这个时候必须用单引号把空格包含进去：</p>
+<p>把包含这行文字的标签都列出来了，并且在控制台是高亮显示的。<br>命令和参数是以空格来分割的，那如果我们想查找的关键字是 Red Hat 这种包含空格呢？这个时候必须用单引号把空格包含进去：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> grep <span class="string">&#x27;html lang=zh&#x27;</span> index.html</span><br><span class="line">&lt;html lang=zh&gt;</span><br></pre></td></tr></table></figure>
 
 <p>和其他几个查看文件的命令一样，grep 也支持多个文件，并且在结果中列出文件名：</p>
@@ -264,15 +251,13 @@
 <h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><blockquote>
 <p>迅速在指定范围内查找到文件。</p>
 </blockquote>
-<p>find 命令的基本语法：<code>find [OPTION] [path...] [expression]</code></p>
-<p>例如在 usr/bin/ 目录中查找 zip 命令：</p>
+<p>find 命令的基本语法：<code>find [OPTION] [path...] [expression]</code><br>例如在 usr/bin/ 目录中查找 zip 命令：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> find /usr/bin/ <span class="literal">-name</span> zip <span class="literal">-print</span></span><br><span class="line">/usr/bin/zip</span><br></pre></td></tr></table></figure>
 
 <p>也可以使用通配符 * 指定文件名，例如查找类型为 go 的文件：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> find / <span class="literal">-name</span> *.go <span class="literal">-print</span></span><br><span class="line">/usr/share/doc/git<span class="literal">-1</span>.<span class="number">8.3</span>.<span class="number">1</span>/contrib/persistent<span class="literal">-https</span>/client.go</span><br><span class="line">/usr/share/doc/git<span class="literal">-1</span>.<span class="number">8.3</span>.<span class="number">1</span>/contrib/persistent<span class="literal">-https</span>/main.go</span><br><span class="line">find: ‘/usr/share/polkit<span class="literal">-1</span>/rules.d’: 权限不够</span><br><span class="line">find: ‘/home/tommy’: 权限不够</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
-<p>对于提示“权限不够（Permission denied）”的目录，说明当前登录的用户没有权限进入这两个目录，find 在扫描时会跳过这两个目录。</p>
-<p>find命令还能够指定文件的类型。在Linux中，包括目录和设备都以文件的形式表现，可以使用 <code>-type</code> 选项来定位特殊文件类型。例如，在 /etc/ 目录中查找名叫 init.d 的目录:</p>
+<p>对于提示“权限不够（Permission denied）”的目录，说明当前登录的用户没有权限进入这两个目录，find 在扫描时会跳过这两个目录。<br>find命令还能够指定文件的类型。在Linux中，包括目录和设备都以文件的形式表现，可以使用 <code>-type</code> 选项来定位特殊文件类型。例如，在 /etc/ 目录中查找名叫 init.d 的目录:</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> find /etc/ <span class="literal">-name</span> init.d <span class="literal">-type</span> d <span class="literal">-print</span></span><br><span class="line">find: /etc/ssl/private: Permission denied</span><br><span class="line">find: /etc/cups/ssl: Permission denied</span><br><span class="line">/etc/ init.d</span><br></pre></td></tr></table></figure>
 
 <p><code>-type</code> 选项可以使用的参数：</p>
@@ -446,12 +431,7 @@
 &lt;h3 id=&#34;cd&#34;&gt;&lt;a href=&#34;#cd&#34; class=&#34;headerlink&#34; title=&#34;cd&#34;&gt;&lt;/a&gt;cd&lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;改变目录。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;日常用法：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;cd /home/blog&lt;/code&gt; 进入 /home/blog 目录；&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;cd ..&lt;/code&gt; 返回上一层目录；&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;cd /&lt;/code&gt; 进入根目录，&lt;code&gt;cd .. / ..&lt;/code&gt; 也是进入根目录；&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;cd&lt;/code&gt; 不带参数总是可以回到自己用户的主目录，或者 &lt;code&gt;cd ~&lt;/code&gt; 也是一样的效果。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;FYI&lt;/strong&gt;：在 Shell 中，&lt;code&gt;..&lt;/code&gt; 代表当前目录的上一级目录，而 &lt;code&gt;.&lt;/code&gt; 则代表当前目录，另外，&lt;code&gt;~&lt;/code&gt; 代表用户主目录。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+&lt;p&gt;日常用法：&lt;br&gt;&lt;code&gt;cd /home/blog&lt;/code&gt; 进入 /home/blog 目录；&lt;br&gt;&lt;code&gt;cd ..&lt;/code&gt; 返回上一层目录；&lt;br&gt;&lt;code&gt;cd /&lt;/code&gt; 进入根目录，&lt;code&gt;cd .. / ..&lt;/code&gt; 也是进入根目录；&lt;br&gt;&lt;code&gt;cd&lt;/code&gt; 不带参数总是可以回到自己用户的主目录，或者 &lt;code&gt;cd ~&lt;/code&gt; 也是一样的效果。&lt;br&gt;&lt;strong&gt;FYI&lt;/strong&gt;：在 Shell 中，&lt;code&gt;..&lt;/code&gt; 代表当前目录的上一级目录，而 &lt;code&gt;.&lt;/code&gt; 则代表当前目录，另外，&lt;code&gt;~&lt;/code&gt; 代表用户主目录。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/24/Linux_Shell1/&t=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
