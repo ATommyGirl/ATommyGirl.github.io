@@ -505,7 +505,7 @@
 <p>这样，ls 的输出就不会在显示器上显示出来，而是出现在 test 目录下的 ls_out 文件中，每行显示一个文件名:</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> test/ls_out</span><br><span class="line">document</span><br><span class="line">hello</span><br><span class="line">picture</span><br><span class="line">test</span><br></pre></td></tr></table></figure>
 
-<p>如果 ls_out 文件不存在，那么输出重定向符号“&gt;”会试图建立这个文件。如果 ls_out 文件已经存在了，那么 <code>&gt;</code> 会删除文件中原有的内容，然后用新内容替代：</p>
+<p>如果 ls_out 文件不存在，那么输出重定向符号 <code>&gt;</code> 会试图建立这个文件。如果 ls_out 文件已经存在了，那么 <code>&gt;</code> 会删除文件中原有的内容，然后用新内容替代：</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> uname <span class="literal">-r</span> &gt; test/ls_out</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> test/ls_out</span><br><span class="line"><span class="number">3.10</span>.<span class="number">0</span><span class="literal">-1160</span>.<span class="number">31.1</span>.el7.x86_64</span><br></pre></td></tr></table></figure>
 
 <p>可以看到，<code>&gt;</code> 并不会礼貌地在原来那堆文件名的后面添上版本信息，而是直接覆盖了刚刚 ls 命令的输出。如果要保留原来文件中的内容，应该使用输出重定向符号 <code>&gt;&gt;</code>：</p>
@@ -526,7 +526,7 @@
 <h3 id="管道"><a href="#管道" class="headerlink" title="管道 - |"></a>管道 - |</h3><p>管道将“重定向”再向前推进了一步。通过一根竖线 <code>|</code>，将一条命令的输出连接到另一条命令输入。下面这条命令显示了如何在文件列表中查找文件名中包含某个特定字符串的文件:</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> test/</span><br><span class="line"><span class="variable">$</span> <span class="built_in">ls</span> | grep out</span><br><span class="line">date_out</span><br><span class="line">ls_out</span><br></pre></td></tr></table></figure>
 
-<p>ls 首先列出当前目录下的所有文件名，管道 <code>|</code> 接收到这些输出，并把它们发送给 grep命令作为其输入，最后 grep 在这堆文件列表中查找包含字符串 out 的文件名，并在标准输出(也就是显示器)显示。<br>可以在以行命令中使用多个管道，将多个命令结合起来，写出复杂的 Shell 脚本。看书看到这里，我仿佛已经会写脚本了一样，哈哈哈~🤓</p>
+<p>ls 首先列出当前目录下的所有文件名，管道 <code>|</code> 接收到这些输出，并把它们发送给 grep 命令作为其输入，最后 grep 在这堆文件列表中查找包含字符串 out 的文件名，并在标准输出(也就是显示器)显示。<br>可以在以行命令中使用多个管道，将多个命令结合起来，写出复杂的 Shell 脚本。看书看到这里，我仿佛已经会写脚本了一样，哈哈哈~🤓</p>
 <hr>
 <p>Linux 的文件系统，暂时学习到这里。</p>
 
