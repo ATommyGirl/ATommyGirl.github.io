@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Cordova 是一个轻量级的移动端混合开发框架，在公司项目中担任桥接器的作用，为前端提供一些原生底层能力，在“插件”中以异步的形式将执行结果返回给前端。考虑到前端的页面可能在本地、远程、跨各种域等等问题，一般的做法是把www&#x2F;cordova.jswww&#x2F;cordova_plugins.js…www&#x2F;plugins&#x2F;*.js…这一连串的 js 放在原生的工程中，由原生动态注入到页面中。功能方面没">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于调整 cordova.js 注入时机的讨论">
+<meta property="og:url" content="https://tommygirl.cn/2022/04/15/InjectCordova/index.html">
+<meta property="og:site_name" content="美滋滋">
+<meta property="og:description" content="Cordova 是一个轻量级的移动端混合开发框架，在公司项目中担任桥接器的作用，为前端提供一些原生底层能力，在“插件”中以异步的形式将执行结果返回给前端。考虑到前端的页面可能在本地、远程、跨各种域等等问题，一般的做法是把www&#x2F;cordova.jswww&#x2F;cordova_plugins.js…www&#x2F;plugins&#x2F;*.js…这一连串的 js 放在原生的工程中，由原生动态注入到页面中。功能方面没">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-15T03:17:40.000Z">
+<meta property="article:modified_time" content="2022-04-15T03:17:40.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="Cordova">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>关于调整 cordova.js 注入时机的讨论</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2022/03/15/Linux_FileSystem/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/04/15/InjectCordova/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/04/15/InjectCordova/&text=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/04/15/InjectCordova/&is_video=false&description=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=关于调整 cordova.js 注入时机的讨论&body=Check out this article: https://tommygirl.cn/2022/04/15/InjectCordova/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/04/15/InjectCordova/&name=关于调整 cordova.js 注入时机的讨论&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/04/15/InjectCordova/&t=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-%E7%AB%AF%E6%89%80%E4%BD%9C%E7%9A%84%E5%B0%9D%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">Android 端所作的尝试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E5%89%8D"><span class="toc-number">1.1.</span> <span class="toc-text">尝试前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E5%90%8E"><span class="toc-number">1.2.</span> <span class="toc-text">尝试后</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-UIWebView"><span class="toc-number">2.</span> <span class="toc-text">iOS - UIWebView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-WKWebView"><span class="toc-number">3.</span> <span class="toc-text">iOS - WKWebView</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        关于调整 cordova.js 注入时机的讨论
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-04-15T03:17:40.000Z" itemprop="datePublished">2022-04-15</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Android/" rel="tag">Android</a>, <a class="tag-link-link" href="/tags/Cordova/" rel="tag">Cordova</a>, <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <hr>
+<p>Cordova 是一个轻量级的移动端混合开发框架，在公司项目中担任桥接器的作用，为前端提供一些原生底层能力，在“插件”中以异步的形式将执行结果返回给前端。考虑到前端的页面可能在本地、远程、跨各种域等等问题，一般的做法是把<br>www/cordova.js<br>www/cordova_plugins.js…<br>www/plugins/*.js<br>…<br>这一连串的 js 放在原生的工程中，由原生动态注入到页面中。功能方面没什么问题，但是插件的调用性能却一直被前端的同事诟病：目前只能等到 cordova 发出 “deviceready” 通知以后，才可以正常调用插件功能。这导致页面想使用插件的信息预加载某些内容时(例如提前做认证等等)没办法正常访问到插件，会提示 Undefine…肉眼可见的效果就是页面前期会白页一两秒。</p>
+<p>这两天抽空做了一下 Android 端的尝试，想要的效果就是尽量提前完成 cordova 相关 js 的注入。Demo 中达到了我预期的效果，高兴的一晚上没睡着觉，但是，Android 和前端我只是略懂皮毛，不确定测试的方案有没有问题、应对复杂的场景是否可行，所以写在这里做一个讨论，希望有共同需求的朋友一起探讨一下。</p>
+<h2 id="Android-端所作的尝试"><a href="#Android-端所作的尝试" class="headerlink" title="Android 端所作的尝试"></a>Android 端所作的尝试</h2><p><a target="_blank" rel="noopener" href="https://github.com/ATommyGirl/cordova.git">Demo 在此。</a></p>
+<h3 id="尝试前"><a href="#尝试前" class="headerlink" title="尝试前"></a>尝试前</h3><p>搜了一下 Android 端注入 js 的方式，大部分都是采用下面的方案（目测此方案是对标自 GitHub 上的一个 InjectCordova 插件）：<br>1、监听 WebView 的 <code>onPageFinished</code> 事件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//监听 onPageFinished 事件</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">CordovaActivity</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  ...</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">onMessage</span><span class="params">(String id, Object data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id.equals(<span class="string">&quot;onPageFinished&quot;</span>)) &#123;</span><br><span class="line">            injectCordova(mEngine); <span class="comment">//标签注入</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、拼接一个 <code>&lt;script&gt;</code> 标签 - 通过 <code>document.createElement()</code> 方法创建一个 <code>&lt;script&gt;</code> 标签，标签内容是所有要注入的 js 源码拼接而成的字符串，再使用 <code>appendChild()</code> 方法把 <code>&lt;script&gt;</code> 拼接在 <code>&lt;head&gt;</code> 标签的后面：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">CordovaActivity</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  ...</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ArrayList&lt;String&gt; preInjectionFileNames = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">injectCordova</span><span class="params">(CordovaWebViewEngine engine)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; jsPaths = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String path: preInjectionFileNames) &#123;</span><br><span class="line">            jsPaths.add(path);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        jsPaths.add(<span class="string">&quot;www/cordova.js&quot;</span>);</span><br><span class="line">        jsPaths.addAll(jsPathsToInject(getResources().getAssets(), <span class="string">&quot;www/plugins&quot;</span>));</span><br><span class="line">        jsPaths.add(<span class="string">&quot;www/cordova_plugins.js&quot;</span>);</span><br><span class="line"></span><br><span class="line">        StringBuilder jsToInject = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">for</span> (String path: jsPaths) &#123;</span><br><span class="line">            jsToInject.append(readFile(getResources().getAssets(), path));</span><br><span class="line">        &#125;</span><br><span class="line">        String jsUrl = <span class="string">&quot;javascript:var script = document.createElement(&#x27;script&#x27;);&quot;</span>;</span><br><span class="line">        jsUrl += <span class="string">&quot;script.src=\&quot;data:text/javascript;charset=utf-8;base64,&quot;</span>;</span><br><span class="line"></span><br><span class="line">        jsUrl += Base64.encodeToString(jsToInject.toString().getBytes(), Base64.NO_WRAP);</span><br><span class="line">        jsUrl += <span class="string">&quot;\&quot;;&quot;</span>;</span><br><span class="line"></span><br><span class="line">        jsUrl += <span class="string">&quot;document.getElementsByTagName(&#x27;head&#x27;)[0].appendChild(script);&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//webView.getEngine().loadUrl(jsUrl, false);</span></span><br><span class="line">        engine.loadUrl(jsUrl, <span class="keyword">false</span>);<span class="comment">//false参数表示，不重启plugin，用于加载js库文件</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">readFile</span><span class="params">(AssetManager assets, String filePath)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">          <span class="comment">//详见 Demo。</span></span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> List&lt;String&gt; <span class="title">jsPathsToInject</span><span class="params">(AssetManager assets, String path)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">          <span class="comment">//详见 Demo。</span></span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3、使用 WebView.loadUrl() 方法注入拼接后的 js。</p>
+<p>上面的方案涉及到了获取、拼接标签元素，如果想在 WebView 加载完成之前提前注入似乎是不太现实的，因为时机太早的话，是拿不到标签的。</p>
+<h3 id="尝试后"><a href="#尝试后" class="headerlink" title="尝试后"></a>尝试后</h3><p>读了一下 Android WebView 的 API 文档，貌似能够实现 js 注入的方法只有两个：<code>loadUrl(String url)</code> 和 <code>evaluateJavascript(String, ValueCallback)</code>。考虑到 cordova 相关 js 中一般不会针对前端标签做什么操作，是在页面中声明一个名为 cordova 的“模块”，这个模块又定义了若干个插件模块和方法，即使是自己写的插件，目的也是为了能让前端使用原生能力(相机、相册等等)，那是否不需要等到 WebView 把 DOM 的内容都渲染完成才可以开始注入？于是做了如下的尝试：</p>
+<p>与之前的方案相似，依旧是循环读取各个 js 中的源码，但不再拼接 <code>&lt;script&gt;</code> 标签，而是使用 <code>evaluateJavascript(String, ValueCallback)</code> 将每段 js 注入到页面中，并且注入时机提前到 <code>onPageStarted</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">CordovaActivity</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  ...</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">onMessage</span><span class="params">(String id, Object data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id.equals(<span class="string">&quot;onPageStarted&quot;</span>)) &#123;</span><br><span class="line">            evaluateCordovaJavascript(mWebView); <span class="comment">//执行 js 注入</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">evaluateCordovaJavascript</span><span class="params">(WebView webView)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; jsPaths = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String path: preInjectionFileNames) &#123;</span><br><span class="line">            jsPaths.add(path);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        jsPaths.add(<span class="string">&quot;www/cordova.js&quot;</span>);</span><br><span class="line">        jsPaths.addAll(jsPathsToInject(getResources().getAssets(), <span class="string">&quot;www/plugins&quot;</span>));</span><br><span class="line">        jsPaths.add(<span class="string">&quot;www/cordova_plugins.js&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (String path: jsPaths) &#123;</span><br><span class="line">            String js = readFile(getResources().getAssets(), path);</span><br><span class="line">            webView.evaluateJavascript(js, <span class="keyword">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来我们做验证，在 index.js 中添加如下测试代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//正常情况下需监听到 cordova 的 deviceready 通知后，才可以调用插件方法：</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">&#x27;deviceready&#x27;</span>, onDeviceReady, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onDeviceReady</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Cordova is now initialized. Have fun!</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;YY: Running cordova - &#x27;</span> + cordova.platformId + <span class="string">&#x27;@&#x27;</span> + cordova.version);</span><br><span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">&#x27;deviceready&#x27;</span>).classList.add(<span class="string">&#x27;ready&#x27;</span>);</span><br><span class="line">    testMyPlugin(<span class="string">&#x27;Device Ready: &#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//这里我们用一个 IIFE - 立即调用函数，使得 index.js 加载的时候立即执行这个方法来调用 cordova 的插件：</span></span><br><span class="line">(</span><br><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;YY: Just do IT!&#x27;</span>);</span><br><span class="line">    testMyPlugin(<span class="string">&#x27;Device Start: &#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">)();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">testMyPlugin</span>(<span class="params">tag</span>) </span>&#123;</span><br><span class="line">   MPKeyChain.getValueForKey(</span><br><span class="line">        <span class="string">&#x27;username&#x27;</span>,</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">success</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;YY: &#x27;</span>+ tag + result);</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">error</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;YY: &#x27;</span>+ tag + <span class="string">&quot;获取用户信息失败&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    );</span><br><span class="line">    MPKeyChain.getServerUrl(</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">success</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;YY: &#x27;</span>+ tag + result);</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">error</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;YY: &#x27;</span>+ tag + <span class="string">&quot;获取服务器信息失败&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据 log 输出的结果，确实像我所预期的效果，是可以提前注入的：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;YY: Just do IT!&quot;, source: https://localhost/js/index.js (39)</span><br><span class="line">&quot;YY: Device Start: zhengyt&quot;, source: https://localhost/js/index.js (49)</span><br><span class="line">&quot;YY: Device Start: https://tommygirl.cn&quot;, source: https://localhost/js/index.js (59)</span><br><span class="line">&quot;YY: Running cordova - android@10.1.1&quot;, source: https://localhost/js/index.js (70)</span><br><span class="line">&quot;YY: Device Ready: zhengyt&quot;, source: https://localhost/js/index.js (49)</span><br><span class="line">&quot;YY: Device Ready: https://tommygirl.cn&quot;, source: https://localhost/js/index.js (59)</span><br></pre></td></tr></table></figure>
+
+<p>进行到这一步的时候，有两点我不太确定：一个是 Android WebView 提供的 onPageStarted、onPageFinished 事件与 DOM 的各个生命周期 DOMContentLoaded、Load 事件之间的关系，二是在 DOM 的生命周期完成之前注入 js 是否存在什么我不懂的问题。</p>
+<p>在 index.js 中增加了对 DOM 生命周期的监听，打印了一下这些事件的顺序：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">2022-04-15 11:25:26.259 I/System.out: YY: onProgressChanged - 10</span><br><span class="line">2022-04-15 11:25:26.321 I/System.out: YY: onMessage - onPageStarted</span><br><span class="line">2022-04-15 11:25:26.355 I/System.out: YY: onMessage - spinner</span><br><span class="line">2022-04-15 11:25:26.361 I/chromium: [INFO:CONSOLE(39)] &quot;YY: Just do IT!&quot;, source: https://localhost/js/index.js (39)</span><br><span class="line">2022-04-15 11:25:26.363 I/chromium: [INFO:CONSOLE(49)] &quot;YY: Device Start: zhengyt&quot;, source: https://localhost/js/index.js (49)</span><br><span class="line">2022-04-15 11:25:26.363 I/chromium: [INFO:CONSOLE(59)] &quot;YY: Device Start: https://tommygirl.cn&quot;, source: https://localhost/js/index.js (59)</span><br><span class="line">2022-04-15 11:25:26.364 I/chromium: [INFO:CONSOLE(33)] &quot;YY: Ready state change!&quot;, source: https://localhost/js/index.js (33)</span><br><span class="line">2022-04-15 11:25:26.364 I/chromium: [INFO:CONSOLE(25)] &quot;YY: DOMContentLoaded&quot;, source: https://localhost/js/index.js (25)</span><br><span class="line">2022-04-15 11:25:26.364 I/System.out: YY: onProgressChanged - 80</span><br><span class="line">2022-04-15 11:25:26.365 I/chromium: [INFO:CONSOLE(33)] &quot;YY: Ready state change!&quot;, source: https://localhost/js/index.js (33)</span><br><span class="line">2022-04-15 11:25:26.365 I/chromium: [INFO:CONSOLE(29)] &quot;YY: Load&quot;, source: https://localhost/js/index.js (29)</span><br><span class="line">2022-04-15 11:25:26.365 I/System.out: YY: onProgressChanged - 100</span><br><span class="line">2022-04-15 11:25:26.365 I/System.out: YY: onProgressChanged - 100</span><br><span class="line">2022-04-15 11:25:26.365 I/chromium: [INFO:CONSOLE(70)] &quot;YY: Running cordova - android@10.1.1&quot;, source: https://localhost/js/index.js (70)</span><br><span class="line">2022-04-15 11:25:26.366 I/System.out: YY: onMessage - onPageFinished</span><br><span class="line">2022-04-15 11:25:26.367 I/chromium: [INFO:CONSOLE(49)] &quot;YY: Device Ready: zhengyt&quot;, source: https://localhost/js/index.js (49)</span><br><span class="line">2022-04-15 11:25:26.367 I/chromium: [INFO:CONSOLE(59)] &quot;YY: Device Ready: https://tommygirl.cn&quot;, source: https://localhost/js/index.js (59)</span><br></pre></td></tr></table></figure>
+
+<p>顺序可见：onPageStarted -&gt; IIFE 中可以调用插件 -&gt; DOMContentLoaded -&gt; Load -&gt; onPageFinished -&gt; cordova 通知 deviceready。</p>
+<p>那这样是否可以证明提前完成注入是可行的呢？又或者我进入了“越无知越拥有莫名其妙勇气”的误区？🤓哈哈哈，求路过的各位大佬赐教、讨论。</p>
+<h2 id="iOS-UIWebView"><a href="#iOS-UIWebView" class="headerlink" title="iOS - UIWebView"></a>iOS - UIWebView</h2><p>cordova 4.0 之后，在 UIWebView 中注入 JS 也需要自己手动完成，但 4.0 之前是怎么样的我记不清了…<a target="_blank" rel="noopener" href="https://github.com/ATommyGirl/cordova.git">Demo 在此。</a> 借助 InjectCordova 的插件监听 <code>CDVPageDidLoadNotification</code> 通知，在收到通知后使用 UIWebView 的 <code>stringByEvaluatingJavaScriptFromString:</code> 方法把 JS 注入进去。其实完全不用插件，在继承自 <code>CDVViewController</code> 的子类中，做这个监听也是可以的。</p>
+<p>UIWebView 中目前不知道怎么可以提前完成注入，貌似 iOS 中 <code>webViewDidStartLoad</code> 和 <code>webViewDidFinishLoad</code> 的概念，同 Android 中的概念不是一回事儿。但…管它呢，升级 WKWebView 吧，美滋滋~~</p>
+<h2 id="iOS-WKWebView"><a href="#iOS-WKWebView" class="headerlink" title="iOS - WKWebView"></a>iOS - WKWebView</h2><p>如果升级至 WKWebView 的话完全不用纠结上面的内容，之前的文章中我们也提到过了，通过 <a href="/2021/12/01/WKWebView/#WKUserScript">WKUserScript、WKUserScriptInjectionTimeAtDocumentStart</a> 可以轻松实现提前注入，关于注入的 js 作用域的问题，也欢迎在博客中讨论。在此不再赘述。</p>
+<hr>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-%E7%AB%AF%E6%89%80%E4%BD%9C%E7%9A%84%E5%B0%9D%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">Android 端所作的尝试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E5%89%8D"><span class="toc-number">1.1.</span> <span class="toc-text">尝试前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E5%90%8E"><span class="toc-number">1.2.</span> <span class="toc-text">尝试后</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-UIWebView"><span class="toc-number">2.</span> <span class="toc-text">iOS - UIWebView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iOS-WKWebView"><span class="toc-number">3.</span> <span class="toc-text">iOS - WKWebView</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/04/15/InjectCordova/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/04/15/InjectCordova/&text=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/04/15/InjectCordova/&is_video=false&description=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=关于调整 cordova.js 注入时机的讨论&body=Check out this article: https://tommygirl.cn/2022/04/15/InjectCordova/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/04/15/InjectCordova/&name=关于调整 cordova.js 注入时机的讨论&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/04/15/InjectCordova/&t=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

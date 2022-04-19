@@ -10,7 +10,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 学习笔记（四）- 文件系统">
 <meta property="og:url" content="https://tommygirl.cn/2022/03/15/Linux_FileSystem/index.html">
-<meta property="og:site_name" content="迷">
+<meta property="og:site_name" content="美滋滋">
 <meta property="og:description" content="说实话我看了一下文件系统架构的介绍，不是很明白，至少按照《Linux 从入门到精通》的顺序读到这里的时候，我没看明白，只知道 Linux 里几乎所有操作最终都可以理解为对文件的修改。所以我就不在这里写太多的学习笔记了，借用作者书中的一段话：  要理解Linux的文件系统架构，看来的确需要耗费一定的脑力。 如果经过努力仍然不明白上面这些文字在说些什么，一个好的建议是：不要管那么多，先使用。没有人会">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/sudo-rm.gif">
@@ -78,6 +78,8 @@
     <br/>
     <span id="actions">
       <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2022/04/15/InjectCordova/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" aria-label="下一篇 " href="/2022/02/24/Linux_Shell1/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -259,9 +261,14 @@
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">文件的权限标志 | 文件的链接个数 | 文件所有者的用户名 | 该用户所在的用户组 | 文件的大小 | 最后一次被修改的日期 | 目录/文件名 </span><br><span class="line">drwxrwx---     	<span class="number">4</span>              yylittlecat        fancy              <span class="number">4096</span>       <span class="number">7</span>月  <span class="number">22</span> <span class="number">2021</span>         blog        </span><br><span class="line">drwxr<span class="literal">-xr</span><span class="literal">-x</span>      <span class="number">2</span>              root               root               <span class="number">4096</span>       <span class="number">7</span>月  <span class="number">22</span> <span class="number">2021</span>         httpbin     </span><br><span class="line">drwx------    	<span class="number">2</span>              archie             fancy              <span class="number">4096</span>       <span class="number">3</span>月  <span class="number">16</span> <span class="number">17</span>:<span class="number">23</span>        archie      </span><br><span class="line"><span class="literal">-rwxr</span><span class="literal">-xr</span><span class="literal">-x</span>      <span class="number">1</span>              root               root               <span class="number">24323</span>      <span class="number">3</span>月  <span class="number">14</span> <span class="number">17</span>:<span class="number">23</span>        gDark.css   </span><br></pre></td></tr></table></figure>
 
 <p>我们注意到，权限标志貌似是一些特殊的符号：d、r、w、x 、- 等等，通过 chmod 命令修改的也是这些内容，这几个符号到底代表什么呢？让我们一探究竟：</p>
-<h3 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h3><p>​    Linux 为 3 种人准备了权限————文件所有者 (属主)、文件属组用户和其他人。因为有了“其他人”，这样的分类将世界上所有的人都包含进来了。但 root 用户其实是不应该被算在“其他人”里面的。root 用户可以查看、修改、删除所有人的文件————即不要忘了 root 拥有控制一台计算机的完整权限。<br>​    <strong>文件所有者</strong>通常是文件的创建者，但这也不是一定的。可以中途改变一个文件的属主用户，这必须直接由 root 用户来实施。这句话换一种说法或许更贴切：文件的创建者自动成为文件所有者(属主)，文件的所有权可以转让，转让“手续”必须使用 root 权限办理。<br>​    可以(也必须)把文件交给一个组，这个组就是<strong>文件的属组</strong>。文件属组中的用户按照设置对该文件享有特定的权限。通常来说，当某个用户(如 tommy)建立一个文件时，这个文件的属主就是 tommy，文件的属组是只包含一个用户 tommy 的 tommy 组。当然，也可以设置文件的属组是一个不包括文件所有者的组，在文件所有者执行文件操作时，系统只关心属主权限，而组权限对属主是没有影响的。<br>​    最后，“<strong>其他人</strong>” 就是不包括前两类人和root用户在内的“其他”用户。通常来说，“其他人”总是享有最低的权限(或者干脆没有权限)。</p>
+<h3 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h3><p>Linux 为 3 种人准备了权限——文件所有者 (属主)、文件属组用户和其他人。因为有了“其他人”，这样的分类将世界上所有的人都包含进来了。但 root 用户其实是不应该被算在“其他人”里面的。root 用户可以查看、修改、删除所有人的文件——即不要忘了 root 拥有控制一台计算机的完整权限。</p>
+<p><strong>文件所有者</strong>通常是文件的创建者，但这也不是一定的。可以中途改变一个文件的属主用户，这必须直接由 root 用户来实施。这句话换一种说法或许更贴切：文件的创建者自动成为文件所有者(属主)，文件的所有权可以转让，转让“手续”必须使用 root 权限办理。</p>
+<p>可以(也必须)把文件交给一个组，这个组就是<strong>文件的属组</strong>。文件属组中的用户按照设置对该文件享有特定的权限。通常来说，当某个用户(如 tommy)建立一个文件时，这个文件的属主就是 tommy，文件的属组是只包含一个用户 tommy 的 tommy 组。当然，也可以设置文件的属组是一个不包括文件所有者的组，在文件所有者执行文件操作时，系统只关心属主权限，而组权限对属主是没有影响的。</p>
+<p>最后，“<strong>其他人</strong>” 就是不包括前两类人和root用户在内的“其他”用户。通常来说，“其他人”总是享有最低的权限(或者干脆没有权限)。</p>
 <p>那都需要设置哪些权限呢？</p>
-<p>​    可以赋予某类用户对文件和目录享有 3 种权限：可读(read)权限，可写(write)权限，可执行(execute)权限。对于文件而言，拥有读取权限意味着可以打开并查看文件的内容，写入位控制着对文件的修改权限。而是否能够删除和重命名一个文件则是由其父目录的权限设置所控制的。<br>​    要让一个文件可执行，必须设置其执行权限。可执行文件有两类，一类是可以直接由 CPU 执行的二进制代码；另一类是 Shell 脚本程序，例如我们常用的命令。<br>​    对目录而言，所谓的可执行权限实际控制了用户能否进入该目录；而可读权限则负责确定能否列出该目录中的内容；可写权限控制着在目录中创建、删除和重命名文件。因此目录的可执行权限是其最基本的权限，换句话说是想访问一个目录以及里面的文件，至少要给到可读可执行两个权限，只有可读，我们还是访问不了的。</p>
+<p>可以赋予某类用户对文件和目录享有 3 种权限：可读(read)权限，可写(write)权限，可执行(execute)权限。对于文件而言，拥有读取权限意味着可以打开并查看文件的内容，写入位控制着对文件的修改权限。而是否能够删除和重命名一个文件则是由其父目录的权限设置所控制的。</p>
+<p>要让一个文件可执行，必须设置其执行权限。可执行文件有两类，一类是可以直接由 CPU 执行的二进制代码；另一类是 Shell 脚本程序，例如我们常用的命令。</p>
+<p>对目录而言，所谓的可执行权限实际控制了用户能否进入该目录；而可读权限则负责确定能否列出该目录中的内容；可写权限控制着在目录中创建、删除和重命名文件。因此目录的可执行权限是其最基本的权限，换句话说是想访问一个目录以及里面的文件，至少要给到可读可执行两个权限，只有可读，我们还是访问不了的。</p>
 <p><strong>FYI：只有文件的所有者和 root 用户才有权修改文件的权限。</strong></p>
 <p><strong>drwxrwxrwx</strong> 这个权限标志一共10位，<strong>第 1 位</strong> 代表文件类型，常用有两个数值：<code>d</code> 和 <code>-</code>，<code>d</code> 代表目录，<code>-</code> 代表非目录，当然还有其他的（、b、c）。后面 9 位可以拆分为 3 组来看，分别对应不同用户：<strong>2-4</strong> 位代表所有者 user 的权限说明，<strong>5-7</strong> 位代表组群 group 的权限说明，<strong>8-10</strong> 位代表其他人 other 的权限说明。<code>r</code> 代表可读(read)权限，<code>w</code> 代表可写(write)权限，<code>x</code> 代表可执行(execute)权限，后 9 位中 <code>-</code> 表示不具备对应的权限。<code>drwxrwxrwx</code> 表示所有用户都对这个目录有可读可写可执行权限。</p>
 <p>Linux 中的文件类型：</p>
