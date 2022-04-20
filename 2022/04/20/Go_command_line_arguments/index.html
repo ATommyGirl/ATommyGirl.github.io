@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="有段时间没有学习 Go 的开发，加之最近换了电脑，导致 Go 的开发环境需要重新安装一遍，但时间隔得太久我甚至连编译方式都快忘光了😂……赶紧做个记录。今天遇到的小问题是在跑之前的一个 Demo 时，提示方法找不到： 1234# command-line-arguments.&#x2F;main.go:29:14: undefined: Add......  Demo 的目录结构是： 123456789h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go 报错 command-line-arguments">
+<meta property="og:url" content="https://tommygirl.cn/2022/04/20/Go_command_line_arguments/index.html">
+<meta property="og:site_name" content="美滋滋">
+<meta property="og:description" content="有段时间没有学习 Go 的开发，加之最近换了电脑，导致 Go 的开发环境需要重新安装一遍，但时间隔得太久我甚至连编译方式都快忘光了😂……赶紧做个记录。今天遇到的小问题是在跑之前的一个 Demo 时，提示方法找不到： 1234# command-line-arguments.&#x2F;main.go:29:14: undefined: Add......  Demo 的目录结构是： 123456789h">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/command-line-arguments-0.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/command-line-arguments-1.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/command-line-arguments-2.png">
+<meta property="article:published_time" content="2022-04-20T02:40:45.000Z">
+<meta property="article:modified_time" content="2022-04-20T02:40:45.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/command-line-arguments-0.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Go 报错 command-line-arguments</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2022/04/15/InjectCordova/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&text=Go 报错 command-line-arguments"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&is_video=false&description=Go 报错 command-line-arguments"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Go 报错 command-line-arguments&body=Check out this article: https://tommygirl.cn/2022/04/20/Go_command_line_arguments/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&name=Go 报错 command-line-arguments&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&t=Go 报错 command-line-arguments"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Go 报错 command-line-arguments
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-04-20T02:40:45.000Z" itemprop="datePublished">2022-04-20</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Go/" rel="tag">Go</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <hr>
+<p>有段时间没有学习 Go 的开发，加之最近换了电脑，导致 Go 的开发环境需要重新安装一遍，但时间隔得太久我甚至连编译方式都快忘光了😂……赶紧做个记录。<br>今天遇到的小问题是在跑之前的一个 Demo 时，提示方法找不到：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># command-line-arguments</span></span><br><span class="line">./main.go:<span class="number">29</span>:<span class="number">14</span>: undefined: Add</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>Demo 的目录结构是：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">hello</span><br><span class="line">└── main</span><br><span class="line">    ├── main.go</span><br><span class="line">    ├── loop<span class="built_in">_</span>use.go</span><br><span class="line">    ├── func<span class="built_in">_</span>use.go</span><br><span class="line">    ├── map<span class="built_in">_</span>use.go</span><br><span class="line">    ├── method<span class="built_in">_</span>use.go</span><br><span class="line">    ├── slice<span class="built_in">_</span>use.go</span><br><span class="line">    └── type<span class="built_in">_</span>use.go</span><br></pre></td></tr></table></figure>
+
+<p>导致上面问题的原因是，Add 方法是在 type_use.go 内定义的，但是编译的时候只编译了 main.go 文件…<br>如果你使用的 IDE 也是 GoLand，可以尝试这样修改一下——修改编译方式:</p>
+<p>1、打开 Edit Configurations…</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/command-line-arguments-0.png"></p>
+<p>2、Run kind 选择的是 File 类型，只编译指定的文件，所以其他 go 文件内的方法找不到是正常的。</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/command-line-arguments-1.png"></p>
+<p>3、将 Run kind 改为 Directory 类型，指定好编译目录。</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/command-line-arguments-2.png"></p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&text=Go 报错 command-line-arguments"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&is_video=false&description=Go 报错 command-line-arguments"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Go 报错 command-line-arguments&body=Check out this article: https://tommygirl.cn/2022/04/20/Go_command_line_arguments/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&name=Go 报错 command-line-arguments&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&t=Go 报错 command-line-arguments"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2022
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>
