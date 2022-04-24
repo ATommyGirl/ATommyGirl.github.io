@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="有段时间没有学习 Go 的开发，加之最近换了电脑，导致 Go 的开发环境需要重新安装一遍，但时间隔得太久我甚至连编译方式都快忘光了😂……赶紧做个记录。今天遇到的小问题是在跑之前的一个 Demo 时，提示方法找不到： 1234# command-line-arguments.&#x2F;main.go:29:14: undefined: Add......  Demo 的目录结构是： 1234567891">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Go 报错 command-line-arguments">
+<meta property="og:title" content="Go 乱七八糟之 command-line-arguments">
 <meta property="og:url" content="https://tommygirl.cn/2022/04/20/Go_command_line_arguments/index.html">
-<meta property="og:site_name" content="美滋滋">
+<meta property="og:site_name" content="咪">
 <meta property="og:description" content="有段时间没有学习 Go 的开发，加之最近换了电脑，导致 Go 的开发环境需要重新安装一遍，但时间隔得太久我甚至连编译方式都快忘光了😂……赶紧做个记录。今天遇到的小问题是在跑之前的一个 Demo 时，提示方法找不到： 1234# command-line-arguments.&#x2F;main.go:29:14: undefined: Add......  Demo 的目录结构是： 1234567891">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/command-line-arguments-0.png">
@@ -41,7 +41,7 @@
       
     
     <!-- title -->
-    <title>Go 报错 command-line-arguments</title>
+    <title>Go 乱七八糟之 command-line-arguments</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -81,6 +81,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" aria-label="上一篇 " href="/2022/04/22/Go_No_Code_Tips/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" aria-label="下一篇 " href="/2022/04/15/InjectCordova/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -96,16 +98,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&text=Go 报错 command-line-arguments"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&is_video=false&description=Go 报错 command-line-arguments"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Go 报错 command-line-arguments&body=Check out this article: https://tommygirl.cn/2022/04/20/Go_command_line_arguments/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&name=Go 报错 command-line-arguments&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&t=Go 报错 command-line-arguments"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&text=Go 乱七八糟之 command-line-arguments"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 乱七八糟之 command-line-arguments"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&is_video=false&description=Go 乱七八糟之 command-line-arguments"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Go 乱七八糟之 command-line-arguments&body=Check out this article: https://tommygirl.cn/2022/04/20/Go_command_line_arguments/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 乱七八糟之 command-line-arguments"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 乱七八糟之 command-line-arguments"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 乱七八糟之 command-line-arguments"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 乱七八糟之 command-line-arguments"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&name=Go 乱七八糟之 command-line-arguments&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&t=Go 乱七八糟之 command-line-arguments"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -122,7 +124,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        Go 报错 command-line-arguments
+        Go 乱七八糟之 command-line-arguments
     </h1>
 
 
@@ -237,16 +239,16 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&text=Go 报错 command-line-arguments"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&is_video=false&description=Go 报错 command-line-arguments"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Go 报错 command-line-arguments&body=Check out this article: https://tommygirl.cn/2022/04/20/Go_command_line_arguments/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 报错 command-line-arguments"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&name=Go 报错 command-line-arguments&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&t=Go 报错 command-line-arguments"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&text=Go 乱七八糟之 command-line-arguments"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 乱七八糟之 command-line-arguments"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&is_video=false&description=Go 乱七八糟之 command-line-arguments"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Go 乱七八糟之 command-line-arguments&body=Check out this article: https://tommygirl.cn/2022/04/20/Go_command_line_arguments/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 乱七八糟之 command-line-arguments"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 乱七八糟之 command-line-arguments"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 乱七八糟之 command-line-arguments"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&title=Go 乱七八糟之 command-line-arguments"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&name=Go 乱七八糟之 command-line-arguments&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/04/20/Go_command_line_arguments/&t=Go 乱七八糟之 command-line-arguments"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
