@@ -110,15 +110,14 @@
 &lt;h2 id=&#34;root-可以做什么&#34;&gt;&lt;a href=&#34;#root-可以做什么&#34; class=&#34;headerlink&#34; title=&#34;root 可以做什么&#34;&gt;&lt;/a&gt;root 可以做什么&lt;/h2&gt;&lt;p&gt;这个问题的答案是 anything。没错，作为整个系统中拥有最高权限的用户，root 可以对系统做任何事情。root 可以访问、修改、删除系统中的任何文件和目录。另外，对于如下这些受限的操作，一般只有 root 用户能够执行。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;添加删除用户;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
 &lt;li&gt;安装软件;&lt;/li&gt;
 &lt;li&gt;添加删除设备;&lt;/li&gt;
 &lt;li&gt;启动和停止网络服务;&lt;/li&gt;
-&lt;li&gt;某些系统调用(例如对内核的请求) ;&lt;/li&gt;
+&lt;li&gt;某些系统调用(例如对内核的请求);&lt;/li&gt;
 &lt;li&gt;关闭系统。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;提示&lt;/strong&gt;：像“关闭系统”这样的操作都需要 root 用户来执行，看起来是一件特别古怪的事情。事实上，作为 Linux 的祖先，UNIX 是一种典型的服务器操作系统。而服务器的关闭和启动都必须得到管理员的授权(试想一个普通用户登录服务器，然后随意执行关机命令会怎样)。出于操作简易性的考虑，桌面版的 Linux 允许普通用户在图形界面下关闭系统。但在命令行下执行关机命令仍然需要 root 口令。Linux 系统上的每个文件和目录都属于某个特定的用户，没有得到许可，其他用户就不能访问这些对象。但 root 用户却可以访问所有用户的文件，就像使用自己的东西一样。&lt;br&gt;系统不会因为用户输入的命令足够“愚蠢”而拒绝执行。相反，系统会美滋滋地执行这样一条命令，然后把自己完完整整地删除了，例如江湖传说：&lt;code&gt;rm -rf /*&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;提示&lt;/strong&gt;：像“关闭系统”这样的操作都需要 root 用户来执行，看起来是一件特别古怪的事情。事实上，作为 Linux 的祖先，UNIX 是一种典型的服务器操作系统。而服务器的关闭和启动都必须得到管理员的授权(试想一个普通用户登录服务器，然后随意执行关机命令会怎样)。出于操作简易性的考虑，桌面版的 Linux 允许普通用户在图形界面下关闭系统。但在命令行下执行关机命令仍然需要 root 口令。Linux 系统上的每个文件和目录都属于某个特定的用户，没有得到许可，其他用户就不能访问这些对象。但 root 用户却可以访问所有用户的文件，就像使用自己的东西一样。&lt;/p&gt;
+&lt;p&gt;系统不会因为用户输入的命令足够“愚蠢”而拒绝执行。相反，系统会美滋滋地执行这样一条命令，然后把自己完完整整地删除了，例如江湖传说：&lt;code&gt;rm -rf /*&lt;/code&gt;。&lt;/p&gt;
 &lt;center&gt;
     &lt;div style=&#34;display:inline-block;&#34;&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/Dont-drink-and-root.jpeg&#34; class width=&#34;300&#34;&gt;&lt;/div&gt;
 &lt;/center&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
@@ -177,15 +176,14 @@
 <h2 id="root-可以做什么"><a href="#root-可以做什么" class="headerlink" title="root 可以做什么"></a>root 可以做什么</h2><p>这个问题的答案是 anything。没错，作为整个系统中拥有最高权限的用户，root 可以对系统做任何事情。root 可以访问、修改、删除系统中的任何文件和目录。另外，对于如下这些受限的操作，一般只有 root 用户能够执行。</p>
 <ul>
 <li>添加删除用户;</li>
-</ul>
-<ul>
 <li>安装软件;</li>
 <li>添加删除设备;</li>
 <li>启动和停止网络服务;</li>
-<li>某些系统调用(例如对内核的请求) ;</li>
+<li>某些系统调用(例如对内核的请求);</li>
 <li>关闭系统。</li>
 </ul>
-<p><strong>提示</strong>：像“关闭系统”这样的操作都需要 root 用户来执行，看起来是一件特别古怪的事情。事实上，作为 Linux 的祖先，UNIX 是一种典型的服务器操作系统。而服务器的关闭和启动都必须得到管理员的授权(试想一个普通用户登录服务器，然后随意执行关机命令会怎样)。出于操作简易性的考虑，桌面版的 Linux 允许普通用户在图形界面下关闭系统。但在命令行下执行关机命令仍然需要 root 口令。Linux 系统上的每个文件和目录都属于某个特定的用户，没有得到许可，其他用户就不能访问这些对象。但 root 用户却可以访问所有用户的文件，就像使用自己的东西一样。<br>系统不会因为用户输入的命令足够“愚蠢”而拒绝执行。相反，系统会美滋滋地执行这样一条命令，然后把自己完完整整地删除了，例如江湖传说：<code>rm -rf /*</code>。</p>
+<p><strong>提示</strong>：像“关闭系统”这样的操作都需要 root 用户来执行，看起来是一件特别古怪的事情。事实上，作为 Linux 的祖先，UNIX 是一种典型的服务器操作系统。而服务器的关闭和启动都必须得到管理员的授权(试想一个普通用户登录服务器，然后随意执行关机命令会怎样)。出于操作简易性的考虑，桌面版的 Linux 允许普通用户在图形界面下关闭系统。但在命令行下执行关机命令仍然需要 root 口令。Linux 系统上的每个文件和目录都属于某个特定的用户，没有得到许可，其他用户就不能访问这些对象。但 root 用户却可以访问所有用户的文件，就像使用自己的东西一样。</p>
+<p>系统不会因为用户输入的命令足够“愚蠢”而拒绝执行。相反，系统会美滋滋地执行这样一条命令，然后把自己完完整整地删除了，例如江湖传说：<code>rm -rf /*</code>。</p>
 <center>
     <div style="display:inline-block;"><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/Dont-drink-and-root.jpeg" class width="300"></div>
 </center>
@@ -433,15 +431,14 @@
 &lt;h2 id=&#34;root-可以做什么&#34;&gt;&lt;a href=&#34;#root-可以做什么&#34; class=&#34;headerlink&#34; title=&#34;root 可以做什么&#34;&gt;&lt;/a&gt;root 可以做什么&lt;/h2&gt;&lt;p&gt;这个问题的答案是 anything。没错，作为整个系统中拥有最高权限的用户，root 可以对系统做任何事情。root 可以访问、修改、删除系统中的任何文件和目录。另外，对于如下这些受限的操作，一般只有 root 用户能够执行。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;添加删除用户;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
 &lt;li&gt;安装软件;&lt;/li&gt;
 &lt;li&gt;添加删除设备;&lt;/li&gt;
 &lt;li&gt;启动和停止网络服务;&lt;/li&gt;
-&lt;li&gt;某些系统调用(例如对内核的请求) ;&lt;/li&gt;
+&lt;li&gt;某些系统调用(例如对内核的请求);&lt;/li&gt;
 &lt;li&gt;关闭系统。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;提示&lt;/strong&gt;：像“关闭系统”这样的操作都需要 root 用户来执行，看起来是一件特别古怪的事情。事实上，作为 Linux 的祖先，UNIX 是一种典型的服务器操作系统。而服务器的关闭和启动都必须得到管理员的授权(试想一个普通用户登录服务器，然后随意执行关机命令会怎样)。出于操作简易性的考虑，桌面版的 Linux 允许普通用户在图形界面下关闭系统。但在命令行下执行关机命令仍然需要 root 口令。Linux 系统上的每个文件和目录都属于某个特定的用户，没有得到许可，其他用户就不能访问这些对象。但 root 用户却可以访问所有用户的文件，就像使用自己的东西一样。&lt;br&gt;系统不会因为用户输入的命令足够“愚蠢”而拒绝执行。相反，系统会美滋滋地执行这样一条命令，然后把自己完完整整地删除了，例如江湖传说：&lt;code&gt;rm -rf /*&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;提示&lt;/strong&gt;：像“关闭系统”这样的操作都需要 root 用户来执行，看起来是一件特别古怪的事情。事实上，作为 Linux 的祖先，UNIX 是一种典型的服务器操作系统。而服务器的关闭和启动都必须得到管理员的授权(试想一个普通用户登录服务器，然后随意执行关机命令会怎样)。出于操作简易性的考虑，桌面版的 Linux 允许普通用户在图形界面下关闭系统。但在命令行下执行关机命令仍然需要 root 口令。Linux 系统上的每个文件和目录都属于某个特定的用户，没有得到许可，其他用户就不能访问这些对象。但 root 用户却可以访问所有用户的文件，就像使用自己的东西一样。&lt;/p&gt;
+&lt;p&gt;系统不会因为用户输入的命令足够“愚蠢”而拒绝执行。相反，系统会美滋滋地执行这样一条命令，然后把自己完完整整地删除了，例如江湖传说：&lt;code&gt;rm -rf /*&lt;/code&gt;。&lt;/p&gt;
 &lt;center&gt;
     &lt;div style=&#34;display:inline-block;&#34;&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/Dont-drink-and-root.jpeg&#34; class width=&#34;300&#34;&gt;&lt;/div&gt;
 &lt;/center&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
