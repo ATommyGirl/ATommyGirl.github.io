@@ -2465,7 +2465,7 @@
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">ls</span> test/</span><br><span class="line">hello hello1 hello2 hello3</span><br><span class="line"><span class="variable">$</span> <span class="built_in">rm</span> test/hello*	<span class="comment">#删除 test 目录下所有以 hello 开头的文件</span></span><br></pre></td></tr></table></figure>
 
 <p>和 mv 等命令一样，rm 不会对此作任何提示。通过 rm 命令删除的文件将永远地从系统中消失了，而不会被放入一个称作“回收站”的临时目录下(尽管某些恢复软件可能找回一些文件，但只是“可能”而已)。一个比较安全的使用 rm 命令的方式是使用 -i 选项，这个选项会在删除文件前给出提示，并等待用户确认。</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">rm</span><span class="literal">-i</span> test/hello</span><br><span class="line"><span class="built_in">rm</span>：是否删除普通文件 “test/hello<span class="string">&quot; ?</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">rm</span> <span class="literal">-i</span> test/hello</span><br><span class="line"><span class="built_in">rm</span>：是否删除普通文件 “test/hello<span class="string">&quot; ?</span></span><br></pre></td></tr></table></figure>
 
 <p>回答 y 表示确认删除，回答 n 表示跳过这个文件。对于只读文件，即便不加上 -i 选项，rm 命令也会对此进行提示。</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">rm</span> hello_bak</span><br><span class="line"><span class="built_in">rm</span>：是否删除有写保护的普通文件 “hello_bak<span class="string">&quot;?</span></span><br></pre></td></tr></table></figure>
