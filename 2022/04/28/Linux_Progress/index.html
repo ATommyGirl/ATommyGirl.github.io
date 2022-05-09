@@ -164,7 +164,7 @@
 </ol>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> sudo chmod +x badpro</span><br><span class="line"><span class="variable">$</span> ./badpro &amp;</span><br></pre></td></tr></table></figure>
 
-<p><strong>FYI</strong>:运行这个程序存在一些风险。千万不要漏了 sleep 2s 这一行，否则创建的目录树的深度会很快超出系统的允许范围。在这种情况下，我们可能必须要使用 <code>rm -fr adir</code> 来删除这些“垃圾”目录。为什么要从后台运行？原因只有一个，即迫使自己使用 kill 命令杀死这个进程。</p>
+<p><strong>FYI</strong>：运行这个程序存在一些风险。千万不要漏了 sleep 2s 这一行，否则创建的目录树的深度会很快超出系统的允许范围。在这种情况下，我们可能必须要使用 <code>rm -fr adir</code> 来删除这些“垃圾”目录。为什么要从后台运行？原因只有一个，即迫使自己使用 kill 命令杀死这个进程。</p>
 <ol start="3">
 <li>现在程序已经跑起来了，可以看到终端在不停地输出 I’m making files! ! 。新开一个终端窗口，使用 <code>ps</code> 命令看一下 badpro 的进程信息，使用管道配合 <code>grep</code> 命令查找 PID，这里 PID 唯一表示一个进程。<code>ps</code> 命令的输出中第二个字段表示 PID，根据 <code>grep</code> 的搜索结果，可以判断出 10221 就是 badpro 的 PID。</li>
 </ol>
