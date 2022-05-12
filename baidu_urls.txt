@@ -1,4 +1,5 @@
 https://tommygirl.cn/2022/05/12/%E4%B8%80%E4%BB%B6%E7%99%BDT%E6%81%A4/
+https://tommygirl.cn/2022/05/12/UIModalPresentationFullScreen_CAGradientLayer/
 https://tommygirl.cn/2022/04/28/Linux_Progress/
 https://tommygirl.cn/2022/04/22/Go_No_Code_Tips/
 https://tommygirl.cn/2022/04/20/Go_command_line_arguments/

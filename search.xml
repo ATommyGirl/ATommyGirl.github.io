@@ -23,6 +23,25 @@
     
     
     <entry>
+      <title>UIModalPresentationFullScreen 导致渐变图层异常</title>
+      <link href="/2022/05/12/UIModalPresentationFullScreen_CAGradientLayer/"/>
+      <url>/2022/05/12/UIModalPresentationFullScreen_CAGradientLayer/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr><p>iOS 13 之前模态弹出一个页面默认是全屏展示，从 iOS 13 开始，如果不特意指定控制器的 <code>modalPresentationStyle</code> 属性，模态出的页面会是卡片式、非全屏，全屏的话需要指定：</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vc.modalPresentationStyle = <span class="built_in">UIModalPresentationFullScreen</span>;</span><br></pre></td></tr></table></figure><p>这一点相信很多年年做适配的同行早就知道了，所以这不是小咪要说的重点。</p><p>小咪要说的是今天修改一个极老的项目，L 页面是模态弹出的，所以用新的编辑环境打包的话是一定要适配上面这一项的。然后又出现新的问题了…客户要求 L 页的背景是渐变色，当时采用的是下面的方式绘制一层渐变图层，加到 L 页的 View 上。</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CAGradientLayer</span> *gl = [<span class="built_in">CAGradientLayer</span> layer];</span><br><span class="line">gl.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, SCREEN_WIDTH, SCREEN_HEIGHT);</span><br><span class="line">gl.colors = @[(__bridge <span class="keyword">id</span>)RGBA(<span class="number">246</span>, <span class="number">135</span>, <span class="number">72</span>, <span class="number">.9</span>f).CGColor, (__bridge <span class="keyword">id</span>)RGBA(<span class="number">230</span>, <span class="number">69</span>, <span class="number">90</span>, <span class="number">.9</span>f).CGColor];</span><br><span class="line">gl.startPoint = <span class="built_in">CGPointMake</span>(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">gl.endPoint = <span class="built_in">CGPointMake</span>(<span class="number">0</span>, <span class="number">1.0</span>);</span><br><span class="line">[<span class="keyword">self</span>.view.layer addSublayer:gl];</span><br></pre></td></tr></table></figure><p>但是修改 <code>modalPresentationStyle</code> 以后，渐变图层跑到了最上面，也就是遮挡住了 L.view 的所有子控件，子控件的事件响应也被阻断了…临时的解决办法是手动把它往后挪了一层：</p><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CALayer</span> *temp = [<span class="keyword">self</span>.view.layer.sublayers lastObject];</span><br><span class="line">[<span class="keyword">self</span>.view.layer insertSublayer:gl below:temp];</span><br></pre></td></tr></table></figure><p>视觉效果和响应上倒是恢复了，但是什么原因导致的图层顺序变化呢…小咪晕了…有遇到同样问题的小伙伴吗？</p><hr>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> iOS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Linux 学习笔记（五）- 进程管理</title>
       <link href="/2022/04/28/Linux_Progress/"/>
       <url>/2022/04/28/Linux_Progress/</url>
