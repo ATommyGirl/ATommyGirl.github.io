@@ -21,7 +21,6 @@ https://tommygirl.cn/2021/12/01/WKWebView/
 https://tommygirl.cn/2021/11/09/iPhone_dev_size/
 https://tommygirl.cn/2021/11/09/iOS%20%E9%87%8D%E7%AD%BE%E5%90%8D%E5%B7%A5%E5%85%B7/
 https://tommygirl.cn/2021/09/23/Subway3/
-https://tommygirl.cn/2021/09/22/Git/
 https://tommygirl.cn/2021/09/18/Git-Flow/
 https://tommygirl.cn/2021/08/29/%E5%A5%B3%E6%80%A7%E7%AE%A1%E7%90%86%E8%80%85/
 https://tommygirl.cn/2021/08/19/Cordova_config.xml/
