@@ -4840,8 +4840,8 @@
       </tags>
   </entry>
   <entry>
-    <title>iOS 开发中常用的型号和尺寸(最新 iPhone 13)</title>
-    <url>/2021/11/09/iPhone_dev_size/</url>
+    <title>iOS 开发中常用的型号和尺寸</title>
+    <url>/2022/09/15/iPhone_dev_size/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>经常忘了一些重要尺寸，做个备忘：</p>
 <h2 id="一、屏幕尺寸-启动图作图大小"><a href="#一、屏幕尺寸-启动图作图大小" class="headerlink" title="一、屏幕尺寸/启动图作图大小"></a>一、屏幕尺寸/启动图作图大小</h2><table>
 <thead>
@@ -4852,125 +4852,143 @@
 <th align="center">屏幕宽高(pt)</th>
 <th align="center">屏幕分辨率(px)</th>
 <th align="center">倍图</th>
-<th align="center">屏幕比例</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">4/4S</td>
+<td align="left">iPhone 4/4S</td>
 <td align="center">3.5</td>
 <td align="center">326</td>
-<td align="center">320*480</td>
-<td align="center">640*960</td>
+<td align="center">320 * 480</td>
+<td align="center">640 * 960</td>
 <td align="center">@2x</td>
-<td align="center">3:2</td>
 </tr>
 <tr>
 <td align="left">iPhone 5/5C/5S/SE</td>
 <td align="center">4.0</td>
 <td align="center">326</td>
-<td align="center">320*568</td>
+<td align="center">320 * 568</td>
 <td align="center">640 * 1136</td>
 <td align="center">@2x</td>
-<td align="center">16:9</td>
 </tr>
 <tr>
 <td align="left">iPhone 6/6s/7/8/SE 2</td>
 <td align="center">4.7</td>
 <td align="center">326</td>
-<td align="center">375*667</td>
+<td align="center">375 * 667</td>
 <td align="center">750 * 1334</td>
 <td align="center">@2x</td>
-<td align="center">16:9</td>
 </tr>
 <tr>
 <td align="left">iPhone 6/6S/7/8 Plus</td>
 <td align="center">5.5</td>
 <td align="center">401</td>
-<td align="center">414*736</td>
+<td align="center">414 * 736</td>
 <td align="center">1242 * 2208</td>
 <td align="center">@3x</td>
-<td align="center">16:9</td>
 </tr>
 <tr>
 <td align="left">iPhone X / XS / 11 Pro</td>
 <td align="center">5.8</td>
 <td align="center">458</td>
-<td align="center">375*812</td>
+<td align="center">375 * 812</td>
 <td align="center">1125 * 2436</td>
 <td align="center">@3x</td>
-<td align="center">19.5:9</td>
 </tr>
 <tr>
-<td align="left">iPhone XR / 11</td>
+<td align="left">iPhone Xr / 11</td>
 <td align="center">6.1</td>
 <td align="center">326</td>
-<td align="center">414*896</td>
+<td align="center">414 * 896</td>
 <td align="center">828 * 1792</td>
 <td align="center">@2x</td>
-<td align="center">19.5:9</td>
 </tr>
 <tr>
 <td align="left">iPhone XS Max / 11 Pro Max</td>
 <td align="center">6.5</td>
 <td align="center">458</td>
-<td align="center">414*896</td>
+<td align="center">414 * 896</td>
 <td align="center">1242 * 2688</td>
 <td align="center">@3x</td>
-<td align="center">19.5:9</td>
 </tr>
 <tr>
 <td align="left">iPhone 12 mini</td>
 <td align="center">5.4</td>
 <td align="center">476</td>
-<td align="center">360*780</td>
-<td align="center">1080 * 2340</td>
+<td align="center">375 * 812</td>
+<td align="center">1125 * 2436</td>
 <td align="center">@3x</td>
-<td align="center">19.5:9</td>
 </tr>
 <tr>
 <td align="left">iPhone 12 / 12 Pro</td>
 <td align="center">6.1</td>
 <td align="center">460</td>
-<td align="center">390*844</td>
+<td align="center">390 * 844</td>
 <td align="center">1170 * 2532</td>
 <td align="center">@3x</td>
-<td align="center">19.5:9</td>
 </tr>
 <tr>
 <td align="left">iPhone 12 Pro Max</td>
 <td align="center">6.7</td>
 <td align="center">458</td>
-<td align="center">428*926</td>
+<td align="center">428 * 926</td>
 <td align="center">1284 * 2778</td>
 <td align="center">@3x</td>
-<td align="center">19.5:9</td>
 </tr>
 <tr>
 <td align="left">iPhone 13 mini</td>
 <td align="center">5.4</td>
 <td align="center">476</td>
-<td align="center">360*780</td>
-<td align="center">1080 * 2340</td>
+<td align="center">375 * 812</td>
+<td align="center">1125 * 2436</td>
 <td align="center">@3x</td>
-<td align="center">19.5:9</td>
 </tr>
 <tr>
 <td align="left">iPhone 13 / 13 Pro</td>
 <td align="center">6.1</td>
 <td align="center">460</td>
-<td align="center">390*844</td>
+<td align="center">390 * 844</td>
 <td align="center">1170 * 2532</td>
 <td align="center">@3x</td>
-<td align="center">19.5:9</td>
 </tr>
 <tr>
 <td align="left">iPhone 13 Pro Max</td>
 <td align="center">6.7</td>
 <td align="center">458</td>
-<td align="center">428*926</td>
+<td align="center">428 * 926</td>
 <td align="center">1284 * 2778</td>
 <td align="center">@3x</td>
-<td align="center">19.5:9</td>
+</tr>
+<tr>
+<td align="left">iPhone 14</td>
+<td align="center">6.1</td>
+<td align="center">460</td>
+<td align="center">375 * 812</td>
+<td align="center">1125 * 2436</td>
+<td align="center">@3x</td>
+</tr>
+<tr>
+<td align="left">iPhone 14 Plus</td>
+<td align="center">6.7</td>
+<td align="center">458</td>
+<td align="center">428 * 926</td>
+<td align="center">1284 * 2778</td>
+<td align="center">@3x</td>
+</tr>
+<tr>
+<td align="left">iPhone 14 Pro</td>
+<td align="center">6.1</td>
+<td align="center">460</td>
+<td align="center">393 * 852</td>
+<td align="center">1179 * 2556</td>
+<td align="center">@3x</td>
+</tr>
+<tr>
+<td align="left">iPhone 14 Pro Max</td>
+<td align="center">6.7</td>
+<td align="center">460</td>
+<td align="center">430 * 932</td>
+<td align="center">1290 * 2796</td>
+<td align="center">@3x</td>
 </tr>
 </tbody></table>
 <span id="more"></span>
@@ -5019,51 +5037,142 @@
 <td align="center">1024 * 1024</td>
 </tr>
 </tbody></table>
-<h2 id="三、导航栏作图大小"><a href="#三、导航栏作图大小" class="headerlink" title="三、导航栏作图大小"></a>三、导航栏作图大小</h2><table>
+<p>Xcode 14 不是说只需要一张 1024 吗，但我试着不太对，是我搞错了吗…😢</p>
+<h2 id="三、安全区"><a href="#三、安全区" class="headerlink" title="三、安全区"></a>三、安全区</h2><table>
+<thead>
+<tr>
+<th align="center">型号</th>
+<th align="center">Edge(Top, Left, Bottom, Right)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">iPhone SE / 5S</td>
+<td align="center">——</td>
+</tr>
+<tr>
+<td align="center">iPhone 6s / 7 / 8</td>
+<td align="center">——</td>
+</tr>
+<tr>
+<td align="center">iPhone 6 / 7 / 8 Plus</td>
+<td align="center">——</td>
+</tr>
+<tr>
+<td align="center">iPhone X / XS</td>
+<td align="center">(44, 0, 0, 34)</td>
+</tr>
+<tr>
+<td align="center">iPhone Xr / 11</td>
+<td align="center">(48, 0, 0, 34)</td>
+</tr>
+<tr>
+<td align="center">iPhone XS Max / 11 Pro Max</td>
+<td align="center">(44, 0, 0, 34)</td>
+</tr>
+<tr>
+<td align="center">iPhone 12 mini / 13mini</td>
+<td align="center">(50, 0, 0, 34)</td>
+</tr>
+<tr>
+<td align="center">iPhone 12 / 12 Pro / 13 / 13 Pro</td>
+<td align="center">(47, 0, 0, 34)</td>
+</tr>
+<tr>
+<td align="center">iPhone 12 Pro Max / 13 Pro Max</td>
+<td align="center">(47, 0, 0, 34)</td>
+</tr>
+<tr>
+<td align="center">iPhone 14</td>
+<td align="center">(47, 0, 0, 34)</td>
+</tr>
+<tr>
+<td align="center">iPhone 14 Plus</td>
+<td align="center">(47, 0, 0, 34)</td>
+</tr>
+<tr>
+<td align="center">iPhone 14 Pro</td>
+<td align="center">(59, 0, 0, 34)</td>
+</tr>
+<tr>
+<td align="center">iPhone 14 Pro Max</td>
+<td align="center">(59, 0, 0, 34)</td>
+</tr>
+</tbody></table>
+<h2 id="四、Tabbar-作图大小"><a href="#四、Tabbar-作图大小" class="headerlink" title="四、Tabbar 作图大小"></a>四、Tabbar 作图大小</h2><table>
 <thead>
 <tr>
 <th align="center">型号</th>
 <th align="center">尺寸(px)</th>
+<th align="center">Tabbar 高度(pt)</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">iPhone SE/5S</td>
+<td align="center">iPhone SE / 5S</td>
 <td align="center">640 * 98</td>
+<td align="center">49</td>
 </tr>
 <tr>
-<td align="center">iPhone 6s/7/8</td>
+<td align="center">iPhone 6s / 7 / 8</td>
 <td align="center">750 * 98</td>
+<td align="center">49</td>
 </tr>
 <tr>
-<td align="center">iPhone 6/7/8 Plus</td>
+<td align="center">iPhone 6 / 7 / 8 Plus</td>
 <td align="center">1242 * 147</td>
+<td align="center">49</td>
 </tr>
 <tr>
-<td align="center">iPhone X/XS</td>
+<td align="center">iPhone X / XS</td>
 <td align="center">1125 * 249</td>
+<td align="center">83</td>
 </tr>
 <tr>
-<td align="center">iPhone XR</td>
+<td align="center">iPhone Xr / 11</td>
 <td align="center">828 * 166</td>
+<td align="center">83</td>
 </tr>
 <tr>
-<td align="center">iPhone XS Max</td>
+<td align="center">iPhone XS Max / 11 Pro Max</td>
 <td align="center">1242 * 249</td>
+<td align="center">83</td>
 </tr>
 <tr>
-<td align="center">iPhone 12 mini/13mini</td>
+<td align="center">iPhone 12 mini / 13mini</td>
 <td align="center">1080 * 249</td>
+<td align="center">83</td>
 </tr>
 <tr>
-<td align="center">iPhone 12 / 12 Pro/13/13 Pro</td>
+<td align="center">iPhone 12 / 12 Pro / 13 / 13 Pro</td>
 <td align="center">1170 * 249</td>
+<td align="center">83</td>
 </tr>
 <tr>
-<td align="center">iPhone 12 Pro Max/13 Pro Max</td>
+<td align="center">iPhone 12 Pro Max / 13 Pro Max</td>
 <td align="center">1284 * 249</td>
+<td align="center">83</td>
+</tr>
+<tr>
+<td align="center">iPhone 14</td>
+<td align="center">1170 * 249</td>
+<td align="center">83</td>
+</tr>
+<tr>
+<td align="center">iPhone 14 Plus</td>
+<td align="center">1284 * 249</td>
+<td align="center">83</td>
+</tr>
+<tr>
+<td align="center">iPhone 14 Pro</td>
+<td align="center">1179 * 249</td>
+<td align="center">83</td>
+</tr>
+<tr>
+<td align="center">iPhone 14 Pro Max</td>
+<td align="center">1290 * 249</td>
+<td align="center">83</td>
 </tr>
 </tbody></table>
-<h2 id="四、硬件信息-设备名称"><a href="#四、硬件信息-设备名称" class="headerlink" title="四、硬件信息/设备名称"></a>四、硬件信息/设备名称</h2><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">NSString</span> *)getDeviceString &#123;</span><br><span class="line">    <span class="keyword">struct</span> utsname systemInfo;</span><br><span class="line">    uname(&amp;systemInfo);</span><br><span class="line">    <span class="built_in">NSString</span> *platform = [<span class="built_in">NSString</span> stringWithCString:systemInfo.machine encoding:<span class="built_in">NSASCIIStringEncoding</span>];</span><br><span class="line">    <span class="built_in">NSDictionary</span> *dic = @&#123;</span><br><span class="line">                          <span class="comment">//iPhone</span></span><br><span class="line">                          <span class="string">@&quot;iPhone1,1&quot;</span> : <span class="string">@&quot;iPhone 1G&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone1,2&quot;</span> : <span class="string">@&quot;iPhone 3G&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone2,1&quot;</span> : <span class="string">@&quot;iPhone 3GS&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone3,1&quot;</span> : <span class="string">@&quot;iPhone 4&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone3,2&quot;</span> : <span class="string">@&quot;iPhone 4&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone3,3&quot;</span> : <span class="string">@&quot;iPhone 4&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone4,1&quot;</span> : <span class="string">@&quot;iPhone 4S&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone5,1&quot;</span> : <span class="string">@&quot;iPhone 5&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone5,2&quot;</span> : <span class="string">@&quot;iPhone 5&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone5,3&quot;</span> : <span class="string">@&quot;iPhone 5C&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone5,4&quot;</span> : <span class="string">@&quot;iPhone 5C&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone6,1&quot;</span> : <span class="string">@&quot;iPhone 5S&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone6,2&quot;</span> : <span class="string">@&quot;iPhone 5S&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone7,1&quot;</span> : <span class="string">@&quot;iPhone 6 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone7,2&quot;</span> : <span class="string">@&quot;iPhone 6&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone8,1&quot;</span> : <span class="string">@&quot;iPhone 6S&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone8,2&quot;</span> : <span class="string">@&quot;iPhone 6s Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone8,4&quot;</span> : <span class="string">@&quot;iPhone SE&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone9,1&quot;</span> : <span class="string">@&quot;iPhone 7&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone9,3&quot;</span> : <span class="string">@&quot;iPhone 7&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone9,2&quot;</span> : <span class="string">@&quot;iPhone 7 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone9,4&quot;</span> : <span class="string">@&quot;iPhone 7 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,1&quot;</span> : <span class="string">@&quot;iPhone 8&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,4&quot;</span> : <span class="string">@&quot;iPhone 8&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,2&quot;</span> : <span class="string">@&quot;iPhone 8 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,5&quot;</span> : <span class="string">@&quot;iPhone 8 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,3&quot;</span> : <span class="string">@&quot;iPhone X&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,6&quot;</span> : <span class="string">@&quot;iPhone X&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone11,8&quot;</span> : <span class="string">@&quot;iPhone XR&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone11,2&quot;</span> : <span class="string">@&quot;iPhone XS&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone11,6&quot;</span> : <span class="string">@&quot;iPhone XS Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone11,4&quot;</span> : <span class="string">@&quot;iPhone XS Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone12,1&quot;</span> : <span class="string">@&quot;iPhone 11&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone12,3&quot;</span> : <span class="string">@&quot;iPhone 11 Pro&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone12,5&quot;</span> : <span class="string">@&quot;iPhone 11 Pro Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone12,8&quot;</span> : <span class="string">@&quot;iPhone SE 2&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone13,1&quot;</span> : <span class="string">@&quot;iPhone 12 mini&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone13,2&quot;</span> : <span class="string">@&quot;iPhone 12&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone13,3&quot;</span> : <span class="string">@&quot;iPhone 12 Pro&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone13,4&quot;</span> : <span class="string">@&quot;iPhone 12 Pro Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,4&quot;</span> : <span class="string">@&quot;iPhone 13 mini&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,5&quot;</span> : <span class="string">@&quot;iPhone 13&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,2&quot;</span> : <span class="string">@&quot;iPhone 13 Pro&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,3&quot;</span> : <span class="string">@&quot;iPhone 13 Pro Max&quot;</span></span><br><span class="line">                          &#125;;</span><br><span class="line">    <span class="keyword">if</span> ([dic valueForKey:platform]) &#123;</span><br><span class="line">        <span class="keyword">return</span> [dic valueForKey:platform];</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> platform;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="五、硬件信息-设备名称"><a href="#五、硬件信息-设备名称" class="headerlink" title="五、硬件信息/设备名称"></a>五、硬件信息/设备名称</h2><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line">+ (<span class="built_in">NSString</span> *)getDeviceString &#123;</span><br><span class="line">    <span class="keyword">struct</span> utsname systemInfo;</span><br><span class="line">    uname(&amp;systemInfo);</span><br><span class="line">    <span class="built_in">NSString</span> *platform = [<span class="built_in">NSString</span> stringWithCString:systemInfo.machine encoding:<span class="built_in">NSASCIIStringEncoding</span>];</span><br><span class="line">    <span class="built_in">NSDictionary</span> *dic = @&#123;</span><br><span class="line">                          <span class="comment">//iPhone</span></span><br><span class="line">                          <span class="string">@&quot;iPhone1,1&quot;</span> : <span class="string">@&quot;iPhone 1G&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone1,2&quot;</span> : <span class="string">@&quot;iPhone 3G&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone2,1&quot;</span> : <span class="string">@&quot;iPhone 3GS&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone3,1&quot;</span> : <span class="string">@&quot;iPhone 4&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone3,2&quot;</span> : <span class="string">@&quot;iPhone 4&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone3,3&quot;</span> : <span class="string">@&quot;iPhone 4&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone4,1&quot;</span> : <span class="string">@&quot;iPhone 4S&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone5,1&quot;</span> : <span class="string">@&quot;iPhone 5&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone5,2&quot;</span> : <span class="string">@&quot;iPhone 5&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone5,3&quot;</span> : <span class="string">@&quot;iPhone 5C&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone5,4&quot;</span> : <span class="string">@&quot;iPhone 5C&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone6,1&quot;</span> : <span class="string">@&quot;iPhone 5S&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone6,2&quot;</span> : <span class="string">@&quot;iPhone 5S&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone7,1&quot;</span> : <span class="string">@&quot;iPhone 6 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone7,2&quot;</span> : <span class="string">@&quot;iPhone 6&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone8,1&quot;</span> : <span class="string">@&quot;iPhone 6S&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone8,2&quot;</span> : <span class="string">@&quot;iPhone 6s Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone8,4&quot;</span> : <span class="string">@&quot;iPhone SE&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone9,1&quot;</span> : <span class="string">@&quot;iPhone 7&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone9,3&quot;</span> : <span class="string">@&quot;iPhone 7&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone9,2&quot;</span> : <span class="string">@&quot;iPhone 7 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone9,4&quot;</span> : <span class="string">@&quot;iPhone 7 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,1&quot;</span> : <span class="string">@&quot;iPhone 8&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,4&quot;</span> : <span class="string">@&quot;iPhone 8&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,2&quot;</span> : <span class="string">@&quot;iPhone 8 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,5&quot;</span> : <span class="string">@&quot;iPhone 8 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,3&quot;</span> : <span class="string">@&quot;iPhone X&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone10,6&quot;</span> : <span class="string">@&quot;iPhone X&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone11,8&quot;</span> : <span class="string">@&quot;iPhone XR&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone11,2&quot;</span> : <span class="string">@&quot;iPhone XS&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone11,6&quot;</span> : <span class="string">@&quot;iPhone XS Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone11,4&quot;</span> : <span class="string">@&quot;iPhone XS Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone12,1&quot;</span> : <span class="string">@&quot;iPhone 11&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone12,3&quot;</span> : <span class="string">@&quot;iPhone 11 Pro&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone12,5&quot;</span> : <span class="string">@&quot;iPhone 11 Pro Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone12,8&quot;</span> : <span class="string">@&quot;iPhone SE 2&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone13,1&quot;</span> : <span class="string">@&quot;iPhone 12 mini&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone13,2&quot;</span> : <span class="string">@&quot;iPhone 12&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone13,3&quot;</span> : <span class="string">@&quot;iPhone 12 Pro&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone13,4&quot;</span> : <span class="string">@&quot;iPhone 12 Pro Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,4&quot;</span> : <span class="string">@&quot;iPhone 13 mini&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,5&quot;</span> : <span class="string">@&quot;iPhone 13&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,2&quot;</span> : <span class="string">@&quot;iPhone 13 Pro&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,3&quot;</span> : <span class="string">@&quot;iPhone 13 Pro Max&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,6&quot;</span> : <span class="string">@&quot;iPhone SE 3&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,7&quot;</span> : <span class="string">@&quot;iPhone 14&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone14,8&quot;</span> : <span class="string">@&quot;iPhone 14 Plus&quot;</span>,</span><br><span class="line">                          <span class="string">@&quot;iPhone15,2&quot;</span> : <span class="string">@&quot;iPhone 14 Pro&quot;</span>,</span><br><span class="line">      										<span class="string">@&quot;iPhone15,3&quot;</span> : <span class="string">@&quot;iPhone 14 Pro Max&quot;</span></span><br><span class="line">                          &#125;;</span><br><span class="line">    <span class="keyword">if</span> ([dic valueForKey:platform]) &#123;</span><br><span class="line">        <span class="keyword">return</span> [dic valueForKey:platform];</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> platform;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
