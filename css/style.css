@@ -467,6 +467,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
+body strong {
+  color: #2bbc8a;
+}
 .content {
   position: relative;
   display: flex;
