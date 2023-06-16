@@ -3661,7 +3661,7 @@
 <hr>
 <p>SDWebImageOptions 的注释翻译：</p>
 <table style="border: 1px solid #C1C1C1;rules: rows;frame: box;cellpadding: 3px;">
-      <caption style="border: 0.5px solid #C1C1C1;color: #29B177;">SDWebImageOptions 的注释翻译</caption>
+      <caption style="border: 0.5px solid #C1C1C1;color: #29B177;">SDWebImageOptions 注释翻译</caption>
     <thead style="border: 0.5px solid #C1C1C1;">
       <tr>
         <th scope="col" style="border: 0.5px solid #C1C1C1;color: #29B177;">Option</th>
