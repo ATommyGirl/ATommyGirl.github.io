@@ -170,7 +170,7 @@
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * By default, when the memory cache miss, we query the disk cache asynchronously. This mask can force to query disk cache (when memory cache miss) synchronously.</span></span><br><span class="line"><span class="comment"> * @note These 3 query options can be combined together. For the full list about these masks combination, see wiki page.</span></span><br><span class="line"><span class="comment"> * @note Query data synchronously is not recommend, unless you want to ensure the image is loaded in the same runloop to avoid flashing during cell reusing.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">SDWebImageQueryDiskDataSync = <span class="number">1</span> &lt;&lt; <span class="number">14</span>,</span><br></pre></td></tr></table></figure>
 
 <p>@note Query data synchronously is not recommend, unless you want to ensure the image is loaded in the same runloop to <strong>avoid flashing during cell reusing</strong>.</p>
-<p>SDK 中已经给出了非常明确的注释，一开始的方向完全是错误的。哭笑不得，时间都浪费了，怎么把内功心法忘了呢：<strong>RTFSC - Read the fucking source code.</strong> 所以一定要先搞清楚问题的本质是什么，谋定而后动。</p>
+<p>SDK 中已经给出了非常明确的注释，一开始的方向完全是错误的。哭笑不得，时间都浪费了，所以一定要先搞清楚问题的本质是什么，谋定而后动，而且怎么把内功心法忘了呢：<strong>RTFSC - Read the fucking source code.</strong> </p>
 <hr>
 <p>SDWebImageOptions 的注释翻译：</p>
 <table style="border: 1px solid #C1C1C1;rules: rows;frame: box;cellpadding: 3px;">
