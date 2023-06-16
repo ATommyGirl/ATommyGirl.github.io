@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tommygirl.cn/2023/06/16/SDWebImage_blink/</loc>
+    
+    <lastmod>2023-06-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://tommygirl.cn/2023/06/14/let_it_go/</loc>
     
     <lastmod>2023-06-14</lastmod>
@@ -867,14 +876,14 @@
   </url>
   
   <url>
-    <loc>https://tommygirl.cn/tags/Nginx/</loc>
+    <loc>https://tommygirl.cn/tags/%E6%88%91/</loc>
     <lastmod>2023-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://tommygirl.cn/tags/%E6%88%91/</loc>
+    <loc>https://tommygirl.cn/tags/Nginx/</loc>
     <lastmod>2023-06-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
