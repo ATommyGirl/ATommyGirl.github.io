@@ -3,7 +3,6 @@ https://tommygirl.cn/2023/06/14/let_it_go/
 https://tommygirl.cn/2023/06/07/Not_important/
 https://tommygirl.cn/2023/03/30/Centos7_update_Python3.8/
 https://tommygirl.cn/2023/03/30/Systemctl_nodejs/
-https://tommygirl.cn/2023/03/28/Linux_note/
 https://tommygirl.cn/2023/03/24/SDWebImageErrorDomain/
 https://tommygirl.cn/2022/12/31/2022%E5%B9%B4%E5%B0%8F%E7%BB%93%E5%84%BF/
 https://tommygirl.cn/2022/11/15/SDWebImage/
