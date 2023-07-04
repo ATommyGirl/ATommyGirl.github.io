@@ -5047,7 +5047,7 @@
 <p>忽略配色，目前不重要🤓。拖拖拽拽几个控件、随机摇到数字、随机展示图片…初步感受：</p>
 <ol>
 <li>与 Android Studio 相比，Xcode 简直是个呆子，他们的编译器也太好用了；</li>
-<li>对于布局文件，既可以通过图形界面来操作，也可以 xml 文件来修改，这一点是目前 iOS 做不到的；</li>
+<li>对于布局文件，既可以通过图形界面来操作，也可以通过 xml 文件来修改，这一点是目前 iOS 做不到的；</li>
 <li>各控件布局时的约束关系，个人觉得没有 iOS 的 AutoLayout 智能和严谨；</li>
 <li>关于随机展示骰子点数的图片：</li>
 </ol>
@@ -5077,7 +5077,7 @@
 <p>在布局文件中指定视图 id 貌似一般是用小写单词并以 _ 下划线隔开，’android:id=”@+id/radio_group” 通过 R 来引用视图是形如 R.id.radio_group，id 还是小写的。但是当通过视图绑定来引用的话，id 会自动变为驼峰的形式，radio_group 被引用时形如 binding.radioGroup。</p>
 <ol start="3">
 <li>说到 RadioGroup，Android 的系统组件也太丰富了吧，都是现成的，iOS 没有…几乎很多组件都需要自己来绘制。还有，提到 Switch 组件，就更大无语了，Android 里的 Switch 还自带文本，iOS 系统提供的 Switch 组件这么多年了连改大小都不行，啊啊啊啊啊，家人们谁懂啊，好想骂人。这样想来 Android 开发者也太幸福了吧。🤡</li>
-<li>在 Android Studio 编辑页面中的变量/参数下面出现下划线，是指该变量为Reassigned parameter，即该变量可以被多次赋值。val 是只读变量，var 是可变变量。还可以设置下划线的样式，设置的位置 ： Editor -&gt; Color Scheme -&gt; Language Defaults -&gt; Identifiers -&gt; Reassigned parameters。</li>
+<li>在 Android Studio 编辑页面中的变量/参数下面出现下划线，是指该变量为 Reassigned parameter，即该变量可以被多次赋值。val 是只读变量，var 是可变变量。还可以设置下划线的样式，设置的位置 ： Editor -&gt; Color Scheme -&gt; Language Defaults -&gt; Identifiers -&gt; Reassigned parameters。</li>
 </ol>
 <img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/var_line.jpg" style="zoom:67%;">
 
