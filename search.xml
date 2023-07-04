@@ -5083,7 +5083,7 @@
 
 <h2 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h2><p>Demo 期间遇到了好多个错误…当然，我一点也看不懂是为什么，希望后面学习深入以后能搞清楚：</p>
 <ol>
-<li>Error: 6 issues were found when checking AAR metadata:</li>
+<li><h3 id="Error-6-issues-were-found-when-checking-AAR-metadata"><a href="#Error-6-issues-were-found-when-checking-AAR-metadata" class="headerlink" title="Error: 6 issues were found when checking AAR metadata:"></a>Error: 6 issues were found when checking AAR metadata:</h3></li>
 </ol>
 <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="number">6</span> issues were found <span class="keyword">when</span> checking AAR metadata:</span><br><span class="line"></span><br><span class="line">  <span class="number">1.</span>  Dependency <span class="string">&#x27;androidx.appcompat:appcompat-resources:1.6.1&#x27;</span> requires libraries and applications that</span><br><span class="line">      depend on it to compile against version <span class="number">33</span> or later of the</span><br><span class="line">      Android APIs.</span><br><span class="line"></span><br><span class="line">      :app <span class="keyword">is</span> currently compiled against android-<span class="number">32.</span></span><br><span class="line"></span><br><span class="line">      Recommended action: Update <span class="keyword">this</span> project to use a newer compileSdkVersion</span><br><span class="line">      of at least <span class="number">33</span>, <span class="keyword">for</span> example <span class="number">33.</span></span><br><span class="line"></span><br><span class="line">      Note that updating a library or application<span class="string">&#x27;s compileSdkVersion (which</span></span><br><span class="line"><span class="string">      allows newer APIs to be used) can be done separately from updating</span></span><br><span class="line"><span class="string">      targetSdkVersion (which opts the app in to new runtime behavior) and</span></span><br><span class="line"><span class="string">      minSdkVersion (which determines which devices the app can be installed</span></span><br><span class="line"><span class="string">      on).</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
 
@@ -5091,7 +5091,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdk 33</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
-<li>⚠️: Use SwitchCompat from AppCompat or SwitchMaterial from Material library.</li>
+<li><h3 id="⚠️-Use-SwitchCompat-from-AppCompat-or-SwitchMaterial-from-Material-library"><a href="#⚠️-Use-SwitchCompat-from-AppCompat-or-SwitchMaterial-from-Material-library" class="headerlink" title="⚠️: Use SwitchCompat from AppCompat or SwitchMaterial from Material library."></a>⚠️: Use SwitchCompat from AppCompat or SwitchMaterial from Material library.</h3></li>
 </ol>
 <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">Use SwitchCompat from AppCompat or SwitchMaterial from Material library  Use SwitchCompat from AppCompat or SwitchMaterial from Material library  Issue id: UseSwitchCompatOrMaterialXml  Vendor: Android Open Source Project Identifier: androidx.appcompat Feedback: https:<span class="comment">//issuetracker.google.com/issues/new?component=460343 </span></span><br></pre></td></tr></table></figure>
 
@@ -5103,13 +5103,14 @@
 <p>SwitchCompat 是核心 Switch 控件的完整向后移植版，它将该控件的视觉效果和功能带到了旧版本的平台。与此包中的其他控件不同，SwitchCompat 不会自动用于使用该元素的布局中。相反，您需要在布局中显式使用 &lt;androidx.appcompat.widget.SwitchCompat&gt; 和匹配的属性。</p>
 </blockquote>
 <ol start="3">
-<li>Error: system_process E/JavaBinder: !!! FAILED BINDER TRANSACTION !!! (parcel size = 108)</li>
+<li><h3 id="Error-system-process-E-JavaBinder-FAILED-BINDER-TRANSACTION-parcel-size-108"><a href="#Error-system-process-E-JavaBinder-FAILED-BINDER-TRANSACTION-parcel-size-108" class="headerlink" title="Error: system_process E/JavaBinder: !!! FAILED BINDER TRANSACTION !!! (parcel size = 108)"></a>Error: system_process E/JavaBinder: !!! FAILED BINDER TRANSACTION !!! (parcel size = 108)</h3></li>
 </ol>
 <p>不知道。</p>
 <ol start="4">
-<li>⚠️: Unknown attribute android:importantForAutofill</li>
+<li><h3 id="⚠️-Unknown-attribute-android-importantForAutofill"><a href="#⚠️-Unknown-attribute-android-importantForAutofill" class="headerlink" title="⚠️: Unknown attribute android:importantForAutofill"></a>⚠️: Unknown attribute android:importantForAutofill</h3></li>
 </ol>
 <p>不知道。</p>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><h2 id><a href="#" class="headerlink" title></a></h2><p><a href="https://github.com/ATommyGirl/android">Demo-Github</a></p>
 <hr>
 <p>下一日目标：了解 SDK version、Android version、Gradle 之间的关系、工程结构。</p>
 ]]></content>
