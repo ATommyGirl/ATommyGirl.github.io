@@ -6915,40 +6915,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Android 打卡 Day 2</title>
-    <url>/2023/07/01/android_day2/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
-<h2 id="SDK-Version"><a href="#SDK-Version" class="headerlink" title="SDK Version"></a>SDK Version</h2><h2 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h2><p>Project</p>
-<p>Android</p>
-<p>Packages</p>
-<h2 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h2><p>Android Studio中的Gradle构建系统使您可以轻松地将外部二进制文件或其他库模块作为依赖项包含到构建中。依赖项可以位于您的机器上或远程存储库中，它们声明的任何可传递依赖项也会自动包含在内。本页介绍如何在Android项目中使用依赖项，包括Gradle的Android插件特有的行为和配置的详细信息。要获得关于Gradle依赖关系的更深入的概念指南，您还应该查看依赖关系管理的Gradle指南，但请记住，您的Android项目必须仅使用此页面上定义的依赖关系配置。</p>
-<p>build.gradle<br>build.gradle(Project:xxx)<br>build.gradle(Project:xxx.app)<br>build.gradle(Project:xxx.someOtherLib)<br>someOther.gradle(Project:xxx.someOtherLib)<br>gradle.properties(Global Properties)</p>
-<h2 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h2><p>Demo 期间遇到了好多个错误…当然，我一点也看不懂是为什么，希望后面学习深入以后能搞清楚：</p>
-<h3 id="❌-6-issues-were-found-when-checking-AAR-metadata"><a href="#❌-6-issues-were-found-when-checking-AAR-metadata" class="headerlink" title="❌: 6 issues were found when checking AAR metadata:"></a>❌: 6 issues were found when checking AAR metadata:</h3><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="number">6</span> issues were found <span class="keyword">when</span> checking AAR metadata:</span><br><span class="line"></span><br><span class="line">  <span class="number">1.</span>  Dependency <span class="string">&#x27;androidx.appcompat:appcompat-resources:1.6.1&#x27;</span> requires libraries and applications that</span><br><span class="line">      depend on it to compile against version <span class="number">33</span> or later of the</span><br><span class="line">      Android APIs.</span><br><span class="line"></span><br><span class="line">      :app <span class="keyword">is</span> currently compiled against android-<span class="number">32.</span></span><br><span class="line"></span><br><span class="line">      Recommended action: Update <span class="keyword">this</span> project to use a newer compileSdkVersion</span><br><span class="line">      of at least <span class="number">33</span>, <span class="keyword">for</span> example <span class="number">33.</span></span><br><span class="line"></span><br><span class="line">      Note that updating a library or application<span class="string">&#x27;s compileSdkVersion (which</span></span><br><span class="line"><span class="string">      allows newer APIs to be used) can be done separately from updating</span></span><br><span class="line"><span class="string">      targetSdkVersion (which opts the app in to new runtime behavior) and</span></span><br><span class="line"><span class="string">      minSdkVersion (which determines which devices the app can be installed</span></span><br><span class="line"><span class="string">      on).</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
-
-<p>是说选择的 android 版本太低了吗？但是写骰子的时候还是可以的，算小费的时候就不行了…改了一下配置：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    compileSdk 33</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="⚠️-Use-SwitchCompat-from-AppCompat-or-SwitchMaterial-from-Material-library"><a href="#⚠️-Use-SwitchCompat-from-AppCompat-or-SwitchMaterial-from-Material-library" class="headerlink" title="⚠️: Use SwitchCompat from AppCompat or SwitchMaterial from Material library."></a>⚠️: Use SwitchCompat from AppCompat or SwitchMaterial from Material library.</h3><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">Use SwitchCompat from AppCompat or SwitchMaterial from Material library  Use SwitchCompat from AppCompat or SwitchMaterial from Material library  Issue id: UseSwitchCompatOrMaterialXml  Vendor: Android Open Source Project Identifier: androidx.appcompat Feedback: https:<span class="comment">//issuetracker.google.com/issues/new?component=460343 </span></span><br></pre></td></tr></table></figure>
-
-<p><a href="https://blog.csdn.net/notthin/article/details/121903846">参考的这里：</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;Switch</span><br><span class="line">	android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">    android:layout_height=&quot;wrap_content&quot; /&gt;</span><br><span class="line">    </span><br><span class="line">//改为</span><br><span class="line"></span><br><span class="line">&lt;androidx.appcompat.widget.SwitchCompat</span><br><span class="line">	android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">	android:layout_height=&quot;wrap_content&quot;/&gt;</span><br></pre></td></tr></table></figure>
-
-<p>因为 Switch 对于旧版本的 Android 有不同的外观。则使用 SwitchCompat 可以为所有 Android 版本提供一致的外观。</p>
-<blockquote>
-<p>SwitchCompat 是核心 Switch 控件的完整向后移植版，它将该控件的视觉效果和功能带到了旧版本的平台。与此包中的其他控件不同，SwitchCompat 不会自动用于使用该元素的布局中。相反，您需要在布局中显式使用 &lt;androidx.appcompat.widget.SwitchCompat&gt; 和匹配的属性。</p>
-</blockquote>
-<h3 id="❌-system-process-E-JavaBinder-FAILED-BINDER-TRANSACTION-parcel-size-108"><a href="#❌-system-process-E-JavaBinder-FAILED-BINDER-TRANSACTION-parcel-size-108" class="headerlink" title="❌: system_process E/JavaBinder: !!! FAILED BINDER TRANSACTION !!! (parcel size = 108)"></a>❌: system_process E/JavaBinder: !!! FAILED BINDER TRANSACTION !!! (parcel size = 108)</h3><p>不知道。</p>
-<h3 id="⚠️-Unknown-attribute-android-importantForAutofill"><a href="#⚠️-Unknown-attribute-android-importantForAutofill" class="headerlink" title="⚠️: Unknown attribute android:importantForAutofill"></a>⚠️: Unknown attribute android:importantForAutofill</h3><p>不知道。</p>
-<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p><a href="https://github.com/ATommyGirl/android">Demo-Github</a></p>
-<hr>
-<p>下一日目标：</p>
-]]></content>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>回忆</title>
     <url>/gallery/index.html</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
