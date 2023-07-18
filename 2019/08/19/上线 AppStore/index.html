@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="iOS打包上线遇到的问题记录和解决办法：  ERROR ITMS-90034ERROR ITMS-4236ERROR ITMS-90717  1. ERROR ITMS-90034:“Missing or invalid signature.The bundle’com.xxx.xxx’ at bundle path ‘Payload&#x2F;xxx’ is not signed using an App">
+    <meta name="description" content="iOS打包上线遇到的问题记录和解决办法：  ERROR ITMS-90034ERROR ITMS-4236ERROR ITMS-90717  ❌ ERROR ITMS-90034:“Missing or invalid signature.The bundle’com.xxx.xxx’ at bundle path ‘Payload&#x2F;xxx’ is not signed using an Appl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS上线 AppStore - 打包、upload 时遇到的问题">
 <meta property="og:url" content="https://tommygirl.cn/2019/08/19/%E4%B8%8A%E7%BA%BF%20AppStore/index.html">
 <meta property="og:site_name" content="白小咪">
-<meta property="og:description" content="iOS打包上线遇到的问题记录和解决办法：  ERROR ITMS-90034ERROR ITMS-4236ERROR ITMS-90717  1. ERROR ITMS-90034:“Missing or invalid signature.The bundle’com.xxx.xxx’ at bundle path ‘Payload&#x2F;xxx’ is not signed using an App">
+<meta property="og:description" content="iOS打包上线遇到的问题记录和解决办法：  ERROR ITMS-90034ERROR ITMS-4236ERROR ITMS-90717  ❌ ERROR ITMS-90034:“Missing or invalid signature.The bundle’com.xxx.xxx’ at bundle path ‘Payload&#x2F;xxx’ is not signed using an Appl">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/1.png">
 <meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/2.png">
@@ -116,13 +116,13 @@
 &lt;blockquote&gt;
 &lt;p&gt;ERROR ITMS-90034&lt;br&gt;ERROR ITMS-4236&lt;br&gt;ERROR ITMS-90717&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h4 id=&#34;1-ERROR-ITMS-90034&#34;&gt;&lt;a href=&#34;#1-ERROR-ITMS-90034&#34; class=&#34;headerlink&#34; title=&#34;1. ERROR ITMS-90034:&#34;&gt;&lt;/a&gt;1. ERROR ITMS-90034:&lt;/h4&gt;&lt;p&gt;“Missing or invalid signature.The bundle’com.xxx.xxx’ at bundle path ‘Payload/xxx’ is not signed using an Apple submission certificate.”&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+&lt;h4 id=&#34;❌-ERROR-ITMS-90034&#34;&gt;&lt;a href=&#34;#❌-ERROR-ITMS-90034&#34; class=&#34;headerlink&#34; title=&#34;❌ ERROR ITMS-90034:&#34;&gt;&lt;/a&gt;❌ ERROR ITMS-90034:&lt;/h4&gt;&lt;p&gt;“Missing or invalid signature.The bundle’com.xxx.xxx’ at bundle path ‘Payload/xxx’ is not signed using an Apple submission certificate.”&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2019/08/19/%E4%B8%8A%E7%BA%BF%20AppStore/&t=iOS上线 AppStore - 打包、upload 时遇到的问题"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-ERROR-ITMS-90034"><span class="toc-number">1.</span> <span class="toc-text">1. ERROR ITMS-90034:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-ERROR-ITMS-4236"><span class="toc-number">2.</span> <span class="toc-text">2. ERROR ITMS-4236:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-ERROR-ITMS-90717"><span class="toc-number">3.</span> <span class="toc-text">3. ERROR ITMS-90717:</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9D%8C-ERROR-ITMS-90034"><span class="toc-number">1.</span> <span class="toc-text">❌ ERROR ITMS-90034:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9D%8C-ERROR-ITMS-4236"><span class="toc-number">2.</span> <span class="toc-text">❌ ERROR ITMS-4236:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9D%8C-ERROR-ITMS-90717"><span class="toc-number">3.</span> <span class="toc-text">❌ ERROR ITMS-90717:</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -170,7 +170,7 @@
 <blockquote>
 <p>ERROR ITMS-90034<br>ERROR ITMS-4236<br>ERROR ITMS-90717</p>
 </blockquote>
-<h4 id="1-ERROR-ITMS-90034"><a href="#1-ERROR-ITMS-90034" class="headerlink" title="1. ERROR ITMS-90034:"></a>1. ERROR ITMS-90034:</h4><p>“Missing or invalid signature.The bundle’com.xxx.xxx’ at bundle path ‘Payload/xxx’ is not signed using an Apple submission certificate.”</p>
+<h4 id="❌-ERROR-ITMS-90034"><a href="#❌-ERROR-ITMS-90034" class="headerlink" title="❌ ERROR ITMS-90034:"></a>❌ ERROR ITMS-90034:</h4><p>“Missing or invalid signature.The bundle’com.xxx.xxx’ at bundle path ‘Payload/xxx’ is not signed using an Apple submission certificate.”</p>
 <span id="more"></span>
 
 <p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/1.png" alt="ERROR ITMS-90034"></p>
@@ -196,11 +196,11 @@
 </ul>
 <p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/6.png" alt="信任证书"></p>
 <p>上面这些操作应该就能解决问题了，可以打包重新upload试试。</p>
-<h4 id="2-ERROR-ITMS-4236"><a href="#2-ERROR-ITMS-4236" class="headerlink" title="2. ERROR ITMS-4236:"></a>2. ERROR ITMS-4236:</h4><p>“Invalid value ‘2019-08-16 14:23:22’ for bundle_version” at SoftwareAssets”</p>
+<h4 id="❌-ERROR-ITMS-4236"><a href="#❌-ERROR-ITMS-4236" class="headerlink" title="❌ ERROR ITMS-4236:"></a>❌ ERROR ITMS-4236:</h4><p>“Invalid value ‘2019-08-16 14:23:22’ for bundle_version” at SoftwareAssets”</p>
 <p>之前App的测试版本，为了方便知道更新时间，Build版本号是通过 Run Script 动态注入了一个时间格式，如下：</p>
 <p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/7.png" alt="Build"></p>
 <p>事实证明，不让这样用，哈哈，乖乖的改回了 2.2.2 。</p>
-<h4 id="3-ERROR-ITMS-90717"><a href="#3-ERROR-ITMS-90717" class="headerlink" title="3. ERROR ITMS-90717:"></a>3. ERROR ITMS-90717:</h4><p>“Invalid App Store Icon. The App Store Icon in the asset catalog in ‘.app’ can’t be transparent nor contain an alpha channel.”</p>
+<h4 id="❌-ERROR-ITMS-90717"><a href="#❌-ERROR-ITMS-90717" class="headerlink" title="❌ ERROR ITMS-90717:"></a>❌ ERROR ITMS-90717:</h4><p>“Invalid App Store Icon. The App Store Icon in the asset catalog in ‘.app’ can’t be transparent nor contain an alpha channel.”</p>
 <p>错误原因：应用图标不能有透明度或者包含Alpha 通道。</p>
 <ul>
 <li><p>让美工去掉图片的透明度。</p>
@@ -212,7 +212,6 @@
 <div contenteditable="plaintext-only"><div contenteditable="plaintext-only"><center>
   <div style="display:inline-block;"><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/flag.jpeg" class width="200"></div>
 </center>
-
 </div></div>
   </div>
 </article>
@@ -275,7 +274,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-ERROR-ITMS-90034"><span class="toc-number">1.</span> <span class="toc-text">1. ERROR ITMS-90034:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-ERROR-ITMS-4236"><span class="toc-number">2.</span> <span class="toc-text">2. ERROR ITMS-4236:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-ERROR-ITMS-90717"><span class="toc-number">3.</span> <span class="toc-text">3. ERROR ITMS-90717:</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9D%8C-ERROR-ITMS-90034"><span class="toc-number">1.</span> <span class="toc-text">❌ ERROR ITMS-90034:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9D%8C-ERROR-ITMS-4236"><span class="toc-number">2.</span> <span class="toc-text">❌ ERROR ITMS-4236:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9D%8C-ERROR-ITMS-90717"><span class="toc-number">3.</span> <span class="toc-text">❌ ERROR ITMS-90717:</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
@@ -293,7 +292,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;ERROR ITMS-90034&lt;br&gt;ERROR ITMS-4236&lt;br&gt;ERROR ITMS-90717&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h4 id=&#34;1-ERROR-ITMS-90034&#34;&gt;&lt;a href=&#34;#1-ERROR-ITMS-90034&#34; class=&#34;headerlink&#34; title=&#34;1. ERROR ITMS-90034:&#34;&gt;&lt;/a&gt;1. ERROR ITMS-90034:&lt;/h4&gt;&lt;p&gt;“Missing or invalid signature.The bundle’com.xxx.xxx’ at bundle path ‘Payload/xxx’ is not signed using an Apple submission certificate.”&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+&lt;h4 id=&#34;❌-ERROR-ITMS-90034&#34;&gt;&lt;a href=&#34;#❌-ERROR-ITMS-90034&#34; class=&#34;headerlink&#34; title=&#34;❌ ERROR ITMS-90034:&#34;&gt;&lt;/a&gt;❌ ERROR ITMS-90034:&lt;/h4&gt;&lt;p&gt;“Missing or invalid signature.The bundle’com.xxx.xxx’ at bundle path ‘Payload/xxx’ is not signed using an Apple submission certificate.”&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2019/08/19/%E4%B8%8A%E7%BA%BF%20AppStore/&t=iOS上线 AppStore - 打包、upload 时遇到的问题"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
