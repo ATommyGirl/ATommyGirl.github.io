@@ -117,9 +117,9 @@
             
             <tag> CentOS </tag>
             
-            <tag> Linux </tag>
-            
             <tag> 转载 </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -142,9 +142,9 @@
             
             <tag> CentOS </tag>
             
-            <tag> Linux </tag>
-            
             <tag> 转载 </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -241,9 +241,9 @@
       
         <tags>
             
-            <tag> Linux </tag>
-            
             <tag> Mac </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -805,9 +805,9 @@
             
             <tag> CentOS </tag>
             
-            <tag> Linux </tag>
-            
             <tag> 转载 </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -830,9 +830,9 @@
             
             <tag> CentOS </tag>
             
-            <tag> Linux </tag>
-            
             <tag> 转载 </tag>
+            
+            <tag> Linux </tag>
             
         </tags>
       
@@ -893,9 +893,9 @@
             
             <tag> 7788 </tag>
             
-            <tag> 服务器 </tag>
-            
             <tag> Mac </tag>
+            
+            <tag> 服务器 </tag>
             
             <tag> 网络 </tag>
             
@@ -1256,11 +1256,11 @@
     
     
     <entry>
-      <title>iOS 开发中的常见问题记录</title>
-      <link href="/2019/11/05/iOS_Problem/"/>
-      <url>/2019/11/05/iOS_Problem/</url>
+      <title>iOS13 适配注意点</title>
+      <link href="/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/"/>
+      <url>/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Xcode"><a href="#Xcode" class="headerlink" title="Xcode"></a>Xcode</h2><h3 id="❌-Thread-1-EXC-BAD-ACCESS-code-1-address-0x0"><a href="#❌-Thread-1-EXC-BAD-ACCESS-code-1-address-0x0" class="headerlink" title="❌ Thread 1: EXC_BAD_ACCESS (code=1, address=0x0)"></a>❌ Thread 1: EXC_BAD_ACCESS (code=1, address=0x0)</h3><p>出现这个问题，说明你访问了已经释放的内存。</p><p>报错行如果有使用到参数，可以看看参数是不是已经为 NULL 了。</p><p>报错行如果没有参数，那需要看调用这个方法的对象是不是已经被释放了。</p><h3 id="❌-No-architectures-to-compile-for-ONLY-ACTIVE-ARCH-YES-active-arch-x86-64"><a href="#❌-No-architectures-to-compile-for-ONLY-ACTIVE-ARCH-YES-active-arch-x86-64" class="headerlink" title="❌ No architectures to compile for (ONLY_ACTIVE_ARCH=YES, active arch=x86_64)"></a>❌ No architectures to compile for (ONLY_ACTIVE_ARCH=YES, active arch=x86_64)</h3><p>原因是模拟器缺少 x86_64 指令集，在 VALID_ARCHS 中 Debug 模式下添加如下：</p><p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/valid_archs.png"></p><h3 id="❌-Building-for-iOS-Simulator-but-the-linked-library-‘-’-was-built-for-iOS"><a href="#❌-Building-for-iOS-Simulator-but-the-linked-library-‘-’-was-built-for-iOS" class="headerlink" title="❌ Building for iOS Simulator, but the linked library ‘***’ was built for iOS."></a>❌ Building for iOS Simulator, but the linked library ‘***’ was built for iOS.</h3><p>Xcode -&gt; File -&gt; Workspace Settings -&gt; Build System 选择 Legacy Build System，当然这个只能做临时解决方案，因为这套编译系统在新版本 Xcode 中已经废弃了，不同的开发人员应该选择同一套编译系统。</p><h3 id="❌-Multiple-commands-produce-Info-plist"><a href="#❌-Multiple-commands-produce-Info-plist" class="headerlink" title="❌ Multiple commands produce *** Info.plist"></a>❌ Multiple commands produce *** Info.plist</h3><p>检查一下 Build Phases -&gt; Copy Bundle resources 中是否把 Info.plist 作为资源文件进行管理了，如果可以搜到，把这一行的引用删除。</p><h3 id="❌-Property-xxx-cannot-be-found-in-forward-class-object-xxx"><a href="#❌-Property-xxx-cannot-be-found-in-forward-class-object-xxx" class="headerlink" title="❌ Property xxx cannot be found in forward class object xxx"></a>❌ Property xxx cannot be found in forward class object xxx</h3><p>出现这类错误，通常由于头文件引起的：</p><ul><li><p>没有引入相应的头文件；</p></li><li><p>某头文件出现了循环引用：A引用B，B引用C，C引用A 。</p></li></ul><p>是不是没想到自己居然会犯引用的错误，哈哈哈~</p><h3 id="❌-ISO-C-17-does-not-allow-‘register’-storage-class-specifier"><a href="#❌-ISO-C-17-does-not-allow-‘register’-storage-class-specifier" class="headerlink" title="❌ ISO C++17 does not allow ‘register’ storage class specifier"></a>❌ ISO C++17 does not allow ‘register’ storage class specifier</h3><p>C++ 中的关键字 <code>register</code> 在 2011 年（C++11）被弃用，自那以后 <code>register</code> 已经没有意义，现在已经被删除。如果在使用基于 C++ 的三方库时提示了这个错误，可以尝试修改 Xcode  中的 <code>Build Settings</code> -&gt; <code>C++ Language Dialect</code> 和 <code>C++ Standard Library</code>的 <code>Compiler Default</code>。</p><p>我的项目中把  <code>C++ Language Dialect</code> 从 <code>GUN++17</code> 降为 <code>GUN++11</code> 一定程度解决了 C++ 语法上的错误。</p><h3 id="❌-NSKeyedUnarchiver-validateAllowedClass-forKey"><a href="#❌-NSKeyedUnarchiver-validateAllowedClass-forKey" class="headerlink" title="❌ -[NSKeyedUnarchiver validateAllowedClass:forKey:]"></a>❌ -[NSKeyedUnarchiver validateAllowedClass:forKey:]</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-[<span class="built_in">NSKeyedUnarchiver</span> validateAllowedClass:forKey:]: <span class="built_in">NSSecureCoding</span> allowed classes list contains [<span class="built_in">NSObject</span> <span class="keyword">class</span>], which bypasses security by allowing any Objective-C <span class="keyword">class</span> to be implicitly decoded. Consider reducing the scope of allowed classes during decoding by listing only the classes you expect to decode, or a more specific base <span class="keyword">class</span> than <span class="built_in">NSObject</span>. This will become an error <span class="keyword">in</span> the future. Allowed <span class="keyword">class</span> list: &#123;(</span><br><span class="line"></span><br><span class="line">  <span class="string">&quot;&#x27;NSObject&#x27; (0x7fff862bc6e8) [/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/usr/lib]&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure><h2 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h2><h3 id="❌-pod-install"><a href="#❌-pod-install" class="headerlink" title="❌ pod install"></a>❌ <code>pod install</code></h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RPC failed; <span class="built_in">curl</span> <span class="number">56</span> LibreSSL SSL_read: SSL_ERROR_SYSCALL, errno <span class="number">54</span></span><br><span class="line"><span class="comment"># 或：</span></span><br><span class="line"></span><br><span class="line">error: RPC failed; <span class="built_in">curl</span> <span class="number">18</span> transfer closed with outstanding read <span class="keyword">data</span> remaining</span><br><span class="line"><span class="comment"># 或：</span></span><br><span class="line"></span><br><span class="line">fatal: the remote <span class="keyword">end</span> hung up unexpectedly</span><br></pre></td></tr></table></figure><p>出现此类问题，大部分都是网络导致的，毕竟我们天朝的网络可是很不一般的……</p><p>如果，我是说如果你有科学上网的话，可以尝试下面的配置：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config -<span class="literal">-global</span> http.https://github.com.proxy socks5://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">10086</span></span><br></pre></td></tr></table></figure><p>取消代理：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config -<span class="literal">-global</span> -<span class="literal">-unset</span> http.https://github.com.proxy</span><br></pre></td></tr></table></figure><p>或者是这种错误：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LibreSSL SSL_connect: SSL_ERROR_SYSCALL <span class="keyword">in</span> connection to github.com:<span class="number">443</span></span><br></pre></td></tr></table></figure><p>查看一下已有的代理是否配置的有问题，unset 一下。</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config -<span class="literal">-global</span> -<span class="literal">-list</span></span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h5 id="❌-KVC-获取私有属性-直接崩溃，比方说获取-SearchBar-的-TextField"><a href="#❌-KVC-获取私有属性-直接崩溃，比方说获取-SearchBar-的-TextField" class="headerlink" title="❌ KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField"></a>❌ KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField</h5><p>​    解决方案是做版本判断 iOS13 的 searchbar 新增了一个 searchTextField 属性</p><h5 id="⚠️-Segement、SearchBar的样式变了，注意一下"><a href="#⚠️-Segement、SearchBar的样式变了，注意一下" class="headerlink" title="⚠️ Segement、SearchBar的样式变了，注意一下"></a>⚠️ Segement、SearchBar的样式变了，注意一下</h5><p>​    for 循环查找子视图失效，改为  searchBar.searchTextField  </p> <span id="more"></span><h5 id="❌-UIWebView-终极废弃，需要替换-WKWebView，不然-AppStore-审核是不通过的。"><a href="#❌-UIWebView-终极废弃，需要替换-WKWebView，不然-AppStore-审核是不通过的。" class="headerlink" title="❌ UIWebView 终极废弃，需要替换 WKWebView，不然 AppStore 审核是不通过的。"></a>❌ UIWebView 终极废弃，需要替换 WKWebView，不然 AppStore 审核是不通过的。</h5><h5 id="⚠️-黑夜模式"><a href="#⚠️-黑夜模式" class="headerlink" title="⚠️ 黑夜模式"></a>⚠️ 黑夜模式</h5><h5 id="⚠️-TextField：LeftView-如果是图片的话-会覆盖整个-TextField-解决办法是用一个-view-包裹一下图片作为-LeftView"><a href="#⚠️-TextField：LeftView-如果是图片的话-会覆盖整个-TextField-解决办法是用一个-view-包裹一下图片作为-LeftView" class="headerlink" title="⚠️ TextField：LeftView 如果是图片的话 会覆盖整个 TextField 解决办法是用一个 view 包裹一下图片作为 LeftView"></a>⚠️ TextField：LeftView 如果是图片的话 会覆盖整个 TextField 解决办法是用一个 view 包裹一下图片作为 LeftView</h5><h5 id="❌-UniversalLink"><a href="#❌-UniversalLink" class="headerlink" title="❌ UniversalLink"></a>❌ UniversalLink</h5><h5 id="https-www-jianshu-com-p-03e6b7828307"><a href="#https-www-jianshu-com-p-03e6b7828307" class="headerlink" title="https://www.jianshu.com/p/03e6b7828307"></a><a href="https://www.jianshu.com/p/03e6b7828307">https://www.jianshu.com/p/03e6b7828307</a></h5><p>​    微信分享强制使用。注册微信开放平台的时候 iOS的项目必须填这个。</p><h5 id="⚠️-模态出的页面，需要指定对应的弹出模式"><a href="#⚠️-模态出的页面，需要指定对应的弹出模式" class="headerlink" title="⚠️ 模态出的页面，需要指定对应的弹出模式"></a>⚠️ 模态出的页面，需要指定对应的弹出模式</h5><p>​    例如：UIModalPresentationOverFullScreen</p><p>​    检查图片选择器？</p><h5 id="❌-Tabbar的文字颜色"><a href="#❌-Tabbar的文字颜色" class="headerlink" title="❌ Tabbar的文字颜色"></a>❌ Tabbar的文字颜色</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[tabbarItem setTitleTextAttributes:@&#123;NSForegroundColorAttributeName:selectColor&#125; forState:UIControlStateSelected];</span><br></pre></td></tr></table></figure><p>​    此方法在 iOS 13 会有 bug，当我们 push 到下一页再次返回时 tabbar 字体颜色设置会失效。</p><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.tabBar.tintColor = selectColor;</span><br></pre></td></tr></table></figure><h5 id="❌-通过-NSURLSessionDataTask-下载文件流"><a href="#❌-通过-NSURLSessionDataTask-下载文件流" class="headerlink" title="❌ 通过 NSURLSessionDataTask 下载文件流"></a>❌ 通过 NSURLSessionDataTask 下载文件流</h5><p>​    需要在头部指定接受的返回格式：<code>application/octet-stream</code></p><h5 id="❌-Cocoapods"><a href="#❌-Cocoapods" class="headerlink" title="❌ Cocoapods"></a>❌ Cocoapods</h5><p>​    升级 CocoaPods 到 1.8.4 版本</p><p>​    但是随即问题就来了, 执行 pod install 下载库时，出现错误</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[!] <span class="symbol">CDN:</span> trunk URL couldn<span class="string">&#x27;t be downloaded: https://cdn.cocoapods.org/all_pods_versions_a_7_5.txt, error: execution expired</span></span><br></pre></td></tr></table></figure><p>后来查了半天资料, 最终在 <a href="https://github.com/CocoaPods/CocoaPods/issues/9303">github CocoaPods issues</a> 找到解决方案：在 Podfile 加上 source <code>https://github.com/CocoaPods/Specs.git</code> 不使用新版本的 CDN</p>]]></content>
       
       
       
@@ -1275,11 +1275,11 @@
     
     
     <entry>
-      <title>iOS13 适配注意点</title>
-      <link href="/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/"/>
-      <url>/2019/11/05/iOS13%20%E9%80%82%E9%85%8D%E6%B3%A8%E6%84%8F%E7%82%B9/</url>
+      <title>iOS 开发中的常见问题记录</title>
+      <link href="/2019/11/05/iOS_Problem/"/>
+      <url>/2019/11/05/iOS_Problem/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h5 id="❌-KVC-获取私有属性-直接崩溃，比方说获取-SearchBar-的-TextField"><a href="#❌-KVC-获取私有属性-直接崩溃，比方说获取-SearchBar-的-TextField" class="headerlink" title="❌ KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField"></a>❌ KVC 获取私有属性 直接崩溃，比方说获取 SearchBar 的 TextField</h5><p>​    解决方案是做版本判断 iOS13 的 searchbar 新增了一个 searchTextField 属性</p><h5 id="⚠️-Segement、SearchBar的样式变了，注意一下"><a href="#⚠️-Segement、SearchBar的样式变了，注意一下" class="headerlink" title="⚠️ Segement、SearchBar的样式变了，注意一下"></a>⚠️ Segement、SearchBar的样式变了，注意一下</h5><p>​    for 循环查找子视图失效，改为  searchBar.searchTextField  </p> <span id="more"></span><h5 id="❌-UIWebView-终极废弃，需要替换-WKWebView，不然-AppStore-审核是不通过的。"><a href="#❌-UIWebView-终极废弃，需要替换-WKWebView，不然-AppStore-审核是不通过的。" class="headerlink" title="❌ UIWebView 终极废弃，需要替换 WKWebView，不然 AppStore 审核是不通过的。"></a>❌ UIWebView 终极废弃，需要替换 WKWebView，不然 AppStore 审核是不通过的。</h5><h5 id="⚠️-黑夜模式"><a href="#⚠️-黑夜模式" class="headerlink" title="⚠️ 黑夜模式"></a>⚠️ 黑夜模式</h5><h5 id="⚠️-TextField：LeftView-如果是图片的话-会覆盖整个-TextField-解决办法是用一个-view-包裹一下图片作为-LeftView"><a href="#⚠️-TextField：LeftView-如果是图片的话-会覆盖整个-TextField-解决办法是用一个-view-包裹一下图片作为-LeftView" class="headerlink" title="⚠️ TextField：LeftView 如果是图片的话 会覆盖整个 TextField 解决办法是用一个 view 包裹一下图片作为 LeftView"></a>⚠️ TextField：LeftView 如果是图片的话 会覆盖整个 TextField 解决办法是用一个 view 包裹一下图片作为 LeftView</h5><h5 id="❌-UniversalLink"><a href="#❌-UniversalLink" class="headerlink" title="❌ UniversalLink"></a>❌ UniversalLink</h5><h5 id="https-www-jianshu-com-p-03e6b7828307"><a href="#https-www-jianshu-com-p-03e6b7828307" class="headerlink" title="https://www.jianshu.com/p/03e6b7828307"></a><a href="https://www.jianshu.com/p/03e6b7828307">https://www.jianshu.com/p/03e6b7828307</a></h5><p>​    微信分享强制使用。注册微信开放平台的时候 iOS的项目必须填这个。</p><h5 id="⚠️-模态出的页面，需要指定对应的弹出模式"><a href="#⚠️-模态出的页面，需要指定对应的弹出模式" class="headerlink" title="⚠️ 模态出的页面，需要指定对应的弹出模式"></a>⚠️ 模态出的页面，需要指定对应的弹出模式</h5><p>​    例如：UIModalPresentationOverFullScreen</p><p>​    检查图片选择器？</p><h5 id="❌-Tabbar的文字颜色"><a href="#❌-Tabbar的文字颜色" class="headerlink" title="❌ Tabbar的文字颜色"></a>❌ Tabbar的文字颜色</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[tabbarItem setTitleTextAttributes:@&#123;NSForegroundColorAttributeName:selectColor&#125; forState:UIControlStateSelected];</span><br></pre></td></tr></table></figure><p>​    此方法在 iOS 13 会有 bug，当我们 push 到下一页再次返回时 tabbar 字体颜色设置会失效。</p><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.tabBar.tintColor = selectColor;</span><br></pre></td></tr></table></figure><h5 id="❌-通过-NSURLSessionDataTask-下载文件流"><a href="#❌-通过-NSURLSessionDataTask-下载文件流" class="headerlink" title="❌ 通过 NSURLSessionDataTask 下载文件流"></a>❌ 通过 NSURLSessionDataTask 下载文件流</h5><p>​    需要在头部指定接受的返回格式：<code>application/octet-stream</code></p><h5 id="❌-Cocoapods"><a href="#❌-Cocoapods" class="headerlink" title="❌ Cocoapods"></a>❌ Cocoapods</h5><p>​    升级 CocoaPods 到 1.8.4 版本</p><p>​    但是随即问题就来了, 执行 pod install 下载库时，出现错误</p><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[!] <span class="symbol">CDN:</span> trunk URL couldn<span class="string">&#x27;t be downloaded: https://cdn.cocoapods.org/all_pods_versions_a_7_5.txt, error: execution expired</span></span><br></pre></td></tr></table></figure><p>后来查了半天资料, 最终在 <a href="https://github.com/CocoaPods/CocoaPods/issues/9303">github CocoaPods issues</a> 找到解决方案：在 Podfile 加上 source <code>https://github.com/CocoaPods/Specs.git</code> 不使用新版本的 CDN</p>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Xcode"><a href="#Xcode" class="headerlink" title="Xcode"></a>Xcode</h2><h3 id="❌-Thread-1-EXC-BAD-ACCESS-code-1-address-0x0"><a href="#❌-Thread-1-EXC-BAD-ACCESS-code-1-address-0x0" class="headerlink" title="❌ Thread 1: EXC_BAD_ACCESS (code=1, address=0x0)"></a>❌ Thread 1: EXC_BAD_ACCESS (code=1, address=0x0)</h3><p>出现这个问题，说明你访问了已经释放的内存。</p><p>报错行如果有使用到参数，可以看看参数是不是已经为 NULL 了。</p><p>报错行如果没有参数，那需要看调用这个方法的对象是不是已经被释放了。</p><h3 id="❌-No-architectures-to-compile-for-ONLY-ACTIVE-ARCH-YES-active-arch-x86-64"><a href="#❌-No-architectures-to-compile-for-ONLY-ACTIVE-ARCH-YES-active-arch-x86-64" class="headerlink" title="❌ No architectures to compile for (ONLY_ACTIVE_ARCH=YES, active arch=x86_64)"></a>❌ No architectures to compile for (ONLY_ACTIVE_ARCH=YES, active arch=x86_64)</h3><p>原因是模拟器缺少 x86_64 指令集，在 VALID_ARCHS 中 Debug 模式下添加如下：</p><p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/valid_archs.png"></p><h3 id="❌-Building-for-iOS-Simulator-but-the-linked-library-‘-’-was-built-for-iOS"><a href="#❌-Building-for-iOS-Simulator-but-the-linked-library-‘-’-was-built-for-iOS" class="headerlink" title="❌ Building for iOS Simulator, but the linked library ‘***’ was built for iOS."></a>❌ Building for iOS Simulator, but the linked library ‘***’ was built for iOS.</h3><p>Xcode -&gt; File -&gt; Workspace Settings -&gt; Build System 选择 Legacy Build System，当然这个只能做临时解决方案，因为这套编译系统在新版本 Xcode 中已经废弃了，不同的开发人员应该选择同一套编译系统。</p><h3 id="❌-Multiple-commands-produce-Info-plist"><a href="#❌-Multiple-commands-produce-Info-plist" class="headerlink" title="❌ Multiple commands produce *** Info.plist"></a>❌ Multiple commands produce *** Info.plist</h3><p>检查一下 Build Phases -&gt; Copy Bundle resources 中是否把 Info.plist 作为资源文件进行管理了，如果可以搜到，把这一行的引用删除。</p><h3 id="❌-Property-xxx-cannot-be-found-in-forward-class-object-xxx"><a href="#❌-Property-xxx-cannot-be-found-in-forward-class-object-xxx" class="headerlink" title="❌ Property xxx cannot be found in forward class object xxx"></a>❌ Property xxx cannot be found in forward class object xxx</h3><p>出现这类错误，通常由于头文件引起的：</p><ul><li><p>没有引入相应的头文件；</p></li><li><p>某头文件出现了循环引用：A引用B，B引用C，C引用A 。</p></li></ul><p>是不是没想到自己居然会犯引用的错误，哈哈哈~</p><h3 id="❌-ISO-C-17-does-not-allow-‘register’-storage-class-specifier"><a href="#❌-ISO-C-17-does-not-allow-‘register’-storage-class-specifier" class="headerlink" title="❌ ISO C++17 does not allow ‘register’ storage class specifier"></a>❌ ISO C++17 does not allow ‘register’ storage class specifier</h3><p>C++ 中的关键字 <code>register</code> 在 2011 年（C++11）被弃用，自那以后 <code>register</code> 已经没有意义，现在已经被删除。如果在使用基于 C++ 的三方库时提示了这个错误，可以尝试修改 Xcode  中的 <code>Build Settings</code> -&gt; <code>C++ Language Dialect</code> 和 <code>C++ Standard Library</code>的 <code>Compiler Default</code>。</p><p>我的项目中把  <code>C++ Language Dialect</code> 从 <code>GUN++17</code> 降为 <code>GUN++11</code> 一定程度解决了 C++ 语法上的错误。</p><h3 id="❌-NSKeyedUnarchiver-validateAllowedClass-forKey"><a href="#❌-NSKeyedUnarchiver-validateAllowedClass-forKey" class="headerlink" title="❌ -[NSKeyedUnarchiver validateAllowedClass:forKey:]"></a>❌ -[NSKeyedUnarchiver validateAllowedClass:forKey:]</h3><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-[<span class="built_in">NSKeyedUnarchiver</span> validateAllowedClass:forKey:]: <span class="built_in">NSSecureCoding</span> allowed classes list contains [<span class="built_in">NSObject</span> <span class="keyword">class</span>], which bypasses security by allowing any Objective-C <span class="keyword">class</span> to be implicitly decoded. Consider reducing the scope of allowed classes during decoding by listing only the classes you expect to decode, or a more specific base <span class="keyword">class</span> than <span class="built_in">NSObject</span>. This will become an error <span class="keyword">in</span> the future. Allowed <span class="keyword">class</span> list: &#123;(</span><br><span class="line"></span><br><span class="line">  <span class="string">&quot;&#x27;NSObject&#x27; (0x7fff862bc6e8) [/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/usr/lib]&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure><h2 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h2><h3 id="❌-pod-install"><a href="#❌-pod-install" class="headerlink" title="❌ pod install"></a>❌ <code>pod install</code></h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RPC failed; <span class="built_in">curl</span> <span class="number">56</span> LibreSSL SSL_read: SSL_ERROR_SYSCALL, errno <span class="number">54</span></span><br><span class="line"><span class="comment"># 或：</span></span><br><span class="line"></span><br><span class="line">error: RPC failed; <span class="built_in">curl</span> <span class="number">18</span> transfer closed with outstanding read <span class="keyword">data</span> remaining</span><br><span class="line"><span class="comment"># 或：</span></span><br><span class="line"></span><br><span class="line">fatal: the remote <span class="keyword">end</span> hung up unexpectedly</span><br></pre></td></tr></table></figure><p>出现此类问题，大部分都是网络导致的，毕竟我们天朝的网络可是很不一般的……</p><p>如果，我是说如果你有科学上网的话，可以尝试下面的配置：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config -<span class="literal">-global</span> http.https://github.com.proxy socks5://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">10086</span></span><br></pre></td></tr></table></figure><p>取消代理：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config -<span class="literal">-global</span> -<span class="literal">-unset</span> http.https://github.com.proxy</span><br></pre></td></tr></table></figure><p>或者是这种错误：</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LibreSSL SSL_connect: SSL_ERROR_SYSCALL <span class="keyword">in</span> connection to github.com:<span class="number">443</span></span><br></pre></td></tr></table></figure><p>查看一下已有的代理是否配置的有问题，unset 一下。</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config -<span class="literal">-global</span> -<span class="literal">-list</span></span><br></pre></td></tr></table></figure>]]></content>
       
       
       
@@ -1611,9 +1611,9 @@
       
         <tags>
             
-            <tag> 转载 </tag>
-            
             <tag> iOS </tag>
+            
+            <tag> 转载 </tag>
             
         </tags>
       
@@ -1645,7 +1645,7 @@
       <link href="/1000/01/01/Music/"/>
       <url>/1000/01/01/Music/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr><p>这篇隐藏的很深，只给有缘人，哈哈哈……分享最近听的音乐：</p><h4 id="王菲-《百年孤寂》"><a href="#王菲-《百年孤寂》" class="headerlink" title="王菲 - 《百年孤寂》"></a>王菲 - 《百年孤寂》</h4><p>林夕作词的一首歌，创作背景咱不了解，但听起来确实感觉大气磅礴。之前没怎么留意，但今年反复循环听了一阵儿。最喜欢这两段词儿：</p><blockquote><p>心属于你的 我借来寄托</p><p>却变成我的心魔</p><p>你属于谁的 我刚好经过</p><p>却带来潮起潮落</p><p>…</p><p>背影是真的 人是假的 没什么执着</p><p>一百年前 你不是你 我不是我</p><p>悲哀是真的 泪是假的 本来没因果</p><p>一百年后 没有你 也没有我</p><p>…</p><p>风属于天的 我借来吹吹</p><p>却吹起人间烟火</p><p>天属于谁的 我借来欣赏</p><p>却看到你的轮廓</p><p>…</p></blockquote><p>听来劝自己的：做人要拿得起放得下。听完也确实各方面看开一些。明年干巴爹~💪</p><h4 id="张学友-《情网》"><a href="#张学友-《情网》" class="headerlink" title="张学友 - 《情网》"></a>张学友 - 《情网》</h4><p>车里电台放的时候，被这种略带哀怨的吟唱吸引了，于是捡来听了几天。不得不说，还是老歌有味道。</p><blockquote><p>而你是一张无边无际的网<br>轻易就把我困在网中央<br>我越陷越深越迷惘<br>路越走越远越漫长</p><p>…</p></blockquote><h4 id="xxx-《安和桥》"><a href="#xxx-《安和桥》" class="headerlink" title="xxx - 《安和桥》"></a>xxx - 《安和桥》</h4><p>曾经有个人让我听一下这首歌 01:58 的位置…听说歌手吸毒，那我就不把他写在这里了。</p><blockquote><p>我知道这个世界<br>每天都有太多遗憾<br>所以你好再见</p><p>…</p></blockquote><h4 id="康姆士乐团-《你要如何，我们就如何》"><a href="#康姆士乐团-《你要如何，我们就如何》" class="headerlink" title="康姆士乐团 - 《你要如何，我们就如何》"></a>康姆士乐团 - 《你要如何，我们就如何》</h4><p>被一句“别哭前面一定有路”吸引来的，也算是支撑自己这一年多的一首歌，不过第一次听好像是在一个搞笑短视频里面。😂</p><blockquote><p>如果我 不对真的就是我 想带你飞<br>别哭 前面一定有路<br>仿佛 幸福在不远处</p><p>…</p></blockquote><h4 id="陈奕迅-《孤勇者》"><a href="#陈奕迅-《孤勇者》" class="headerlink" title="陈奕迅 - 《孤勇者》"></a>陈奕迅 - 《孤勇者》</h4><p>前几天同事推荐的，听说是为英雄联盟创作的动画中文主题曲。偷过来听了听，有几句歌词比较符合自己积极又强势的性格，哈哈，很喜欢：</p><blockquote><p>爱你孤身走暗巷</p><p>爱你不跪的模样</p><p>爱你对峙过绝望</p><p>不肯哭一场</p><p>爱你破烂的衣裳</p><p>却敢堵命运的枪</p><p>爱你和我那么像</p><p>缺口都一样</p><p>去吗 配吗 这褴褛的披风</p><p>战吗 战啊 以最卑微的梦</p></blockquote><h4 id="告五人-《爱人错过》"><a href="#告五人-《爱人错过》" class="headerlink" title="告五人 - 《爱人错过》"></a>告五人 - 《爱人错过》</h4><p>喜欢听这个倒不是说感叹情呀爱呀的，是因为这两句歌词，哈哈：</p><blockquote><p>你妈没有告诉你</p><p>撞到人要说对不起</p></blockquote><h4 id="汪苏泷-大张伟-的-Live-版-《剑魂》"><a href="#汪苏泷-大张伟-的-Live-版-《剑魂》" class="headerlink" title="汪苏泷/大张伟 的 Live 版 - 《剑魂》"></a>汪苏泷/大张伟 的 Live 版 - 《剑魂》</h4><blockquote><p>山外还有山比山高</p><p>半山腰</p><p>一声惊雷摇晃树梢</p><p>人外还有人忘不掉</p><p>…</p></blockquote><h4 id="邓紫棋-《Bang-Bang》"><a href="#邓紫棋-《Bang-Bang》" class="headerlink" title="邓紫棋 - 《Bang Bang》"></a>邓紫棋 - 《Bang Bang》</h4><p>据说是给小黄人大电影做的主题曲，俏皮又欢快。</p><blockquote><p>今天你说爱上我<br>就把自己上了锁<br>要是别人来诱惑<br>那就情海起风波</p><p>…</p></blockquote><h4 id="周杰伦、杨瑞代-《等你下课》"><a href="#周杰伦、杨瑞代-《等你下课》" class="headerlink" title="周杰伦、杨瑞代 - 《等你下课》"></a>周杰伦、杨瑞代 - 《等你下课》</h4><p>听好多年了，但是因为周董发新专辑，开始二次收费了。😂</p><blockquote><p>当我开始学会做蛋饼<br>才发现你不吃早餐</p><p>…</p><p>在人来人往找寻着你<br>守护着你不求结局</p><p>…</p></blockquote><h4 id="Tank-《三国恋》"><a href="#Tank-《三国恋》" class="headerlink" title="Tank - 《三国恋》"></a>Tank - 《三国恋》</h4><p>小时候听的，怀旧一下，哈哈，暴露年龄了。</p><blockquote><p>等待<del>良人归来那一刻<br>眼</del>泪~为你唱歌</p><p>…</p></blockquote><h4 id="周杰伦-《断了的弦》"><a href="#周杰伦-《断了的弦》" class="headerlink" title="周杰伦 - 《断了的弦》"></a>周杰伦 - 《断了的弦》</h4><blockquote><p>我突然释怀的笑</p><p>…</p></blockquote><p>突然间醒悟了一个人、三两个人 内心有多阴险、阴暗，只怪自己太蠢。</p><h4 id="周杰伦-《黑色毛衣》"><a href="#周杰伦-《黑色毛衣》" class="headerlink" title="周杰伦 - 《黑色毛衣》"></a>周杰伦 - 《黑色毛衣》</h4><blockquote><p>看着那白色的蜻蜓 在空中忘了前进</p><p>还能不能 重新编织 脑海中起毛球的记忆</p><p>再说我爱你 可能雨也不会停</p><p>…</p></blockquote><p>当意识到结果不再重要的时候，守住那一点点自以为的回忆和美好就够了，只是回忆再也与你无关了。</p><h4 id="周杰伦-《兰亭序》"><a href="#周杰伦-《兰亭序》" class="headerlink" title="周杰伦 - 《兰亭序》"></a>周杰伦 - 《兰亭序》</h4><blockquote><p>…</p><p>无关风月 我题序等你回<br>手书无愧 无惧人间是非<br>雨打蕉叶 又萧萧了几夜<br>我等春雷 来提醒你爱谁。</p></blockquote><hr>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr><p>这篇隐藏的很深，只给有缘人，哈哈哈……</p><p>分享最近听的音乐：</p><h4 id="〽️-王菲-《百年孤寂》"><a href="#〽️-王菲-《百年孤寂》" class="headerlink" title="〽️ 王菲 - 《百年孤寂》"></a>〽️ 王菲 - 《百年孤寂》</h4><p>林夕作词的一首歌，创作背景咱不了解，但听起来确实感觉大气磅礴。之前没怎么留意，但今年反复循环听了一阵儿。最喜欢这两段词儿：</p><blockquote><p>心属于你的 我借来寄托</p><p>却变成我的心魔</p><p>你属于谁的 我刚好经过</p><p>却带来潮起潮落</p><p>…</p><p>背影是真的 人是假的 没什么执着</p><p>一百年前 你不是你 我不是我</p><p>悲哀是真的 泪是假的 本来没因果</p><p>一百年后 没有你 也没有我</p><p>…</p><p>风属于天的 我借来吹吹</p><p>却吹起人间烟火</p><p>天属于谁的 我借来欣赏</p><p>却看到你的轮廓</p><p>…</p></blockquote><p>听来劝自己的：做人要拿得起放得下。听完也确实各方面看开一些。明年干巴爹~💪</p><h4 id="☄️-张学友-《情网》"><a href="#☄️-张学友-《情网》" class="headerlink" title="☄️ 张学友 - 《情网》"></a>☄️ 张学友 - 《情网》</h4><p>车里电台放的时候，被这种略带哀怨的吟唱吸引了，于是捡来听了几天。不得不说，还是老歌有味道。</p><blockquote><p>而你是一张无边无际的网<br>轻易就把我困在网中央<br>我越陷越深越迷惘<br>路越走越远越漫长</p><p>…</p></blockquote><h4 id="🖕-xxx-《安和桥》"><a href="#🖕-xxx-《安和桥》" class="headerlink" title="🖕 xxx - 《安和桥》"></a>🖕 xxx - 《安和桥》</h4><p>曾经有个人让我听一下这首歌 01:58 的位置…听说歌手吸毒，那我就不把他写在这里了。</p><blockquote><p>我知道这个世界<br>每天都有太多遗憾<br>所以你好再见</p><p>…</p></blockquote><h4 id="🤦‍♀️-康姆士乐团-《你要如何，我们就如何》"><a href="#🤦‍♀️-康姆士乐团-《你要如何，我们就如何》" class="headerlink" title="🤦‍♀️ 康姆士乐团 - 《你要如何，我们就如何》"></a>🤦‍♀️ 康姆士乐团 - 《你要如何，我们就如何》</h4><p>被一句“别哭前面一定有路”吸引来的，也算是支撑自己这一年多的一首歌，不过第一次听好像是在一个搞笑短视频里面。😂</p><blockquote><p>如果我 不对真的就是我 想带你飞<br>别哭 前面一定有路<br>仿佛 幸福在不远处</p><p>…</p></blockquote><h4 id="🤖-陈奕迅-《孤勇者》"><a href="#🤖-陈奕迅-《孤勇者》" class="headerlink" title="🤖 陈奕迅 - 《孤勇者》"></a>🤖 陈奕迅 - 《孤勇者》</h4><p>前几天同事推荐的，听说是为英雄联盟创作的动画中文主题曲。偷过来听了听，有几句歌词比较符合自己积极又强势的性格，哈哈，很喜欢：</p><blockquote><p>爱你孤身走暗巷</p><p>爱你不跪的模样</p><p>爱你对峙过绝望</p><p>不肯哭一场</p><p>爱你破烂的衣裳</p><p>却敢堵命运的枪</p><p>爱你和我那么像</p><p>缺口都一样</p><p>去吗 配吗 这褴褛的披风</p><p>战吗 战啊 以最卑微的梦</p></blockquote><h4 id="🤷‍♀️-告五人-《爱人错过》"><a href="#🤷‍♀️-告五人-《爱人错过》" class="headerlink" title="🤷‍♀️ 告五人 - 《爱人错过》"></a>🤷‍♀️ 告五人 - 《爱人错过》</h4><p>喜欢听这个倒不是说感叹情呀爱呀的，是因为这两句歌词，哈哈：</p><blockquote><p>你妈没有告诉你</p><p>撞到人要说对不起</p></blockquote><h4 id="🤺-汪苏泷-大张伟-的-Live-版-《剑魂》"><a href="#🤺-汪苏泷-大张伟-的-Live-版-《剑魂》" class="headerlink" title="🤺 汪苏泷/大张伟 的 Live 版 - 《剑魂》"></a>🤺 汪苏泷/大张伟 的 Live 版 - 《剑魂》</h4><blockquote><p>山外还有山比山高</p><p>半山腰</p><p>一声惊雷摇晃树梢</p><p>人外还有人忘不掉</p><p>…</p></blockquote><h4 id="🍌-邓紫棋-《Bang-Bang》"><a href="#🍌-邓紫棋-《Bang-Bang》" class="headerlink" title="🍌 邓紫棋 - 《Bang Bang》"></a>🍌 邓紫棋 - 《Bang Bang》</h4><p>据说是给小黄人大电影做的主题曲，俏皮又欢快。</p><blockquote><p>今天你说爱上我<br>就把自己上了锁<br>要是别人来诱惑<br>那就情海起风波</p><p>…</p></blockquote><h4 id="🍑-周杰伦、杨瑞代-《等你下课》"><a href="#🍑-周杰伦、杨瑞代-《等你下课》" class="headerlink" title="🍑 周杰伦、杨瑞代 - 《等你下课》"></a>🍑 周杰伦、杨瑞代 - 《等你下课》</h4><p>听好多年了，但是因为周董发新专辑，开始二次收费了。😂</p><blockquote><p>当我开始学会做蛋饼<br>才发现你不吃早餐</p><p>…</p><p>在人来人往找寻着你<br>守护着你不求结局</p><p>…</p></blockquote><h4 id="🍥-Tank-《三国恋》"><a href="#🍥-Tank-《三国恋》" class="headerlink" title="🍥 Tank - 《三国恋》"></a>🍥 Tank - 《三国恋》</h4><p>小时候听的，怀旧一下，哈哈，暴露年龄了。</p><blockquote><p>等待<del>良人归来那一刻<br>眼</del>泪~为你唱歌</p><p>…</p></blockquote><h4 id="🎻-周杰伦-《断了的弦》"><a href="#🎻-周杰伦-《断了的弦》" class="headerlink" title="🎻 周杰伦 - 《断了的弦》"></a>🎻 周杰伦 - 《断了的弦》</h4><blockquote><p>我突然释怀的笑</p><p>…</p></blockquote><p>突然间醒悟了一个人、三两个人 内心有多阴险、阴暗，只怪自己太蠢。</p><h4 id="⚠️-周杰伦-《黑色毛衣》"><a href="#⚠️-周杰伦-《黑色毛衣》" class="headerlink" title="⚠️ 周杰伦 - 《黑色毛衣》"></a>⚠️ 周杰伦 - 《黑色毛衣》</h4><blockquote><p>看着那白色的蜻蜓 在空中忘了前进</p><p>还能不能 重新编织 脑海中起毛球的记忆</p><p>再说我爱你 可能雨也不会停</p><p>…</p></blockquote><p>当意识到结果不再重要的时候，守住那一点点自以为的回忆和美好就够了，只是回忆再也与你无关了。</p><h4 id="🍊-周杰伦-《兰亭序》"><a href="#🍊-周杰伦-《兰亭序》" class="headerlink" title="🍊 周杰伦 - 《兰亭序》"></a>🍊 周杰伦 - 《兰亭序》</h4><blockquote><p>…</p><p>无关风月 我题序等你回<br>手书无愧 无惧人间是非<br>雨打蕉叶 又萧萧了几夜<br>我等春雷 来提醒你爱谁。</p></blockquote><hr>]]></content>
       
       
       
@@ -1663,9 +1663,20 @@
     
     
     <entry>
-      <title>回忆</title>
-      <link href="/gallery/index.html"/>
-      <url>/gallery/index.html</url>
+      <title>我</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="About-Me"><a href="#About-Me" class="headerlink" title="About Me"></a>About Me</h2><p>一个喜欢吃橘子的程序员👩‍💻：</p><ul><li>笔名：YYLittleCat</li><li>法号：迷</li><li>特点：明眸皓齿、巧笑嫣然</li><li>爱好：周星驰、名侦探柯南</li><li>宠物：🐈、🐈、🐢</li><li>职业：全菜工程师、半个PM</li><li>年龄：初代目90后</li></ul><p>“关于”，想了很久不知道写点儿什么，我就是一个简简单单的人，喜欢和乐观的人谈心、和厚道的人交朋友、和靠谱的人共事。为什么喜欢吃橘子？因为不用洗呀，很多人都这样不是吗，例如菠萝、香蕉、草莓，你的第一选择是什么？香蕉。剥了皮就可以吃嘛，但其实我最爱吃的水果是菠萝🍍和草莓🍓。</p><h2 id="Find-Me"><a href="#Find-Me" class="headerlink" title="Find Me"></a>Find Me</h2><ul><li><p>E-Mail：<a href="mailto:&#x7a;&#x68;&#x65;&#110;&#103;&#x79;&#116;&#x5f;&#x39;&#x31;&#x40;&#49;&#54;&#x33;&#46;&#x63;&#x6f;&#109;">&#x7a;&#x68;&#x65;&#110;&#103;&#x79;&#116;&#x5f;&#x39;&#x31;&#x40;&#49;&#54;&#x33;&#46;&#x63;&#x6f;&#109;</a> | <a href="mailto:&#122;&#104;&#101;&#x6e;&#x67;&#121;&#116;&#x40;&#x66;&#x6f;&#120;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;">&#122;&#104;&#101;&#x6e;&#x67;&#121;&#116;&#x40;&#x66;&#x6f;&#120;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;</a></p></li><li><p>Github：<a href="https://github.com/ATommyGirl">ATommyGirl</a></p></li><li><p>社交信息：</p></li></ul><center>    <div style="display:inline-block;"><img src="/about/index/myicon.jpg" class width="100"></div>    <div style="display:inline-block;margin-left:10px;"><img src="/about/index/myicon.jpg" class width="100"></div></center><p>欢迎文明交流！</p><p>原本，在这里放的是两张微信名片，意在希望所剩不多的 iOS 开发者可以抱团取暖，但之前有个神叨叨的开发者加我，着实恶心到了本喵，本喵属白色，不愿在污泥烂沟里搅和……思来想去还是把微信名片下线了，有需要交流的朋友留意 E-Mail 和 Github 的信息吧，也可以在最新的文章评论中留言。</p><h2 id="The-End"><a href="#The-End" class="headerlink" title="The End"></a>The End</h2><p>送给读到这里的你一个美丽的日落：</p><p><video controls src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/sundown.MOV" type="video/mp4">您的浏览器不支持播放该视频！</video></p>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -1685,33 +1696,11 @@
     
     
     <entry>
-      <title>categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>回忆</title>
+      <link href="/gallery/index.html"/>
+      <url>/gallery/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>我</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="About-Me"><a href="#About-Me" class="headerlink" title="About Me"></a>About Me</h2><p>一个喜欢吃橘子的程序员👩‍💻：</p><ul><li>笔名：YYLittleCat</li><li>法号：迷</li><li>特点：明眸皓齿、巧笑嫣然</li><li>爱好：周星驰、名侦探柯南</li><li>宠物：🐈、🐈、🐢</li><li>职业：全菜工程师、半个PM</li><li>年龄：初代目90后</li></ul><p>“关于”，想了很久不知道写点儿什么，我就是一个简简单单的人，喜欢和乐观的人谈心、和厚道的人交朋友、和靠谱的人共事。为什么喜欢吃橘子？因为不用洗呀，很多人都这样不是吗，例如菠萝、香蕉、草莓，你的第一选择是什么？香蕉。剥了皮就可以吃嘛，但其实我最爱吃的水果是菠萝🍍和草莓🍓。</p><h2 id="Find-Me"><a href="#Find-Me" class="headerlink" title="Find Me"></a>Find Me</h2><ul><li><p>E-Mail：<a href="mailto:&#122;&#x68;&#101;&#x6e;&#x67;&#x79;&#116;&#95;&#57;&#x31;&#x40;&#49;&#54;&#x33;&#46;&#99;&#111;&#x6d;">&#122;&#x68;&#101;&#x6e;&#x67;&#x79;&#116;&#95;&#57;&#x31;&#x40;&#49;&#54;&#x33;&#46;&#99;&#111;&#x6d;</a> | <a href="mailto:&#122;&#x68;&#x65;&#110;&#103;&#x79;&#116;&#64;&#x66;&#x6f;&#x78;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#111;&#109;">&#122;&#x68;&#x65;&#110;&#103;&#x79;&#116;&#64;&#x66;&#x6f;&#x78;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#111;&#109;</a></p></li><li><p>Github：<a href="https://github.com/ATommyGirl">ATommyGirl</a></p></li><li><p>社交信息：</p></li></ul><center>    <div style="display:inline-block;"><img src="/about/index/myicon.jpg" class width="100"></div>    <div style="display:inline-block;margin-left:10px;"><img src="/about/index/myicon.jpg" class width="100"></div></center><p>欢迎文明交流！</p><p>原本，在这里放的是两张微信名片，意在希望所剩不多的 iOS 开发者可以抱团取暖，但之前有个神叨叨的开发者加我，着实恶心到了本喵，本喵属白色，不愿在污泥烂沟里搅和……思来想去还是把微信名片下线了，有需要交流的朋友留意 E-Mail 和 Github 的信息吧，也可以在最新的文章评论中留言。</p><h2 id="The-End"><a href="#The-End" class="headerlink" title="The End"></a>The End</h2><p>送给读到这里的你一个美丽的日落：</p><p><video controls src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/sundown.MOV" type="video/mp4">您的浏览器不支持播放该视频！</video></p>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>昆明</title>
-      <link href="/gallery/%E6%98%86%E6%98%8E/index.html"/>
-      <url>/gallery/%E6%98%86%E6%98%8E/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><a href="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/%E6%98%86%E6%98%8E/km_5.jpg">https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/%E6%98%86%E6%98%8E/km_5.jpg</a></p>]]></content>
       
     </entry>
     
@@ -1723,6 +1712,17 @@
       <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><table><thead><tr><th align="center">🤓 <a href="iOS">iOS</a></th><th align="center">🛠 <a href="/tags/Xcode/">Xcode</a></th><th align="center">🔨 <a href="pod">Pod</a></th></tr></thead><tbody><tr><td align="center">😜 <a href="/tags/7788/">7788</a></td><td align="center">📖 <a href="/tags/%E8%AF%BB%E4%B9%A6/">读书</a></td><td align="center">🕸 <a href="/tags/%E7%BD%91%E7%BB%9C/">网络</a></td></tr><tr><td align="center">💻 <a href="/tags/Mac/">Mac</a></td><td align="center">📮 <a href="%E9%82%AE%E7%AE%B1">邮箱</a></td><td align="center">🤡 <a href="/tags/%E7%9E%8E%E6%89%AF/">瞎扯</a></td></tr><tr><td align="center">📑 <a href="WebView">WebView</a></td><td align="center">😍 <a href="/tags/%E6%88%91/">我</a></td><td align="center">💾 <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a></td></tr><tr><td align="center">💿 <a href="/tags/CentOS/">CentOS</a></td><td align="center"></td><td align="center"></td></tr></tbody></table>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>昆明</title>
+      <link href="/gallery/%E6%98%86%E6%98%8E/index.html"/>
+      <url>/gallery/%E6%98%86%E6%98%8E/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><a href="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/%E6%98%86%E6%98%8E/km_5.jpg">https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/%E6%98%86%E6%98%8E/km_5.jpg</a></p>]]></content>
       
     </entry>
     
