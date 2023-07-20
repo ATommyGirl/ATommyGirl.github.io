@@ -178,7 +178,7 @@
 <hr>
 <p>粘一段 ChatGPT 回复的会话 Cookie 和 长效 Cookie 的区别：</p>
 <p>❓ Cookie 是否分为会话 Cookie 和长效 Cookie ？</p>
-<p>Cookie 可以分为会话 Cookie（Session Cookie）和长效 Cookie（Persistent Cookie）两种类型。</p>
+<p>&#8195;&#8195;Cookie 可以分为会话 Cookie（Session Cookie）和长效 Cookie（Persistent Cookie）两种类型。</p>
 <ol>
 <li>会话 Cookie（Session Cookie）：<br>会话Cookie是一种临时性的Cookie，它保存在用户的浏览器中，只在用户的会话期间有效。会话期间通常是指用户在浏览器中打开网站直到关闭浏览器的这段时间。一旦用户关闭浏览器，会话 Cookie 就会被删除，不会在用户的计算机上保留任何信息。会话Cookie通常用于存储临时的、与用户会话相关的信息，比如用户登录状态、购物车内容等。</li>
 <li>长效 Cookie（Persistent Cookie）：<br>长效 Cookie 是一种更持久的 Cookie，它也保存在用户的浏览器中，但具有一定的过期时间。长效 Cookie 不会随着用户会话的结束而被删除，而是在设置的过期时间到达之前一直有效。长效 Cookie 通常用于跟踪用户的偏好设置、广告定向、用户标识等。这样，当用户重新访问网站时，网站可以读取长效 Cookie 中存储的信息，并根据之前的活动提供更加个性化的体验。</li>
@@ -189,22 +189,22 @@
 <li>长效 Cookie 是持久性的，具有过期时间，在过期之前一直有效。</li>
 </ul>
 <p>❓ 服务端是如何指定不同类型的 Cookie？</p>
-<p>在服务端，可以通过设置 Cookie 的属性来指定它的类型是会话 Cookie 还是长效 Cookie。这可以通过在 HTTP 响应头中设置 Cookie 的 “Max-Age”（最大年龄）或 “Expires”（过期时间）属性来实现。</p>
+<p>&#8195;&#8195;在服务端，可以通过设置 Cookie 的属性来指定它的类型是会话 Cookie 还是长效 Cookie。这可以通过在 HTTP 响应头中设置 Cookie 的 “Max-Age”（最大年龄）或 “Expires”（过期时间）属性来实现。</p>
 <ol>
 <li><p>设置会话 Cookie：<br>如果希望 Cookie 在用户会话期间有效，即在用户关闭浏览器后被删除，可以在 HTTP 响应头中设置 “Set-Cookie” 字段，并省略 “Max-Age” 和 “Expires” 属性，例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: cookie_name=cookie_value; path=/; HttpOnly</span><br></pre></td></tr></table></figure>
-<p>“HttpOnly” 属性可以防止 JavaScript 访问 Cookie，提高安全性。</p>
+<p>&#8195;&#8195;”HttpOnly” 属性可以防止 JavaScript 访问 Cookie，提高安全性。</p>
 </li>
 <li><p>设置长效 Cookie：<br>如果希望 Cookie 在一定的时间内保持有效，可以设置 “Max-Age” 属性来指定Cookie的存活时间（单位为秒），或者使用 “Expires” 属性来指定过期日期和时间。例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: cookie_name=cookie_value; path=/; Max-Age=3600; HttpOnly</span><br></pre></td></tr></table></figure>
-<p>上述例子中，”Max-Age=3600” 表示 Cookie 将在设置后的3600秒（1小时）后过期。</p>
+<p>&#8195;&#8195;上述例子中，”Max-Age=3600” 表示 Cookie 将在设置后的3600秒（1小时）后过期。</p>
 </li>
 </ol>
-<p>或者使用 “Expires” 属性：</p>
+<p>&#8195;&#8195;或者使用 “Expires” 属性：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: cookie_name=cookie_value; path=/; Expires=Wed, 20 Jul 2023 12:00:00 GMT; HttpOnly</span><br></pre></td></tr></table></figure>
-<p>上述例子中，”Expires” 属性指定了一个具体的过期日期和时间，当到达指定时间后，Cookie 将过期失效。</p>
-<p>&#8195;请注意，”Max-Age” 和 “Expires” 属性是互斥的，只需要设置其中一个即可。同时，如果两者都设置了，”Max-Age” 属性优先于 “Expires” 属性。</p>
-<p>需要注意的是，如果设置了长效 Cookie，那么这个 Cookie 将在用户的浏览器中保持有效，直到达到指定的过期时间或者用户手动删除了这个 Cookie 为止。而会话 Cookie 则会在用户关闭浏览器后自动删除，不会在用户计算机上保留任何信息。</p>
+<p>&#8195;&#8195;上述例子中，”Expires” 属性指定了一个具体的过期日期和时间，当到达指定时间后，Cookie 将过期失效。</p>
+<p>&#8195;&#8195;请注意，”Max-Age” 和 “Expires” 属性是互斥的，只需要设置其中一个即可。同时，如果两者都设置了，”Max-Age” 属性优先于 “Expires” 属性。</p>
+<p>&#8195;&#8195;需要注意的是，如果设置了长效 Cookie，那么这个 Cookie 将在用户的浏览器中保持有效，直到达到指定的过期时间或者用户手动删除了这个 Cookie 为止。而会话 Cookie 则会在用户关闭浏览器后自动删除，不会在用户计算机上保留任何信息。</p>
 <hr>
 <h2 id="关于-WKWebView-的几篇文章："><a href="#关于-WKWebView-的几篇文章：" class="headerlink" title="关于 WKWebView 的几篇文章："></a><strong>关于 WKWebView 的几篇文章：</strong></h2><p><a href="/2021/12/01/WKWebView/">WKWebView 基础篇</a><br><a href="/2021/12/02/WKWebView-Protocol/">WKWebView 协议篇</a><br><a href="/2021/12/11/WKWebView-Use/">WKWebView 实战篇</a></p>
 <h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a><strong>Demo</strong></h2><p><a target="_blank" rel="noopener" href="https://github.com/ATommyGirl/WebView">WebView 的 Demo</a></p>
