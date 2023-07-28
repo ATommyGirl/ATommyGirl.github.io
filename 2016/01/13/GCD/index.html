@@ -9,7 +9,7 @@
     <meta name="description" content="转载自 戴铭老师  文中较详细介绍GCD队列，各种GCD使用方法，实例如何使用Dispatch Source监听系统底层对象，分析不同锁的性能对比，实例GCD死锁情况。  文中的Demo在这里 Demo 对着文章试着来调demo体会更深哦，细细嚼消化好🤓">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【转载】GCD (Grand Central Dispatch)">
-<meta property="og:url" content="https://tommygirl.cn/2016/01/13/GCD/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2016/01/13/GCD/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="转载自 戴铭老师  文中较详细介绍GCD队列，各种GCD使用方法，实例如何使用Dispatch Source监听系统底层对象，分析不同锁的性能对比，实例GCD死锁情况。  文中的Demo在这里 Demo 对着文章试着来调demo体会更深哦，细细嚼消化好🤓">
 <meta property="og:locale" content="zh_CN">
@@ -94,20 +94,20 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2016/01/13/GCD/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2016/01/13/GCD/&text=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2016/01/13/GCD/&is_video=false&description=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=【转载】GCD (Grand Central Dispatch)&body=Check out this article: https://tommygirl.cn/2016/01/13/GCD/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2016/01/13/GCD/&name=【转载】GCD (Grand Central Dispatch)&description=&lt;p&gt;转载自 &lt;a href=&#34;https://github.com/ming1016&#34;&gt;戴铭老师&lt;/a&gt;&lt;/p&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2016/01/13/GCD/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2016/01/13/GCD/&text=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2016/01/13/GCD/&is_video=false&description=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【转载】GCD (Grand Central Dispatch)&body=Check out this article: https://tiantian.fyi/2016/01/13/GCD/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2016/01/13/GCD/&name=【转载】GCD (Grand Central Dispatch)&description=&lt;p&gt;转载自 &lt;a href=&#34;https://github.com/ming1016&#34;&gt;戴铭老师&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;文中较详细介绍GCD队列，各种GCD使用方法，实例如何使用Dispatch Source监听系统底层对象，分析不同锁的性能对比，实例GCD死锁情况。 &lt;/p&gt;
 &lt;p&gt;文中的Demo在这里 &lt;a href=&#34;https://github.com/ming1016/GCDDemo&#34;&gt;Demo&lt;/a&gt; 对着文章试着来调demo体会更深哦，细细嚼消化好🤓&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2016/01/13/GCD/&t=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2016/01/13/GCD/&t=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -606,20 +606,20 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2016/01/13/GCD/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2016/01/13/GCD/&text=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2016/01/13/GCD/&is_video=false&description=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=【转载】GCD (Grand Central Dispatch)&body=Check out this article: https://tommygirl.cn/2016/01/13/GCD/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2016/01/13/GCD/&name=【转载】GCD (Grand Central Dispatch)&description=&lt;p&gt;转载自 &lt;a href=&#34;https://github.com/ming1016&#34;&gt;戴铭老师&lt;/a&gt;&lt;/p&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2016/01/13/GCD/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2016/01/13/GCD/&text=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2016/01/13/GCD/&is_video=false&description=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【转载】GCD (Grand Central Dispatch)&body=Check out this article: https://tiantian.fyi/2016/01/13/GCD/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2016/01/13/GCD/&title=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2016/01/13/GCD/&name=【转载】GCD (Grand Central Dispatch)&description=&lt;p&gt;转载自 &lt;a href=&#34;https://github.com/ming1016&#34;&gt;戴铭老师&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;文中较详细介绍GCD队列，各种GCD使用方法，实例如何使用Dispatch Source监听系统底层对象，分析不同锁的性能对比，实例GCD死锁情况。 &lt;/p&gt;
 &lt;p&gt;文中的Demo在这里 &lt;a href=&#34;https://github.com/ming1016/GCDDemo&#34;&gt;Demo&lt;/a&gt; 对着文章试着来调demo体会更深哦，细细嚼消化好🤓&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2016/01/13/GCD/&t=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2016/01/13/GCD/&t=【转载】GCD (Grand Central Dispatch)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

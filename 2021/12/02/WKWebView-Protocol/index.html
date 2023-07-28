@@ -9,7 +9,7 @@
     <meta name="description" content="WKWebView 的基础内容可以看我之前写的这篇。WKWebView 基础篇 项目中用到的几个协议：  WKNavigationDelegate WKUIDelegate WKScriptMessageHandler WKHTTPCookieStoreObserver WKURLSchemeHandler WKScriptMessageHandlerWithReply  让我们康康都是用来做什么">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WKWebView 协议篇">
-<meta property="og:url" content="https://tommygirl.cn/2021/12/02/WKWebView-Protocol/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2021/12/02/WKWebView-Protocol/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="WKWebView 的基础内容可以看我之前写的这篇。WKWebView 基础篇 项目中用到的几个协议：  WKNavigationDelegate WKUIDelegate WKScriptMessageHandler WKHTTPCookieStoreObserver WKURLSchemeHandler WKScriptMessageHandlerWithReply  让我们康康都是用来做什么">
 <meta property="og:locale" content="zh_CN">
@@ -94,16 +94,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&text=WKWebView 协议篇"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&is_video=false&description=WKWebView 协议篇"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=WKWebView 协议篇&body=Check out this article: https://tommygirl.cn/2021/12/02/WKWebView-Protocol/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&name=WKWebView 协议篇&description=&lt;p&gt;WKWebView 的基础内容可以看我之前写的这篇。&lt;a href=&#34;/2020/12/01/WKWebView/&#34;&gt;WKWebView 基础篇&lt;/a&gt;&lt;/p&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&text=WKWebView 协议篇"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&is_video=false&description=WKWebView 协议篇"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WKWebView 协议篇&body=Check out this article: https://tiantian.fyi/2021/12/02/WKWebView-Protocol/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&name=WKWebView 协议篇&description=&lt;p&gt;WKWebView 的基础内容可以看我之前写的这篇。&lt;a href=&#34;/2020/12/01/WKWebView/&#34;&gt;WKWebView 基础篇&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;项目中用到的几个协议：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;WKNavigationDelegate&lt;/li&gt;
@@ -114,7 +114,7 @@
 &lt;li&gt;WKScriptMessageHandlerWithReply&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;让我们康康都是用来做什么的……&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&t=WKWebView 协议篇"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&t=WKWebView 协议篇"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -334,7 +334,7 @@
 <p>用于 <code>接收</code> JavaScript 发来的消息的消息处理器。</p>
 </blockquote>
 <p>iOS 与 JavaScript 做交互的协议。当 JavaScript 代码发送一条专门针对我们的消息处理程序的消息时，可以通过这个协议的方法来接收，然后自定义后续的处理。</p>
-<p>涉及到的类型 <code>WKUserContentController</code>。基本用法我们在 <a href="https://tommygirl.cn/2020/12/01/WKWebView/#WKUserContentController"><code>WKWebView 基础篇</code></a> 提到过，这里就不重复了。</p>
+<p>涉及到的类型 <code>WKUserContentController</code>。基本用法我们在 <a target="_blank" rel="noopener" href="https://tommygirl.cn/2020/12/01/WKWebView/#WKUserContentController"><code>WKWebView 基础篇</code></a> 提到过，这里就不重复了。</p>
 <p>很简单，就一个方法。干就完了。</p>
 <ul>
 <li>接收到 script message</li>
@@ -438,16 +438,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&text=WKWebView 协议篇"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&is_video=false&description=WKWebView 协议篇"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=WKWebView 协议篇&body=Check out this article: https://tommygirl.cn/2021/12/02/WKWebView-Protocol/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&name=WKWebView 协议篇&description=&lt;p&gt;WKWebView 的基础内容可以看我之前写的这篇。&lt;a href=&#34;/2020/12/01/WKWebView/&#34;&gt;WKWebView 基础篇&lt;/a&gt;&lt;/p&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&text=WKWebView 协议篇"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&is_video=false&description=WKWebView 协议篇"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WKWebView 协议篇&body=Check out this article: https://tiantian.fyi/2021/12/02/WKWebView-Protocol/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&title=WKWebView 协议篇"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&name=WKWebView 协议篇&description=&lt;p&gt;WKWebView 的基础内容可以看我之前写的这篇。&lt;a href=&#34;/2020/12/01/WKWebView/&#34;&gt;WKWebView 基础篇&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;项目中用到的几个协议：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;WKNavigationDelegate&lt;/li&gt;
@@ -458,7 +458,7 @@
 &lt;li&gt;WKScriptMessageHandlerWithReply&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;让我们康康都是用来做什么的……&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/12/02/WKWebView-Protocol/&t=WKWebView 协议篇"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2021/12/02/WKWebView-Protocol/&t=WKWebView 协议篇"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

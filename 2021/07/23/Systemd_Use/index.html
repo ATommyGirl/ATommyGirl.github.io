@@ -9,7 +9,7 @@
     <meta name="description" content="参考自：阮一峰老师博客  上一篇文章，我介绍了 Systemd 的主要命令，今天介绍如何使用它完成一些基本的任务。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【转载】Systemd 入门教程：实战篇">
-<meta property="og:url" content="https://tommygirl.cn/2021/07/23/Systemd_Use/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2021/07/23/Systemd_Use/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="参考自：阮一峰老师博客  上一篇文章，我介绍了 Systemd 的主要命令，今天介绍如何使用它完成一些基本的任务。">
 <meta property="og:locale" content="zh_CN">
@@ -19,8 +19,8 @@
 <meta property="article:author" content="YYLittleCat">
 <meta property="article:tag" content="服务器">
 <meta property="article:tag" content="CentOS">
-<meta property="article:tag" content="转载">
 <meta property="article:tag" content="Linux">
+<meta property="article:tag" content="转载">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.ruanyifeng.com/blogimg/asset/2016/bg2016030801.jpg">
     
@@ -98,20 +98,20 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/07/23/Systemd_Use/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&text=【转载】Systemd 入门教程：实战篇"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&is_video=false&description=【转载】Systemd 入门教程：实战篇"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=【转载】Systemd 入门教程：实战篇&body=Check out this article: https://tommygirl.cn/2021/07/23/Systemd_Use/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&name=【转载】Systemd 入门教程：实战篇&description=&lt;p&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html&#34;&gt;参考自：阮一峰老师博客&lt;/a&gt;&lt;/p&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2021/07/23/Systemd_Use/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&text=【转载】Systemd 入门教程：实战篇"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&is_video=false&description=【转载】Systemd 入门教程：实战篇"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【转载】Systemd 入门教程：实战篇&body=Check out this article: https://tiantian.fyi/2021/07/23/Systemd_Use/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&name=【转载】Systemd 入门教程：实战篇&description=&lt;p&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html&#34;&gt;参考自：阮一峰老师博客&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;上一篇文章，我介绍了 Systemd 的&lt;a href=&#34;https://tommygirl.cn/2021/07/23/Systemd_Command/&#34;&gt;主要命令&lt;/a&gt;，今天介绍如何使用它完成一些基本的任务。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.ruanyifeng.com/blogimg/asset/2016/bg2016030801.jpg&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/07/23/Systemd_Use/&t=【转载】Systemd 入门教程：实战篇"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2021/07/23/Systemd_Use/&t=【转载】Systemd 入门教程：实战篇"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -162,7 +162,7 @@
   <div class="content" itemprop="articleBody">
     <p><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html">参考自：阮一峰老师博客</a></p>
 <hr>
-<p>上一篇文章，我介绍了 Systemd 的<a href="https://tommygirl.cn/2021/07/23/Systemd_Command/">主要命令</a>，今天介绍如何使用它完成一些基本的任务。</p>
+<p>上一篇文章，我介绍了 Systemd 的<a target="_blank" rel="noopener" href="https://tommygirl.cn/2021/07/23/Systemd_Command/">主要命令</a>，今天介绍如何使用它完成一些基本的任务。</p>
 <p><img src="https://www.ruanyifeng.com/blogimg/asset/2016/bg2016030801.jpg" alt="img"></p>
 <span id="more"></span>
 
@@ -380,20 +380,20 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/07/23/Systemd_Use/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&text=【转载】Systemd 入门教程：实战篇"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&is_video=false&description=【转载】Systemd 入门教程：实战篇"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=【转载】Systemd 入门教程：实战篇&body=Check out this article: https://tommygirl.cn/2021/07/23/Systemd_Use/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/07/23/Systemd_Use/&name=【转载】Systemd 入门教程：实战篇&description=&lt;p&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html&#34;&gt;参考自：阮一峰老师博客&lt;/a&gt;&lt;/p&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2021/07/23/Systemd_Use/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&text=【转载】Systemd 入门教程：实战篇"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&is_video=false&description=【转载】Systemd 入门教程：实战篇"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【转载】Systemd 入门教程：实战篇&body=Check out this article: https://tiantian.fyi/2021/07/23/Systemd_Use/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&title=【转载】Systemd 入门教程：实战篇"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2021/07/23/Systemd_Use/&name=【转载】Systemd 入门教程：实战篇&description=&lt;p&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html&#34;&gt;参考自：阮一峰老师博客&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;上一篇文章，我介绍了 Systemd 的&lt;a href=&#34;https://tommygirl.cn/2021/07/23/Systemd_Command/&#34;&gt;主要命令&lt;/a&gt;，今天介绍如何使用它完成一些基本的任务。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.ruanyifeng.com/blogimg/asset/2016/bg2016030801.jpg&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/07/23/Systemd_Use/&t=【转载】Systemd 入门教程：实战篇"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2021/07/23/Systemd_Use/&t=【转载】Systemd 入门教程：实战篇"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

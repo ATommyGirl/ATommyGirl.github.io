@@ -9,7 +9,7 @@
     <meta name="description" content="什么是 Shell之前我一直混淆了几个概念：命令行、脚本、命令解释器、Shell。  从严格意义上讲，命令行指的是供用户输入命令的界面，其本身只是接受输入，然后把命令传递给命令解释器。后者就是 Shell。从本质上讲，Shell 是一个程序，它在用户和操作系统之间提供了一个面向行的可交互接口。用户在命令行中输入命令，运行在后台的 Shell 把命令转换成指令代码发送给操作系统。Shell 提供了">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 学习笔记（二）- Shell 初识">
-<meta property="og:url" content="https://tommygirl.cn/2022/02/23/Linux_Shell/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2022/02/23/Linux_Shell/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="什么是 Shell之前我一直混淆了几个概念：命令行、脚本、命令解释器、Shell。  从严格意义上讲，命令行指的是供用户输入命令的界面，其本身只是接受输入，然后把命令传递给命令解释器。后者就是 Shell。从本质上讲，Shell 是一个程序，它在用户和操作系统之间提供了一个面向行的可交互接口。用户在命令行中输入命令，运行在后台的 Shell 把命令转换成指令代码发送给操作系统。Shell 提供了">
 <meta property="og:locale" content="zh_CN">
@@ -93,16 +93,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/02/23/Linux_Shell/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&text=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&is_video=false&description=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（二）- Shell 初识&body=Check out this article: https://tommygirl.cn/2022/02/23/Linux_Shell/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&name=Linux 学习笔记（二）- Shell 初识&description=&lt;hr&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/02/23/Linux_Shell/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&text=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&is_video=false&description=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（二）- Shell 初识&body=Check out this article: https://tiantian.fyi/2022/02/23/Linux_Shell/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&name=Linux 学习笔记（二）- Shell 初识&description=&lt;hr&gt;
 &lt;h2 id=&#34;什么是-Shell&#34;&gt;&lt;a href=&#34;#什么是-Shell&#34; class=&#34;headerlink&#34; title=&#34;什么是 Shell&#34;&gt;&lt;/a&gt;什么是 Shell&lt;/h2&gt;&lt;p&gt;之前我一直混淆了几个概念：命令行、脚本、命令解释器、Shell。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;从严格意义上讲，命令行指的是供用户输入命令的界面，其本身只是接受输入，然后把命令传递给命令解释器。后者就是 Shell。从本质上讲，Shell 是一个程序，它在用户和操作系统之间提供了一个面向行的可交互接口。用户在命令行中输入命令，运行在后台的 Shell 把命令转换成指令代码发送给操作系统。Shell 提供了很多高级特性，使得用户和操作系统间的交互变得简便和高效。&lt;/p&gt;
@@ -113,7 +113,7 @@
 
 &lt;p&gt;&lt;strong&gt;FYI&lt;/strong&gt;：Linux 中命令和文件名都是区分大小写的。&lt;/p&gt;
 &lt;h2 id=&#34;小试牛刀&#34;&gt;&lt;a href=&#34;#小试牛刀&#34; class=&#34;headerlink&#34; title=&#34;小试牛刀&#34;&gt;&lt;/a&gt;小试牛刀&lt;/h2&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/23/Linux_Shell/&t=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/02/23/Linux_Shell/&t=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -286,16 +286,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/02/23/Linux_Shell/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&text=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&is_video=false&description=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（二）- Shell 初识&body=Check out this article: https://tommygirl.cn/2022/02/23/Linux_Shell/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/23/Linux_Shell/&name=Linux 学习笔记（二）- Shell 初识&description=&lt;hr&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/02/23/Linux_Shell/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&text=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&is_video=false&description=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（二）- Shell 初识&body=Check out this article: https://tiantian.fyi/2022/02/23/Linux_Shell/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&title=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/02/23/Linux_Shell/&name=Linux 学习笔记（二）- Shell 初识&description=&lt;hr&gt;
 &lt;h2 id=&#34;什么是-Shell&#34;&gt;&lt;a href=&#34;#什么是-Shell&#34; class=&#34;headerlink&#34; title=&#34;什么是 Shell&#34;&gt;&lt;/a&gt;什么是 Shell&lt;/h2&gt;&lt;p&gt;之前我一直混淆了几个概念：命令行、脚本、命令解释器、Shell。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;从严格意义上讲，命令行指的是供用户输入命令的界面，其本身只是接受输入，然后把命令传递给命令解释器。后者就是 Shell。从本质上讲，Shell 是一个程序，它在用户和操作系统之间提供了一个面向行的可交互接口。用户在命令行中输入命令，运行在后台的 Shell 把命令转换成指令代码发送给操作系统。Shell 提供了很多高级特性，使得用户和操作系统间的交互变得简便和高效。&lt;/p&gt;
@@ -306,7 +306,7 @@
 
 &lt;p&gt;&lt;strong&gt;FYI&lt;/strong&gt;：Linux 中命令和文件名都是区分大小写的。&lt;/p&gt;
 &lt;h2 id=&#34;小试牛刀&#34;&gt;&lt;a href=&#34;#小试牛刀&#34; class=&#34;headerlink&#34; title=&#34;小试牛刀&#34;&gt;&lt;/a&gt;小试牛刀&lt;/h2&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/23/Linux_Shell/&t=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/02/23/Linux_Shell/&t=Linux 学习笔记（二）- Shell 初识"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

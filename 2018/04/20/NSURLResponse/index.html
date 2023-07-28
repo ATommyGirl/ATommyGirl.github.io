@@ -9,7 +9,7 @@
     <meta name="description" content="NSURLResponse NSURLResponse&#x2F;URLResponse 类中存放请求的回执信息，在发送网络请求时，如果请求成功，首先会接收到服务端的回执信息，直接开始接收具体的返回数据。与协议或URL方案无关。  主要有以下几个属性，并且都是只读的，因为是服务器帮我们指定的，所以一般我们是不能自定义这些属性的： url 本次请求的URL地址  1open var url: URL? &amp;#1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="URL Loading System 之 NSURLResponse&#x2F;URLResponse">
-<meta property="og:url" content="https://tommygirl.cn/2018/04/20/NSURLResponse/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2018/04/20/NSURLResponse/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="NSURLResponse NSURLResponse&#x2F;URLResponse 类中存放请求的回执信息，在发送网络请求时，如果请求成功，首先会接收到服务端的回执信息，直接开始接收具体的返回数据。与协议或URL方案无关。  主要有以下几个属性，并且都是只读的，因为是服务器帮我们指定的，所以一般我们是不能自定义这些属性的： url 本次请求的URL地址  1open var url: URL? &amp;#1">
 <meta property="og:locale" content="zh_CN">
@@ -94,17 +94,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2018/04/20/NSURLResponse/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&text=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&is_video=false&description=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=URL Loading System 之 NSURLResponse/URLResponse&body=Check out this article: https://tommygirl.cn/2018/04/20/NSURLResponse/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&name=URL Loading System 之 NSURLResponse/URLResponse&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2018/04/20/NSURLResponse/&t=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2018/04/20/NSURLResponse/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&text=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&is_video=false&description=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=URL Loading System 之 NSURLResponse/URLResponse&body=Check out this article: https://tiantian.fyi/2018/04/20/NSURLResponse/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&name=URL Loading System 之 NSURLResponse/URLResponse&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2018/04/20/NSURLResponse/&t=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -193,7 +193,7 @@
 <h3 id="statusCode"><a href="#statusCode" class="headerlink" title="statusCode"></a>statusCode</h3><blockquote>
 <p>请求的状态码</p>
 </blockquote>
-<p>标准 HTTP 协议内容，不同的 code 码表示不同的请求状态，参见<a href="https://tommygirl.cn/2015/08/02/HTTP%20%E7%9A%84%E4%B8%80%E7%82%B9%E5%84%BF%E5%B0%8F%E7%9F%A5%E8%AF%86/#%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%BA%94%E7%9A%84%E5%B8%B8%E8%A7%81%E7%8A%B6%E6%80%81">网络响应的常见状态</a> 。</p>
+<p>标准 HTTP 协议内容，不同的 code 码表示不同的请求状态，参见<a target="_blank" rel="noopener" href="https://tommygirl.cn/2015/08/02/HTTP%20%E7%9A%84%E4%B8%80%E7%82%B9%E5%84%BF%E5%B0%8F%E7%9F%A5%E8%AF%86/#%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%BA%94%E7%9A%84%E5%B8%B8%E8%A7%81%E7%8A%B6%E6%80%81">网络响应的常见状态</a> 。</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="keyword">var</span> statusCode: <span class="type">Int</span> &#123; <span class="keyword">get</span> &#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="allHeaderFields"><a href="#allHeaderFields" class="headerlink" title="allHeaderFields"></a>allHeaderFields</h3><blockquote>
@@ -213,9 +213,9 @@
 
 
 
-<h2 id="系列："><a href="#系列：" class="headerlink" title="系列："></a>系列：</h2><p><a href="https://tommygirl.cn/2018/04/19/URLLoadingSystem/">URL Loading System[译]</a></p>
-<p><a href="https://tommygirl.cn/2018/04/19/NSURLRequest/">NSURLRequest</a></p>
-<p><a href="https://tommygirl.cn/2018/04/20/NSURLResponse/">NSURLResponse</a></p>
+<h2 id="系列："><a href="#系列：" class="headerlink" title="系列："></a>系列：</h2><p><a target="_blank" rel="noopener" href="https://tommygirl.cn/2018/04/19/URLLoadingSystem/">URL Loading System[译]</a></p>
+<p><a target="_blank" rel="noopener" href="https://tommygirl.cn/2018/04/19/NSURLRequest/">NSURLRequest</a></p>
+<p><a target="_blank" rel="noopener" href="https://tommygirl.cn/2018/04/20/NSURLResponse/">NSURLResponse</a></p>
 
   </div>
 </article>
@@ -283,17 +283,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2018/04/20/NSURLResponse/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&text=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&is_video=false&description=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=URL Loading System 之 NSURLResponse/URLResponse&body=Check out this article: https://tommygirl.cn/2018/04/20/NSURLResponse/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2018/04/20/NSURLResponse/&name=URL Loading System 之 NSURLResponse/URLResponse&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2018/04/20/NSURLResponse/&t=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2018/04/20/NSURLResponse/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&text=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&is_video=false&description=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=URL Loading System 之 NSURLResponse/URLResponse&body=Check out this article: https://tiantian.fyi/2018/04/20/NSURLResponse/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&title=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2018/04/20/NSURLResponse/&name=URL Loading System 之 NSURLResponse/URLResponse&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2018/04/20/NSURLResponse/&t=URL Loading System 之 NSURLResponse/URLResponse"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

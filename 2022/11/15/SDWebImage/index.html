@@ -9,7 +9,7 @@
     <meta name="description" content="&amp;#8195;&amp;#8195;OC 中常用的轮播图控件是 SDCycleScrollView，基本上满足轮播的需求，当然，如果需要花里胡哨的自定义样式，还是要自己改的… &amp;#8195;&amp;#8195;今天想记录的一个小问题是：轮播图要加载的图片需要通过认证才可以访问，而认证信息是由服务器颁发、通过 Cookie 下发到客户端。问题是轮播图没有自动携带 Cookie，导致认证失败、图片加载失败。 SD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SDWebImage 不携带 Cookie 的问题">
-<meta property="og:url" content="https://tommygirl.cn/2022/11/15/SDWebImage/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2022/11/15/SDWebImage/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="&amp;#8195;&amp;#8195;OC 中常用的轮播图控件是 SDCycleScrollView，基本上满足轮播的需求，当然，如果需要花里胡哨的自定义样式，还是要自己改的… &amp;#8195;&amp;#8195;今天想记录的一个小问题是：轮播图要加载的图片需要通过认证才可以访问，而认证信息是由服务器颁发、通过 Cookie 下发到客户端。问题是轮播图没有自动携带 Cookie，导致认证失败、图片加载失败。 SD">
 <meta property="og:locale" content="zh_CN">
@@ -96,17 +96,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/11/15/SDWebImage/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/11/15/SDWebImage/&text=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/11/15/SDWebImage/&is_video=false&description=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=SDWebImage 不携带 Cookie 的问题&body=Check out this article: https://tommygirl.cn/2022/11/15/SDWebImage/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/11/15/SDWebImage/&name=SDWebImage 不携带 Cookie 的问题&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/11/15/SDWebImage/&t=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/11/15/SDWebImage/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/11/15/SDWebImage/&text=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/11/15/SDWebImage/&is_video=false&description=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SDWebImage 不携带 Cookie 的问题&body=Check out this article: https://tiantian.fyi/2022/11/15/SDWebImage/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/11/15/SDWebImage/&name=SDWebImage 不携带 Cookie 的问题&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/11/15/SDWebImage/&t=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -284,17 +284,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/11/15/SDWebImage/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/11/15/SDWebImage/&text=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/11/15/SDWebImage/&is_video=false&description=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=SDWebImage 不携带 Cookie 的问题&body=Check out this article: https://tommygirl.cn/2022/11/15/SDWebImage/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/11/15/SDWebImage/&name=SDWebImage 不携带 Cookie 的问题&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/11/15/SDWebImage/&t=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/11/15/SDWebImage/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/11/15/SDWebImage/&text=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/11/15/SDWebImage/&is_video=false&description=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SDWebImage 不携带 Cookie 的问题&body=Check out this article: https://tiantian.fyi/2022/11/15/SDWebImage/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/11/15/SDWebImage/&title=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/11/15/SDWebImage/&name=SDWebImage 不携带 Cookie 的问题&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/11/15/SDWebImage/&t=SDWebImage 不携带 Cookie 的问题"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

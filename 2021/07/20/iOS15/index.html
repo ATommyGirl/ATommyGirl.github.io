@@ -9,7 +9,7 @@
     <meta name="description" content="苹果前两天推出了iOS 15的beta-3。这个消息还是从客户那儿知道的😂，没想到他们比我还前卫，秋天都等不及~~ 测试背景Xcode 13 beta版，iOS 15 beta 3的系统。除了客户提出的问题，自己还发现了两处UI异常，不过说不定苹果能良心发现，在正式版中给修复一下。 坑一、企业签名的 App 无法使用客户反馈说 App 不能正常打开，并且提示下面的这种信息：  “xxx”Need">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS 15 适配踩坑">
-<meta property="og:url" content="https://tommygirl.cn/2021/07/20/iOS15/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2021/07/20/iOS15/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="苹果前两天推出了iOS 15的beta-3。这个消息还是从客户那儿知道的😂，没想到他们比我还前卫，秋天都等不及~~ 测试背景Xcode 13 beta版，iOS 15 beta 3的系统。除了客户提出的问题，自己还发现了两处UI异常，不过说不定苹果能良心发现，在正式版中给修复一下。 坑一、企业签名的 App 无法使用客户反馈说 App 不能正常打开，并且提示下面的这种信息：  “xxx”Need">
 <meta property="og:locale" content="zh_CN">
@@ -95,23 +95,23 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/07/20/iOS15/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/07/20/iOS15/&text=iOS 15 适配踩坑"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/07/20/iOS15/&is_video=false&description=iOS 15 适配踩坑"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=iOS 15 适配踩坑&body=Check out this article: https://tommygirl.cn/2021/07/20/iOS15/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/07/20/iOS15/&name=iOS 15 适配踩坑&description=&lt;p&gt;苹果前两天推出了iOS 15的beta-3。这个消息还是从客户那儿知道的😂，没想到他们比我还前卫，秋天都等不及~~&lt;/p&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2021/07/20/iOS15/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2021/07/20/iOS15/&text=iOS 15 适配踩坑"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2021/07/20/iOS15/&is_video=false&description=iOS 15 适配踩坑"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS 15 适配踩坑&body=Check out this article: https://tiantian.fyi/2021/07/20/iOS15/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2021/07/20/iOS15/&name=iOS 15 适配踩坑&description=&lt;p&gt;苹果前两天推出了iOS 15的beta-3。这个消息还是从客户那儿知道的😂，没想到他们比我还前卫，秋天都等不及~~&lt;/p&gt;
 &lt;h2 id=&#34;测试背景&#34;&gt;&lt;a href=&#34;#测试背景&#34; class=&#34;headerlink&#34; title=&#34;测试背景&#34;&gt;&lt;/a&gt;测试背景&lt;/h2&gt;&lt;p&gt;Xcode 13 beta版，iOS 15 beta 3的系统。&lt;br&gt;除了客户提出的问题，自己还发现了两处UI异常，不过说不定苹果能良心发现，在正式版中给修复一下。&lt;/p&gt;
 &lt;h2 id=&#34;坑&#34;&gt;&lt;a href=&#34;#坑&#34; class=&#34;headerlink&#34; title=&#34;坑&#34;&gt;&lt;/a&gt;坑&lt;/h2&gt;&lt;h3 id=&#34;一、企业签名的-App-无法使用&#34;&gt;&lt;a href=&#34;#一、企业签名的-App-无法使用&#34; class=&#34;headerlink&#34; title=&#34;一、企业签名的 App 无法使用&#34;&gt;&lt;/a&gt;一、企业签名的 App 无法使用&lt;/h3&gt;&lt;p&gt;客户反馈说 App 不能正常打开，并且提示下面的这种信息：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;“xxx”Needs to Be Updated : The developer of this app needs to update it to work with this version of iOS.&lt;/p&gt;
 &lt;p&gt;“xxx”需要更新 ：App开发者需要更新此App以在此iOS版本上正常工作。&lt;/p&gt;
 &lt;/blockquote&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/07/20/iOS15/&t=iOS 15 适配踩坑"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2021/07/20/iOS15/&t=iOS 15 适配踩坑"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -326,23 +326,23 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/07/20/iOS15/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/07/20/iOS15/&text=iOS 15 适配踩坑"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/07/20/iOS15/&is_video=false&description=iOS 15 适配踩坑"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=iOS 15 适配踩坑&body=Check out this article: https://tommygirl.cn/2021/07/20/iOS15/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/07/20/iOS15/&name=iOS 15 适配踩坑&description=&lt;p&gt;苹果前两天推出了iOS 15的beta-3。这个消息还是从客户那儿知道的😂，没想到他们比我还前卫，秋天都等不及~~&lt;/p&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2021/07/20/iOS15/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2021/07/20/iOS15/&text=iOS 15 适配踩坑"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2021/07/20/iOS15/&is_video=false&description=iOS 15 适配踩坑"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS 15 适配踩坑&body=Check out this article: https://tiantian.fyi/2021/07/20/iOS15/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2021/07/20/iOS15/&title=iOS 15 适配踩坑"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2021/07/20/iOS15/&name=iOS 15 适配踩坑&description=&lt;p&gt;苹果前两天推出了iOS 15的beta-3。这个消息还是从客户那儿知道的😂，没想到他们比我还前卫，秋天都等不及~~&lt;/p&gt;
 &lt;h2 id=&#34;测试背景&#34;&gt;&lt;a href=&#34;#测试背景&#34; class=&#34;headerlink&#34; title=&#34;测试背景&#34;&gt;&lt;/a&gt;测试背景&lt;/h2&gt;&lt;p&gt;Xcode 13 beta版，iOS 15 beta 3的系统。&lt;br&gt;除了客户提出的问题，自己还发现了两处UI异常，不过说不定苹果能良心发现，在正式版中给修复一下。&lt;/p&gt;
 &lt;h2 id=&#34;坑&#34;&gt;&lt;a href=&#34;#坑&#34; class=&#34;headerlink&#34; title=&#34;坑&#34;&gt;&lt;/a&gt;坑&lt;/h2&gt;&lt;h3 id=&#34;一、企业签名的-App-无法使用&#34;&gt;&lt;a href=&#34;#一、企业签名的-App-无法使用&#34; class=&#34;headerlink&#34; title=&#34;一、企业签名的 App 无法使用&#34;&gt;&lt;/a&gt;一、企业签名的 App 无法使用&lt;/h3&gt;&lt;p&gt;客户反馈说 App 不能正常打开，并且提示下面的这种信息：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;“xxx”Needs to Be Updated : The developer of this app needs to update it to work with this version of iOS.&lt;/p&gt;
 &lt;p&gt;“xxx”需要更新 ：App开发者需要更新此App以在此iOS版本上正常工作。&lt;/p&gt;
 &lt;/blockquote&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/07/20/iOS15/&t=iOS 15 适配踩坑"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2021/07/20/iOS15/&t=iOS 15 适配踩坑"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

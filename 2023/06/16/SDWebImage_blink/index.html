@@ -9,7 +9,7 @@
     <meta name="description" content="&amp;#8195;&amp;#8195;前两天测试提了一个问题，不方便发图片和视频，那先简单描述一下 App 构造：App 是类似钉钉的一个办公软件，首页也是类似钉钉「办公专区」的页面。测试反馈从后台回到前台时，只要 Tab 切换到首页，首页中 UICollectionView 的部分图标就一定会闪一下；如果在前台切换 Tab 页签的话，偶尔能复现… &amp;#8195;&amp;#8195;用了这么久的 UIColle">
 <meta property="og:type" content="article">
 <meta property="og:title" content="UICollectionView 图片闪烁">
-<meta property="og:url" content="https://tommygirl.cn/2023/06/16/SDWebImage_blink/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2023/06/16/SDWebImage_blink/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="&amp;#8195;&amp;#8195;前两天测试提了一个问题，不方便发图片和视频，那先简单描述一下 App 构造：App 是类似钉钉的一个办公软件，首页也是类似钉钉「办公专区」的页面。测试反馈从后台回到前台时，只要 Tab 切换到首页，首页中 UICollectionView 的部分图标就一定会闪一下；如果在前台切换 Tab 页签的话，偶尔能复现… &amp;#8195;&amp;#8195;用了这么久的 UIColle">
 <meta property="og:locale" content="zh_CN">
@@ -97,17 +97,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2023/06/16/SDWebImage_blink/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&text=UICollectionView 图片闪烁"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&is_video=false&description=UICollectionView 图片闪烁"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=UICollectionView 图片闪烁&body=Check out this article: https://tommygirl.cn/2023/06/16/SDWebImage_blink/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&name=UICollectionView 图片闪烁&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&t=UICollectionView 图片闪烁"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2023/06/16/SDWebImage_blink/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&text=UICollectionView 图片闪烁"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&is_video=false&description=UICollectionView 图片闪烁"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=UICollectionView 图片闪烁&body=Check out this article: https://tiantian.fyi/2023/06/16/SDWebImage_blink/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&name=UICollectionView 图片闪烁&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&t=UICollectionView 图片闪烁"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -347,17 +347,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2023/06/16/SDWebImage_blink/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&text=UICollectionView 图片闪烁"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&is_video=false&description=UICollectionView 图片闪烁"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=UICollectionView 图片闪烁&body=Check out this article: https://tommygirl.cn/2023/06/16/SDWebImage_blink/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&name=UICollectionView 图片闪烁&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2023/06/16/SDWebImage_blink/&t=UICollectionView 图片闪烁"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2023/06/16/SDWebImage_blink/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&text=UICollectionView 图片闪烁"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&is_video=false&description=UICollectionView 图片闪烁"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=UICollectionView 图片闪烁&body=Check out this article: https://tiantian.fyi/2023/06/16/SDWebImage_blink/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&title=UICollectionView 图片闪烁"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&name=UICollectionView 图片闪烁&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2023/06/16/SDWebImage_blink/&t=UICollectionView 图片闪烁"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

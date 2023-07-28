@@ -9,7 +9,7 @@
     <meta name="description" content="前两篇文章简单学习了 WKWebView 的基础内容和几个协议，今天我们看看在使用中常见的问题。 一、Cookie 同步以往通过 AFNetworking、NSURLSession、UIWebView 等方式得到的 cookie，统统放在 NSHTTPCookieStorage 中，一般情况下是不需要我们特别处理的。但对于 WKWebView 我们说过，改为放在 WKHTTPCookieStor">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WKWebView 实战篇">
-<meta property="og:url" content="https://tommygirl.cn/2021/12/11/WKWebView-Use/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2021/12/11/WKWebView-Use/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="前两篇文章简单学习了 WKWebView 的基础内容和几个协议，今天我们看看在使用中常见的问题。 一、Cookie 同步以往通过 AFNetworking、NSURLSession、UIWebView 等方式得到的 cookie，统统放在 NSHTTPCookieStorage 中，一般情况下是不需要我们特别处理的。但对于 WKWebView 我们说过，改为放在 WKHTTPCookieStor">
 <meta property="og:locale" content="zh_CN">
@@ -100,19 +100,19 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/12/11/WKWebView-Use/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&text=WKWebView 实战篇"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&is_video=false&description=WKWebView 实战篇"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=WKWebView 实战篇&body=Check out this article: https://tommygirl.cn/2021/12/11/WKWebView-Use/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&name=WKWebView 实战篇&description=&lt;hr&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2021/12/11/WKWebView-Use/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&text=WKWebView 实战篇"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&is_video=false&description=WKWebView 实战篇"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WKWebView 实战篇&body=Check out this article: https://tiantian.fyi/2021/12/11/WKWebView-Use/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&name=WKWebView 实战篇&description=&lt;hr&gt;
 &lt;p&gt;前两篇文章简单学习了 WKWebView 的基础内容和几个协议，今天我们看看在使用中常见的问题。&lt;/p&gt;
 &lt;h2 id=&#34;一、Cookie-同步&#34;&gt;&lt;a href=&#34;#一、Cookie-同步&#34; class=&#34;headerlink&#34; title=&#34;一、Cookie 同步&#34;&gt;&lt;/a&gt;一、Cookie 同步&lt;/h2&gt;&lt;p&gt;以往通过 AFNetworking、NSURLSession、UIWebView 等方式得到的 cookie，统统放在 NSHTTPCookieStorage 中，一般情况下是不需要我们特别处理的。但对于 WKWebView 我们说过，改为放在 WKHTTPCookieStore 中，而且两者是不互通的。举个例子，对于现在很多 原生 + h5 混合开发的 App 来说，通常在登录成功以后，WebView 访问页面时会希望携带会话信息直接通过服务端的认证，而不是在 WebView 中再登录一次。这个时候我们可能就需要同步一下两个 Storage 中的 cookie。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/12/11/WKWebView-Use/&t=WKWebView 实战篇"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2021/12/11/WKWebView-Use/&t=WKWebView 实战篇"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -237,10 +237,10 @@
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span>  tommygirl.cn;</span><br><span class="line">    <span class="attribute">ssl_certificate</span>  certs/server.crt;<span class="comment">#公钥</span></span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> certs/server.key;<span class="comment">#私钥</span></span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">listen</span>       [::]:<span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  tommygirl.cn;</span><br><span class="line">    <span class="attribute">return</span> <span class="number">301</span>   https://tommygirl.cn;</span><br><span class="line">&#125; </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
 <p>更多关于 Nginx 配置 HTTPS 单、双向认证的内容 <a target="_blank" rel="noopener" href="https://www.hi-linux.com/posts/38492.html">Here</a> 。</p>
-<h3 id="单向认证"><a href="#单向认证" class="headerlink" title="单向认证"></a>单向认证</h3><p>显然通过浏览器访问 <a href="https://tommygirl.cn/">tommygirl.cn</a> 是可以成功的，并且地址栏有一个小锁头🔒，所以 HTTPS 我们配置成功了。或者说单向认证已经没问题了。那有的同学可能会问，单向认证？谁？哪里认证的？我没有认证呀？我们对照着一个流程图看一下一个完整的 HTTPS 请求都经历了哪些过程：</p>
+<h3 id="单向认证"><a href="#单向认证" class="headerlink" title="单向认证"></a>单向认证</h3><p>显然通过浏览器访问 <a target="_blank" rel="noopener" href="https://tommygirl.cn/">tommygirl.cn</a> 是可以成功的，并且地址栏有一个小锁头🔒，所以 HTTPS 我们配置成功了。或者说单向认证已经没问题了。那有的同学可能会问，单向认证？谁？哪里认证的？我没有认证呀？我们对照着一个流程图看一下一个完整的 HTTPS 请求都经历了哪些过程：</p>
 <p><img src="https://ata2-img.cn-hangzhou.oss-pub.aliyun-inc.com/14158ca87e2f341ff044efd967f3e008.png" alt="img"></p>
 <ol>
-<li>客户端访问 <a href="https://tommygirl.cn/">https://tommygirl.cn</a> ；</li>
+<li>客户端访问 <a target="_blank" rel="noopener" href="https://tommygirl.cn/">https://tommygirl.cn</a> ；</li>
 <li>服务器端将本机的公钥证书 server.crt 发送给客户端；</li>
 <li>客户端读取公钥证书 server.crt ，取出了服务端公钥；</li>
 <li>客户端生成一个随机数（密钥 R），用刚才得到的服务器公钥去加密这个随机数形成密文，发送给服务端；</li>
@@ -353,19 +353,19 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/12/11/WKWebView-Use/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&text=WKWebView 实战篇"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&is_video=false&description=WKWebView 实战篇"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=WKWebView 实战篇&body=Check out this article: https://tommygirl.cn/2021/12/11/WKWebView-Use/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/12/11/WKWebView-Use/&name=WKWebView 实战篇&description=&lt;hr&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2021/12/11/WKWebView-Use/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&text=WKWebView 实战篇"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&is_video=false&description=WKWebView 实战篇"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WKWebView 实战篇&body=Check out this article: https://tiantian.fyi/2021/12/11/WKWebView-Use/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&title=WKWebView 实战篇"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2021/12/11/WKWebView-Use/&name=WKWebView 实战篇&description=&lt;hr&gt;
 &lt;p&gt;前两篇文章简单学习了 WKWebView 的基础内容和几个协议，今天我们看看在使用中常见的问题。&lt;/p&gt;
 &lt;h2 id=&#34;一、Cookie-同步&#34;&gt;&lt;a href=&#34;#一、Cookie-同步&#34; class=&#34;headerlink&#34; title=&#34;一、Cookie 同步&#34;&gt;&lt;/a&gt;一、Cookie 同步&lt;/h2&gt;&lt;p&gt;以往通过 AFNetworking、NSURLSession、UIWebView 等方式得到的 cookie，统统放在 NSHTTPCookieStorage 中，一般情况下是不需要我们特别处理的。但对于 WKWebView 我们说过，改为放在 WKHTTPCookieStore 中，而且两者是不互通的。举个例子，对于现在很多 原生 + h5 混合开发的 App 来说，通常在登录成功以后，WebView 访问页面时会希望携带会话信息直接通过服务端的认证，而不是在 WebView 中再登录一次。这个时候我们可能就需要同步一下两个 Storage 中的 cookie。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/12/11/WKWebView-Use/&t=WKWebView 实战篇"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2021/12/11/WKWebView-Use/&t=WKWebView 实战篇"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

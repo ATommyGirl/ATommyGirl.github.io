@@ -9,7 +9,7 @@
     <meta name="description" content="无论是系统管理员还是普通用户，监视系统进程的运行情况，并适时终止一些失控的进程是每天的例行事务…就像人生一样，总有那么几个失控的瞬间，怎么办呢，扼杀掉它。🤓 快速上手：结束一个失控的程序传说中有一个古老而有名的“恶作剧”程序，会在 Shell 中不停地创建目录和文件。如果不赶快终止，那么它将在系统中创建一棵很深的目录树：  在主目录中用文本编辑器创建一个名为 badpro 的文本文件，包含以下">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 学习笔记（五）- 进程管理">
-<meta property="og:url" content="https://tommygirl.cn/2022/04/28/Linux_Progress/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2022/04/28/Linux_Progress/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="无论是系统管理员还是普通用户，监视系统进程的运行情况，并适时终止一些失控的进程是每天的例行事务…就像人生一样，总有那么几个失控的瞬间，怎么办呢，扼杀掉它。🤓 快速上手：结束一个失控的程序传说中有一个古老而有名的“恶作剧”程序，会在 Shell 中不停地创建目录和文件。如果不赶快终止，那么它将在系统中创建一棵很深的目录树：  在主目录中用文本编辑器创建一个名为 badpro 的文本文件，包含以下">
 <meta property="og:locale" content="zh_CN">
@@ -93,17 +93,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/04/28/Linux_Progress/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&text=Linux 学习笔记（五）- 进程管理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&is_video=false&description=Linux 学习笔记（五）- 进程管理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（五）- 进程管理&body=Check out this article: https://tommygirl.cn/2022/04/28/Linux_Progress/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&name=Linux 学习笔记（五）- 进程管理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/04/28/Linux_Progress/&t=Linux 学习笔记（五）- 进程管理"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/04/28/Linux_Progress/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&text=Linux 学习笔记（五）- 进程管理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&is_video=false&description=Linux 学习笔记（五）- 进程管理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（五）- 进程管理&body=Check out this article: https://tiantian.fyi/2022/04/28/Linux_Progress/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&name=Linux 学习笔记（五）- 进程管理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/04/28/Linux_Progress/&t=Linux 学习笔记（五）- 进程管理"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -265,17 +265,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/04/28/Linux_Progress/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&text=Linux 学习笔记（五）- 进程管理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&is_video=false&description=Linux 学习笔记（五）- 进程管理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（五）- 进程管理&body=Check out this article: https://tommygirl.cn/2022/04/28/Linux_Progress/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/04/28/Linux_Progress/&name=Linux 学习笔记（五）- 进程管理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/04/28/Linux_Progress/&t=Linux 学习笔记（五）- 进程管理"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/04/28/Linux_Progress/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&text=Linux 学习笔记（五）- 进程管理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&is_video=false&description=Linux 学习笔记（五）- 进程管理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（五）- 进程管理&body=Check out this article: https://tiantian.fyi/2022/04/28/Linux_Progress/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&title=Linux 学习笔记（五）- 进程管理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/04/28/Linux_Progress/&name=Linux 学习笔记（五）- 进程管理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/04/28/Linux_Progress/&t=Linux 学习笔记（五）- 进程管理"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

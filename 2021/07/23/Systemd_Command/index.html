@@ -9,7 +9,7 @@
     <meta name="description" content="转载自：阮一峰老师博客  Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。 本文介绍它的基本用法，分为上下两篇。今天介绍它的主要命令，下一篇介绍如何用于实战。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【转载】Systemd 入门教程：命令篇">
-<meta property="og:url" content="https://tommygirl.cn/2021/07/23/Systemd_Command/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2021/07/23/Systemd_Command/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="转载自：阮一峰老师博客  Systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数发行版的标准配置。 本文介绍它的基本用法，分为上下两篇。今天介绍它的主要命令，下一篇介绍如何用于实战。">
 <meta property="og:locale" content="zh_CN">
@@ -21,8 +21,8 @@
 <meta property="article:author" content="YYLittleCat">
 <meta property="article:tag" content="服务器">
 <meta property="article:tag" content="CentOS">
-<meta property="article:tag" content="转载">
 <meta property="article:tag" content="Linux">
+<meta property="article:tag" content="转载">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.ruanyifeng.com/blogimg/asset/2016/bg2016030701.gif">
     
@@ -100,21 +100,21 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/07/23/Systemd_Command/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&text=【转载】Systemd 入门教程：命令篇"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&is_video=false&description=【转载】Systemd 入门教程：命令篇"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=【转载】Systemd 入门教程：命令篇&body=Check out this article: https://tommygirl.cn/2021/07/23/Systemd_Command/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&name=【转载】Systemd 入门教程：命令篇&description=&lt;p&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html&#34;&gt;转载自：阮一峰老师博客&lt;/a&gt;&lt;/p&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2021/07/23/Systemd_Command/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&text=【转载】Systemd 入门教程：命令篇"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&is_video=false&description=【转载】Systemd 入门教程：命令篇"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【转载】Systemd 入门教程：命令篇&body=Check out this article: https://tiantian.fyi/2021/07/23/Systemd_Command/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&name=【转载】Systemd 入门教程：命令篇&description=&lt;p&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html&#34;&gt;转载自：阮一峰老师博客&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;Systemd 是 Linux 系统工具，用来启动&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/02/linux-daemon.html&#34;&gt;守护进程&lt;/a&gt;，已成为大多数发行版的标准配置。&lt;/p&gt;
 &lt;p&gt;本文介绍它的基本用法，分为上下两篇。今天介绍它的主要命令，&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html&#34;&gt;下一篇&lt;/a&gt;介绍如何用于实战。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.ruanyifeng.com/blogimg/asset/2016/bg2016030701.gif&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/07/23/Systemd_Command/&t=【转载】Systemd 入门教程：命令篇"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2021/07/23/Systemd_Command/&t=【转载】Systemd 入门教程：命令篇"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -411,21 +411,21 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2021/07/23/Systemd_Command/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&text=【转载】Systemd 入门教程：命令篇"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&is_video=false&description=【转载】Systemd 入门教程：命令篇"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=【转载】Systemd 入门教程：命令篇&body=Check out this article: https://tommygirl.cn/2021/07/23/Systemd_Command/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2021/07/23/Systemd_Command/&name=【转载】Systemd 入门教程：命令篇&description=&lt;p&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html&#34;&gt;转载自：阮一峰老师博客&lt;/a&gt;&lt;/p&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2021/07/23/Systemd_Command/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&text=【转载】Systemd 入门教程：命令篇"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&is_video=false&description=【转载】Systemd 入门教程：命令篇"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【转载】Systemd 入门教程：命令篇&body=Check out this article: https://tiantian.fyi/2021/07/23/Systemd_Command/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&title=【转载】Systemd 入门教程：命令篇"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2021/07/23/Systemd_Command/&name=【转载】Systemd 入门教程：命令篇&description=&lt;p&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html&#34;&gt;转载自：阮一峰老师博客&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;Systemd 是 Linux 系统工具，用来启动&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/02/linux-daemon.html&#34;&gt;守护进程&lt;/a&gt;，已成为大多数发行版的标准配置。&lt;/p&gt;
 &lt;p&gt;本文介绍它的基本用法，分为上下两篇。今天介绍它的主要命令，&lt;a href=&#34;https://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html&#34;&gt;下一篇&lt;/a&gt;介绍如何用于实战。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.ruanyifeng.com/blogimg/asset/2016/bg2016030701.gif&#34; alt=&#34;img&#34;&gt;&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2021/07/23/Systemd_Command/&t=【转载】Systemd 入门教程：命令篇"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2021/07/23/Systemd_Command/&t=【转载】Systemd 入门教程：命令篇"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

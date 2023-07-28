@@ -9,7 +9,7 @@
     <meta name="description" content="查看目录和文件pwd 显示当前所在的位置，即工作目录。  12[blog@VM-0-13-centos ~]$ pwd&#x2F;home&#x2F;blog  cd 改变目录。  日常用法：cd &#x2F;home&#x2F;blog 进入 &#x2F;home&#x2F;blog 目录；cd .. 返回上一层目录；cd &#x2F; 进入根目录，cd .. &#x2F; .. 也是进入根目录；cd 不带参数总是可以回到自己用户的主目录，或者 cd ~ 也是一样的效果。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 学习笔记（三）- Shell 基础命令">
-<meta property="og:url" content="https://tommygirl.cn/2022/02/24/Linux_Shell1/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2022/02/24/Linux_Shell1/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="查看目录和文件pwd 显示当前所在的位置，即工作目录。  12[blog@VM-0-13-centos ~]$ pwd&#x2F;home&#x2F;blog  cd 改变目录。  日常用法：cd &#x2F;home&#x2F;blog 进入 &#x2F;home&#x2F;blog 目录；cd .. 返回上一层目录；cd &#x2F; 进入根目录，cd .. &#x2F; .. 也是进入根目录；cd 不带参数总是可以回到自己用户的主目录，或者 cd ~ 也是一样的效果。">
 <meta property="og:locale" content="zh_CN">
@@ -93,16 +93,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/02/24/Linux_Shell1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&text=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&is_video=false&description=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（三）- Shell 基础命令&body=Check out this article: https://tommygirl.cn/2022/02/24/Linux_Shell1/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&name=Linux 学习笔记（三）- Shell 基础命令&description=&lt;hr&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/02/24/Linux_Shell1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&text=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&is_video=false&description=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（三）- Shell 基础命令&body=Check out this article: https://tiantian.fyi/2022/02/24/Linux_Shell1/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&name=Linux 学习笔记（三）- Shell 基础命令&description=&lt;hr&gt;
 &lt;h2 id=&#34;查看目录和文件&#34;&gt;&lt;a href=&#34;#查看目录和文件&#34; class=&#34;headerlink&#34; title=&#34;查看目录和文件&#34;&gt;&lt;/a&gt;查看目录和文件&lt;/h2&gt;&lt;h3 id=&#34;pwd&#34;&gt;&lt;a href=&#34;#pwd&#34; class=&#34;headerlink&#34; title=&#34;pwd&#34;&gt;&lt;/a&gt;pwd&lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;显示当前所在的位置，即工作目录。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -112,7 +112,7 @@
 &lt;p&gt;改变目录。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;日常用法：&lt;br&gt;&lt;code&gt;cd /home/blog&lt;/code&gt; 进入 /home/blog 目录；&lt;br&gt;&lt;code&gt;cd ..&lt;/code&gt; 返回上一层目录；&lt;br&gt;&lt;code&gt;cd /&lt;/code&gt; 进入根目录，&lt;code&gt;cd .. / ..&lt;/code&gt; 也是进入根目录；&lt;br&gt;&lt;code&gt;cd&lt;/code&gt; 不带参数总是可以回到自己用户的主目录，或者 &lt;code&gt;cd ~&lt;/code&gt; 也是一样的效果。&lt;br&gt;&lt;strong&gt;FYI&lt;/strong&gt;：在 Shell 中，&lt;code&gt;..&lt;/code&gt; 代表当前目录的上一级目录，而 &lt;code&gt;.&lt;/code&gt; 则代表当前目录，另外，&lt;code&gt;~&lt;/code&gt; 代表用户主目录。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/24/Linux_Shell1/&t=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/02/24/Linux_Shell1/&t=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -413,16 +413,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/02/24/Linux_Shell1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&text=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&is_video=false&description=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（三）- Shell 基础命令&body=Check out this article: https://tommygirl.cn/2022/02/24/Linux_Shell1/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/24/Linux_Shell1/&name=Linux 学习笔记（三）- Shell 基础命令&description=&lt;hr&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/02/24/Linux_Shell1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&text=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&is_video=false&description=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（三）- Shell 基础命令&body=Check out this article: https://tiantian.fyi/2022/02/24/Linux_Shell1/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/02/24/Linux_Shell1/&name=Linux 学习笔记（三）- Shell 基础命令&description=&lt;hr&gt;
 &lt;h2 id=&#34;查看目录和文件&#34;&gt;&lt;a href=&#34;#查看目录和文件&#34; class=&#34;headerlink&#34; title=&#34;查看目录和文件&#34;&gt;&lt;/a&gt;查看目录和文件&lt;/h2&gt;&lt;h3 id=&#34;pwd&#34;&gt;&lt;a href=&#34;#pwd&#34; class=&#34;headerlink&#34; title=&#34;pwd&#34;&gt;&lt;/a&gt;pwd&lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;显示当前所在的位置，即工作目录。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -432,7 +432,7 @@
 &lt;p&gt;改变目录。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;日常用法：&lt;br&gt;&lt;code&gt;cd /home/blog&lt;/code&gt; 进入 /home/blog 目录；&lt;br&gt;&lt;code&gt;cd ..&lt;/code&gt; 返回上一层目录；&lt;br&gt;&lt;code&gt;cd /&lt;/code&gt; 进入根目录，&lt;code&gt;cd .. / ..&lt;/code&gt; 也是进入根目录；&lt;br&gt;&lt;code&gt;cd&lt;/code&gt; 不带参数总是可以回到自己用户的主目录，或者 &lt;code&gt;cd ~&lt;/code&gt; 也是一样的效果。&lt;br&gt;&lt;strong&gt;FYI&lt;/strong&gt;：在 Shell 中，&lt;code&gt;..&lt;/code&gt; 代表当前目录的上一级目录，而 &lt;code&gt;.&lt;/code&gt; 则代表当前目录，另外，&lt;code&gt;~&lt;/code&gt; 代表用户主目录。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/24/Linux_Shell1/&t=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/02/24/Linux_Shell1/&t=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

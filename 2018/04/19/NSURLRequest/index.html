@@ -9,7 +9,7 @@
     <meta name="description" content="NSURLRequest NSURLRequest &#x2F;URLRequest 封装了请求的两个基本属性：要加载的URL和用于加载该请求的策略。通常用于 HTTP 和 HTTPS 请求，包括 HTTP 方法（GET，POST等）和 HTTP 标头。可变子类型是 NSMutableURLRequest 。  一个平平无奇的 GET 请求 网络请求的测试，我们访问 httpbin 来进行，方便对比请求的响">
 <meta property="og:type" content="article">
 <meta property="og:title" content="URL Loading System 之 NSURLRequest&#x2F;URLRequest">
-<meta property="og:url" content="https://tommygirl.cn/2018/04/19/NSURLRequest/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2018/04/19/NSURLRequest/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="NSURLRequest NSURLRequest &#x2F;URLRequest 封装了请求的两个基本属性：要加载的URL和用于加载该请求的策略。通常用于 HTTP 和 HTTPS 请求，包括 HTTP 方法（GET，POST等）和 HTTP 标头。可变子类型是 NSMutableURLRequest 。  一个平平无奇的 GET 请求 网络请求的测试，我们访问 httpbin 来进行，方便对比请求的响">
 <meta property="og:locale" content="zh_CN">
@@ -94,16 +94,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2018/04/19/NSURLRequest/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&text=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&is_video=false&description=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=URL Loading System 之 NSURLRequest/URLRequest&body=Check out this article: https://tommygirl.cn/2018/04/19/NSURLRequest/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&name=URL Loading System 之 NSURLRequest/URLRequest&description=&lt;h2 id=&#34;NSURLRequest&#34;&gt;&lt;a href=&#34;#NSURLRequest&#34; class=&#34;headerlink&#34; title=&#34;NSURLRequest&#34;&gt;&lt;/a&gt;NSURLRequest&lt;/h2&gt;&lt;blockquote&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2018/04/19/NSURLRequest/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&text=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&is_video=false&description=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=URL Loading System 之 NSURLRequest/URLRequest&body=Check out this article: https://tiantian.fyi/2018/04/19/NSURLRequest/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&name=URL Loading System 之 NSURLRequest/URLRequest&description=&lt;h2 id=&#34;NSURLRequest&#34;&gt;&lt;a href=&#34;#NSURLRequest&#34; class=&#34;headerlink&#34; title=&#34;NSURLRequest&#34;&gt;&lt;/a&gt;NSURLRequest&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;NSURLRequest /URLRequest 封装了请求的两个基本属性：要加载的URL和用于加载该请求的策略。通常用于 HTTP 和 HTTPS 请求，包括 HTTP 方法（&lt;code&gt;GET&lt;/code&gt;，&lt;code&gt;POST&lt;/code&gt;等）和 HTTP 标头。可变子类型是 NSMutableURLRequest 。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;一个平平无奇的-GET-请求&#34;&gt;&lt;a href=&#34;#一个平平无奇的-GET-请求&#34; class=&#34;headerlink&#34; title=&#34;一个平平无奇的 GET 请求&#34;&gt;&lt;/a&gt;一个平平无奇的 GET 请求&lt;/h3&gt;&lt;blockquote&gt;
@@ -111,7 +111,7 @@
 &lt;p&gt;官网：&lt;a href=&#34;https://httpbin.org/&#34;&gt;https://httpbin.org/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;httpbin 可以把我们请求时的信息，返回给我们&lt;/p&gt;
 &lt;/blockquote&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2018/04/19/NSURLRequest/&t=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2018/04/19/NSURLRequest/&t=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -194,9 +194,9 @@
 <p>决定这个请求是否要使用cookie，默认为YES。</p>
 </blockquote>
 <p>常用到的就上面这几个属性，真实开发中我们很少会直接使用  <code>Request</code>  发送请求，往往依赖于三方框架，像 OC 的 <code>AFNetworking</code> 、swift 的 <code>Alamofire</code> 等等。</p>
-<h2 id="系列："><a href="#系列：" class="headerlink" title="系列："></a>系列：</h2><p><a href="https://tommygirl.cn/2018/04/19/URLLoadingSystem/">URL Loading System[译]</a></p>
-<p><a href="https://tommygirl.cn/2018/04/19/NSURLRequest/">NSURLRequest</a></p>
-<p><a href="https://tommygirl.cn/2018/04/20/NSURLResponse/">NSURLResponse</a></p>
+<h2 id="系列："><a href="#系列：" class="headerlink" title="系列："></a>系列：</h2><p><a target="_blank" rel="noopener" href="https://tommygirl.cn/2018/04/19/URLLoadingSystem/">URL Loading System[译]</a></p>
+<p><a target="_blank" rel="noopener" href="https://tommygirl.cn/2018/04/19/NSURLRequest/">NSURLRequest</a></p>
+<p><a target="_blank" rel="noopener" href="https://tommygirl.cn/2018/04/20/NSURLResponse/">NSURLResponse</a></p>
 
   </div>
 </article>
@@ -264,16 +264,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2018/04/19/NSURLRequest/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&text=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&is_video=false&description=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=URL Loading System 之 NSURLRequest/URLRequest&body=Check out this article: https://tommygirl.cn/2018/04/19/NSURLRequest/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2018/04/19/NSURLRequest/&name=URL Loading System 之 NSURLRequest/URLRequest&description=&lt;h2 id=&#34;NSURLRequest&#34;&gt;&lt;a href=&#34;#NSURLRequest&#34; class=&#34;headerlink&#34; title=&#34;NSURLRequest&#34;&gt;&lt;/a&gt;NSURLRequest&lt;/h2&gt;&lt;blockquote&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2018/04/19/NSURLRequest/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&text=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&is_video=false&description=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=URL Loading System 之 NSURLRequest/URLRequest&body=Check out this article: https://tiantian.fyi/2018/04/19/NSURLRequest/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&title=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2018/04/19/NSURLRequest/&name=URL Loading System 之 NSURLRequest/URLRequest&description=&lt;h2 id=&#34;NSURLRequest&#34;&gt;&lt;a href=&#34;#NSURLRequest&#34; class=&#34;headerlink&#34; title=&#34;NSURLRequest&#34;&gt;&lt;/a&gt;NSURLRequest&lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;NSURLRequest /URLRequest 封装了请求的两个基本属性：要加载的URL和用于加载该请求的策略。通常用于 HTTP 和 HTTPS 请求，包括 HTTP 方法（&lt;code&gt;GET&lt;/code&gt;，&lt;code&gt;POST&lt;/code&gt;等）和 HTTP 标头。可变子类型是 NSMutableURLRequest 。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;一个平平无奇的-GET-请求&#34;&gt;&lt;a href=&#34;#一个平平无奇的-GET-请求&#34; class=&#34;headerlink&#34; title=&#34;一个平平无奇的 GET 请求&#34;&gt;&lt;/a&gt;一个平平无奇的 GET 请求&lt;/h3&gt;&lt;blockquote&gt;
@@ -281,7 +281,7 @@
 &lt;p&gt;官网：&lt;a href=&#34;https://httpbin.org/&#34;&gt;https://httpbin.org/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;httpbin 可以把我们请求时的信息，返回给我们&lt;/p&gt;
 &lt;/blockquote&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2018/04/19/NSURLRequest/&t=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2018/04/19/NSURLRequest/&t=URL Loading System 之 NSURLRequest/URLRequest"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

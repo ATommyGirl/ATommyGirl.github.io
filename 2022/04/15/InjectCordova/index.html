@@ -9,7 +9,7 @@
     <meta name="description" content="Cordova 是一个轻量级的移动端混合开发框架，在公司项目中担任桥接器的作用，为前端提供一些原生底层能力，在“插件”中以异步的形式将执行结果返回给前端。考虑到前端的页面可能在本地、远程、跨各种域等等问题，一般的做法是把www&#x2F;cordova.jswww&#x2F;cordova_plugins.js…www&#x2F;plugins&#x2F;*.js…这一连串的 js 放在原生的工程中，由原生动态注入到页面中。功能方面没">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于调整 cordova.js 注入时机的讨论">
-<meta property="og:url" content="https://tommygirl.cn/2022/04/15/InjectCordova/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2022/04/15/InjectCordova/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="Cordova 是一个轻量级的移动端混合开发框架，在公司项目中担任桥接器的作用，为前端提供一些原生底层能力，在“插件”中以异步的形式将执行结果返回给前端。考虑到前端的页面可能在本地、远程、跨各种域等等问题，一般的做法是把www&#x2F;cordova.jswww&#x2F;cordova_plugins.js…www&#x2F;plugins&#x2F;*.js…这一连串的 js 放在原生的工程中，由原生动态注入到页面中。功能方面没">
 <meta property="og:locale" content="zh_CN">
@@ -95,17 +95,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/04/15/InjectCordova/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/04/15/InjectCordova/&text=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/04/15/InjectCordova/&is_video=false&description=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=关于调整 cordova.js 注入时机的讨论&body=Check out this article: https://tommygirl.cn/2022/04/15/InjectCordova/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/04/15/InjectCordova/&name=关于调整 cordova.js 注入时机的讨论&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/04/15/InjectCordova/&t=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/04/15/InjectCordova/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/04/15/InjectCordova/&text=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/04/15/InjectCordova/&is_video=false&description=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=关于调整 cordova.js 注入时机的讨论&body=Check out this article: https://tiantian.fyi/2022/04/15/InjectCordova/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/04/15/InjectCordova/&name=关于调整 cordova.js 注入时机的讨论&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/04/15/InjectCordova/&t=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -253,17 +253,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/04/15/InjectCordova/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/04/15/InjectCordova/&text=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/04/15/InjectCordova/&is_video=false&description=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=关于调整 cordova.js 注入时机的讨论&body=Check out this article: https://tommygirl.cn/2022/04/15/InjectCordova/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/04/15/InjectCordova/&name=关于调整 cordova.js 注入时机的讨论&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/04/15/InjectCordova/&t=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/04/15/InjectCordova/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/04/15/InjectCordova/&text=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/04/15/InjectCordova/&is_video=false&description=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=关于调整 cordova.js 注入时机的讨论&body=Check out this article: https://tiantian.fyi/2022/04/15/InjectCordova/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/04/15/InjectCordova/&title=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/04/15/InjectCordova/&name=关于调整 cordova.js 注入时机的讨论&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/04/15/InjectCordova/&t=关于调整 cordova.js 注入时机的讨论"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

@@ -9,7 +9,7 @@
     <meta name="description" content="&amp;#8195;&amp;#8195;一直想学习 Linux，但无奈小白不知道从何入手。经常看群里服务端的同事提到 root 、sudo，那我想着从用户管理入手，先认清楚大小王总是可以的吧，趁工作的空档学习了一些基本知识，大部分描述来自于《Linux从入门到精通》一书。 记录一下尝试过的命令： root 可以做什么&amp;#8195;&amp;#8195;这个问题的答案是 anything。没错，作为整个系统中拥有最高">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 学习笔记（一）- 用户">
-<meta property="og:url" content="https://tommygirl.cn/2022/02/18/Linux_user/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2022/02/18/Linux_user/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="&amp;#8195;&amp;#8195;一直想学习 Linux，但无奈小白不知道从何入手。经常看群里服务端的同事提到 root 、sudo，那我想着从用户管理入手，先认清楚大小王总是可以的吧，趁工作的空档学习了一些基本知识，大部分描述来自于《Linux从入门到精通》一书。 记录一下尝试过的命令： root 可以做什么&amp;#8195;&amp;#8195;这个问题的答案是 anything。没错，作为整个系统中拥有最高">
 <meta property="og:locale" content="zh_CN">
@@ -95,16 +95,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/02/18/Linux_user/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/02/18/Linux_user/&text=Linux 学习笔记（一）- 用户"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/02/18/Linux_user/&is_video=false&description=Linux 学习笔记（一）- 用户"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（一）- 用户&body=Check out this article: https://tommygirl.cn/2022/02/18/Linux_user/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/18/Linux_user/&name=Linux 学习笔记（一）- 用户&description=&lt;hr&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/02/18/Linux_user/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/02/18/Linux_user/&text=Linux 学习笔记（一）- 用户"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/02/18/Linux_user/&is_video=false&description=Linux 学习笔记（一）- 用户"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（一）- 用户&body=Check out this article: https://tiantian.fyi/2022/02/18/Linux_user/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/02/18/Linux_user/&name=Linux 学习笔记（一）- 用户&description=&lt;hr&gt;
 &lt;p&gt;&amp;#8195;&amp;#8195;一直想学习 Linux，但无奈小白不知道从何入手。经常看群里服务端的同事提到 root 、sudo，那我想着从用户管理入手，先认清楚大小王总是可以的吧，趁工作的空档学习了一些基本知识，大部分描述来自于《Linux从入门到精通》一书。&lt;/p&gt;
 &lt;p&gt;记录一下尝试过的命令：&lt;/p&gt;
 &lt;h2 id=&#34;root-可以做什么&#34;&gt;&lt;a href=&#34;#root-可以做什么&#34; class=&#34;headerlink&#34; title=&#34;root 可以做什么&#34;&gt;&lt;/a&gt;root 可以做什么&lt;/h2&gt;&lt;p&gt;&amp;#8195;&amp;#8195;这个问题的答案是 anything。没错，作为整个系统中拥有最高权限的用户，root 可以对系统做任何事情。root 可以访问、修改、删除系统中的任何文件和目录。另外，对于如下这些受限的操作，一般只有 root 用户能够执行。&lt;/p&gt;
@@ -121,7 +121,7 @@
 &lt;center&gt;
     &lt;div style=&#34;display:inline-block;&#34;&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/Dont-drink-and-root.jpeg&#34; class width=&#34;300&#34;&gt;&lt;/div&gt;
 &lt;/center&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/18/Linux_user/&t=Linux 学习笔记（一）- 用户"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/02/18/Linux_user/&t=Linux 学习笔记（一）- 用户"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -417,16 +417,16 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2022/02/18/Linux_user/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2022/02/18/Linux_user/&text=Linux 学习笔记（一）- 用户"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2022/02/18/Linux_user/&is_video=false&description=Linux 学习笔记（一）- 用户"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（一）- 用户&body=Check out this article: https://tommygirl.cn/2022/02/18/Linux_user/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2022/02/18/Linux_user/&name=Linux 学习笔记（一）- 用户&description=&lt;hr&gt;
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/02/18/Linux_user/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/02/18/Linux_user/&text=Linux 学习笔记（一）- 用户"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/02/18/Linux_user/&is_video=false&description=Linux 学习笔记（一）- 用户"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（一）- 用户&body=Check out this article: https://tiantian.fyi/2022/02/18/Linux_user/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/02/18/Linux_user/&title=Linux 学习笔记（一）- 用户"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/02/18/Linux_user/&name=Linux 学习笔记（一）- 用户&description=&lt;hr&gt;
 &lt;p&gt;&amp;#8195;&amp;#8195;一直想学习 Linux，但无奈小白不知道从何入手。经常看群里服务端的同事提到 root 、sudo，那我想着从用户管理入手，先认清楚大小王总是可以的吧，趁工作的空档学习了一些基本知识，大部分描述来自于《Linux从入门到精通》一书。&lt;/p&gt;
 &lt;p&gt;记录一下尝试过的命令：&lt;/p&gt;
 &lt;h2 id=&#34;root-可以做什么&#34;&gt;&lt;a href=&#34;#root-可以做什么&#34; class=&#34;headerlink&#34; title=&#34;root 可以做什么&#34;&gt;&lt;/a&gt;root 可以做什么&lt;/h2&gt;&lt;p&gt;&amp;#8195;&amp;#8195;这个问题的答案是 anything。没错，作为整个系统中拥有最高权限的用户，root 可以对系统做任何事情。root 可以访问、修改、删除系统中的任何文件和目录。另外，对于如下这些受限的操作，一般只有 root 用户能够执行。&lt;/p&gt;
@@ -443,7 +443,7 @@
 &lt;center&gt;
     &lt;div style=&#34;display:inline-block;&#34;&gt;&lt;img src=&#34;https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/Dont-drink-and-root.jpeg&#34; class width=&#34;300&#34;&gt;&lt;/div&gt;
 &lt;/center&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2022/02/18/Linux_user/&t=Linux 学习笔记（一）- 用户"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/02/18/Linux_user/&t=Linux 学习笔记（一）- 用户"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

@@ -9,7 +9,7 @@
     <meta name="description" content="Too young too naive…  让人头疼的问题&amp;#8195;&amp;#8195;在项目中替换 UIWebView 之前，我看了 WKWebView 的文档、也看了网上大部分的博客，算是做了一些评估，优缺点都挺明显：优在性能更好（也有网友说徒有其表）、苹果官方主推，缺在 API 还没完全成型、Cookie 同步等历史问题，网上关于 Cookie 的解决方案五花八门（其实抄来抄去的也都差不多）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WKWebView Cookie 试错">
-<meta property="og:url" content="https://tommygirl.cn/2023/01/03/WKWebView-XHR/index.html">
+<meta property="og:url" content="https://tiantian.fyi/2023/01/03/WKWebView-XHR/index.html">
 <meta property="og:site_name" content="白小咪">
 <meta property="og:description" content="Too young too naive…  让人头疼的问题&amp;#8195;&amp;#8195;在项目中替换 UIWebView 之前，我看了 WKWebView 的文档、也看了网上大部分的博客，算是做了一些评估，优缺点都挺明显：优在性能更好（也有网友说徒有其表）、苹果官方主推，缺在 API 还没完全成型、Cookie 同步等历史问题，网上关于 Cookie 的解决方案五花八门（其实抄来抄去的也都差不多）">
 <meta property="og:locale" content="zh_CN">
@@ -96,17 +96,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2023/01/03/WKWebView-XHR/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&text=WKWebView Cookie 试错"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&is_video=false&description=WKWebView Cookie 试错"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=WKWebView Cookie 试错&body=Check out this article: https://tommygirl.cn/2023/01/03/WKWebView-XHR/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&name=WKWebView Cookie 试错&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&t=WKWebView Cookie 试错"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2023/01/03/WKWebView-XHR/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&text=WKWebView Cookie 试错"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&is_video=false&description=WKWebView Cookie 试错"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WKWebView Cookie 试错&body=Check out this article: https://tiantian.fyi/2023/01/03/WKWebView-XHR/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&name=WKWebView Cookie 试错&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&t=WKWebView Cookie 试错"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -278,17 +278,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tommygirl.cn/2023/01/03/WKWebView-XHR/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&text=WKWebView Cookie 试错"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&is_video=false&description=WKWebView Cookie 试错"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=WKWebView Cookie 试错&body=Check out this article: https://tommygirl.cn/2023/01/03/WKWebView-XHR/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&name=WKWebView Cookie 试错&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tommygirl.cn/2023/01/03/WKWebView-XHR/&t=WKWebView Cookie 试错"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2023/01/03/WKWebView-XHR/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&text=WKWebView Cookie 试错"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&is_video=false&description=WKWebView Cookie 试错"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WKWebView Cookie 试错&body=Check out this article: https://tiantian.fyi/2023/01/03/WKWebView-XHR/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&title=WKWebView Cookie 试错"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&name=WKWebView Cookie 试错&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2023/01/03/WKWebView-XHR/&t=WKWebView Cookie 试错"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
