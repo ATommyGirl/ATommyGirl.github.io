@@ -819,13 +819,6 @@
   </url>
   
   <url>
-    <loc>https://tiantian.fyi/tags/iOS/</loc>
-    <lastmod>2023-07-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://tiantian.fyi/tags/7788/</loc>
     <lastmod>2023-07-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -833,14 +826,7 @@
   </url>
   
   <url>
-    <loc>https://tiantian.fyi/tags/Mac/</loc>
-    <lastmod>2023-07-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://tiantian.fyi/tags/Tool/</loc>
+    <loc>https://tiantian.fyi/tags/iOS/</loc>
     <lastmod>2023-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -861,6 +847,13 @@
   </url>
   
   <url>
+    <loc>https://tiantian.fyi/tags/%E8%BD%AC%E8%BD%BD/</loc>
+    <lastmod>2023-07-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://tiantian.fyi/tags/Linux/</loc>
     <lastmod>2023-07-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -868,7 +861,14 @@
   </url>
   
   <url>
-    <loc>https://tiantian.fyi/tags/%E8%BD%AC%E8%BD%BD/</loc>
+    <loc>https://tiantian.fyi/tags/Mac/</loc>
+    <lastmod>2023-07-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://tiantian.fyi/tags/Tool/</loc>
     <lastmod>2023-07-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
