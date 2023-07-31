@@ -5371,28 +5371,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Android 打卡 Day3 - 四大组件</title>
-    <url>/2023/07/20/android_day3/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
-<h2 id="Android-手机系统"><a href="#Android-手机系统" class="headerlink" title="Android 手机系统"></a>Android 手机系统</h2><p>Android 是一个适用于移动设备的开源操作系统，由 Google 主导对应的开源项目。整个 Android 以 Linux 的核心作为底层，加上中介函数库和 API，函数库大部分以 C语言设计，框架大多以 Java 相容的程序编写，在这个框架之上才是手机安装的应用。作为一个开源项目，Android 被打造成了一个适用于消费类产品的完整高品质操作系统，并配有可自定义并运用到几乎所有设备的源代码，以及所有用户均可使用的公开文档。</p>
-<img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/android-stack_2x.png" style="zoom: 40%;">
-
-<p>从下往上：</p>
-<ul>
-<li>Linux 内核。</li>
-<li>HAL - 硬件抽象层。提供标准界面，向更高级别的 Java API 框架显示设备硬件功能。HAL 包含多个库模块，其中每个模块都为特定类型的硬件组件实现一个界面，例如相机或蓝牙模块。当框架 API 要求访问设备硬件时，Android 系统将为该硬件组件加载库模块。</li>
-<li>ART - Android Runtime。</li>
-</ul>
-<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>仅用于记录学习过程，不具备指导性。🤓</p>
-<p><a href="https://github.com/ATommyGirl/android">Demo-Github</a></p>
-<hr>
-<p>下一日目标：</p>
-]]></content>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HEAD 小乌龙</title>
     <url>/2022/01/14/http_head/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="手机-App"><a href="#手机-App" class="headerlink" title="手机 App"></a>手机 App</h3><p>熟悉手机端的朋友一般都了解:</p>
