@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Android 平台架构Android 是一个适用于移动设备的开源操作系统，由 Google 主导对应的开源项目。整个 Android 以 Linux 的核心作为底层，加上中介函数库和 API，函数库大部分以 C语言设计，框架大多以 Java 相容的程序编写，在这个框架之上才是手机安装的应用。作为一个开源项目，Android 被打造成了一个适用于消费类产品的完整高品质操作系统，并配有可自定义并运">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 打卡 Day3 - 四大组件 - 初识">
+<meta property="og:url" content="https://tiantian.fyi/2023/09/22/android_day3/index.html">
+<meta property="og:site_name" content="白小咪">
+<meta property="og:description" content="Android 平台架构Android 是一个适用于移动设备的开源操作系统，由 Google 主导对应的开源项目。整个 Android 以 Linux 的核心作为底层，加上中介函数库和 API，函数库大部分以 C语言设计，框架大多以 Java 相容的程序编写，在这个框架之上才是手机安装的应用。作为一个开源项目，Android 被打造成了一个适用于消费类产品的完整高品质操作系统，并配有可自定义并运">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/android-stack_2x.png">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/service_lifecycle.png">
+<meta property="article:published_time" content="2023-09-22T12:06:15.000Z">
+<meta property="article:modified_time" content="2023-09-22T12:06:15.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/android-stack_2x.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Android 打卡 Day3 - 四大组件 - 初识</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2023/09/22/no_bb/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2023/09/22/android_day3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2023/09/22/android_day3/&text=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2023/09/22/android_day3/&title=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2023/09/22/android_day3/&is_video=false&description=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android 打卡 Day3 - 四大组件 - 初识&body=Check out this article: https://tiantian.fyi/2023/09/22/android_day3/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2023/09/22/android_day3/&title=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2023/09/22/android_day3/&title=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2023/09/22/android_day3/&title=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2023/09/22/android_day3/&title=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2023/09/22/android_day3/&name=Android 打卡 Day3 - 四大组件 - 初识&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2023/09/22/android_day3/&t=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-%E5%B9%B3%E5%8F%B0%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">Android 平台架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">四大组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%98%84%EF%B8%8F-Activity"><span class="toc-number">2.1.</span> <span class="toc-text">☄️ Activity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%98%84%EF%B8%8F-Service"><span class="toc-number">2.2.</span> <span class="toc-text">☄️ Service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%98%84%EF%B8%8F-Content-Provider"><span class="toc-number">2.3.</span> <span class="toc-text">☄️ Content Provider</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%98%84%EF%B8%8F-Broadcast-Receiver"><span class="toc-number">2.4.</span> <span class="toc-text">☄️ Broadcast Receiver</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo"><span class="toc-number">3.</span> <span class="toc-text">Demo</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Android 打卡 Day3 - 四大组件 - 初识
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-22T12:06:15.000Z" itemprop="datePublished">2023-09-22</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Android/" rel="tag">Android</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <hr>
+<h2 id="Android-平台架构"><a href="#Android-平台架构" class="headerlink" title="Android 平台架构"></a>Android 平台架构</h2><p>Android 是一个适用于移动设备的开源操作系统，由 Google 主导对应的开源项目。整个 Android 以 Linux 的核心作为底层，加上中介函数库和 API，函数库大部分以 C语言设计，框架大多以 Java 相容的程序编写，在这个框架之上才是手机安装的应用。作为一个开源项目，Android 被打造成了一个适用于消费类产品的完整高品质操作系统，并配有可自定义并运用到几乎所有设备的源代码，以及所有用户均可使用的公开文档。</p>
+<img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/android-stack_2x.png" style="zoom: 40%;">
+
+<p>从下往上：</p>
+<ul>
+<li><p>Linux 内核。</p>
+</li>
+<li><p>HAL - 硬件抽象层。提供标准界面，向更高级别的 Java API 框架显示设备硬件功能。HAL 包含多个库模块，其中每个模块都为特定类型的硬件组件实现一个界面，例如相机或蓝牙模块。当框架 API 要求访问设备硬件时，Android 系统将为该硬件组件加载库模块。</p>
+</li>
+<li><p>ART - Android Runtime。</p>
+</li>
+<li><p>原生 C/C++ 库 - 许多核心 Android 系统组件和服务（例如 ART 和 HAL）构建自原生代码，需要以 C 和 C++ 编写的原生库。Android 平台提供 Java 框架 API 以向应用显示其中部分原生库的功能。</p>
+</li>
+<li><p>Java API 框架- 可通过以 Java 语言编写的 API 使用 Android OS 的整个功能集。这些 API 形成创建 Android 应用所需的构建块，它们可简化核心模块化系统组件和服务的重复使用，包括以下组件和服务：</p>
+<ul>
+<li>丰富、可扩展的<a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/ui/overview?hl=zh-cn">视图系统</a>，可用以构建应用的 UI，包括列表、网格、文本框、按钮甚至可嵌入的网络浏览器</li>
+<li><a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/resources/overview?hl=zh-cn">资源管理器</a>，用于访问非代码资源，例如本地化的字符串、图形和布局文件</li>
+<li><a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/ui/notifiers/notifications?hl=zh-cn">通知管理器</a>，可让所有应用在状态栏中显示自定义提醒</li>
+<li><a target="_blank" rel="noopener" href="https://developer.android.com/guide/components/activities?hl=zh-cn">Activity 管理器</a>，用于管理应用的生命周期，提供常见的<a target="_blank" rel="noopener" href="https://developer.android.com/guide/components/tasks-and-back-stack?hl=zh-cn">导航返回栈</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.android.com/guide/topics/providers/content-providers?hl=zh-cn">内容提供程序</a>，可让应用访问其他应用（例如“联系人”应用）中的数据或者共享其自己的数据</li>
+</ul>
+<p>开发者可以完全访问 Android 系统应用使用的<a target="_blank" rel="noopener" href="https://developer.android.com/reference/packages?hl=zh-cn">框架 API</a>。</p>
+</li>
+<li><p>系统应用（System Apps）- 相机、邮件、短信、日历等。</p>
+</li>
+</ul>
+<h2 id="四大组件"><a href="#四大组件" class="headerlink" title="四大组件"></a>四大组件</h2><h3 id="☄️-Activity"><a href="#☄️-Activity" class="headerlink" title="☄️ Activity"></a>☄️ Activity</h3><ul>
+<li><p>一个 <a target="_blank" rel="noopener" href="https://developer.android.com/guide/components/activities/intro-activities?hl=zh-cn#mtal">Activity</a> 通常就是一个单独的屏幕（窗口）。此窗口通常会填满屏幕，但也可能比屏幕小，并浮动在其他窗口上面。通常，应用中的一个 Activity 会被指定为主 Activity，这是用户启动应用时出现的第一个屏幕。然后，每个 Activity 可以启动另一个 Activity，以执行不同的操作。例如，一个简单的电子邮件应用中的主 Activity 可能会提供显示电子邮件收件箱的屏幕。主 Activity 可能会从该屏幕启动其他 Activity，以提供执行写邮件和打开邮件这类任务的屏幕。</p>
+</li>
+<li><p>Activity 之间通过 Intent 进行通信。虽然应用中的各个 Activity 协同工作形成统一的用户体验，但每个 Activity 与其他 Activity 之间只存在松散的关联，应用内不同 Activity 之间的依赖关系通常很小。事实上，Activity 经常会启动属于其他应用的 Activity。例如，浏览器应用可能会启动社交媒体应用的“分享”Activity。</p>
+</li>
+<li><p><strong>Android 应用中每一个 Activity 都必须要在 AndroidManifest.xml 配置文件中声明</strong>，并且必须适当地管理 Activity 的生命周期，否则系统将不识别也不执行该 Activity。</p>
+</li>
+<li><p>使用 <code>&lt;activity&gt;</code> 标签进行声明，唯一的必要属性是 <code>android:name</code>。</p>
+</li>
+<li><p>使用 <code>Intent</code> 显示/隐式请求启动 Activity。</p>
+</li>
+<li><p>生命周期：</p>
+<p><code>onCreate()</code> 在系统创建 Activity 时触发，初始化 Activity 的基本组件、必须在此处调用 <code>setContentView()</code> 来定义 Activity 界面的布局。<br>⬇️<br><code>onStart()</code> “已启动”，并对用户可见。此回调包含 Activity 进入前台与用户进行互动之前的最后准备工作。<br>⬇️<br><code>onResume()</code> 系统会在 Activity 开始与用户互动之前调用此回调。此时，该 Activity 位于 Activity 堆栈的顶部，并会捕获所有用户输入。应用的大部分核心功能都是在 <code>onResume()</code> 方法中实现的。<code>onResume()</code> 回调后面总是跟着 <code>onPause()</code> 回调。<br>⬇️<br><code>onPause()</code> 当 Activity 失去焦点并进入“已暂停”状态时，系统就会调用 <code>onPause()</code>。例如，当用户点按“返回”或“最近使用的应用”按钮时，就会出现此状态。当系统调用 Activity 的 <code>onPause()</code> 时，从技术上来说，这意味着该 Activity 仍然部分可见，但大多数情况下，这表明用户正在离开该 Activity，该 Activity 很快将进入“已停止”或“已恢复”状态。如果用户希望界面继续更新，则处于“已暂停”状态的 Activity 也可以继续更新界面。例如，显示导航地图屏幕或播放媒体播放器的 Activity 就属于此类 Activity。即使此类 Activity 失去了焦点，用户仍希望其界面继续更新。开发者<strong>不</strong>应使用 <code>onPause()</code> 来保存应用或用户数据、进行网络呼叫或执行数据库事务。有关保存数据的信息，请参阅<a target="_blank" rel="noopener" href="https://developer.android.com/guide/components/activities/activity-lifecycle?hl=zh-cn#saras">保存和恢复 Activity 状态</a>。</p>
+<p><code>onPause()</code> 执行完毕后，下一个回调为 <code>onStop()</code>或 <code>onResume()</code>，具体取决于 Activity 进入“已暂停”状态后发生的情况。<br>⬇️<br><code>onStop()</code> 当 Activity 对用户不再可见时，系统会调用 <code>onStop()</code>。出现这种情况的原因可能是 Activity 被销毁、新的 Activity 启动、或者现有的 Activity 正在进入“已恢复”状态并覆盖了已停止的 Activity。在所有这些情况下，停止的 Activity 都将完全不再可见。系统调用的下一个回调将是 <code>onRestart()</code>（如果 Activity 重新与用户互动）或者 <code>onDestroy()</code>（如果 Activity 彻底终止）。</p>
+<p>⬇️<br><code>onRestart()</code> 当处于“已停止”状态的 Activity 即将重启时，系统就会调用此回调。<code>onRestart()</code> 会从 Activity 停止时的状态恢复 Activity。此回调后面总是跟着 <code>onStart()</code>。<br>⬇️<br><code>onDestroy()</code> 系统会在销毁 Activity 之前调用此回调。此回调是 Activity 接收的最后一个回调。通常，实现 <code>onDestroy()</code> 是为了确保在销毁 Activity 或包含该 Activity 的进程时释放该 Activity 的所有资源。</p>
+</li>
+</ul>
+<p>生命周期整体上和 iOS 类似。</p>
+<h3 id="☄️-Service"><a href="#☄️-Service" class="headerlink" title="☄️ Service"></a>☄️ Service</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="https://developer.android.com/guide/components/services?hl=zh-cn">Service</a> 是一种可在后台执行长时间运行操作而不提供界面的应用组件。Service 可由其他应用组件启动，而且即使用户切换到其他应用，Service 仍将在后台继续运行。此外，组件可通过绑定到 Service 与之进行交互，甚至是执行进程间通信 (IPC)。Service 组件通常用于为其他组件提供后台服务或监控其他组件的运行状态，例如，服务可在后台处理网络事务、播放音乐，执行文件 I/O 或与内容提供程序进行交互。</p>
+</li>
+<li><p>Service 的启动方式分为两种：</p>
+<ul>
+<li>Started（启动）：当应用程序组件（如 activity）调用 <code>startService()</code> 方法启动服务时，服务处于 started 状态。</li>
+<li>Bound（绑定）：当应用程序组件调用 <code>bindService()</code> 方法绑定到服务时，服务处于 bound 状态。</li>
+</ul>
+</li>
+<li><p>startService() 与 bindService() 区别：</p>
+<ul>
+<li>Started Service（启动服务）是由其他组件调用 <code>startService()</code> 方法启动的，这导致服务的 <code>onStartCommand()</code> 方法被调用。当服务是 started 状态时，其生命周期与启动它的组件无关，并且可以在后台无限期运行，即使启动服务的组件已经被销毁。因此，服务需要在完成任务后调用 <code>stopSelf()</code> 方法停止，或者由其他组件调用 <code>stopService()</code> 方法停止。</li>
+<li>Bound Service（绑定服务）使用 <code>bindService()</code> 方法启用服务，调用者与服务绑定在了一起，调用者一旦退出，服务也就终止，“不求同年同月同日生，必须同年同月同日死”。</li>
+</ul>
+</li>
+<li><p>如同 Activity 及其他组件的操作一样，<strong>开发者必须在 AndroidManifest.xml 文件中声明所有服务</strong>，使用 <service></service> 标签。</p>
+</li>
+<li><p>生命周期：</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/service_lifecycle.png"></p>
+<p>左图显示使用 <code>startService()</code> 创建的服务的生命周期，右图显示使用 <code>bindService()</code> 创建的服务的生命周期，两者还可以嵌套循环使用。</p>
+</li>
+</ul>
+<h3 id="☄️-Content-Provider"><a href="#☄️-Content-Provider" class="headerlink" title="☄️ Content Provider"></a>☄️ Content Provider</h3><ul>
+<li>Content Provider 使一个应用程序的指定数据集提供给其他应用程序，是一种标准接口。其他应用可以通过 ContentResolver 类从该内容提供者中访问或修改数据。</li>
+<li>只有需要在多个应用程序间共享数据是才需要内容提供者。例如，通讯录数据被多个应用程序使用，且必须存储在一个内容提供者中。它的好处是统一数据访问方式。</li>
+<li>ContentProvider 实现数据共享。ContentProvider 用于保存和获取数据，并使其对所有应用程序可见。这是不同应用程序间共享数据的唯一方式，因为 Android 没有提供所有应用共同访问的公共存储区。</li>
+<li>开发人员不会直接使用 ContentProvider 类的对象，大多数是通过 ContentResolver 对象实现对 ContentProvider 的操作。</li>
+<li>ContentProvider 使用 URI 来唯一标识其数据集，这里的 URI 以 content:// 作为 scheme，表示该数据由 ContentProvider 来管理。</li>
+</ul>
+<h3 id="☄️-Broadcast-Receiver"><a href="#☄️-Broadcast-Receiver" class="headerlink" title="☄️ Broadcast Receiver"></a>☄️ Broadcast Receiver</h3><ul>
+<li>类似<strong>发布-订阅</strong>的设计模式，应用可以订阅特定的广播，对外部事件进行过滤，只对感兴趣的外部事件 (如当电话呼入时，或者数据网络可用时) 进行接收并做出响应。广播接收器没有用户界面。然而，它们可以启动一个 Activity 或 Service 来响应它们收到的信息，或者用 NotificationManager 来通知用户，通知可以用很多种方式来吸引用户的注意力，例如闪动背灯、震动、播放声音等。一般来说是在状态栏上放一个持久的图标，用户可以打开它并获取消息。</li>
+<li>应用可以通过两种方式接收广播：<strong>清单声明</strong>的（静态）接收器和<strong>上下文注册</strong>的（动态）接收器。</li>
+<li>动态注册广播接收器特点是当用来注册的 Activity 关掉后，广播也就失效了。静态注册无需担忧广播接收器是否被关闭，只要设备是开启状态，广播接收器也是打开着的。也就是说即使 App 本身未启动，该 app 订阅的广播在触发时也会对它起作用。</li>
+</ul>
+<p>🔆 概念理解起来还算顺利，Activity 类似 ViewController，Content Provider 一定程度上类似文件分享？，Broadcast 类似 iOS 的远程/本地通知，还有 Service 和 iOS 的小组件有点类似，但是限制明显比 iOS 少一些…</p>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p>仅用于记录学习过程，不具备指导性。🤓</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ATommyGirl/android">Demo-Github</a></p>
+<hr>
+<p>下一日目标：Demo 中实践四大组件。</p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last',
+    proxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Android-%E5%B9%B3%E5%8F%B0%E6%9E%B6%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">Android 平台架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E5%A4%A7%E7%BB%84%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">四大组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%98%84%EF%B8%8F-Activity"><span class="toc-number">2.1.</span> <span class="toc-text">☄️ Activity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%98%84%EF%B8%8F-Service"><span class="toc-number">2.2.</span> <span class="toc-text">☄️ Service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%98%84%EF%B8%8F-Content-Provider"><span class="toc-number">2.3.</span> <span class="toc-text">☄️ Content Provider</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%98%84%EF%B8%8F-Broadcast-Receiver"><span class="toc-number">2.4.</span> <span class="toc-text">☄️ Broadcast Receiver</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo"><span class="toc-number">3.</span> <span class="toc-text">Demo</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2023/09/22/android_day3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2023/09/22/android_day3/&text=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2023/09/22/android_day3/&title=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2023/09/22/android_day3/&is_video=false&description=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android 打卡 Day3 - 四大组件 - 初识&body=Check out this article: https://tiantian.fyi/2023/09/22/android_day3/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2023/09/22/android_day3/&title=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2023/09/22/android_day3/&title=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2023/09/22/android_day3/&title=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2023/09/22/android_day3/&title=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2023/09/22/android_day3/&name=Android 打卡 Day3 - 四大组件 - 初识&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2023/09/22/android_day3/&t=Android 打卡 Day3 - 四大组件 - 初识"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2023
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>
