@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Too young too naive… 之前项目中 H5 和 原生之间互通消息一直依赖于 Cordova，还没正式用过 WKScriptMessageHandler，前两天发现确实像网友所说的会引起循环引用，导致控制器没办法释放。🔽这篇文章写的挺清楚，我就不废话了… 转载自：addScriptMessageHandler 内存泄露 | The Catcher in the Rye  今天使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WKWebView - WKScriptMessageHandler 循环引用">
+<meta property="og:url" content="https://tiantian.fyi/2023/10/30/WKWebView-Retain/index.html">
+<meta property="og:site_name" content="白小咪">
+<meta property="og:description" content="Too young too naive… 之前项目中 H5 和 原生之间互通消息一直依赖于 Cordova，还没正式用过 WKScriptMessageHandler，前两天发现确实像网友所说的会引起循环引用，导致控制器没办法释放。🔽这篇文章写的挺清楚，我就不废话了… 转载自：addScriptMessageHandler 内存泄露 | The Catcher in the Rye  今天使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/wkxhr.png">
+<meta property="article:published_time" content="2023-10-30T03:27:02.000Z">
+<meta property="article:modified_time" content="2023-10-30T03:27:02.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="WebView">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/wkxhr.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>WKWebView - WKScriptMessageHandler 循环引用</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2023/10/14/favor/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2023/10/30/WKWebView-Retain/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&text=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&title=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&is_video=false&description=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WKWebView - WKScriptMessageHandler 循环引用&body=Check out this article: https://tiantian.fyi/2023/10/30/WKWebView-Retain/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&title=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&title=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&title=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&title=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&name=WKWebView - WKScriptMessageHandler 循环引用&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&t=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">出现问题的代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0"><span class="toc-number">2.</span> <span class="toc-text">原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-1"><span class="toc-number">3.1.</span> <span class="toc-text">方案 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-2"><span class="toc-number">3.2.</span> <span class="toc-text">方案 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-3"><span class="toc-number">3.3.</span> <span class="toc-text">方案 3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-WKWebView-%E7%9A%84%E5%87%A0%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">关于 WKWebView 的几篇文章：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo"><span class="toc-number">5.</span> <span class="toc-text">Demo</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        WKWebView - WKScriptMessageHandler 循环引用
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-10-30T03:27:02.000Z" itemprop="datePublished">2023-10-30</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/WebView/" rel="tag">WebView</a>, <a class="tag-link-link" href="/tags/iOS/" rel="tag">iOS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/wkxhr.png"></p>
+<p>Too young too naive…</p>
+<p>之前项目中 H5 和 原生之间互通消息一直依赖于 Cordova，还没正式用过 <code>WKScriptMessageHandler</code>，前两天发现确实像网友所说的会引起循环引用，导致控制器没办法释放。🔽这篇文章写的挺清楚，我就不废话了…</p>
+<p><a target="_blank" rel="noopener" href="https://blog.jashoka.com/2020/05/30/addScriptMessageHandler-%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/">转载自：addScriptMessageHandler 内存泄露 | The Catcher in the Rye</a></p>
+<hr>
+<p>今天使用 <code>addScriptMessageHandler</code> 向 <code>WKWebView</code> 注入方法给 <code>js</code> 调用时发现有内存泄露问题。</p>
+<h2 id="出现问题的代码"><a href="#出现问题的代码" class="headerlink" title="出现问题的代码"></a>出现问题的代码</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">WKWebViewConfiguration</span> *webViewConfiguration = [[<span class="built_in">WKWebViewConfiguration</span> alloc] init];</span><br><span class="line"><span class="built_in">WKUserContentController</span> *userContentController = [[<span class="built_in">WKUserContentController</span> alloc] init];</span><br><span class="line">[userContentController addScriptMessageHandler:<span class="keyword">self</span> name:<span class="string">@&quot;nativeProcess&quot;</span>];</span><br><span class="line">webViewConfiguration.userContentController= userContentController;</span><br><span class="line">_webView = [[<span class="built_in">WKWebView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">self</span>.view.bounds.size.width, <span class="keyword">self</span>.view.bounds.size.height) configuration:webViewConfiguration];</span><br></pre></td></tr></table></figure>
+
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>调用 <code>addScriptMessageHandler</code> 时 <code>userContentController</code> 会 retain <code>self</code>，而 <code>self</code> 又间接 retain <code>userContentController</code>，形成了循环引用。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>搜了下，网上已经有解决方案了，后来在 <code>cordova-plugin-wkwebview-engine</code> 里也看到处理这个问题，这里记录下 3 个解决方案。</p>
+<h3 id="方案-1"><a href="#方案-1" class="headerlink" title="方案 1"></a>方案 1</h3><p>在适当的时候调用 <code>removeScriptMessageHandlerForName</code> 方法。这个方案缺点时是不好找到适当的时间点，比如该 <code>viewController</code> 被其他地方 <code>dismiss</code> 这时候就不好处理。</p>
+<h3 id="方案-2"><a href="#方案-2" class="headerlink" title="方案 2"></a>方案 2</h3><p>新建一个类来代理 <code>self</code>，这样 <code>userContentController</code> 就 retain 这个新类的对象，新类对象只是弱引用 <code>self</code>，这样循环引用就解开了。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">CDVWKWeakScriptMessageHandler</span> : <span class="title">NSObject</span> &lt;<span class="title">WKScriptMessageHandler</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>, <span class="keyword">readonly</span>) <span class="keyword">id</span>&lt;<span class="built_in">WKScriptMessageHandler</span>&gt;scriptMessageHandler;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">instancetype</span>)initWithScriptMessageHandler:(<span class="keyword">id</span>&lt;<span class="built_in">WKScriptMessageHandler</span>&gt;)scriptMessageHandler;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">CDVWKWeakScriptMessageHandler</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">instancetype</span>)initWithScriptMessageHandler:(<span class="keyword">id</span>&lt;<span class="built_in">WKScriptMessageHandler</span>&gt;)scriptMessageHandler</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        _scriptMessageHandler = scriptMessageHandler;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)userContentController:(<span class="built_in">WKUserContentController</span> *)userContentController didReceiveScriptMessage:(<span class="built_in">WKScriptMessage</span> *)message</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="keyword">self</span>.scriptMessageHandler userContentController:userContentController didReceiveScriptMessage:message];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"><span class="comment">// CDVWKWebViewEngine.m</span></span><br><span class="line">CDVWKWeakScriptMessageHandler *weakScriptMessageHandler = [[CDVWKWeakScriptMessageHandler alloc] initWithScriptMessageHandler:<span class="keyword">self</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">WKUserContentController</span>* userContentController = [[<span class="built_in">WKUserContentController</span> alloc] init];</span><br><span class="line">[userContentController addScriptMessageHandler:weakScriptMessageHandler name:CDV_BRIDGE_NAME];</span><br><span class="line"></span><br><span class="line"><span class="built_in">WKWebViewConfiguration</span>* configuration = [<span class="keyword">self</span> createConfigurationFromSettings:settings];</span><br><span class="line">configuration.userContentController = userContentController;</span><br><span class="line"></span><br><span class="line"><span class="built_in">WKWebView</span>* wkWebView = [[<span class="built_in">WKWebView</span> alloc] initWithFrame:<span class="keyword">self</span>.engineWebView.frame configuration:configuration];</span><br><span class="line"><span class="keyword">self</span>.engineWebView = wkWebView;</span><br></pre></td></tr></table></figure>
+
+<h3 id="方案-3"><a href="#方案-3" class="headerlink" title="方案 3"></a>方案 3</h3><p>该方案跟方案 2 基本一样，不过新类集成 <code>NSProxy</code>，并把所有接收到的方法都转发给 <code>self</code>。该方案使用于所有类似场景，更具通用性。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  WeakProxy.h</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by Ashoka on 2020/5/30.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">NS_ASSUME_NONNULL_BEGIN</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">WeakProxy</span> : <span class="title">NSProxy</span></span></span><br><span class="line"></span><br><span class="line">+ (<span class="keyword">instancetype</span>)weakProxy:(<span class="keyword">id</span>)object;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="keyword">id</span> object;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">NS_ASSUME_NONNULL_END</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  WeakProxy.m</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by Ashoka on 2020/5/30.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">&quot;WeakProxy.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">WeakProxy</span></span></span><br><span class="line"></span><br><span class="line">+ (<span class="keyword">instancetype</span>)weakProxy:(<span class="keyword">id</span>)object &#123;</span><br><span class="line">    <span class="keyword">return</span> [[WeakProxy alloc] initWithObject:object];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">instancetype</span>)initWithObject:(<span class="keyword">id</span>)object &#123;</span><br><span class="line">    <span class="keyword">self</span>.object = object;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">NSMethodSignature</span> *)methodSignatureForSelector:(SEL)sel &#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">self</span>.object methodSignatureForSelector:sel];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)forwardInvocation:(<span class="built_in">NSInvocation</span> *)invocation &#123;</span><br><span class="line">    [invocation invokeWithTarget:<span class="keyword">self</span>.object];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">WKWebViewConfiguration</span> *webViewConfiguration = [[<span class="built_in">WKWebViewConfiguration</span> alloc] init];</span><br><span class="line"><span class="built_in">WKUserContentController</span> *userContentController = [[<span class="built_in">WKUserContentController</span> alloc] init];</span><br><span class="line">[userContentController addScriptMessageHandler:(<span class="keyword">id</span>&lt;<span class="built_in">WKScriptMessageHandler</span>&gt;)[WeakProxy weakProxy:<span class="keyword">self</span>] name:<span class="string">@&quot;nativeProcess&quot;</span>];</span><br><span class="line">webViewConfiguration.userContentController= userContentController;</span><br><span class="line">_webView = [[<span class="built_in">WKWebView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">self</span>.view.bounds.size.width, <span class="keyword">self</span>.view.bounds.size.height) configuration:webViewConfiguration];</span><br></pre></td></tr></table></figure>
+
+
+
+<p>全文完</p>
+<hr>
+<h2 id="关于-WKWebView-的几篇文章："><a href="#关于-WKWebView-的几篇文章：" class="headerlink" title="关于 WKWebView 的几篇文章："></a><strong>关于 WKWebView 的几篇文章：</strong></h2><p><a href="/2021/12/01/WKWebView/">WKWebView 基础篇</a><br><a href="/2021/12/02/WKWebView-Protocol/">WKWebView 协议篇</a><br><a href="/2021/12/11/WKWebView-Use/">WKWebView 实战篇</a></p>
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a><strong>Demo</strong></h2><p><a target="_blank" rel="noopener" href="https://github.com/ATommyGirl/WebView">WebView 的 Demo</a></p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last',
+    proxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">出现问题的代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0"><span class="toc-number">2.</span> <span class="toc-text">原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-1"><span class="toc-number">3.1.</span> <span class="toc-text">方案 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-2"><span class="toc-number">3.2.</span> <span class="toc-text">方案 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88-3"><span class="toc-number">3.3.</span> <span class="toc-text">方案 3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-WKWebView-%E7%9A%84%E5%87%A0%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">关于 WKWebView 的几篇文章：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo"><span class="toc-number">5.</span> <span class="toc-text">Demo</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2023/10/30/WKWebView-Retain/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&text=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&title=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&is_video=false&description=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=WKWebView - WKScriptMessageHandler 循环引用&body=Check out this article: https://tiantian.fyi/2023/10/30/WKWebView-Retain/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&title=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&title=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&title=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&title=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&name=WKWebView - WKScriptMessageHandler 循环引用&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2023/10/30/WKWebView-Retain/&t=WKWebView - WKScriptMessageHandler 循环引用"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2023
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>
