@@ -7341,10 +7341,7 @@
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr>
 <h2 id="偏爱"><a href="#偏爱" class="headerlink" title="偏爱"></a>偏爱</h2><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/so_fucking_close.png" style="zoom: 50%;">
 
-<p>最近关注的一个心理咨询师闲聊的一句话：</p>
-<blockquote>
-<p>能让女孩子着迷的东西是什么，具体的我也说不太清楚，有可能是金钱，也有可能是颜值。但是我知道，能让女孩子一直着迷的是你的责任和担当，还有你对她的偏爱。</p>
-</blockquote>
+<p>&#8195;&#8195;能让女孩子着迷的东西是什么，具体的我也说不太清楚，有可能是金钱，也有可能是颜值。但是我知道，能让女孩子<strong>一直</strong>着迷的是你的责任和担当，还有你对她的偏爱。</p>
 <p>&#8195;&#8195;你给你妈发信息，如果她不回你，一般你不会心慌；但如果你给你的对象发信息，对象没回你的话，你也许会心慌。为什么？根本原因是你确定你妈妈爱你，但你不确定你的对象到底爱不爱你，只有不确定的东西才会患得患失。很多人“博爱”，看上去对谁都挺好、老好人，但是也经常出现另一半被逼疯的情况，归根结底是没有安全感。如果在一段关系中没有安全感，大概率你是没有被偏爱的，所以安全感不是来源于爱，而是<strong>偏爱</strong>。</p>
 <p>&#8195;&#8195;八岁的小男孩儿说自己喜欢班上的一个女孩儿，妈妈问他，你怎么知道你喜欢她呢，男孩儿说，我不喜欢胖胖的人，但是她胖就可以…</p>
 <p>&#8195;&#8195;你不喜欢玩游戏，但是她 call 你，你愿意花时间陪她玩一会儿…</p>
@@ -7369,7 +7366,7 @@
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/wkxhr.png"></p>
 <p>Too young too naive…</p>
 <p>之前项目中 H5 和 原生之间互通消息一直依赖于 Cordova，还没正式用过 <code>WKScriptMessageHandler</code>，前两天发现确实像网友所说的会引起循环引用，导致控制器没办法释放。🔽这篇文章写的挺清楚，我就不废话了…</p>
-<p><a href="https://blog.jashoka.com/2020/05/30/addScriptMessageHandler-%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/">转载自：addScriptMessageHandler 内存泄露 | The Catcher in the Rye</a></p>
+<p><a href="https://blog.jashoka.com/2020/05/30/addScriptMessageHandler-%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2/">【转载自】：addScriptMessageHandler 内存泄露 | The Catcher in the Rye</a></p>
 <hr>
 <p>今天使用 <code>addScriptMessageHandler</code> 向 <code>WKWebView</code> 注入方法给 <code>js</code> 调用时发现有内存泄露问题。</p>
 <h2 id="出现问题的代码"><a href="#出现问题的代码" class="headerlink" title="出现问题的代码"></a>出现问题的代码</h2><figure class="highlight objc"><table><tr><td class="code"><pre><span class="line"><span class="built_in">WKWebViewConfiguration</span> *webViewConfiguration = [[<span class="built_in">WKWebViewConfiguration</span> alloc] init];</span><br><span class="line"><span class="built_in">WKUserContentController</span> *userContentController = [[<span class="built_in">WKUserContentController</span> alloc] init];</span><br><span class="line">[userContentController addScriptMessageHandler:<span class="keyword">self</span> name:<span class="string">@&quot;nativeProcess&quot;</span>];</span><br><span class="line">webViewConfiguration.userContentController= userContentController;</span><br><span class="line">_webView = [[<span class="built_in">WKWebView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">self</span>.view.bounds.size.width, <span class="keyword">self</span>.view.bounds.size.height) configuration:webViewConfiguration];</span><br></pre></td></tr></table></figure>
