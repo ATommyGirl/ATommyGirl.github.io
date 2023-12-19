@@ -4608,12 +4608,14 @@
 
 <p>到这里应该可以了吧？</p>
 <p>But…<br>But…<br>But…</p>
-<h3 id="我的小情怀"><a href="#我的小情怀" class="headerlink" title="我的小情怀"></a>我的小情怀</h3><p>&#8195;&#8195;我个人对某些机型或者系统有自己奇奇怪怪的情怀，很少以旧换新。例如有台 iPhone 5s 是第一代指纹识别的 HOME 键，让它的系统一直停留在了 ios9；又例如有台 iPhone 12 边框是方的所以喜欢，让它停在了 ios15.4，也因为莫名其妙觉得它比较省电。这不是重点，重点是同样的 API、同样的律动小箭头、同样的一个贴边儿条形码，在这台 iPhone 12 上，识别出来是这样的，具体识别出来了几个，我也没数🤷‍♀️：</p>
+<h3 id="我的小情怀"><a href="#我的小情怀" class="headerlink" title="我的小情怀"></a>我的小情怀</h3><p>&#8195;&#8195;我个人对某些机型或者系统有自己奇奇怪怪的情怀，很少以旧换新。例如有台 iPhone 5s 是第一代指纹识别的 HOME 键，让它的系统一直停留在了 ios9；又例如有台 iPhone 12 边框是方的所以喜欢，让它停在了 ios15.4，也因为莫名其妙觉得它比较省电。</p>
+<p>&#8195;&#8195;这不是重点，重点是同样的 API、同样的律动小箭头、同样的一个贴边儿条形码，在这台 iPhone 12 上，识别出来是这样的，具体识别出来了几个，我也没数🤷‍♀️：</p>
 <center>
     <div style="display:inline-block;"><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/vision_5.jpg" class width="300"></div>
 </center>
+...
+...
 
-<p>…<br>…</p>
 <center>
     <div style="display:inline-block;"><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/vision_10.jpg" class width="80"></div>
   <div style="display:inline-block;"><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/vision_10.jpg" class width="80"></div>
@@ -4628,7 +4630,7 @@
 <p>&#8195;&#8195;哪个坏人总说客户端简单的？打你哦。</p>
 <p>&#8195;&#8195;正经人谁做客户端开发啊。</p>
 <p>&#8195;&#8195;关机，保命，再见。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>最后一句，<a href="https://github.com/ATommyGirl/Vision.git">代码在这里</a>，需要自取。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>最后一句，<a href="https://github.com/ATommyGirl/Vision.git">代码在这里 - BarcodeDetector</a>，需要自取。</p>
 <hr>
 ]]></content>
       <tags>
