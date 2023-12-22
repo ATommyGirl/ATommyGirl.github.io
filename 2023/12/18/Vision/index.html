@@ -92,6 +92,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" aria-label="上一篇 " href="/2023/12/22/slow-cooked-life/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" aria-label="下一篇 " href="/2023/11/14/badman/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -249,7 +251,7 @@
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">convertCIBoundingRectToUIRect</span>(<span class="keyword">_</span> <span class="params">ci</span>: <span class="type">CGRect</span>)</span> -&gt; <span class="type">CGRect</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> renderingRect <span class="operator">=</span> imgV.renderingRectForImage()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> w <span class="operator">=</span> ci.size.width <span class="operator">*</span> renderingRect<span class="operator">!</span>.size.width</span><br><span class="line">    <span class="keyword">let</span> h <span class="operator">=</span> ci.size.height <span class="operator">*</span> renderingRect<span class="operator">!</span>.size.height</span><br><span class="line">    <span class="keyword">let</span> x <span class="operator">=</span> ci.origin.x <span class="operator">*</span> renderingRect<span class="operator">!</span>.size.width <span class="operator">+</span> renderingRect<span class="operator">!</span>.origin.x</span><br><span class="line">    <span class="keyword">let</span> y <span class="operator">=</span> ci.origin.y <span class="operator">*</span> renderingRect<span class="operator">!</span>.size.height <span class="operator">+</span> renderingRect<span class="operator">!</span>.origin.y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="type">CGRectMake</span>(x, y, w, h)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ol start="4">
-<li>基于转换后的坐标创建抖动的绿色小箭头，告诉用户“点我<del>点我</del>”。到这一步基本上已经达到上图的目的了。</li>
+<li>基于转换后的坐标创建抖动的绿色小箭头，告诉用户“点我-点我-”。到这一步基本上已经达到上图的目的了。</li>
 </ol>
 <p>But…<br>But…<br>But…</p>
 <p>&#8195;&#8195;上面的小箭头其实是经过一次“变态”转换之后的效果。用过 CI 坐标的都知道，在 CoreImage 中或者说读到内存中的图片，坐标系的原点和图片方向是有关系的，并不是单纯和 UI 坐标上下反过来的关系。正常情况下图片的方向是 <strong>CGImagePropertyOrientation.up</strong>，想模拟其他方向可以把手机横着或者倒过来拍照试试，还用上面的多条码图片举例，按照我们 1-4 步骤出来的效果其实是这样的;</p>
