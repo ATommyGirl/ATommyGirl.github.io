@@ -87,4 +87,4 @@ https://tiantian.fyi/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/
 https://tiantian.fyi/2016/07/01/CentOS%20%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/
 https://tiantian.fyi/2016/01/13/GCD/
 https://tiantian.fyi/2015/08/02/HTTP%20%E7%9A%84%E4%B8%80%E7%82%B9%E5%84%BF%E5%B0%8F%E7%9F%A5%E8%AF%86/
-https://tiantian.fyi/1000/01/01/music/
+https://tiantian.fyi/1000/01/01/Music/
