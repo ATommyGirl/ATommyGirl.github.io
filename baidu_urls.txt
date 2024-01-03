@@ -1,3 +1,4 @@
+https://tiantian.fyi/2023/12/31/2023/
 https://tiantian.fyi/2023/12/29/social-stupidity/
 https://tiantian.fyi/2023/12/22/slow-cooked-life/
 https://tiantian.fyi/2023/12/18/Vision/
@@ -9,13 +10,13 @@ https://tiantian.fyi/2023/09/18/myself/
 https://tiantian.fyi/2023/07/01/android_day2/
 https://tiantian.fyi/2023/06/29/android_day1/
 https://tiantian.fyi/2023/06/16/SDWebImage_blink/
-https://tiantian.fyi/2023/06/14/let_it_go/
-https://tiantian.fyi/2023/06/07/Not_important/
+https://tiantian.fyi/2023/06/14/let-it-go/
+https://tiantian.fyi/2023/06/07/not-important/
 https://tiantian.fyi/2023/03/30/Centos7_update_Python3.8/
 https://tiantian.fyi/2023/03/30/Systemctl_nodejs/
 https://tiantian.fyi/2023/03/24/SDWebImageErrorDomain/
 https://tiantian.fyi/2023/01/03/WKWebView-XHR/
-https://tiantian.fyi/2022/12/31/2022%E5%B9%B4%E5%B0%8F%E7%BB%93%E5%84%BF/
+https://tiantian.fyi/2022/12/31/2022/
 https://tiantian.fyi/2022/11/15/SDWebImage/
 https://tiantian.fyi/2022/09/15/iPhone_dev_size/
 https://tiantian.fyi/2022/07/28/MacOS%20%E4%B8%8A%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E5%B0%8F%E5%B0%8F%E7%9A%84%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6/
@@ -33,7 +34,7 @@ https://tiantian.fyi/2022/02/23/Linux_Shell/
 https://tiantian.fyi/2022/02/18/Linux_user/
 https://tiantian.fyi/2022/02/16/Apple%20Configurator%202/
 https://tiantian.fyi/2022/02/08/Docker_network/
-https://tiantian.fyi/2022/01/19/2021%E5%B9%B4%E5%B0%8F%E7%BB%93%E5%84%BF/
+https://tiantian.fyi/2022/01/19/2021/
 https://tiantian.fyi/2022/01/14/http_head/
 https://tiantian.fyi/2021/12/31/http_referer/
 https://tiantian.fyi/2021/12/11/WKWebView-Use/
@@ -41,7 +42,7 @@ https://tiantian.fyi/2021/12/08/Systemd_Go/
 https://tiantian.fyi/2021/12/02/WKWebView-Protocol/
 https://tiantian.fyi/2021/12/01/WKWebView/
 https://tiantian.fyi/2021/11/09/iOS%20%E9%87%8D%E7%AD%BE%E5%90%8D%E5%B7%A5%E5%85%B7/
-https://tiantian.fyi/2021/09/23/Subway3/
+https://tiantian.fyi/2021/09/23/subway3/
 https://tiantian.fyi/2021/09/18/Git-Flow/
 https://tiantian.fyi/2021/08/29/%E5%A5%B3%E6%80%A7%E7%AE%A1%E7%90%86%E8%80%85/
 https://tiantian.fyi/2021/08/19/Cordova_config.xml/
@@ -88,4 +89,4 @@ https://tiantian.fyi/2017/01/04/iOS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/
 https://tiantian.fyi/2016/07/01/CentOS%20%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/
 https://tiantian.fyi/2016/01/13/GCD/
 https://tiantian.fyi/2015/08/02/HTTP%20%E7%9A%84%E4%B8%80%E7%82%B9%E5%84%BF%E5%B0%8F%E7%9F%A5%E8%AF%86/
-https://tiantian.fyi/1000/01/01/Music/
+https://tiantian.fyi/1000/01/01/music/

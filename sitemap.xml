@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://tiantian.fyi/2023/12/31/2023/</loc>
+    
+    <lastmod>2023-12-31</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://tiantian.fyi/2023/12/29/social-stupidity/</loc>
     
     <lastmod>2023-12-29</lastmod>
@@ -101,7 +110,7 @@
   </url>
   
   <url>
-    <loc>https://tiantian.fyi/2023/06/14/let_it_go/</loc>
+    <loc>https://tiantian.fyi/2023/06/14/let-it-go/</loc>
     
     <lastmod>2023-06-14</lastmod>
     
@@ -110,7 +119,7 @@
   </url>
   
   <url>
-    <loc>https://tiantian.fyi/2023/06/07/Not_important/</loc>
+    <loc>https://tiantian.fyi/2023/06/07/not-important/</loc>
     
     <lastmod>2023-06-07</lastmod>
     
@@ -155,7 +164,7 @@
   </url>
   
   <url>
-    <loc>https://tiantian.fyi/2022/12/31/2022%E5%B9%B4%E5%B0%8F%E7%BB%93%E5%84%BF/</loc>
+    <loc>https://tiantian.fyi/2022/12/31/2022/</loc>
     
     <lastmod>2022-12-31</lastmod>
     
@@ -317,7 +326,7 @@
   </url>
   
   <url>
-    <loc>https://tiantian.fyi/2022/01/19/2021%E5%B9%B4%E5%B0%8F%E7%BB%93%E5%84%BF/</loc>
+    <loc>https://tiantian.fyi/2022/01/19/2021/</loc>
     
     <lastmod>2022-01-19</lastmod>
     
@@ -389,7 +398,7 @@
   </url>
   
   <url>
-    <loc>https://tiantian.fyi/2021/09/23/Subway3/</loc>
+    <loc>https://tiantian.fyi/2021/09/23/subway3/</loc>
     
     <lastmod>2021-09-23</lastmod>
     
@@ -866,7 +875,7 @@
   </url>
   
   <url>
-    <loc>https://tiantian.fyi/1000/01/01/Music/</loc>
+    <loc>https://tiantian.fyi/1000/01/01/music/</loc>
     
     <lastmod>0999-12-31</lastmod>
     
@@ -877,148 +886,148 @@
 
   <url>
     <loc>https://tiantian.fyi/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>https://tiantian.fyi/tags/7788/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <loc>https://tiantian.fyi/tags/%E8%AF%BB%E4%B9%A6/</loc>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://tiantian.fyi/tags/%E8%AF%BB%E4%B9%A6/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <loc>https://tiantian.fyi/tags/7788/</loc>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/iOS/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/Mac/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/Tool/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/CentOS/</loc>
-    <lastmod>2023-12-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://tiantian.fyi/tags/Linux/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/%E8%BD%AC%E8%BD%BD/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/Cordova/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://tiantian.fyi/tags/Linux/</loc>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/%E7%BD%91%E7%BB%9C/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/Go/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/Android/</loc>
-    <lastmod>2023-12-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://tiantian.fyi/tags/%E6%88%91/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/Nginx/</loc>
-    <lastmod>2023-12-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://tiantian.fyi/tags/%E7%9E%8E%E6%89%AF/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/WebView/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/Xcode/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/pod/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://tiantian.fyi/tags/%E6%88%91/</loc>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://tiantian.fyi/tags/%E9%82%AE%E7%AE%B1/</loc>
-    <lastmod>2023-12-29</lastmod>
+    <lastmod>2024-01-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://tiantian.fyi/tags/%E7%9E%8E%E6%89%AF/</loc>
+    <lastmod>2024-01-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
