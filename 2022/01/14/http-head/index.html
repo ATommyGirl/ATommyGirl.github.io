@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="背景手机 App熟悉手机端的朋友一般都了解:  iOS App 的文件格式是 .ipa ；Android App 的文件格式是 .apk。 ipa 文件安装协议是苹果提供的形如：itms-services:&#x2F;&#x2F;?action&#x3D;download-manifest&amp;url&#x3D;https:&#x2F;&#x2F;tommygirl.cn&#x2F;app&#x2F;download&#x2F;plist 的链接。一系列的请求首先指向 plist">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HEAD 小乌龙">
+<meta property="og:url" content="https://tiantian.fyi/2022/01/14/http-head/index.html">
+<meta property="og:site_name" content="白小咪">
+<meta property="og:description" content="背景手机 App熟悉手机端的朋友一般都了解:  iOS App 的文件格式是 .ipa ；Android App 的文件格式是 .apk。 ipa 文件安装协议是苹果提供的形如：itms-services:&#x2F;&#x2F;?action&#x3D;download-manifest&amp;url&#x3D;https:&#x2F;&#x2F;tommygirl.cn&#x2F;app&#x2F;download&#x2F;plist 的链接。一系列的请求首先指向 plist">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/http-head.jpg">
+<meta property="og:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/flag.jpeg">
+<meta property="article:published_time" content="2022-01-14T04:30:23.000Z">
+<meta property="article:modified_time" content="2022-01-14T04:30:23.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/http-head.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>HEAD 小乌龙</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2022/01/19/2021/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/12/31/http-referer/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/01/14/http-head/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/01/14/http-head/&text=HEAD 小乌龙"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/01/14/http-head/&title=HEAD 小乌龙"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/01/14/http-head/&is_video=false&description=HEAD 小乌龙"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HEAD 小乌龙&body=Check out this article: https://tiantian.fyi/2022/01/14/http-head/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/01/14/http-head/&title=HEAD 小乌龙"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/01/14/http-head/&title=HEAD 小乌龙"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/01/14/http-head/&title=HEAD 小乌龙"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/01/14/http-head/&title=HEAD 小乌龙"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/01/14/http-head/&name=HEAD 小乌龙&description=&lt;h2 id=&#34;背景&#34;&gt;&lt;a href=&#34;#背景&#34; class=&#34;headerlink&#34; title=&#34;背景&#34;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;h3 id=&#34;手机-App&#34;&gt;&lt;a href=&#34;#手机-App&#34; class=&#34;headerlink&#34; title=&#34;手机 App&#34;&gt;&lt;/a&gt;手机 App&lt;/h3&gt;&lt;p&gt;熟悉手机端的朋友一般都了解:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;iOS App 的文件格式是 .ipa ；Android App 的文件格式是 .apk。&lt;/li&gt;
+&lt;li&gt;ipa 文件安装协议是苹果提供的形如：&lt;code&gt;itms-services://?action=download-manifest&amp;amp;url=https://tommygirl.cn/app/download/plist&lt;/code&gt; 的链接。一系列的请求首先指向 plist 文件，plist 文件中会注明 ipa 文件的真实下载地址以及 App 的基本信息。在此不赘述。&lt;/li&gt;
+&lt;li&gt;apk 文件相较于 ipa 的安装更简单一些，下载好 apk 文件以后跟随系统的提示进行安装即可。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;提供给企业内部员工使用的 App 一般不会特意上线 AppStore 或者安卓各应用市场，通常自己维护一个下载机制供少数人安装即可。&lt;/p&gt;
+&lt;h3 id=&#34;服务端&#34;&gt;&lt;a href=&#34;#服务端&#34; class=&#34;headerlink&#34; title=&#34;服务端&#34;&gt;&lt;/a&gt;服务端&lt;/h3&gt;&lt;p&gt;基于手机端的背景，一个简单的下载机制可以是这样的:&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/01/14/http-head/&t=HEAD 小乌龙"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E6%9C%BA-App"><span class="toc-number">1.1.</span> <span class="toc-text">手机 App</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-number">1.2.</span> <span class="toc-text">服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E9%9C%80%E6%B1%82"><span class="toc-number">1.3.</span> <span class="toc-text">用户需求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90-%E6%8A%93%E5%8C%85"><span class="toc-number">2.</span> <span class="toc-text">分析-抓包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HEAD-%E8%AF%B7%E6%B1%82"><span class="toc-number">3.</span> <span class="toc-text">HEAD 请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#302"><span class="toc-number">4.</span> <span class="toc-text">302</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        HEAD 小乌龙
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-01-14T04:30:23.000Z" itemprop="datePublished">2022-01-14</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="手机-App"><a href="#手机-App" class="headerlink" title="手机 App"></a>手机 App</h3><p>熟悉手机端的朋友一般都了解:</p>
+<ol>
+<li>iOS App 的文件格式是 .ipa ；Android App 的文件格式是 .apk。</li>
+<li>ipa 文件安装协议是苹果提供的形如：<code>itms-services://?action=download-manifest&amp;url=https://tommygirl.cn/app/download/plist</code> 的链接。一系列的请求首先指向 plist 文件，plist 文件中会注明 ipa 文件的真实下载地址以及 App 的基本信息。在此不赘述。</li>
+<li>apk 文件相较于 ipa 的安装更简单一些，下载好 apk 文件以后跟随系统的提示进行安装即可。</li>
+</ol>
+<p>提供给企业内部员工使用的 App 一般不会特意上线 AppStore 或者安卓各应用市场，通常自己维护一个下载机制供少数人安装即可。</p>
+<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><p>基于手机端的背景，一个简单的下载机制可以是这样的:</p>
+<span id="more"></span>
+
+<ol>
+<li><p>提供一个统一的 App 下载(更新)接口:</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://tommygirl.cn/app/download</span><br></pre></td></tr></table></figure></li>
+<li><p>根据 HTTP 头部 User-Agent 字段来判断设备类型：PC、iOS、Android……等等。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent : Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36</span><br></pre></td></tr></table></figure></li>
+<li><p>根据不同设备在 Response 中返回不同的下载地址:</p>
+<p>如果是 Android 设备呢，1. 接口返回形如:</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://tommygirl.cn/app/download/ahaaaaa.apk</span><br></pre></td></tr></table></figure>
+
+<p>如果是 iOS 设备呢，1. 接口返回形如:</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">itms-services://?action=download-manifest&amp;url=https://tommygirl.cn/app/download/plist</span><br></pre></td></tr></table></figure>
+
+<p>plist 指向 ipa:</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://tommygirl.cn/app/download/ahaaaaa.ipa</span><br></pre></td></tr></table></figure></li>
+<li><p>手机端根据各自系统的特点去下载新的安装包。</p>
+</li>
+</ol>
+<h3 id="用户需求"><a href="#用户需求" class="headerlink" title="用户需求"></a>用户需求</h3><p>用户要求统计 ipa 和 apk 的下载量，误差姑且接受 ±100 吧。哈哈哈，毕竟自己人可能反复测试产生一些误差数据🤓。</p>
+<p>由于项目周期短，服务端的实现机制是统计两个文件所在位置的访问量。然鹅，同事测试的时候发现：下载量是翻倍在增长，这样下去我们 App 的下载量可以跟微信媲美了 😂。所以这个诡异的现象是为什么呢？</p>
+<h2 id="分析-抓包"><a href="#分析-抓包" class="headerlink" title="分析-抓包"></a>分析-抓包</h2><p>从安卓手机安装的现象看，浏览器先访问了一次 apk 文件，但又主动取消了下载，要等用户手动再点一次下载，才会真正的开始接收数据。所以我猜测是不是先做了一次 HEAD 请求，第二次再做的 GET 请求下载数据。</p>
+<ol>
+<li><p>先在 iOS 手机上抓了一下包，每点击一次下载按钮都会依次发出三个网络请求：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/app/download/plist</span> <span class="meta">HTTP/1.1</span></span><br><span class="line">HEAD /app/download/ahaaaaa.ipa HTTP/1.1</span><br><span class="line">GET /app/download/ahaaaaa.ipa HTTP/1.1</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>抓包内容：</p>
+<center>
+    <div style="display:inline-block;"><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/http-head.jpg" class width="500"></div>
+</center>
+
+<p>这个时候我已经咋咋呼呼的跑去找后端同事炫耀自己的猜测了，自信的认为绝对是 HEAD 请求导致的，燃鹅……</p>
+<ol start="2">
+<li><p>在 Android 手机上抓包，两级反转了：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/app/download/ahaaaaa.apk</span> <span class="meta">HTTP/1.1</span></span><br><span class="line">GET /app/download/ahaaaaa.apk HTTP/1.1</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>抓包内容：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//----- Android</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;time_local&quot;</span>: <span class="string">&quot;30/Dec/2021:15:24:04 +0800&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;remote_addr&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;remote_user&quot;</span>: <span class="string">&quot;-&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;upstream_addr&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;time_total&quot;</span>: <span class="string">&quot;2.081&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;upstream_response_time&quot;</span>: <span class="string">&quot;2.081&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;status&quot;</span>: <span class="string">&quot;200&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;request&quot;</span>: <span class="string">&quot;GET /app/download/ahaaaaa.apk HTTP/1.1&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;method&quot;</span>: <span class="string">&quot;GET&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;body_bytes_sent&quot;</span>: <span class="string">&quot;13815405&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;http_user_agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Linux; Android 9; MHA-AL00; HMSCore 6.2.0.301; GMSCore 19.6.29) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.105 HuaweiBrowser/12.0.1.300 Mobile Safari/537.36&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	<span class="attr">&quot;time_local&quot;</span>: <span class="string">&quot;30/Dec/202:15:24:12 +0800&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;remote_addr&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;remote_user&quot;</span>: <span class="string">&quot;-&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;upstream_addr&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;time_total&quot;</span>: <span class="string">&quot;4.410&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;upstream_response_time&quot;</span>: <span class="string">&quot;4.411&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;status&quot;</span>: <span class="string">&quot;200&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;request&quot;</span>: <span class="string">&quot;GET /app/download/ahaaaaa.apk HTTP/1.1&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;method&quot;</span>: <span class="string">&quot;GET&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;body_bytes_sent&quot;</span>: <span class="string">&quot;13815405&quot;</span>,</span><br><span class="line">	<span class="attr">&quot;http_user_agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Linux; Android 9; MHA-AL00; HMSCore 6.2.0.301; GMSCore 19.6.29) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.105 HuaweiBrowser/12.0.1.300 Mobile Safari/537.36&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>竟然是两个 GET 请求，第一个请求被浏览器主动断开了，所以时间也相对较短。这里我是挺不理解的，为什么不直接使用一个 HEAD 请求呢？所以这就是为什么我不爱用安卓手机🤓。</p>
+<h2 id="HEAD-请求"><a href="#HEAD-请求" class="headerlink" title="HEAD 请求"></a>HEAD 请求</h2><p>所以什么是 HEAD 请求呢？</p>
+<blockquote>
+<p><strong>HTTP <code>HEAD</code> 方法</strong> 请求资源的头部信息, 并且这些头部与 HTTP <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/GET"><code>GET</code></a> 方法请求时返回的一致. 该请求方法的一个使用场景是在下载一个大文件前先获取其大小再决定是否要下载, 以此可以节约带宽资源。</p>
+<p><code>HEAD</code> 方法的响应不应包含响应正文. 即使包含了正文也必须忽略掉. 虽然描述正文信息的 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Entity_header">entity headers</a>, 例如 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Length"><code>Content-Length</code></a> 可能会包含在响应中, 但它们并不是用来描述 <code>HEAD</code> 响应本身的, 而是用来描述同样情况下的 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/GET"><code>GET</code></a> 请求应该返回的响应。</p>
+<p>如果 <code>HEAD</code> 请求的结果显示在上一次 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/GET"><code>GET</code></a> 请求后缓存的资源已经过期了, 即使没有发出<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods/GET"><code>GET</code></a>请求，缓存也会失效。</p>
+</blockquote>
+<p>除了上面提到的节约带宽以外，还可以探测文件的有效性、可用性、最近是否有修改等等。</p>
+<h2 id="302"><a href="#302" class="headerlink" title="302"></a>302</h2><p>苹果系统针对 ipa 文件应该是主动发的 HEAD 请求，这个相对好处理一些。但安卓系统内部的实现机制我们不太好猜了。最终的解决方案是通过一个 302 跳转规避这种情况，在 <a href="/2022/01/14/http_head/#%E6%9C%8D%E5%8A%A1%E7%AB%AF">原方案</a> 中的第三步修改为:</p>
+<ol start="3">
+<li>在 Response 中返回同一个地址(用于统计下载量的接口)，但并不是真正的安装包下载地址。</li>
+</ol>
+<p>For example 返回一个统计接口给手机端：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://tommygirl.cn/app/download/file</span><br></pre></td></tr></table></figure>
+
+<p>如果是 Android 设备呢，统计接口再 302 指向:</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://tommygirl.cn/app/download/ahaaaaa.apk</span><br></pre></td></tr></table></figure>
+
+<p>如果是 iOS 设备呢，统计接口再 302 指向:</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">itms-services://?action=download-manifest&amp;url=https://tommygirl.cn/app/download/plist</span><br></pre></td></tr></table></figure>
+
+<p>……后面的过程就一样了。</p>
+<p>FYI: iOS 用的网络组件 AFNetworking 正常情况下是不支持 itms-services 协议的，所以要单独在失败回调中处理一下。</p>
+<p>so……一个小乌龙就这样了</p>
+<p><img src="https://yyblog-images-1258406742.cos.ap-beijing.myqcloud.com/flag.jpeg"></p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last',
+    proxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E6%9C%BA-App"><span class="toc-number">1.1.</span> <span class="toc-text">手机 App</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-number">1.2.</span> <span class="toc-text">服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E9%9C%80%E6%B1%82"><span class="toc-number">1.3.</span> <span class="toc-text">用户需求</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90-%E6%8A%93%E5%8C%85"><span class="toc-number">2.</span> <span class="toc-text">分析-抓包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HEAD-%E8%AF%B7%E6%B1%82"><span class="toc-number">3.</span> <span class="toc-text">HEAD 请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#302"><span class="toc-number">4.</span> <span class="toc-text">302</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/01/14/http-head/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/01/14/http-head/&text=HEAD 小乌龙"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/01/14/http-head/&title=HEAD 小乌龙"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/01/14/http-head/&is_video=false&description=HEAD 小乌龙"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HEAD 小乌龙&body=Check out this article: https://tiantian.fyi/2022/01/14/http-head/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/01/14/http-head/&title=HEAD 小乌龙"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/01/14/http-head/&title=HEAD 小乌龙"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/01/14/http-head/&title=HEAD 小乌龙"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/01/14/http-head/&title=HEAD 小乌龙"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/01/14/http-head/&name=HEAD 小乌龙&description=&lt;h2 id=&#34;背景&#34;&gt;&lt;a href=&#34;#背景&#34; class=&#34;headerlink&#34; title=&#34;背景&#34;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;h3 id=&#34;手机-App&#34;&gt;&lt;a href=&#34;#手机-App&#34; class=&#34;headerlink&#34; title=&#34;手机 App&#34;&gt;&lt;/a&gt;手机 App&lt;/h3&gt;&lt;p&gt;熟悉手机端的朋友一般都了解:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;iOS App 的文件格式是 .ipa ；Android App 的文件格式是 .apk。&lt;/li&gt;
+&lt;li&gt;ipa 文件安装协议是苹果提供的形如：&lt;code&gt;itms-services://?action=download-manifest&amp;amp;url=https://tommygirl.cn/app/download/plist&lt;/code&gt; 的链接。一系列的请求首先指向 plist 文件，plist 文件中会注明 ipa 文件的真实下载地址以及 App 的基本信息。在此不赘述。&lt;/li&gt;
+&lt;li&gt;apk 文件相较于 ipa 的安装更简单一些，下载好 apk 文件以后跟随系统的提示进行安装即可。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;提供给企业内部员工使用的 App 一般不会特意上线 AppStore 或者安卓各应用市场，通常自己维护一个下载机制供少数人安装即可。&lt;/p&gt;
+&lt;h3 id=&#34;服务端&#34;&gt;&lt;a href=&#34;#服务端&#34; class=&#34;headerlink&#34; title=&#34;服务端&#34;&gt;&lt;/a&gt;服务端&lt;/h3&gt;&lt;p&gt;基于手机端的背景，一个简单的下载机制可以是这样的:&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/01/14/http-head/&t=HEAD 小乌龙"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2024
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

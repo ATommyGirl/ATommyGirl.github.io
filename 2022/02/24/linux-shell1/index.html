@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="查看目录和文件pwd 显示当前所在的位置，即工作目录。  12[blog@VM-0-13-centos ~]$ pwd&#x2F;home&#x2F;blog  cd 改变目录。  日常用法：cd &#x2F;home&#x2F;blog 进入 &#x2F;home&#x2F;blog 目录；cd .. 返回上一层目录；cd &#x2F; 进入根目录，cd .. &#x2F; .. 也是进入根目录；cd 不带参数总是可以回到自己用户的主目录，或者 cd ~ 也是一样的效果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 学习笔记（三）- Shell 基础命令">
+<meta property="og:url" content="https://tiantian.fyi/2022/02/24/linux-shell1/index.html">
+<meta property="og:site_name" content="白小咪">
+<meta property="og:description" content="查看目录和文件pwd 显示当前所在的位置，即工作目录。  12[blog@VM-0-13-centos ~]$ pwd&#x2F;home&#x2F;blog  cd 改变目录。  日常用法：cd &#x2F;home&#x2F;blog 进入 &#x2F;home&#x2F;blog 目录；cd .. 返回上一层目录；cd &#x2F; 进入根目录，cd .. &#x2F; .. 也是进入根目录；cd 不带参数总是可以回到自己用户的主目录，或者 cd ~ 也是一样的效果。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-24T14:01:34.000Z">
+<meta property="article:modified_time" content="2022-02-24T14:01:34.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Linux 学习笔记（三）- Shell 基础命令</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2022/03/15/linux-file-system/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2022/02/23/linux-shell/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/02/24/linux-shell1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/02/24/linux-shell1/&text=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/02/24/linux-shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/02/24/linux-shell1/&is_video=false&description=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（三）- Shell 基础命令&body=Check out this article: https://tiantian.fyi/2022/02/24/linux-shell1/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/02/24/linux-shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/02/24/linux-shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/02/24/linux-shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/02/24/linux-shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/02/24/linux-shell1/&name=Linux 学习笔记（三）- Shell 基础命令&description=&lt;hr&gt;
+&lt;h2 id=&#34;查看目录和文件&#34;&gt;&lt;a href=&#34;#查看目录和文件&#34; class=&#34;headerlink&#34; title=&#34;查看目录和文件&#34;&gt;&lt;/a&gt;查看目录和文件&lt;/h2&gt;&lt;h3 id=&#34;pwd&#34;&gt;&lt;a href=&#34;#pwd&#34; class=&#34;headerlink&#34; title=&#34;pwd&#34;&gt;&lt;/a&gt;pwd&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;显示当前所在的位置，即工作目录。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;figure class=&#34;highlight powershell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;[&lt;span class=&#34;type&#34;&gt;blog&lt;/span&gt;@&lt;span class=&#34;type&#34;&gt;VM&lt;/span&gt;-&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;-&lt;span class=&#34;number&#34;&gt;13&lt;/span&gt;-&lt;span class=&#34;type&#34;&gt;centos&lt;/span&gt; ~]&lt;span class=&#34;variable&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;pwd&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/home/blog&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h3 id=&#34;cd&#34;&gt;&lt;a href=&#34;#cd&#34; class=&#34;headerlink&#34; title=&#34;cd&#34;&gt;&lt;/a&gt;cd&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;改变目录。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;日常用法：&lt;br&gt;&lt;code&gt;cd /home/blog&lt;/code&gt; 进入 /home/blog 目录；&lt;br&gt;&lt;code&gt;cd ..&lt;/code&gt; 返回上一层目录；&lt;br&gt;&lt;code&gt;cd /&lt;/code&gt; 进入根目录，&lt;code&gt;cd .. / ..&lt;/code&gt; 也是进入根目录；&lt;br&gt;&lt;code&gt;cd&lt;/code&gt; 不带参数总是可以回到自己用户的主目录，或者 &lt;code&gt;cd ~&lt;/code&gt; 也是一样的效果。&lt;br&gt;&lt;strong&gt;FYI&lt;/strong&gt;：在 Shell 中，&lt;code&gt;..&lt;/code&gt; 代表当前目录的上一级目录，而 &lt;code&gt;.&lt;/code&gt; 则代表当前目录，另外，&lt;code&gt;~&lt;/code&gt; 代表用户主目录。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/02/24/linux-shell1/&t=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%9B%AE%E5%BD%95%E5%92%8C%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">查看目录和文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pwd"><span class="toc-number">1.1.</span> <span class="toc-text">pwd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cd"><span class="toc-number">1.2.</span> <span class="toc-text">cd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ls"><span class="toc-number">1.3.</span> <span class="toc-text">ls</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dir-vdir"><span class="toc-number">1.4.</span> <span class="toc-text">dir&#x2F;vdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cat"><span class="toc-number">1.5.</span> <span class="toc-text">cat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#more"><span class="toc-number">1.6.</span> <span class="toc-text">more</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#head"><span class="toc-number">1.7.</span> <span class="toc-text">head</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tail"><span class="toc-number">1.8.</span> <span class="toc-text">tail</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#less"><span class="toc-number">1.9.</span> <span class="toc-text">less</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#grep"><span class="toc-number">1.10.</span> <span class="toc-text">grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find"><span class="toc-number">1.11.</span> <span class="toc-text">find</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#locate"><span class="toc-number">1.12.</span> <span class="toc-text">locate</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E5%91%BD%E4%BB%A4%E5%92%8C%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF"><span class="toc-number">2.</span> <span class="toc-text">查找命令和系统信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#whereis"><span class="toc-number">2.1.</span> <span class="toc-text">whereis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#who"><span class="toc-number">2.2.</span> <span class="toc-text">who</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#whoami"><span class="toc-number">2.3.</span> <span class="toc-text">whoami</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uname"><span class="toc-number">2.4.</span> <span class="toc-text">uname</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#man"><span class="toc-number">2.5.</span> <span class="toc-text">man</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#whatis"><span class="toc-number">2.6.</span> <span class="toc-text">whatis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#apropos"><span class="toc-number">2.7.</span> <span class="toc-text">apropos</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Linux 学习笔记（三）- Shell 基础命令
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-02-24T14:01:34.000Z" itemprop="datePublished">2022-02-24</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <hr>
+<h2 id="查看目录和文件"><a href="#查看目录和文件" class="headerlink" title="查看目录和文件"></a>查看目录和文件</h2><h3 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h3><blockquote>
+<p>显示当前所在的位置，即工作目录。</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> ~]<span class="variable">$</span> <span class="built_in">pwd</span></span><br><span class="line">/home/blog</span><br></pre></td></tr></table></figure>
+
+<h3 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h3><blockquote>
+<p>改变目录。</p>
+</blockquote>
+<p>日常用法：<br><code>cd /home/blog</code> 进入 /home/blog 目录；<br><code>cd ..</code> 返回上一层目录；<br><code>cd /</code> 进入根目录，<code>cd .. / ..</code> 也是进入根目录；<br><code>cd</code> 不带参数总是可以回到自己用户的主目录，或者 <code>cd ~</code> 也是一样的效果。<br><strong>FYI</strong>：在 Shell 中，<code>..</code> 代表当前目录的上一级目录，而 <code>.</code> 则代表当前目录，另外，<code>~</code> 代表用户主目录。</p>
+<span id="more"></span>
+
+<h3 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h3><blockquote>
+<p>列出目录内容。</p>
+</blockquote>
+<p>ls 是 list 的简写。常用选项：<br><code>ls</code> 不带参数时，会列出当前目录下的所有文件和子目录。默认情况下，目录显示为蓝色，普通文件显示为黑色，可执行文件显示为草绿色，淡蓝色则表示这个文件是一个链接文件(相当于 Windows 下的快捷方式)。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> ~]<span class="variable">$</span> <span class="built_in">cd</span> /etc/</span><br><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">ls</span></span><br><span class="line">acpi                     e2fsck.conf    libreport                 pm              shells.rpmnew</span><br><span class="line">adjtime                  environment    libuser.conf              polkit<span class="literal">-1</span>        skel</span><br><span class="line">aliases                  ethertypes     locale.conf               popt.d          sos.conf</span><br><span class="line">alternatives             exports        localtime                 postfix         ssh</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><code>ls -F</code> 用户也可以使用带 -F 选项的 ls 命令。可以看到，-F 选项会在每个目录后加上 /，在可执行文件后加 *，在链接文件后加上 @。这个选项在某些无法显示颜色的终端上会比较有用:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> ~]<span class="variable">$</span> <span class="built_in">cd</span> /etc/</span><br><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">ls</span> <span class="operator">-F</span></span><br><span class="line">acpi/                    e2fsck.conf    libreport/                pm/              shells.rpmnew</span><br><span class="line">adjtime                  environment    libuser.conf              polkit<span class="literal">-1</span>/        skel/</span><br><span class="line">aliases                  ethertypes     locale.conf               popt.d/          sos.conf</span><br><span class="line">alternatives/            exports        localtime<span class="selector-tag">@</span>                postfix/         ssh/</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><code>ls -a</code> 查看所有文件，包括隐藏文件。<br><code>ls -aF</code> 命令的选项也可以组合使用，只需要一个 <code>-</code> 符号：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">ls</span> <span class="literal">-aF</span></span><br><span class="line">./                       dracut.conf.d/  libreport/                polkit<span class="literal">-1</span>/        skel/</span><br><span class="line">../                      e2fsck.conf     libuser.conf              popt.d/          sos.conf</span><br><span class="line">acpi/                    environment     locale.conf               postfix/         ssh/</span><br><span class="line">adjtime                  ethertypes      localtime<span class="selector-tag">@</span>                ppp/             ssl/</span><br></pre></td></tr></table></figure>
+
+<p><code>ls -l</code> 查看文件的属性，从左至右依次是：文件的权限标志；文件的链接个数；文件所有者的用户名；该用户所在的用户组；文件的大小；最后一次被修改的日期；文件名。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> <span class="type">etc</span>]<span class="variable">$</span> <span class="built_in">ls</span> <span class="literal">-l</span></span><br><span class="line">总用量 <span class="number">1536</span></span><br><span class="line">drwxr<span class="literal">-xr</span><span class="literal">-x</span>.  <span class="number">4</span> root root     <span class="number">4096</span> <span class="number">4</span>月  <span class="number">11</span> <span class="number">2018</span> acpi</span><br><span class="line"><span class="literal">-rw</span><span class="literal">-r</span>-<span class="literal">-r</span>--.  <span class="number">1</span> root root       <span class="number">16</span> <span class="number">4</span>月  <span class="number">21</span> <span class="number">2016</span> adjtime</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><code>ls [路径]</code> 路径作为参数，就是查看该子目录的内容：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">blog</span>@<span class="type">VM</span>-<span class="number">0</span>-<span class="number">13</span>-<span class="type">centos</span> ~]<span class="variable">$</span> <span class="built_in">ls</span> /etc/yum</span><br><span class="line">fssnap.d  pluginconf.d  protected.d  vars  version<span class="literal">-groups</span>.conf</span><br></pre></td></tr></table></figure>
+
+<h3 id="dir-vdir"><a href="#dir-vdir" class="headerlink" title="dir/vdir"></a>dir/vdir</h3><p><code>dir</code> 类似 <code>ls</code>，<code>vdir</code> 类似 <code>ls -l</code>。</p>
+<h3 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h3><blockquote>
+<p>用于查看文件内容，后面跟文件名作为参数。</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> helloworld</span><br><span class="line"><span class="variable">$</span> <span class="built_in">cat</span> <span class="literal">-n</span> helloworld <span class="comment"># 带行号的 -n </span></span><br></pre></td></tr></table></figure>
+
+<p>cat 会将文件的所有内容显示在屏幕上，那对于大文件来说，cat 显得毫无用处。</p>
+<h3 id="more"><a href="#more" class="headerlink" title="more"></a>more</h3><blockquote>
+<p>考虑到 cat 命令的缺点，Linux 提供了 more 命令一页一页的显示文件内容…</p>
+</blockquote>
+<p>&#8195;&#8195;可以看到，more 命令会在最后显示一个百分比，表示已显示内容占整个文件的比例，按下空格键向下翻动一页，按 Enter 键向下滚动一行，按 Q 键退出，或者滚到最后一行时自动就退出了。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> more <span class="number">404</span>.html</span><br><span class="line">&lt;!DOCTYPE html PUBLIC <span class="string">&quot;-//W3C//DTD XHTML 1.1//EN&quot;</span> <span class="string">&quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;html xmlns=<span class="string">&quot;http://www.w3.org/1999/xhtml&quot;</span> xml:lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;The page is not found&lt;/title&gt;</span><br><span class="line">        &lt;meta http<span class="literal">-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> content=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> /&gt;</span><br><span class="line">        &lt;style <span class="built_in">type</span>=<span class="string">&quot;text/css&quot;</span>&gt;</span><br><span class="line">            /*&lt;![<span class="type">CDATA</span>[*/</span><br><span class="line">            <span class="type">body</span> &#123;</span><br><span class="line">                <span class="type">background</span>-<span class="type">color</span>: <span class="comment">#fff;</span></span><br><span class="line">                <span class="type">color</span>: <span class="comment">#000;</span></span><br><span class="line">                <span class="type">font</span>-<span class="type">size</span>: <span class="number">0.9</span><span class="type">em</span>;</span><br><span class="line">                <span class="type">font</span>-<span class="type">family</span>: <span class="type">sans</span>-<span class="type">serif</span>,<span class="type">helvetica</span>;</span><br><span class="line">                <span class="type">margin</span>: <span class="number">0</span>;</span><br><span class="line">                <span class="type">padding</span>: <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            :<span class="type">link</span> &#123;</span><br><span class="line">                <span class="type">color</span>: <span class="comment">#c00;</span></span><br><span class="line">            &#125;</span><br><span class="line">            :<span class="type">visited</span> &#123;</span><br><span class="line">                <span class="type">color</span>: <span class="comment">#c00;</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">a</span>:<span class="type">hover</span> &#123;</span><br><span class="line">                <span class="type">color</span>: <span class="comment">#f50;</span></span><br><span class="line">            &#125;</span><br><span class="line">--<span class="type">More</span>--(<span class="number">41</span>%)</span><br></pre></td></tr></table></figure>
+
+<h3 id="head"><a href="#head" class="headerlink" title="head"></a>head</h3><blockquote>
+<p>显示文件的开头。</p>
+</blockquote>
+<h3 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h3><blockquote>
+<p>显示文件的结尾。</p>
+</blockquote>
+<p>head 和 tail 可以使用 <code>-n</code> 参数指定显示的行数。默认不指定行数的话，我也不太清楚它显示的行数是根据什么判断的😂</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> head <span class="literal">-n</span> <span class="number">5</span> <span class="number">404</span>.html</span><br><span class="line">&lt;!DOCTYPE html PUBLIC <span class="string">&quot;-//W3C//DTD XHTML 1.1//EN&quot;</span> <span class="string">&quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;html xmlns=<span class="string">&quot;http://www.w3.org/1999/xhtml&quot;</span> xml:lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;The page is not found&lt;/title&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> tail <span class="literal">-n</span> <span class="number">5</span> <span class="number">404</span>.html</span><br><span class="line">                    width=<span class="string">&quot;88&quot;</span> height=<span class="string">&quot;31&quot;</span> /&gt;&lt;/a&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> head <span class="literal">-n</span> <span class="number">2</span> index.html search.xml</span><br><span class="line">==&gt; index.html &lt;==</span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=zh&gt;</span><br><span class="line"></span><br><span class="line">==&gt; search.xml &lt;==</span><br><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="line">&lt;search&gt;</span><br></pre></td></tr></table></figure>
+
+<p>两个命令如果查看多个文件的话，默认会把文件名输出，放在 ==&gt; 和 &lt;== 之间。</p>
+<h3 id="less"><a href="#less" class="headerlink" title="less"></a>less</h3><p>&#8195;&#8195;less 和 more 非常相似，但其功能更为强大。less 改进了 more 命令的很多细节，并添加了许多的特性。这些特性让 less 看起来更像是一个文本编辑器，只是去掉了文本编辑功能。总体来说，less 命令提供了下面这些增强功能：</p>
+<ul>
+<li>使用光标键在文本文件中前后(甚至左右)滚屏;</li>
+<li>用行号或百分比作为书签浏览文件;</li>
+<li>实现复杂的检索、高亮显示等操作;</li>
+<li>兼容常用的字处理程序(如Emacs、Vim)的键盘操作;</li>
+<li>阅读到文件结束时 less 命令不会退出，按 Q 键退出;</li>
+<li>屏幕底部的信息提示更容易控制使用，而且提供了更多的信息。</li>
+</ul>
+<p>下面简单地介绍 less 命令的使用方法。以博客的 index.html 文件为例，执行 <code>less index.html</code> ：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=zh&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;!-- so meta --&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;utf-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta http<span class="literal">-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;IE=edge&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;HandheldFriendly&quot;</span> content=<span class="string">&quot;True&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1, maximum-scale=5&quot;</span> /&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;description&quot;</span> content=<span class="string">&quot;能改变自己的都是神，想改变别人的都是神经病。&lt;U+1F34A&gt;&quot;</span>&gt;</span><br><span class="line">&lt;meta property=<span class="string">&quot;og:type&quot;</span> content=<span class="string">&quot;website&quot;</span>&gt;</span><br><span class="line">&lt;meta property=<span class="string">&quot;og:title&quot;</span> content=<span class="string">&quot;迷&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#此处省略一部分</span></span><br><span class="line">...</span><br><span class="line">        &lt;!-- mathjax --&gt;</span><br><span class="line"></span><br><span class="line">:</span><br></pre></td></tr></table></figure>
+
+<p>&#8195;&#8195;可以看到，less 在屏幕底部显示一个冒号“:”等待用户输入命令。如果想向下翻一页，可以按下<strong>空格键</strong>，如果想向上翻一页，按下 <strong>B 键</strong>，也可以用光标键向<strong>前、后、</strong>甚至<strong>左右</strong>移动。如果要在文件中搜索某一个字符串， 可以使用正斜杠<strong>“/”</strong>跟上想要查找的内容，less 会把找到的第一个搜索目标高亮显示，要继续查找相同的内容，只要<strong>再次输入</strong>正斜杠<strong>“/”</strong>，并按下回车键就可以了。<br>&#8195;&#8195;使用带 <code>-M</code> 参数可以显示更多文件信息，<code>less -M index.html</code> :</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=zh&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;!-- so meta --&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;utf-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta http<span class="literal">-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;IE=edge&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;HandheldFriendly&quot;</span> content=<span class="string">&quot;True&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1, maximum-scale=5&quot;</span> /&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;description&quot;</span> content=<span class="string">&quot;能改变自己的都是神，想改变别人的都是神经病。&lt;U+1F34A&gt;&quot;</span>&gt;</span><br><span class="line">&lt;meta property=<span class="string">&quot;og:type&quot;</span> content=<span class="string">&quot;website&quot;</span>&gt;</span><br><span class="line"><span class="comment">#此处省略一部分</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">        &lt;!-- mathjax --&gt;</span><br><span class="line"></span><br><span class="line">index.html lines <span class="number">1</span><span class="literal">-48</span>/<span class="number">338</span> <span class="number">19</span>%</span><br></pre></td></tr></table></figure>
+
+<p>可以看到 less 在底部显示了“文件名字 当前行数范围/总行数 当前位置占总文件的百分比”。</p>
+<h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><blockquote>
+<p>在很多时候，并不需要列出文件的全部内容，我们想做的可能只是找到包含某些关键信息的某几行。这个时候使用 more 命令肯定就很麻烦了，可以用 grep …</p>
+</blockquote>
+<p>命令格式：<code>grep [OPTION] PATTERN [FILE...]</code> 。还是以博客主页为例，我们搜索“能改变自己的都是神，想改变别人的都是神经病。🍊” ：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> grep 能改变自己的都是神，想改变别人的都是神经病。 index.html</span><br><span class="line">    &lt;meta name=<span class="string">&quot;description&quot;</span> content=<span class="string">&quot;能改变自己的都是神，想改变别人的都是神经病。🍊&quot;</span>&gt;</span><br><span class="line">&lt;meta property=<span class="string">&quot;og:description&quot;</span> content=<span class="string">&quot;能改变自己的都是神，想改变别人的都是神经病。🍊&quot;</span>&gt;</span><br><span class="line">    &lt;p&gt;能改变自己的都是神，想改变别人的都是神经病。🍊&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>&#8195;&#8195;把包含这行文字的标签都列出来了，并且在控制台是高亮显示的。<br>&#8195;&#8195;命令和参数是以空格来分割的，那如果我们想查找的关键字是 Red Hat 这种包含空格呢？这个时候必须用单引号把空格包含进去：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> grep <span class="string">&#x27;html lang=zh&#x27;</span> index.html</span><br><span class="line">&lt;html lang=zh&gt;</span><br></pre></td></tr></table></figure>
+
+<p>和其他几个查看文件的命令一样，grep 也支持多个文件，并且在结果中列出文件名：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> grep 迷 index.html search.xml</span><br><span class="line">index.html:&lt;meta property=<span class="string">&quot;og:title&quot;</span> content=<span class="string">&quot;迷&quot;</span>&gt;</span><br><span class="line">index.html:&lt;meta property=<span class="string">&quot;og:site_name&quot;</span> content=<span class="string">&quot;迷&quot;</span>&gt;</span><br><span class="line">index.html:    &lt;title&gt;迷&lt;/title&gt;</span><br><span class="line">index.html:      &lt;h1&gt;迷&lt;/h1&gt;</span><br><span class="line">search.xml:&lt;li&gt;法号：迷&lt;/li&gt;</span><br></pre></td></tr></table></figure>
+
+<p>&#8195;&#8195;严格地说，grep 通过“基础正则表达式(basic regular expression)”进行搜索，和 grep 相关的一个工具是 egrep，除了使用“扩展的正则表达式(extended regular expression)”，egrep 和 grep 完全一样， “ 扩展正则表达式”能够提供比“基础正则表达式”更完整地表达规范。正则表达式我还没太学会…🤓</p>
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><blockquote>
+<p>迅速在指定范围内查找到文件。</p>
+</blockquote>
+<p>find 命令的基本语法：<code>find [OPTION] [path...] [expression]</code><br>例如在 usr/bin/ 目录中查找 zip 命令：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> find /usr/bin/ <span class="literal">-name</span> zip <span class="literal">-print</span></span><br><span class="line">/usr/bin/zip</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用通配符 * 指定文件名，例如查找类型为 go 的文件：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> find / <span class="literal">-name</span> *.go <span class="literal">-print</span></span><br><span class="line">/usr/share/doc/git<span class="literal">-1</span>.<span class="number">8.3</span>.<span class="number">1</span>/contrib/persistent<span class="literal">-https</span>/client.go</span><br><span class="line">/usr/share/doc/git<span class="literal">-1</span>.<span class="number">8.3</span>.<span class="number">1</span>/contrib/persistent<span class="literal">-https</span>/main.go</span><br><span class="line">find: ‘/usr/share/polkit<span class="literal">-1</span>/rules.d’: 权限不够</span><br><span class="line">find: ‘/home/tommy’: 权限不够</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>&#8195;&#8195;对于提示“权限不够（Permission denied）”的目录，说明当前登录的用户没有权限进入这两个目录，find 在扫描时会跳过这两个目录。<br>&#8195;&#8195;find命令还能够指定文件的类型。在Linux中，包括目录和设备都以文件的形式表现，可以使用 <code>-type</code> 选项来定位特殊文件类型。例如，在 /etc/ 目录中查找名叫 init.d 的目录:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> find /etc/ <span class="literal">-name</span> init.d <span class="literal">-type</span> d <span class="literal">-print</span></span><br><span class="line">find: /etc/ssl/private: Permission denied</span><br><span class="line">find: /etc/cups/ssl: Permission denied</span><br><span class="line">/etc/ init.d</span><br></pre></td></tr></table></figure>
+
+<p><code>-type</code> 选项可以使用的参数：</p>
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">含义</th>
+<th align="center">参数</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">b</td>
+<td align="center">块设备文件</td>
+<td align="center">f</td>
+<td align="center">普通文件</td>
+</tr>
+<tr>
+<td align="center">c</td>
+<td align="center">字符设备文件</td>
+<td align="center">p</td>
+<td align="center">命名管道</td>
+</tr>
+<tr>
+<td align="center">d</td>
+<td align="center">目录文件</td>
+<td align="center">l</td>
+<td align="center">符号链接</td>
+</tr>
+</tbody></table>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> find -<span class="literal">-help</span></span><br><span class="line">用法: find [-<span class="type">H</span>] [-<span class="type">L</span>] [-<span class="type">P</span>] [-<span class="type">Olevel</span>] [-<span class="type">D</span> <span class="type">help</span>|<span class="type">tree</span>|<span class="type">search</span>|<span class="type">stat</span>|<span class="type">rates</span>|<span class="type">opt</span>|<span class="type">exec</span>] [<span class="type">path...</span>] [<span class="type">expression</span>]</span><br><span class="line"></span><br><span class="line">默认路径为当前目录；默认表达式为 <span class="literal">-print</span></span><br><span class="line">表达式可能由下列成份组成：操作符、选项、测试表达式以及动作：</span><br><span class="line"></span><br><span class="line">操作符 (优先级递减；未做任何指定时默认使用 <span class="operator">-and</span>):</span><br><span class="line">      ( EXPR )   ! EXPR   <span class="operator">-not</span> EXPR   EXPR1 <span class="literal">-a</span> EXPR2   EXPR1 <span class="operator">-and</span> EXPR2</span><br><span class="line">      EXPR1 <span class="literal">-o</span> EXPR2   EXPR1 <span class="operator">-or</span> EXPR2   EXPR1 , EXPR2</span><br><span class="line"></span><br><span class="line">positional options (always true): <span class="literal">-daystart</span> <span class="literal">-follow</span> <span class="literal">-regextype</span></span><br><span class="line"></span><br><span class="line">normal options (always true, specified before other expressions):</span><br><span class="line">      <span class="literal">-depth</span> -<span class="literal">-help</span> <span class="literal">-maxdepth</span> LEVELS <span class="literal">-mindepth</span> LEVELS <span class="literal">-mount</span> <span class="literal">-noleaf</span></span><br><span class="line">      -<span class="literal">-version</span> <span class="literal">-xautofs</span> <span class="literal">-xdev</span> <span class="literal">-ignore_readdir_race</span> <span class="literal">-noignore_readdir_race</span></span><br><span class="line"></span><br><span class="line">比较测试 (N 可以是 +N 或 <span class="literal">-N</span> 或 N): <span class="literal">-amin</span> N <span class="literal">-anewer</span> FILE <span class="literal">-atime</span> N <span class="literal">-cmin</span> N</span><br><span class="line">      <span class="literal">-cnewer</span> 文件 <span class="literal">-ctime</span> N <span class="literal">-empty</span> <span class="literal">-false</span> <span class="literal">-fstype</span> 类型 <span class="literal">-gid</span> N <span class="literal">-group</span> 名称</span><br><span class="line">      <span class="literal">-ilname</span> 匹配模式 <span class="literal">-iname</span> 匹配模式 <span class="literal">-inum</span> N <span class="literal">-ipath</span> 匹配模式 <span class="literal">-iregex</span> 匹配模式</span><br><span class="line">      <span class="literal">-links</span> N <span class="literal">-lname</span> 匹配模式 <span class="literal">-mmin</span> N <span class="literal">-mtime</span> N <span class="literal">-name</span> 匹配模式 <span class="literal">-newer</span> 文件</span><br><span class="line">      <span class="literal">-nouser</span> <span class="literal">-nogroup</span> <span class="literal">-path</span> PATTERN <span class="literal">-perm</span> [-/]MODE <span class="operator">-regex</span> PATTERN</span><br><span class="line">      <span class="literal">-readable</span> <span class="literal">-writable</span> <span class="literal">-executable</span></span><br><span class="line">      <span class="literal">-wholename</span> PATTERN <span class="literal">-size</span> N[<span class="type">bcwkMG</span>] <span class="literal">-true</span> <span class="literal">-type</span> [<span class="type">bcdpflsD</span>] <span class="literal">-uid</span> N</span><br><span class="line">      <span class="literal">-used</span> N <span class="literal">-user</span> NAME <span class="literal">-xtype</span> [<span class="type">bcdpfls</span>]</span><br><span class="line">      <span class="literal">-context</span> 文本</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">操作: <span class="literal">-delete</span> <span class="literal">-print0</span> <span class="literal">-printf</span> 格式 <span class="literal">-fprintf</span> 文件 格式 <span class="literal">-print</span></span><br><span class="line">      <span class="literal">-fprint0</span> 文件 <span class="literal">-fprint</span> 文件 <span class="literal">-ls</span> <span class="literal">-fls</span> 文件 <span class="literal">-prune</span> <span class="literal">-quit</span></span><br><span class="line">      <span class="literal">-exec</span> 命令 ; <span class="literal">-exec</span> 命令 &#123;&#125; + <span class="literal">-ok</span> 命令 ;</span><br><span class="line">      <span class="literal">-execdir</span> 命令 ; <span class="literal">-execdir</span> 命令 &#123;&#125; + <span class="literal">-okdir</span> 命令 ;</span><br></pre></td></tr></table></figure>
+
+<h3 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h3><blockquote>
+<p>如果我们不记得文件具体在哪个位置，又非常需要找到它，find 就略显尴尬了，locate 会是个不错的选择。</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> locate <span class="number">404</span>.html</span><br><span class="line">/<span class="number">404</span>.html</span><br><span class="line">/usr/share/nginx/html/<span class="number">404</span>.html</span><br></pre></td></tr></table></figure>
+
+<p>&#8195;&#8195;“这些搜索结果几乎是一瞬间就出现了。这不禁让人疑惑，locate 究竟是如何做到这一点的？事实上，locate 并没有进入子目录搜索，它有一点类似于 Google 的桌面搜索，通过检索文件名数据库来确定文件的位置。locate 命令自动建立整个文件名数据库，不需要用户插手。如果希望立刻生成该数据库文件的最新版本，那么可以使用 updatedb 命令，运行这个命令需要有 root 权限，更新整个数据库大概耗时1分钟。” 以上这段是书上的描述，在我的虚拟机上没有用时1分钟，很快。然后在 Mac OS (衍生自 Unix) 首次使用 locate 命令时，提示我们需要手动建立文件名数据库：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> locate <span class="string">&#x27;Linux 从入门到精通&#x27;</span></span><br><span class="line"></span><br><span class="line">WARNING: The locate database (/var/db/locate.database) does not exist.</span><br><span class="line">To create the database, run the following command:</span><br><span class="line"></span><br><span class="line">  sudo launchctl load <span class="literal">-w</span> /System/Library/LaunchDaemons/com.apple.locate.plist</span><br><span class="line"></span><br><span class="line">Please be aware that the database can take some time to generate; once</span><br><span class="line">the database has been created, this message will no longer appear.</span><br></pre></td></tr></table></figure>
+
+<h2 id="查找命令和系统信息"><a href="#查找命令和系统信息" class="headerlink" title="查找命令和系统信息"></a>查找命令和系统信息</h2><h3 id="whereis"><a href="#whereis" class="headerlink" title="whereis"></a>whereis</h3><blockquote>
+<p>whereis 命令主要用于查找程序文件，并提供这个文件的二进制可执行文件、源代码文件和使用手册页存放的位置。</p>
+</blockquote>
+<p>例如，查找刚刚用到的 locate 命令：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> whereis locate</span><br><span class="line">locate: /usr/bin/locate /usr/share/<span class="built_in">man</span>/man1/locate.<span class="number">1</span>.gz</span><br></pre></td></tr></table></figure>
+
+<p>如果只想查找可执行文件，可以使用 <code>-b</code> 选项：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> whereis <span class="literal">-b</span> find</span><br><span class="line">find: /usr/bin/find</span><br></pre></td></tr></table></figure>
+
+<p>这样有点儿类似于 which 命令：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> which locate</span><br><span class="line">/usr/bin/locate</span><br></pre></td></tr></table></figure>
+
+<h3 id="who"><a href="#who" class="headerlink" title="who"></a>who</h3><blockquote>
+<p>查看当前系统中有哪些人登录，以及工作在哪个控制台上。</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> who</span><br><span class="line">tommy   pts/<span class="number">0</span>        <span class="number">2022</span><span class="literal">-03</span><span class="literal">-11</span> <span class="number">15</span>:<span class="number">07</span> (<span class="number">0.0</span>.<span class="number">0.0</span>)</span><br><span class="line">tommy   pts/<span class="number">1</span>        <span class="number">2022</span><span class="literal">-03</span><span class="literal">-11</span> <span class="number">16</span>:<span class="number">17</span> (<span class="number">0.0</span>.<span class="number">0.0</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="whoami"><a href="#whoami" class="headerlink" title="whoami"></a>whoami</h3><blockquote>
+<p>我是谁？有些时候，可能会忘记自己是以什么身份登录到系统，特别当需要以特定身份启动某个服务器程序时。</p>
+</blockquote>
+<h3 id="uname"><a href="#uname" class="headerlink" title="uname"></a>uname</h3><blockquote>
+<p> 用于显示当前系统的版本信息。带 -a 选项的 uname 命令会给出当前操作系统的所有有用信息。</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> uname <span class="literal">-a</span></span><br><span class="line">Linux VM<span class="literal">-0</span><span class="literal">-13</span><span class="literal">-centos</span> <span class="number">3.10</span>.<span class="number">0</span><span class="literal">-1160</span>.<span class="number">31.1</span>.el7.x86_64 <span class="comment">#1 SMP Thu Jun 10 13:32:12 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux</span></span><br></pre></td></tr></table></figure>
+
+<p>在大部分时候，需要的只是其中的内核版本信息。此时可以使用 -r 选项。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> uname <span class="literal">-r</span></span><br><span class="line"><span class="number">3.10</span>.<span class="number">0</span><span class="literal">-1160</span>.<span class="number">31.1</span>.el7.x86_64</span><br></pre></td></tr></table></figure>
+
+<h3 id="man"><a href="#man" class="headerlink" title="man"></a>man</h3><blockquote>
+<p>在 Linux 中获取帮助是一件非常容易的事情。Linux 为几乎每一个命令和系统调用编写了帮助手册。使用man命令可以方便地获取某个命令的帮助信息。</p>
+</blockquote>
+<p>以前查看命令的帮助，一般使用 <code>--help</code> 选项，但是 man 命令获取到的帮助信息明显“好看”多了。那我们看看 <code>man man</code> 是什么吧，哈哈哈</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">MAN</span>(<span class="number">1</span>)                                        Manual pager utils                                       <span class="built_in">MAN</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">NAME</span><br><span class="line">       <span class="built_in">man</span> - an interface to the on<span class="literal">-line</span> reference manuals</span><br><span class="line"></span><br><span class="line">SYNOPSIS</span><br><span class="line">       <span class="built_in">man</span>  [-<span class="type">C</span> <span class="type">file</span>] [-<span class="type">d</span>] [-<span class="type">D</span>] [--<span class="type">warnings</span>[=<span class="type">warnings</span>]] [-<span class="type">R</span> <span class="type">encoding</span>] [-<span class="type">L</span> <span class="type">locale</span>] [-<span class="type">m</span> <span class="type">system</span>[,<span class="type">...</span>]] [-<span class="type">M</span> <span class="type">path</span>]</span><br><span class="line">       [-<span class="type">S</span> <span class="type">list</span>] [-<span class="type">e</span> <span class="type">extension</span>] [-<span class="type">i</span>|-<span class="type">I</span>] [--<span class="type">regex</span>|--<span class="type">wildcard</span>] [--<span class="type">names</span>-<span class="type">only</span>]  [-<span class="type">a</span>]  [-<span class="type">u</span>]  [--<span class="type">no</span>-<span class="type">subpages</span>]  [-<span class="type">P</span></span><br><span class="line">       <span class="type">pager</span>]  [-<span class="type">r</span>  <span class="type">prompt</span>]  [-<span class="number">7</span>]  [-<span class="type">E</span>  <span class="type">encoding</span>]  [--<span class="type">no</span>-<span class="type">hyphenation</span>]  [--<span class="type">no</span>-<span class="type">justification</span>]  [-<span class="type">p</span> <span class="built_in">string</span>] [-<span class="type">t</span>]</span><br><span class="line">       [-<span class="type">T</span>[<span class="type">device</span>]] [-<span class="type">H</span>[<span class="type">browser</span>]] [-<span class="type">X</span>[<span class="type">dpi</span>]] [-<span class="type">Z</span>] [[<span class="type">section</span>] <span class="type">page</span> <span class="type">...</span>] ...</span><br><span class="line">       <span class="built_in">man</span> <span class="literal">-k</span> [<span class="type">apropos</span> <span class="type">options</span>] regexp ...</span><br><span class="line">       <span class="built_in">man</span> <span class="literal">-K</span> [-<span class="type">w</span>|-<span class="type">W</span>] [-<span class="type">S</span> <span class="type">list</span>] [-<span class="type">i</span>|-<span class="type">I</span>] [--<span class="type">regex</span>] [<span class="type">section</span>] term ...</span><br><span class="line">       <span class="built_in">man</span> <span class="operator">-f</span> [<span class="type">whatis</span> <span class="type">options</span>] page ...</span><br><span class="line">       <span class="built_in">man</span> <span class="literal">-l</span> [-<span class="type">C</span> <span class="type">file</span>] [-<span class="type">d</span>] [-<span class="type">D</span>] [--<span class="type">warnings</span>[=<span class="type">warnings</span>]] [-<span class="type">R</span> <span class="type">encoding</span>] [-<span class="type">L</span> <span class="type">locale</span>] [-<span class="type">P</span>  <span class="type">pager</span>]  [-<span class="type">r</span>  <span class="type">prompt</span>]</span><br><span class="line">       [-<span class="number">7</span>] [-<span class="type">E</span> <span class="type">encoding</span>] [-<span class="type">p</span> <span class="built_in">string</span>] [-<span class="type">t</span>] [-<span class="type">T</span>[<span class="type">device</span>]] [-<span class="type">H</span>[<span class="type">browser</span>]] [-<span class="type">X</span>[<span class="type">dpi</span>]] [-<span class="type">Z</span>] file ...</span><br><span class="line">       <span class="built_in">man</span> <span class="literal">-w</span>|<span class="literal">-W</span> [-<span class="type">C</span> <span class="type">file</span>] [-<span class="type">d</span>] [-<span class="type">D</span>] page ...</span><br><span class="line">       <span class="built_in">man</span> <span class="literal">-c</span> [-<span class="type">C</span> <span class="type">file</span>] [-<span class="type">d</span>] [-<span class="type">D</span>] page ...</span><br><span class="line">       <span class="built_in">man</span> [-?<span class="type">V</span>]</span><br><span class="line"></span><br><span class="line">DESCRIPTION</span><br><span class="line">...</span><br><span class="line">Manual page <span class="built_in">man</span>(<span class="number">1</span>) line <span class="number">1</span> (press <span class="built_in">h</span> <span class="keyword">for</span> help or q to quit)</span><br></pre></td></tr></table></figure>
+
+<p>看到最后一行，是不是觉得眼熟，less … so…man 命令在显示手册页时实际调用的是 less 程序。</p>
+<h3 id="whatis"><a href="#whatis" class="headerlink" title="whatis"></a>whatis</h3><blockquote>
+<p>man 手册中的长篇大论有时候显得太哕嗦了一很多情况下，人们只是想要知道一个命令大概可以做些什么。于是，whatis 满足了大家的好奇心。whatis 从某个程序的使用手册页中抽出一行简单的介绍性文字，帮助用户了解这个程序的大致用途。whatis 的原理同 locate 命令基本一致。</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> whatis uname</span><br><span class="line">uname (<span class="number">1</span>)            - print system information</span><br></pre></td></tr></table></figure>
+
+<p>我发现 Linux 的命令有意思的一点是“我否定我自己，我完善我自己” 。😂</p>
+<h3 id="apropos"><a href="#apropos" class="headerlink" title="apropos"></a>apropos</h3><blockquote>
+<p>和 whatis 相反，通过搜索使用手册中的关键字，帮我们反查到想要的命令。</p>
+</blockquote>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> apropos search</span><br><span class="line">apropos (<span class="number">1</span>)          - search the manual page names and descriptions</span><br><span class="line">ausearch (<span class="number">8</span>)         - a tool to query audit daemon logs</span><br><span class="line">au<span class="built_in">search-expression</span> (<span class="number">5</span>) - audit search expression format</span><br><span class="line">badblocks (<span class="number">8</span>)        - search a device <span class="keyword">for</span> bad blocks</span><br><span class="line">bzgrep (<span class="number">1</span>)           - search possibly bzip2 compressed files <span class="keyword">for</span> a regular expression</span><br><span class="line">find (<span class="number">1</span>)             - search <span class="keyword">for</span> files <span class="keyword">in</span> a directory hierarchy</span><br><span class="line">git<span class="literal">-bisect</span> (<span class="number">1</span>)       - Find by binary search the change that introduced a bug</span><br><span class="line">manpath (<span class="number">1</span>)          - determine search path <span class="keyword">for</span> manual pages</span><br><span class="line">npm<span class="literal">-help</span><span class="literal">-search</span> (<span class="number">1</span>)  - Search npm help documentation</span><br><span class="line">npm<span class="literal">-search</span> (<span class="number">1</span>)       - Search <span class="keyword">for</span> packages</span><br><span class="line">oldfind (<span class="number">1</span>)          - search <span class="keyword">for</span> files <span class="keyword">in</span> a directory hierarchy</span><br><span class="line">Pod::Simple::Search (<span class="number">3</span>pm) - find POD documents <span class="keyword">in</span> directory trees</span><br><span class="line">Search::Dict (<span class="number">3</span>pm)   - look - search <span class="keyword">for</span> key <span class="keyword">in</span> dictionary file</span><br><span class="line">vgscan (<span class="number">8</span>)           - Search <span class="keyword">for</span> all volume groups</span><br><span class="line">xzegrep (<span class="number">1</span>)          - search compressed files <span class="keyword">for</span> a regular expression</span><br><span class="line">xzfgrep (<span class="number">1</span>)          - search compressed files <span class="keyword">for</span> a regular expression</span><br><span class="line">xzgrep (<span class="number">1</span>)           - search compressed files <span class="keyword">for</span> a regular expression</span><br><span class="line">zgrep (<span class="number">1</span>)            - search possibly compressed files <span class="keyword">for</span> a regular expression</span><br><span class="line">zipgrep (<span class="number">1</span>)          - search files <span class="keyword">in</span> a ZIP archive <span class="keyword">for</span> lines matching a pattern</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>基础的 Shell 命令暂时学到这里。</p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last',
+    proxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E7%9B%AE%E5%BD%95%E5%92%8C%E6%96%87%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">查看目录和文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pwd"><span class="toc-number">1.1.</span> <span class="toc-text">pwd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cd"><span class="toc-number">1.2.</span> <span class="toc-text">cd</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ls"><span class="toc-number">1.3.</span> <span class="toc-text">ls</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dir-vdir"><span class="toc-number">1.4.</span> <span class="toc-text">dir&#x2F;vdir</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cat"><span class="toc-number">1.5.</span> <span class="toc-text">cat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#more"><span class="toc-number">1.6.</span> <span class="toc-text">more</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#head"><span class="toc-number">1.7.</span> <span class="toc-text">head</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tail"><span class="toc-number">1.8.</span> <span class="toc-text">tail</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#less"><span class="toc-number">1.9.</span> <span class="toc-text">less</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#grep"><span class="toc-number">1.10.</span> <span class="toc-text">grep</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find"><span class="toc-number">1.11.</span> <span class="toc-text">find</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#locate"><span class="toc-number">1.12.</span> <span class="toc-text">locate</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E5%91%BD%E4%BB%A4%E5%92%8C%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF"><span class="toc-number">2.</span> <span class="toc-text">查找命令和系统信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#whereis"><span class="toc-number">2.1.</span> <span class="toc-text">whereis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#who"><span class="toc-number">2.2.</span> <span class="toc-text">who</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#whoami"><span class="toc-number">2.3.</span> <span class="toc-text">whoami</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uname"><span class="toc-number">2.4.</span> <span class="toc-text">uname</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#man"><span class="toc-number">2.5.</span> <span class="toc-text">man</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#whatis"><span class="toc-number">2.6.</span> <span class="toc-text">whatis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#apropos"><span class="toc-number">2.7.</span> <span class="toc-text">apropos</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2022/02/24/linux-shell1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2022/02/24/linux-shell1/&text=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2022/02/24/linux-shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2022/02/24/linux-shell1/&is_video=false&description=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Linux 学习笔记（三）- Shell 基础命令&body=Check out this article: https://tiantian.fyi/2022/02/24/linux-shell1/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2022/02/24/linux-shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2022/02/24/linux-shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2022/02/24/linux-shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2022/02/24/linux-shell1/&title=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2022/02/24/linux-shell1/&name=Linux 学习笔记（三）- Shell 基础命令&description=&lt;hr&gt;
+&lt;h2 id=&#34;查看目录和文件&#34;&gt;&lt;a href=&#34;#查看目录和文件&#34; class=&#34;headerlink&#34; title=&#34;查看目录和文件&#34;&gt;&lt;/a&gt;查看目录和文件&lt;/h2&gt;&lt;h3 id=&#34;pwd&#34;&gt;&lt;a href=&#34;#pwd&#34; class=&#34;headerlink&#34; title=&#34;pwd&#34;&gt;&lt;/a&gt;pwd&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;显示当前所在的位置，即工作目录。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;figure class=&#34;highlight powershell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;[&lt;span class=&#34;type&#34;&gt;blog&lt;/span&gt;@&lt;span class=&#34;type&#34;&gt;VM&lt;/span&gt;-&lt;span class=&#34;number&#34;&gt;0&lt;/span&gt;-&lt;span class=&#34;number&#34;&gt;13&lt;/span&gt;-&lt;span class=&#34;type&#34;&gt;centos&lt;/span&gt; ~]&lt;span class=&#34;variable&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;built_in&#34;&gt;pwd&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;/home/blog&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h3 id=&#34;cd&#34;&gt;&lt;a href=&#34;#cd&#34; class=&#34;headerlink&#34; title=&#34;cd&#34;&gt;&lt;/a&gt;cd&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;改变目录。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;日常用法：&lt;br&gt;&lt;code&gt;cd /home/blog&lt;/code&gt; 进入 /home/blog 目录；&lt;br&gt;&lt;code&gt;cd ..&lt;/code&gt; 返回上一层目录；&lt;br&gt;&lt;code&gt;cd /&lt;/code&gt; 进入根目录，&lt;code&gt;cd .. / ..&lt;/code&gt; 也是进入根目录；&lt;br&gt;&lt;code&gt;cd&lt;/code&gt; 不带参数总是可以回到自己用户的主目录，或者 &lt;code&gt;cd ~&lt;/code&gt; 也是一样的效果。&lt;br&gt;&lt;strong&gt;FYI&lt;/strong&gt;：在 Shell 中，&lt;code&gt;..&lt;/code&gt; 代表当前目录的上一级目录，而 &lt;code&gt;.&lt;/code&gt; 则代表当前目录，另外，&lt;code&gt;~&lt;/code&gt; 代表用户主目录。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2022/02/24/linux-shell1/&t=Linux 学习笔记（三）- Shell 基础命令"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2024
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>

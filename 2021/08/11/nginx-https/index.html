@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="以下内容转载自 这里 。转载的原因是怕他们的网站突然访问不了😂。  研究 HTTPS 的双向认证实现与原理，踩了不少坑，终于整个流程都跑通了，现在总结出一篇文档来，把一些心得，特别是容易踩坑的地方记录下来。 1. 原理双向认证，顾名思义，客户端和服务器端都需要验证对方的身份，在建立 HTTPS 连接的过程中，握手的流程比单向认证多了几步。单向认证的过程，客户端从服务器端下载服务器端公钥证书进行验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转载】巧用 Nginx 快速实现 HTTPS 双向认证">
+<meta property="og:url" content="https://tiantian.fyi/2021/08/11/nginx-https/index.html">
+<meta property="og:site_name" content="白小咪">
+<meta property="og:description" content="以下内容转载自 这里 。转载的原因是怕他们的网站突然访问不了😂。  研究 HTTPS 的双向认证实现与原理，踩了不少坑，终于整个流程都跑通了，现在总结出一篇文档来，把一些心得，特别是容易踩坑的地方记录下来。 1. 原理双向认证，顾名思义，客户端和服务器端都需要验证对方的身份，在建立 HTTPS 连接的过程中，握手的流程比单向认证多了几步。单向认证的过程，客户端从服务器端下载服务器端公钥证书进行验">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ata2-img.cn-hangzhou.oss-pub.aliyun-inc.com/14158ca87e2f341ff044efd967f3e008.png">
+<meta property="og:image" content="https://ata2-img.cn-hangzhou.oss-pub.aliyun-inc.com/08e6235892053a81603a4c3d7c7f44ad.png">
+<meta property="og:image" content="https://www.hi-linux.com/img/linux/nginx-ssl-03.png">
+<meta property="article:published_time" content="2021-08-11T05:29:02.000Z">
+<meta property="article:modified_time" content="2021-08-11T05:29:02.000Z">
+<meta property="article:author" content="YYLittleCat">
+<meta property="article:tag" content="转载">
+<meta property="article:tag" content="网络">
+<meta property="article:tag" content="Nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ata2-img.cn-hangzhou.oss-pub.aliyun-inc.com/14158ca87e2f341ff044efd967f3e008.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/mini-icon.svg">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>【转载】巧用 Nginx 快速实现 HTTPS 双向认证</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2021/08/19/cordova-config/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2021/07/23/systemd-use/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2021/08/11/nginx-https/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2021/08/11/nginx-https/&text=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2021/08/11/nginx-https/&title=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2021/08/11/nginx-https/&is_video=false&description=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【转载】巧用 Nginx 快速实现 HTTPS 双向认证&body=Check out this article: https://tiantian.fyi/2021/08/11/nginx-https/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2021/08/11/nginx-https/&title=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2021/08/11/nginx-https/&title=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2021/08/11/nginx-https/&title=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2021/08/11/nginx-https/&title=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2021/08/11/nginx-https/&name=【转载】巧用 Nginx 快速实现 HTTPS 双向认证&description=&lt;p&gt;以下内容转载自 &lt;a href=&#34;https://www.hi-linux.com/posts/38492.html&#34;&gt;这里&lt;/a&gt; 。转载的原因是怕他们的网站突然访问不了😂。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;研究 HTTPS 的双向认证实现与原理，踩了不少坑，终于整个流程都跑通了，现在总结出一篇文档来，把一些心得，特别是容易踩坑的地方记录下来。&lt;/p&gt;
+&lt;h2 id=&#34;1-原理&#34;&gt;&lt;a href=&#34;#1-原理&#34; class=&#34;headerlink&#34; title=&#34;1. 原理&#34;&gt;&lt;/a&gt;1. 原理&lt;/h2&gt;&lt;p&gt;双向认证，顾名思义，客户端和服务器端都需要验证对方的身份，在建立 &lt;code&gt;HTTPS&lt;/code&gt; 连接的过程中，握手的流程比单向认证多了几步。单向认证的过程，客户端从服务器端下载服务器端公钥证书进行验证，然后建立安全通信通道。双向通信流程，客户端除了需要从服务器端下载服务器的公钥证书进行验证外，还需要把客户端的公钥证书上传到服务器端给服务器端进行验证，等双方都认证通过了，才开始建立安全通信通道进行数据传输。&lt;/p&gt;
+&lt;h3 id=&#34;1-1-单向认证流程&#34;&gt;&lt;a href=&#34;#1-1-单向认证流程&#34; class=&#34;headerlink&#34; title=&#34;1.1 单向认证流程&#34;&gt;&lt;/a&gt;1.1 单向认证流程&lt;/h3&gt;&lt;p&gt;单向认证流程中，服务器端保存着公钥证书和私钥两个文件，整个握手过程如下：&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2021/08/11/nginx-https/&t=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">1. 原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%8D%95%E5%90%91%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 单向认证流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%8F%8C%E5%90%91%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 双向认证流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%AF%81%E4%B9%A6%E7%94%9F%E6%88%90"><span class="toc-number">2.</span> <span class="toc-text">2. 证书生成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%94%9F%E6%88%90%E8%87%AA%E7%AD%BE%E5%90%8D%E6%A0%B9%E8%AF%81%E4%B9%A6"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 生成自签名根证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%94%9F%E6%88%90%E8%87%AA%E7%AD%BE%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AF%81%E4%B9%A6"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 生成自签名服务器端证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E7%94%9F%E6%88%90%E8%87%AA%E7%AD%BE%E5%90%8D%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%81%E4%B9%A6"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 生成自签名客户端证书</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Nginx-%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">3.Nginx 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-curl-%E8%B0%83%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">4.curl 调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Java-%E8%B0%83%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">5.Java 调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%AD%98%E7%96%91"><span class="toc-number">6.</span> <span class="toc-text">6. 存疑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB-%E6%9C%AC%E6%96%87%E6%A0%B8%E5%BF%83"><span class="toc-number">7.</span> <span class="toc-text">7. 扩展阅读 (本文核心)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%8F%97%E4%BF%A1%E8%AF%81%E4%B9%A6%E8%BF%9B%E8%A1%8C%E5%8F%8C%E5%90%91%E8%AE%A4%E8%AF%81"><span class="toc-number">7.1.</span> <span class="toc-text">使用受信证书进行双向认证</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        【转载】巧用 Nginx 快速实现 HTTPS 双向认证
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">YYLittleCat</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-08-11T05:29:02.000Z" itemprop="datePublished">2021-08-11</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Nginx/" rel="tag">Nginx</a>, <a class="tag-link-link" href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a>, <a class="tag-link-link" href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag">转载</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>以下内容转载自 <a target="_blank" rel="noopener" href="https://www.hi-linux.com/posts/38492.html">这里</a> 。转载的原因是怕他们的网站突然访问不了😂。</p>
+<hr>
+<p>研究 HTTPS 的双向认证实现与原理，踩了不少坑，终于整个流程都跑通了，现在总结出一篇文档来，把一些心得，特别是容易踩坑的地方记录下来。</p>
+<h2 id="1-原理"><a href="#1-原理" class="headerlink" title="1. 原理"></a>1. 原理</h2><p>双向认证，顾名思义，客户端和服务器端都需要验证对方的身份，在建立 <code>HTTPS</code> 连接的过程中，握手的流程比单向认证多了几步。单向认证的过程，客户端从服务器端下载服务器端公钥证书进行验证，然后建立安全通信通道。双向通信流程，客户端除了需要从服务器端下载服务器的公钥证书进行验证外，还需要把客户端的公钥证书上传到服务器端给服务器端进行验证，等双方都认证通过了，才开始建立安全通信通道进行数据传输。</p>
+<h3 id="1-1-单向认证流程"><a href="#1-1-单向认证流程" class="headerlink" title="1.1 单向认证流程"></a>1.1 单向认证流程</h3><p>单向认证流程中，服务器端保存着公钥证书和私钥两个文件，整个握手过程如下：</p>
+<span id="more"></span>
+
+<p><img src="https://ata2-img.cn-hangzhou.oss-pub.aliyun-inc.com/14158ca87e2f341ff044efd967f3e008.png" alt="img"></p>
+<ol>
+<li>客户端发起建立 HTTPS 连接请求，将 SSL 协议版本的信息发送给服务器端；</li>
+<li>服务器端将本机的公钥证书（server.crt）发送给客户端；</li>
+<li>客户端读取公钥证书 (server.crt)，取出了服务端公钥；</li>
+<li>客户端生成一个随机数（密钥 R），用刚才得到的服务器公钥去加密这个随机数形成密文，发送给服务端；</li>
+<li>服务端用自己的私钥 (server.key) 去解密这个密文，得到了密钥 R</li>
+<li>服务端和客户端在后续通讯过程中就使用这个密钥 R 进行通信了。</li>
+</ol>
+<h3 id="1-2-双向认证流程"><a href="#1-2-双向认证流程" class="headerlink" title="1.2 双向认证流程"></a>1.2 双向认证流程</h3><p><img src="https://ata2-img.cn-hangzhou.oss-pub.aliyun-inc.com/08e6235892053a81603a4c3d7c7f44ad.png" alt="img"></p>
+<ol>
+<li>客户端发起建立 HTTPS 连接请求，将 SSL 协议版本的信息发送给服务端；</li>
+<li>服务器端将本机的公钥证书 (server.crt) 发送给客户端；</li>
+<li>客户端读取公钥证书 (server.crt)，取出了服务端公钥；</li>
+<li>客户端将客户端公钥证书 (client.crt) 发送给服务器端；</li>
+<li>服务器端解密客户端公钥证书，拿到客户端公钥；</li>
+<li>客户端发送自己支持的加密方案给服务器端；</li>
+<li>服务器端根据自己和客户端的能力，选择一个双方都能接受的加密方案，使用客户端的公钥加密后发送给客户端；</li>
+<li>客户端使用自己的私钥解密加密方案，生成一个随机数 R，使用服务器公钥加密后传给服务器端；</li>
+<li>服务端用自己的私钥去解密这个密文，得到了密钥 R</li>
+<li>服务端和客户端在后续通讯过程中就使用这个密钥 R 进行通信了。</li>
+</ol>
+<h2 id="2-证书生成"><a href="#2-证书生成" class="headerlink" title="2. 证书生成"></a>2. 证书生成</h2><p>从上一章内容中，我们可以总结出来，如果要把整个双向认证的流程跑通，最终需要五个证书文件：</p>
+<ul>
+<li>服务器端公钥证书：server.crt</li>
+<li>服务器端私钥文件：server.key</li>
+<li>客户端公钥证书：client.crt</li>
+<li>客户端私钥文件：client.key</li>
+<li>客户端集成证书（包括公钥和私钥，用于浏览器访问场景）：client.p12</li>
+</ul>
+<p>生成这一些列证书之前，我们需要先生成一个 <code>CA</code> 根证书，然后由这个 <code>CA</code> 根证书颁发服务器公钥证书和客户端公钥证书。</p>
+<p><img src="https://www.hi-linux.com/img/linux/nginx-ssl-03.png" alt="img"></p>
+<p>我们可以全程使用 <code>Openssl</code> 来生成一些列的自签名证书，自签名证书没有通过证书机构的认证，很多浏览器会认为不安全，但我们用来实验是足够的。需要在本机安装了 <code>Openssl</code> 后才能继续本章的实验。</p>
+<h3 id="2-1-生成自签名根证书"><a href="#2-1-生成自签名根证书" class="headerlink" title="2.1 生成自签名根证书"></a>2.1 生成自签名根证书</h3><ol>
+<li>创建根证书私钥：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl genrsa -out root.key 1024</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>创建根证书请求文件：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl req -new -out root.csr -key root.key</span></span><br><span class="line"></span><br><span class="line">后续参数请自行填写，下面是一个例子：</span><br><span class="line"></span><br><span class="line">Country Name (2 letter code) [XX]:cn</span><br><span class="line">State or Province Name (full name) []:bj</span><br><span class="line">Locality Name (eg, city) [Default City]:bj</span><br><span class="line">Organization Name (eg, company) [Default Company Ltd]:alibaba</span><br><span class="line">Organizational Unit Name (eg, section) []:test</span><br><span class="line">Common Name (eg, your name or your servers hostname) []:www.yourdomain.com</span><br><span class="line">Email Address []:a.alibaba.com</span><br><span class="line">A challenge password []:</span><br><span class="line">An optional company name []:</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>创建根证书：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -req -<span class="keyword">in</span> root.csr -out root.crt -signkey root.key -CAcreateserial -days 3650</span></span><br></pre></td></tr></table></figure>
+
+<p>在创建证书请求文件的时候需要注意三点，下面生成服务器请求文件和客户端请求文件均要注意这三点：</p>
+<ul>
+<li>Common Name 填写证书对应的服务域名；</li>
+<li>所有字段的填写，根证书、服务器端证书、客户端证书需保持一致</li>
+<li>最后的密码可以直接回车跳过。</li>
+</ul>
+<p>经过上面三个命令行，我们最终可以得到一个签名有效期为 10 年的根证书 root.crt，后面我们可以用这个根证书去颁发服务器证书和客户端证书。</p>
+<h3 id="2-2-生成自签名服务器端证书"><a href="#2-2-生成自签名服务器端证书" class="headerlink" title="2.2 生成自签名服务器端证书"></a>2.2 生成自签名服务器端证书</h3><ol>
+<li>生成服务器端证书私钥：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl genrsa -out server.key 1024</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>生成服务器证书请求文件，过程和注意事项参考根证书，本节不详述：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl req -new -out server.csr -key server.key</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>生成服务器端公钥证书</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -req -<span class="keyword">in</span> server.csr -out server.crt -signkey server.key -CA root.crt -CAkey root.key -CAcreateserial -days 3650</span></span><br></pre></td></tr></table></figure>
+
+<p>经过上面的三个命令，我们得到：</p>
+<ul>
+<li>server.key：服务器端的秘钥文件</li>
+<li>server.crt：有效期十年的服务器端公钥证书，使用根证书和服务器端私钥文件一起生成</li>
+</ul>
+<h3 id="2-3-生成自签名客户端证书"><a href="#2-3-生成自签名客户端证书" class="headerlink" title="2.3 生成自签名客户端证书"></a>2.3 生成自签名客户端证书</h3><ol>
+<li>生成客户端证书秘钥：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl genrsa -out client.key 1024</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>生成客户端证书请求文件，过程和注意事项参考根证书，本节不详述：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl req -new -out client.csr -key client.key</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>生客户端证书</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl x509 -req -<span class="keyword">in</span> client.csr -out client.crt -signkey client.key -CA root.crt -CAkey root.key -CAcreateserial -days 3650</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>生客户端 P12 格式证书</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl pkcs12 -<span class="built_in">export</span> -clcerts -<span class="keyword">in</span> client.crt -inkey client.key -out client.p12</span></span><br></pre></td></tr></table></figure>
+
+<p>经过上面的三个命令，我们得到：</p>
+<ul>
+<li>client.key：客户端的私钥文件</li>
+<li>client.crt：有效期十年的客户端证书，使用根证书和客户端私钥一起生成</li>
+<li>client.p12：客户端 p12 格式，这个证书文件包含客户端的公钥和私钥，主要用来给浏览器访问使用</li>
+</ul>
+<h2 id="3-Nginx-配置"><a href="#3-Nginx-配置" class="headerlink" title="3.Nginx 配置"></a>3.Nginx 配置</h2><p>有了上面的一些列证书，我们可以在 <code>Nginx</code> 服务器上配置双向认证的 <code>HTTPS</code> 服务了，具体配置方式如下：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">server_name</span>  www.yourdomain.com;</span><br><span class="line">    <span class="attribute">ssl</span>                  <span class="literal">on</span>;  </span><br><span class="line">    <span class="attribute">ssl_certificate</span>      /data/sslKey/server.crt;  <span class="comment">#server公钥证书</span></span><br><span class="line">    <span class="attribute">ssl_certificate_key</span>  /data/sslKey/server.key;  <span class="comment">#server私钥</span></span><br><span class="line">    <span class="attribute">ssl_client_certificate</span> /data/sslKey/client.crt;  <span class="comment">#客户端公钥证书</span></span><br><span class="line">    <span class="attribute">ssl_verify_client</span> <span class="literal">on</span>;  <span class="comment">#开启客户端证书验证  </span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">root</span>   html;</span><br><span class="line">        <span class="attribute">index</span>  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体就是将服务器端的两个证书文件 (server.crt/server.key) 和客户端的公钥证书文件 (client.crt) 的路径配置到 <code>Nginx</code> 的 <code>server</code> 节点配置中，并且把 <code>ssl_verify_client</code> 这个参数设置为 <code>on</code>。<br>有一点需要注意的就是，如果客户端证书不是由根证书直接颁发的，配置中还需要加一个配置：<code>ssl_verify_depth 1</code> ；配置完成后，执行 <code>nginx -s reload</code> 重新加载下就生效了。</p>
+<h2 id="4-curl-调用"><a href="#4-curl-调用" class="headerlink" title="4.curl 调用"></a>4.curl 调用</h2><p>使用 <code>curl</code> 加上证书路径，可以直接测试 <code>Nginx</code> 的 <code>HTTPS</code> 双向认证是否配置成功。</p>
+<ol>
+<li>带证书的成功调用</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># --cert指定客户端公钥证书的路径</span></span><br><span class="line"><span class="comment"># --key指定客户端私钥文件的路径</span></span><br><span class="line"><span class="comment"># -k不校验证书的合法性，因为我们用的是自签名证书，所以需要加这个参数</span></span><br><span class="line"><span class="comment"># 可以使用 -v 来观察具体的 SSL 握手过程</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$</span> <span class="built_in">curl</span> -<span class="literal">-cert</span> ./client.crt -<span class="literal">-key</span> ./client.key https://integration<span class="literal">-fred2</span>.fredhuang.com <span class="literal">-k</span> <span class="literal">-v</span></span><br><span class="line">* Rebuilt URL to: https://integration<span class="literal">-fred2</span>.fredhuang.com/</span><br><span class="line">*   Trying <span class="number">47.91</span>.<span class="number">39.145</span>...</span><br><span class="line">* TCP_NODELAY <span class="built_in">set</span></span><br><span class="line">* Connected to integration<span class="literal">-fred2</span>.fredhuang.com (<span class="number">47.91</span>.<span class="number">39.145</span>) port <span class="number">443</span> (<span class="comment">#0)</span></span><br><span class="line">* ALPN, offering h2</span><br><span class="line">* ALPN, offering http/<span class="number">1.1</span></span><br><span class="line">* Cipher selection: ALL:!EXPORT:!EXPORT40:!EXPORT56:!aNULL:!LOW:!RC4:@STRENGTH</span><br><span class="line">* successfully <span class="built_in">set</span> certificate verify locations:</span><br><span class="line">*   CAfile: /etc/ssl/cert.pem</span><br><span class="line">  CApath: none</span><br><span class="line">* TLSv1.<span class="number">2</span> (OUT), TLS handshake, Client hello (<span class="number">1</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS handshake, Server hello (<span class="number">2</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS handshake, Certificate (<span class="number">11</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS handshake, Server key exchange (<span class="number">12</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS handshake, Request CERT (<span class="number">13</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS handshake, Server finished (<span class="number">14</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (OUT), TLS handshake, Certificate (<span class="number">11</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (OUT), TLS handshake, Client key exchange (<span class="number">16</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (OUT), TLS handshake, CERT verify (<span class="number">15</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (OUT), TLS change cipher, Client hello (<span class="number">1</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (OUT), TLS handshake, Finished (<span class="number">20</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS change cipher, Client hello (<span class="number">1</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS handshake, Finished (<span class="number">20</span>):</span><br><span class="line">* SSL connection <span class="keyword">using</span> TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256</span><br><span class="line">* ALPN, server accepted to use h2</span><br><span class="line">* Server certificate:</span><br><span class="line">*  subject: C=CN; ST=BeiJing; L=BeiJing; O=Alibaba; OU=Test; CN=integration<span class="literal">-fred2</span>.fredhuang.com; emailAddress=a@alibaba.com</span><br><span class="line">*  <span class="built_in">start</span> date: Oct <span class="number">30</span> <span class="number">06</span>:<span class="number">43</span>:<span class="number">19</span> <span class="number">2019</span> GMT</span><br><span class="line">*  expire date: Oct <span class="number">27</span> <span class="number">06</span>:<span class="number">43</span>:<span class="number">19</span> <span class="number">2029</span> GMT</span><br><span class="line">*  issuer: C=CN; ST=BeiJing; L=BeiJing; O=Alibaba; OU=Test; CN=integration<span class="literal">-fred2</span>.fredhuang.com; emailAddress=a@alibaba.com</span><br><span class="line">*  SSL certificate verify result: self signed certificate (<span class="number">18</span>), continuing anyway.</span><br><span class="line">* <span class="keyword">Using</span> HTTP2, server supports multi-use</span><br><span class="line">* Connection state changed (HTTP/<span class="number">2</span> confirmed)</span><br><span class="line">* Copying HTTP/<span class="number">2</span> <span class="keyword">data</span> <span class="keyword">in</span> stream buffer to connection buffer after upgrade: len=<span class="number">0</span></span><br><span class="line">* <span class="keyword">Using</span> Stream ID: 1 (easy handle 0x7f8ae1809a00)</span><br><span class="line">&gt; GET / HTTP/<span class="number">2</span></span><br><span class="line">&gt; Host: integration<span class="literal">-fred2</span>.fredhuang.com</span><br><span class="line">&gt; User<span class="literal">-Agent</span>: <span class="built_in">curl</span>/<span class="number">7.54</span>.<span class="number">0</span></span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt;</span><br><span class="line">* Connection state changed (MAX_CONCURRENT_STREAMS updated)!</span><br><span class="line">&lt; HTTP/<span class="number">2</span> <span class="number">200</span></span><br><span class="line">&lt; server: Tengine</span><br><span class="line">&lt; date: Fri, <span class="number">01</span> Nov <span class="number">2019</span> <span class="number">11</span>:<span class="number">16</span>:<span class="number">39</span> GMT</span><br><span class="line">&lt; content<span class="literal">-type</span>: text/plain;charset=UTF<span class="literal">-8</span></span><br><span class="line">&lt; content<span class="literal">-length</span>: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>不带证书的失败调用</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">curl</span>  https://integration<span class="literal">-fred2</span>.fredhuang.com <span class="literal">-k</span> <span class="literal">-v</span></span><br><span class="line">* Rebuilt URL to: https://integration<span class="literal">-fred2</span>.fredhuang.com/</span><br><span class="line">*   Trying <span class="number">47.91</span>.<span class="number">39.145</span>...</span><br><span class="line">* TCP_NODELAY <span class="built_in">set</span></span><br><span class="line">* Connected to integration<span class="literal">-fred2</span>.fredhuang.com (<span class="number">47.91</span>.<span class="number">39.145</span>) port <span class="number">443</span> (<span class="comment">#0)</span></span><br><span class="line">* ALPN, offering h2</span><br><span class="line">* ALPN, offering http/<span class="number">1.1</span></span><br><span class="line">* Cipher selection: ALL:!EXPORT:!EXPORT40:!EXPORT56:!aNULL:!LOW:!RC4:@STRENGTH</span><br><span class="line">* successfully <span class="built_in">set</span> certificate verify locations:</span><br><span class="line">*   CAfile: /etc/ssl/cert.pem</span><br><span class="line">  CApath: none</span><br><span class="line">* TLSv1.<span class="number">2</span> (OUT), TLS handshake, Client hello (<span class="number">1</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS handshake, Server hello (<span class="number">2</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS handshake, Certificate (<span class="number">11</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS handshake, Server key exchange (<span class="number">12</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS handshake, Request CERT (<span class="number">13</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS handshake, Server finished (<span class="number">14</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (OUT), TLS handshake, Certificate (<span class="number">11</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (OUT), TLS handshake, Client key exchange (<span class="number">16</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (OUT), TLS change cipher, Client hello (<span class="number">1</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (OUT), TLS handshake, Finished (<span class="number">20</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS change cipher, Client hello (<span class="number">1</span>):</span><br><span class="line">* TLSv1.<span class="number">2</span> (<span class="keyword">IN</span>), TLS handshake, Finished (<span class="number">20</span>):</span><br><span class="line">* SSL connection <span class="keyword">using</span> TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256</span><br><span class="line">* ALPN, server accepted to use h2</span><br><span class="line">* Server certificate:</span><br><span class="line">*  subject: C=CN; ST=BeiJing; L=BeiJing; O=Alibaba; OU=Test; CN=integration<span class="literal">-fred2</span>.fredhuang.com; emailAddress=a@alibaba.com</span><br><span class="line">*  <span class="built_in">start</span> date: Oct <span class="number">30</span> <span class="number">06</span>:<span class="number">43</span>:<span class="number">19</span> <span class="number">2019</span> GMT</span><br><span class="line">*  expire date: Oct <span class="number">27</span> <span class="number">06</span>:<span class="number">43</span>:<span class="number">19</span> <span class="number">2029</span> GMT</span><br><span class="line">*  issuer: C=CN; ST=BeiJing; L=BeiJing; O=Alibaba; OU=Test; CN=integration<span class="literal">-fred2</span>.fredhuang.com; emailAddress=a@alibaba.com</span><br><span class="line">*  SSL certificate verify result: self signed certificate (<span class="number">18</span>), continuing anyway.</span><br><span class="line">* <span class="keyword">Using</span> HTTP2, server supports multi-use</span><br><span class="line">* Connection state changed (HTTP/<span class="number">2</span> confirmed)</span><br><span class="line">* Copying HTTP/<span class="number">2</span> <span class="keyword">data</span> <span class="keyword">in</span> stream buffer to connection buffer after upgrade: len=<span class="number">0</span></span><br><span class="line">* <span class="keyword">Using</span> Stream ID: 1 (easy handle 0x7fcc52805e00)</span><br><span class="line">&gt; GET / HTTP/<span class="number">2</span></span><br><span class="line">&gt; Host: integration<span class="literal">-fred2</span>.fredhuang.com</span><br><span class="line">&gt; User<span class="literal">-Agent</span>: <span class="built_in">curl</span>/<span class="number">7.54</span>.<span class="number">0</span></span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt;</span><br><span class="line">* Connection state changed (MAX_CONCURRENT_STREAMS updated)!</span><br><span class="line">&lt; HTTP/<span class="number">2</span> <span class="number">400</span></span><br><span class="line">&lt; server: Tengine</span><br><span class="line">&lt; date: Fri, <span class="number">01</span> Nov <span class="number">2019</span> <span class="number">11</span>:<span class="number">25</span>:<span class="number">28</span> GMT</span><br><span class="line">&lt; content<span class="literal">-type</span>: text/html</span><br><span class="line">&lt; content<span class="literal">-length</span>: <span class="number">685</span></span><br><span class="line">&lt;</span><br><span class="line">&lt;!DOCTYPE HTML PUBLIC <span class="string">&quot;-//IETF//DTD HTML 2.0//EN&quot;</span>&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;title&gt;<span class="number">400</span> No required SSL certificate was sent&lt;/title&gt;&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;center&gt;&lt;h1&gt;<span class="number">400</span> Bad Request&lt;/h1&gt;&lt;/center&gt;</span><br><span class="line">&lt;center&gt;No required SSL certificate was sent&lt;/center&gt;</span><br><span class="line"> Sorry <span class="keyword">for</span> the inconvenience.&lt;br/&gt;</span><br><span class="line">Please report this message and include the following information to us.&lt;br/&gt;</span><br><span class="line">Thank you very much!&lt;/p&gt;</span><br><span class="line">&lt;table&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">&lt;td&gt;URL:&lt;/td&gt;</span><br><span class="line">&lt;td&gt;https://integration<span class="literal">-fred2</span>.fredhuang.com:<span class="number">444</span>/&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">&lt;td&gt;Server:&lt;/td&gt;</span><br><span class="line">&lt;td&gt;cag<span class="literal">-access</span><span class="literal">-tengine011192099198</span>.au49&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">&lt;td&gt;Date:&lt;/td&gt;</span><br><span class="line">&lt;td&gt;<span class="number">2019</span>/<span class="number">11</span>/<span class="number">01</span> <span class="number">19</span>:<span class="number">25</span>:<span class="number">28</span>&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line">&lt;hr/&gt;Powered by Tengine&lt;hr&gt;&lt;center&gt;tengine&lt;/center&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Java-调用"><a href="#5-Java-调用" class="headerlink" title="5.Java 调用"></a>5.Java 调用</h2><p>由于使用的是自签名证书，使用 <code>ApacheHttpClient</code> 去调用的话，需要将服务器证书加入可信任证书库中，才能成功调用，也可以在代码中简单忽略证书。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$</span> <span class="built_in">cd</span> <span class="variable">$JAVA_HOME</span></span><br><span class="line"><span class="variable">$</span> sudo ./bin/keytool <span class="literal">-import</span> <span class="literal">-alias</span> ttt <span class="literal">-keystore</span> cacerts <span class="operator">-file</span> /Users/fred/temp/cert5/server.crt</span><br></pre></td></tr></table></figure>
+
+<p>将服务器端公钥证书设置为可信证书后，使用以下代码可以直接发起带客户端证书的 <code>HTTPS</code> 请求：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.http.HttpEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.SSLConnectionSocketFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.ssl.SSLContexts;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.SSLContext;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.security.KeyStore;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpClientWithClientCert</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String PFX_PATH = <span class="string">&quot;/Users/fred/temp/cert5/client.p12&quot;</span>;    <span class="comment">//客户端证书路径</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String PFX_PWD = <span class="string">&quot;123456&quot;</span>;    <span class="comment">//客户端证书密码</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">sslRequestGet</span><span class="params">(String url)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        KeyStore keyStore = KeyStore.getInstance(<span class="string">&quot;PKCS12&quot;</span>);</span><br><span class="line">        InputStream instream = <span class="keyword">new</span> FileInputStream(<span class="keyword">new</span> File(PFX_PATH));</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            keyStore.load(instream, PFX_PWD.toCharArray());</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            instream.close();</span><br><span class="line">        &#125;</span><br><span class="line">        SSLContext sslcontext = SSLContexts.custom().loadKeyMaterial(keyStore, PFX_PWD.toCharArray()).build();</span><br><span class="line">        SSLConnectionSocketFactory sslsf = <span class="keyword">new</span> SSLConnectionSocketFactory(sslcontext</span><br><span class="line">                , <span class="keyword">new</span> String[] &#123; <span class="string">&quot;TLSv1&quot;</span> &#125;    <span class="comment">// supportedProtocols ,这里可以按需要设置</span></span><br><span class="line">                , <span class="keyword">null</span>    <span class="comment">// supportedCipherSuites</span></span><br><span class="line">                , SSLConnectionSocketFactory.getDefaultHostnameVerifier());</span><br><span class="line"></span><br><span class="line">        CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            HttpGet httpget = <span class="keyword">new</span> HttpGet(url);</span><br><span class="line">            <span class="comment">//httpget.addHeader(&quot;host&quot;, &quot;integration-fred2.fredhuang.com&quot;);// 设置一些heander等</span></span><br><span class="line">            CloseableHttpResponse response = httpclient.execute(httpget);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                HttpEntity entity = response.getEntity();</span><br><span class="line">                String jsonStr = EntityUtils.toString(response.getEntity(), <span class="string">&quot;UTF-8&quot;</span>);<span class="comment">//返回结果</span></span><br><span class="line">                EntityUtils.consume(entity);</span><br><span class="line">                <span class="keyword">return</span> jsonStr;</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                response.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            httpclient.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(System.getProperty(<span class="string">&quot;java.home&quot;</span>));</span><br><span class="line">        System.out.println(sslRequestGet(<span class="string">&quot;https://integration-fred2.fredhuang.com/test&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-存疑"><a href="#6-存疑" class="headerlink" title="6. 存疑"></a>6. 存疑</h2><p>网上很多文章都描述到 <code>Nginx</code> 配置中的客户端证书（<code>ssl_client_certificate</code>）可以配置根证书 root.crt，然后就可以适配所有这个根证书办法的客户端公钥证书了。我试了，使用 root.crt 作为 <code>ssl_client_certificate</code> 的值，然后使用 client.crt 来访问，发现不行，<code>Nginx</code> 会报这个错误：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">title</span>&gt;</span>400 The SSL certificate error<span class="tag">&lt;/<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>400 Bad Request<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">center</span>&gt;</span>The SSL certificate error<span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span><span class="tag">&lt;<span class="name">center</span>&gt;</span>nginx/1.17.5<span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个特性原作者一直没有配置成功 (我也没配置成功)，有可能是配置有问题，也有可能是网上文章不靠谱，写错了。</p>
+<blockquote>
+<p>本文转载自：「阿里云开发者社区」，原文：<a target="_blank" rel="noopener" href="https://tinyurl.com/yaamh7vf">https://tinyurl.com/yaamh7vf</a> ，版权归原作者所有。欢迎投稿，投稿邮箱: <a href="mailto:editor@hi-linux.com">editor@hi-linux.com</a>。</p>
+</blockquote>
+<h2 id="7-扩展阅读-本文核心"><a href="#7-扩展阅读-本文核心" class="headerlink" title="7. 扩展阅读 (本文核心)"></a>7. 扩展阅读 (本文核心)</h2><p>在原文基础上，我在分享一个你在大多数网站和搜索引擎中都找不到的很实用的小技巧，说得这么神秘到底是什么呢？<br>那就是使用受信证书进行双向认证，网上大多数文章介绍的实现 <code>HTTPS</code> 双向认证的文章都是使用 <code>CA</code> 自签的方式进行。虽然这能实现目的，但方法不太优雅。<br>在 <code>SSL</code> 证书全面普及的当下，你其实很有必要申请一个受信证书来进行 <code>HTTPS</code> 双向认证。这样看上去不但更权威，而且实现上也更便捷一些。</p>
+<h3 id="使用受信证书进行双向认证"><a href="#使用受信证书进行双向认证" class="headerlink" title="使用受信证书进行双向认证"></a>使用受信证书进行双向认证</h3><p>要使用受信证书进行认证的前提条件：当然是你必须有一个权威 CA 机构给你签发的证书。</p>
+<ul>
+<li>如果你是土豪，随便购买一个就行了。</li>
+<li>如果你囊中羞涩，也不要紧，可以去申请一个免费的 <code>SSL</code> 证书。目前 <code>Let&#39;s Encrypt</code>、<code>阿里云</code> 都可以申请，具体方法就不在这展开了，你可以直接在公众号上搜索相关文章。</li>
+<li>为了便于管理和多场景使用，建议直接申请通配证书。</li>
+</ul>
+<p>证书准备完成后，接下来当然是直接使用它。因为是受信证书，上面所有的证书自签操作都不需要了，你只需直接配置 <code>Nginx</code> 就可以了。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">access_log</span>  /var/log/nginx/accesse.log  main;</span><br><span class="line">    <span class="attribute">server_name</span>  ci.hi-linux.com;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_certificate</span>      /etc/ssl/certs/hi-linux.com/hi-linux.com.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span>  /etc/ssl/certs/hi-linux.com/hi-linux.com.key;</span><br><span class="line">    <span class="attribute">ssl_client_certificate</span> /etc/ssl/certs/hi-linux.com/hi-linux.com.pem;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_verify_depth</span> <span class="number">3</span>;</span><br><span class="line">    <span class="attribute">ssl_session_timeout</span>  <span class="number">5m</span>;</span><br><span class="line">    <span class="attribute">ssl_verify_client</span> <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">ssl_protocols</span>  SSLv2 SSLv3 TLSv1;</span><br><span class="line">    <span class="attribute">ssl_ciphers</span> ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;</span><br><span class="line">    <span class="attribute">ssl_prefer_server_ciphers</span>   <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">            <span class="attribute">proxy_pass</span>   http://ci/;</span><br><span class="line">            <span class="attribute">proxy_set_header</span> Host $host:$server_port;</span><br><span class="line">            <span class="attribute">proxy_set_header</span> X-Real-IP $remote_addr;</span><br><span class="line">            <span class="attribute">proxy_set_header</span> X-Forwarded-Proto $scheme;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意：<code>ssl_certificate</code> 指定的是证书，<code>ssl_certificate_key</code> 指定是证书对应的私钥，请自行将对应证书文件放到配置文件中指定的目录中。<br>以上配置段和上面的自签证书大同小异，主要需注意的有 <code>ssl_client_certificate</code> 和 <code>ssl_verify_depth</code> 这两个参数。</p>
+<ul>
+<li><code>ssl_client_certificate</code> 主要用于指定客户端所使用的证书，这里可以直接使用受信证书机构签发的证书文件。</li>
+<li><code>ssl_verify_depth</code> 这个参数是使用受信证书能成功进行客户端验证的关键，注意它的值是 <code>3</code>。</li>
+</ul>
+<p>因为当 <code>ssl_verify_depth</code> 设置为 <code>1</code>（ <code>Nginx</code> 的默认值）的时候，服务端只会接受直接被 <code>CA</code> 签发的客户端证书或自签名的证书。也就是说，直接尝试使用中级 <code>CA</code> 来验证客户端是无法通过的，<code>OpenSSL</code> 会自动的去找中级 <code>CA</code> 的签发者并一层层验证上去，直到找到根证书。<br>所以，就算将中级 <code>CA</code> 和根 <code>CA</code> 都放在信任证书列表中，由于最终 <code>ssl_verify_depth</code> 为 <code>2</code> 的缘故，验证还是通不过的。<br>因此，在实际使用的时候，需要注意以下两点：</p>
+<ul>
+<li>CA 文件中必须同时存在 中级 <code>CA</code> 和根 <code>CA</code>，必须构成完整证书链，不能少任何一个；</li>
+<li>默认的验证深度 <code>ssl_verify_depth</code> 是 1，中级 <code>CA</code> 签发的客户端证书一律无法通过认证，需要增大该值，所以我们上面配置中 <code>ssl_verify_depth</code> 值为 <code>3</code> 。</li>
+</ul>
+<p>为了客户端方便导入，你同样还是需要将证书文件转换成 P12 格式。当然你还可以在转换的过程中给证书加个密码，以保证证书的安全。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ openssl pkcs12 -export -clcerts -in hi-linux.com.pem -inkey hi-linux.com.key -out hi-linux.com-client.p12</span><br></pre></td></tr></table></figure>
+
+<p>至此，<code>HTTPS</code> 双向证书的实现就讲完了，如果你还有什么更好的补充，欢迎大家积极留言交流哟！</p>
+
+  </div>
+</article>
+
+
+    
+<div class="gitalk" id="gitalk-container"></div>
+<link rel="stylesheet" href="/gDark.css" media="screen" type="text/css"> 
+
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'c0fd3fecc668416852dc',
+    clientSecret: '5f849bbb22f9233b3fe19627c9eb28be39b721d1',
+    repo: 'YYBlogGiTalk',
+    owner: 'ATommyGirl',
+    admin: ['ATommyGirl'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last',
+    proxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+    
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">1. 原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%8D%95%E5%90%91%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 单向认证流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%8F%8C%E5%90%91%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 双向认证流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%AF%81%E4%B9%A6%E7%94%9F%E6%88%90"><span class="toc-number">2.</span> <span class="toc-text">2. 证书生成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%94%9F%E6%88%90%E8%87%AA%E7%AD%BE%E5%90%8D%E6%A0%B9%E8%AF%81%E4%B9%A6"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 生成自签名根证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%94%9F%E6%88%90%E8%87%AA%E7%AD%BE%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E8%AF%81%E4%B9%A6"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 生成自签名服务器端证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E7%94%9F%E6%88%90%E8%87%AA%E7%AD%BE%E5%90%8D%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%81%E4%B9%A6"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 生成自签名客户端证书</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Nginx-%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">3.Nginx 配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-curl-%E8%B0%83%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">4.curl 调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Java-%E8%B0%83%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">5.Java 调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%AD%98%E7%96%91"><span class="toc-number">6.</span> <span class="toc-text">6. 存疑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%89%A9%E5%B1%95%E9%98%85%E8%AF%BB-%E6%9C%AC%E6%96%87%E6%A0%B8%E5%BF%83"><span class="toc-number">7.</span> <span class="toc-text">7. 扩展阅读 (本文核心)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%8F%97%E4%BF%A1%E8%AF%81%E4%B9%A6%E8%BF%9B%E8%A1%8C%E5%8F%8C%E5%90%91%E8%AE%A4%E8%AF%81"><span class="toc-number">7.1.</span> <span class="toc-text">使用受信证书进行双向认证</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://tiantian.fyi/2021/08/11/nginx-https/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://tiantian.fyi/2021/08/11/nginx-https/&text=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://tiantian.fyi/2021/08/11/nginx-https/&title=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://tiantian.fyi/2021/08/11/nginx-https/&is_video=false&description=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=【转载】巧用 Nginx 快速实现 HTTPS 双向认证&body=Check out this article: https://tiantian.fyi/2021/08/11/nginx-https/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://tiantian.fyi/2021/08/11/nginx-https/&title=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://tiantian.fyi/2021/08/11/nginx-https/&title=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://tiantian.fyi/2021/08/11/nginx-https/&title=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://tiantian.fyi/2021/08/11/nginx-https/&title=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://tiantian.fyi/2021/08/11/nginx-https/&name=【转载】巧用 Nginx 快速实现 HTTPS 双向认证&description=&lt;p&gt;以下内容转载自 &lt;a href=&#34;https://www.hi-linux.com/posts/38492.html&#34;&gt;这里&lt;/a&gt; 。转载的原因是怕他们的网站突然访问不了😂。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;研究 HTTPS 的双向认证实现与原理，踩了不少坑，终于整个流程都跑通了，现在总结出一篇文档来，把一些心得，特别是容易踩坑的地方记录下来。&lt;/p&gt;
+&lt;h2 id=&#34;1-原理&#34;&gt;&lt;a href=&#34;#1-原理&#34; class=&#34;headerlink&#34; title=&#34;1. 原理&#34;&gt;&lt;/a&gt;1. 原理&lt;/h2&gt;&lt;p&gt;双向认证，顾名思义，客户端和服务器端都需要验证对方的身份，在建立 &lt;code&gt;HTTPS&lt;/code&gt; 连接的过程中，握手的流程比单向认证多了几步。单向认证的过程，客户端从服务器端下载服务器端公钥证书进行验证，然后建立安全通信通道。双向通信流程，客户端除了需要从服务器端下载服务器的公钥证书进行验证外，还需要把客户端的公钥证书上传到服务器端给服务器端进行验证，等双方都认证通过了，才开始建立安全通信通道进行数据传输。&lt;/p&gt;
+&lt;h3 id=&#34;1-1-单向认证流程&#34;&gt;&lt;a href=&#34;#1-1-单向认证流程&#34; class=&#34;headerlink&#34; title=&#34;1.1 单向认证流程&#34;&gt;&lt;/a&gt;1.1 单向认证流程&lt;/h3&gt;&lt;p&gt;单向认证流程中，服务器端保存着公钥证书和私钥两个文件，整个握手过程如下：&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://tiantian.fyi/2021/08/11/nginx-https/&t=【转载】巧用 Nginx 快速实现 HTTPS 双向认证"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives">归档</a></li>
+         
+          <li><a href="/tags">标签</a></li>
+         
+          <li><a href="/about">关于</a></li>
+         
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </nav> 
+  </div>
+  <div class="footer-right">
+      YYLittleCat
+      Copyright &copy;
+      
+      
+      2015-2024
+  </div>
+  <a target="_blank" rel="noopener" href="https://beian.miit.gov.cn">津ICP备2021005176号</a>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"left","width":300,"height":600,"vOffset":-100,"hOffset":50},"mobile":{"show":false},"log":false});</script></body>
+</html>
