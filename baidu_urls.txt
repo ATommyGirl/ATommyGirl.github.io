@@ -17,10 +17,11 @@ https://tiantian.fyi/2023/03/30/systemctl-nodejs/
 https://tiantian.fyi/2023/03/24/SDWebImageErrorDomain/
 https://tiantian.fyi/2023/01/03/WKWebView-XHR/
 https://tiantian.fyi/2022/12/31/2022/
+https://tiantian.fyi/2022/12/31/2022%E5%B9%B4%E5%B0%8F%E7%BB%93%E5%84%BF/
 https://tiantian.fyi/2022/11/15/SDWebImage/
 https://tiantian.fyi/2022/09/15/iphone-dev-size/
 https://tiantian.fyi/2022/07/28/macos-executable/
-https://tiantian.fyi/2022/07/26/dog-barking/
+https://tiantian.fyi/2022/07/26/%E4%BD%A0%E5%9C%A8%E7%8B%97%E5%8F%AB%E4%BB%80%E4%B9%88/
 https://tiantian.fyi/2022/06/14/be-a-mogul/
 https://tiantian.fyi/2022/05/12/UIModalPresentationFullScreen-CAGradientLayer/
 https://tiantian.fyi/2022/05/12/white-T-shirt/
@@ -42,9 +43,9 @@ https://tiantian.fyi/2021/12/08/systemd-go/
 https://tiantian.fyi/2021/12/02/WKWebView-Protocol/
 https://tiantian.fyi/2021/12/01/WKWebView/
 https://tiantian.fyi/2021/11/09/ios-ipa-resign/
-https://tiantian.fyi/2021/09/23/subway3/
-https://tiantian.fyi/2021/09/18/git-flow/
-https://tiantian.fyi/2021/08/29/female-mgr/
+https://tiantian.fyi/2021/09/23/Subway3/
+https://tiantian.fyi/2021/09/18/Git-Flow/
+https://tiantian.fyi/2021/08/29/%E5%A5%B3%E6%80%A7%E7%AE%A1%E7%90%86%E8%80%85/
 https://tiantian.fyi/2021/08/19/cordova-config/
 https://tiantian.fyi/2021/08/11/nginx-https/
 https://tiantian.fyi/2021/07/23/systemd-use/
@@ -53,7 +54,7 @@ https://tiantian.fyi/2021/07/20/iOS15/
 https://tiantian.fyi/2021/07/14/suggested-filename/
 https://tiantian.fyi/2021/06/30/hexo-cloud-server-migration/
 https://tiantian.fyi/2021/06/29/hexo-website-submit/
-https://tiantian.fyi/2021/06/22/gitalk-404/
+https://tiantian.fyi/2021/06/22/GiTalk-404/
 https://tiantian.fyi/2021/06/22/WKWebView-Keyboard-0/
 https://tiantian.fyi/2021/06/18/audio-services-play-system-sound/
 https://tiantian.fyi/2021/05/07/Love/
@@ -66,7 +67,7 @@ https://tiantian.fyi/2020/12/14/iTerm2-split/
 https://tiantian.fyi/2020/09/04/pod-file-not-found/
 https://tiantian.fyi/2020/06/05/device-check/
 https://tiantian.fyi/2020/06/02/oolong/
-https://tiantian.fyi/2020/05/22/have-you-eaten/
+https://tiantian.fyi/2020/05/22/%E5%90%83%E9%A5%AD%E5%95%A6/
 https://tiantian.fyi/2020/03/07/1Q84/
 https://tiantian.fyi/2020/02/14/launch-image/
 https://tiantian.fyi/2020/01/20/Xcode11-ipa-processing/
