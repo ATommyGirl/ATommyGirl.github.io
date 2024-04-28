@@ -1,3 +1,4 @@
+https://tiantian.fyi/2024/04/27/personality/
 https://tiantian.fyi/2023/12/31/2023/
 https://tiantian.fyi/2023/12/29/social-stupidity/
 https://tiantian.fyi/2023/12/22/slow-cooked-life/
@@ -16,7 +17,6 @@ https://tiantian.fyi/2023/03/30/centos7-update-python38/
 https://tiantian.fyi/2023/03/30/systemctl-nodejs/
 https://tiantian.fyi/2023/03/24/SDWebImageErrorDomain/
 https://tiantian.fyi/2023/01/03/WKWebView-XHR/
-https://tiantian.fyi/2022/12/31/2022/
 https://tiantian.fyi/2022/12/31/2022%E5%B9%B4%E5%B0%8F%E7%BB%93%E5%84%BF/
 https://tiantian.fyi/2022/11/15/SDWebImage/
 https://tiantian.fyi/2022/09/15/iphone-dev-size/
