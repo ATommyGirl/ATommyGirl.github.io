@@ -1,3 +1,4 @@
+https://tiantian.fyi/2025/02/15/wet-coat/
 https://tiantian.fyi/2024/04/27/personality/
 https://tiantian.fyi/2023/12/31/2023/
 https://tiantian.fyi/2023/12/29/social-stupidity/
@@ -71,8 +72,8 @@ https://tiantian.fyi/2020/05/22/%E5%90%83%E9%A5%AD%E5%95%A6/
 https://tiantian.fyi/2020/03/07/1Q84/
 https://tiantian.fyi/2020/02/14/launch-image/
 https://tiantian.fyi/2020/01/20/Xcode11-ipa-processing/
-https://tiantian.fyi/2019/11/05/ios-problem/
 https://tiantian.fyi/2019/11/05/ios13-adapter/
+https://tiantian.fyi/2019/11/05/ios-problem/
 https://tiantian.fyi/2019/08/19/app-store-connect/
 https://tiantian.fyi/2019/08/19/upload-app-store/
 https://tiantian.fyi/2019/05/21/git-use/
